@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -10,7 +9,7 @@ namespace CariHuruf.Entities.Player
     public class PlayerInputHandler : MonoBehaviour
     {
         #region Variable
-
+        
         [Header("Joystick Settings")] 
         [Tooltip("Isi dengan ukuran Rect Transform joystick yang diinginkan")]
         [SerializeField] private Vector2 joystickSize;
@@ -26,12 +25,12 @@ namespace CariHuruf.Entities.Player
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             _floatJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatJoystick>();
         }
-
+        
         private void OnEnable()
         {
             EnhancedTouchSupport.Enable();
@@ -47,12 +46,12 @@ namespace CariHuruf.Entities.Player
             ETouch.Touch.onFingerMove -= TouchOnFingerMove;
             EnhancedTouchSupport.Disable();
         }
-
+        
         #endregion
-
+        
         #region Enhanced Touch Callbacks
-
-        // Dipanggil waktu layar mendapat touch input
+        
+        // NOTE: Dipanggil waktu layar mendapat touch input
         private void TouchOnFingerDown(Finger fingerTouch)
         {
             var touchRestriction = fingerTouch.screenPosition.x <= _floatJoystick.ScreenRestriction.x 
@@ -64,9 +63,8 @@ namespace CariHuruf.Entities.Player
                 InitializeTouchOn(fingerTouch);
             }
         }
-
         
-        // Dipanggil waktu touch input terlepas dari layar
+        // NOTE: Dipanggil waktu touch input terlepas dari layar
         private void TouchOnFingerUp(Finger fingerTouch)
         {
             if (fingerTouch == _movementFinger)
@@ -75,7 +73,7 @@ namespace CariHuruf.Entities.Player
             }
         }
         
-        // Dipanggil waktu touch input digerakkan pada layar
+        // NOTE: Dipanggil waktu touch input digerakkan pada layar
         private void TouchOnFingerMove(Finger fingerTouch)
         {
             if (fingerTouch != _movementFinger)
@@ -89,19 +87,19 @@ namespace CariHuruf.Entities.Player
         #endregion
         
         #region Zimbril Callbacks
-
+        
         private void InitializeTouchOn(Finger fingerOn)
         {
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _floatJoystick.gameObject.SetActive(true);
             _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
-            _floatJoystick.JoyRectTransform.anchoredPosition = ClampStartPosition(fingerOn.screenPosition);
+            _floatJoystick.JoyRectTransform.anchoredPosition = fingerOn.screenPosition;
         }
 
         private void MoveTouchOn(Finger fingerMove)
         {
-            var knobPosition = Vector2.zero;
+            Vector2 knobPosition;
             var maxMovement = joystickSize.x / 2f;
             var currentTouch = fingerMove.currentTouch;
             
@@ -125,8 +123,21 @@ namespace CariHuruf.Entities.Player
             _floatJoystick.gameObject.SetActive(false);
             Direction = Vector2.zero;
         }
+
+        #endregion
         
-        private Vector2 ClampStartPosition(Vector2 startPosition)
+        #region Screen Restriction Method
+        // NOTE: Pakai method ini jika pakai screen restriction
+        private void InitializeTouchOnScreen(Finger fingerOn)
+        {
+            _movementFinger = fingerOn;
+            Direction = Vector2.zero;
+            _floatJoystick.gameObject.SetActive(true);
+            _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
+            _floatJoystick.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
+        }
+        
+        private Vector2 ScreenClampStartPosition(Vector2 startPosition)
         {
             if (startPosition.x < joystickSize.x / 2)
             {
@@ -148,7 +159,6 @@ namespace CariHuruf.Entities.Player
             
             return startPosition;
         }
-
         #endregion
     }
 }

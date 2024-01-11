@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f52310f8a349fd9931a874beb75eb2, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 9cab04344e6144fe96289faaeb8ad197, type: 3}
+  m_Name: Enemy_01
   m_EditorClassIdentifier: 
-  PlayerName: Senku
-  <MoveSpeed>k__BackingField: 5
+  EnemyName: Bobi
+  <EnemyMove>k__BackingField: 2

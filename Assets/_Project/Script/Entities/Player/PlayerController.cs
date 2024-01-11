@@ -1,7 +1,6 @@
 using System;
-using CariHuruf.Data;
 using UnityEngine;
-using UnityEngine.Serialization;
+using CariHuruf.Data;
 
 namespace CariHuruf.Entities.Player
 {
@@ -13,8 +12,11 @@ namespace CariHuruf.Entities.Player
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] private Vector2 movementDirection;
-
-        private bool _isRight;
+        
+        // Const
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "isMove";
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
@@ -35,7 +37,6 @@ namespace CariHuruf.Entities.Player
         private void Start()
         {
             gameObject.name = playerData.PlayerName;
-            _isRight = false;
         }
 
         private void FixedUpdate()
@@ -74,18 +75,19 @@ namespace CariHuruf.Entities.Player
         
         private void PlayerAnimation()
         {
-            // TODO: Drop animation logic for player here
             if (movementDirection != Vector2.zero)
             {
-                _playerAnimator.SetFloat("Horizontal", movementDirection.x);
-                _playerAnimator.SetFloat("Vertical", movementDirection.y);
-                _playerAnimator.SetBool("isMove", true);
+                _playerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
+                _playerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
+                _playerAnimator.SetBool(IS_MOVE, true);
             }
             else
             {
-                _playerAnimator.SetBool("isMove", false);
+                _playerAnimator.SetBool(IS_MOVE, false);
             }
         }
+
+        private void StopPlayer() => _playerRb.velocity = Vector2.zero;
 
         #endregion
     }

@@ -9,6 +9,7 @@ TagManager:
   - GameManager
   - AudioManager
   - Joystick
+  - Wall
   layers:
   - Default
   - TransparentFX
