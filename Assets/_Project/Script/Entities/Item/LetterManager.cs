@@ -1,0 +1,83 @@
+﻿using System;
+using UnityEngine;
+using KevinCastejon.MoreAttributes;
+using CariHuruf.Gameplay.EventHandler;
+
+namespace CariHuruf.Entities.Item
+{
+    public class LetterManager : MonoBehaviour
+    {
+        #region Variable
+        
+        [Header("Objective")] 
+        [SerializeField] [ReadOnlyOnPlay] private int amountOfLetter;
+        [SerializeField] private GameObject[] letterItemUI;
+        
+        public event Action<int> OnLetterTaken;
+        private int _currentTakenLetter;
+        
+        #endregion
+
+        #region MonoBehaviour Callbacks
+
+        private void OnEnable()
+        {
+            OnLetterTaken += UpdateTakenLetter;
+        }
+
+        private void OnDisable()
+        {
+            OnLetterTaken -= UpdateTakenLetter;
+        }
+
+        private void Start()
+        {
+            Initialize();
+        }
+        
+        #endregion
+        
+        #region CariHuruf Callbacks
+        
+        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
+        
+        private void Initialize()
+        {
+            foreach (var letter in letterItemUI)
+            {
+                letter.SetActive(false);
+            }
+            
+            _currentTakenLetter = 0;
+        }
+        
+        private void UpdateTakenLetter(int itemId)
+        {
+            var itemIndex = itemId - 1;
+            letterItemUI[itemIndex].SetActive(true);
+            _currentTakenLetter++;
+            
+            if (_currentTakenLetter >= amountOfLetter || IsAllLetterActive())
+            {
+                // TODO: Drop event/method for opening door when all letter is taken
+                Debug.Log("buka pintu");
+            }
+        }
+        
+        private bool IsAllLetterActive()
+        {
+            var activeLetterNum = 0;
+            foreach (var itemUI in letterItemUI)
+            {
+                if (itemUI.activeSelf)
+                {
+                    activeLetterNum++;
+                }
+            }
+            
+            return activeLetterNum >= amountOfLetter;
+        }
+        
+        #endregion
+    }
+}

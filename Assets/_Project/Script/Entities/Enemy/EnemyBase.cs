@@ -2,6 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 using CariHuruf.Data;
+using CariHuruf.Enum;
 
 namespace CariHuruf.Entities.Enemy
 {
@@ -11,6 +12,7 @@ namespace CariHuruf.Entities.Enemy
 
         [Header("Data")] 
         public EnemyData EnemyData;
+        public EnemyPattern EnemyType;
         public Transform[] MovePointTransform;
         
         protected Transform CurrentTarget;
@@ -35,24 +37,18 @@ namespace CariHuruf.Entities.Enemy
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
         }
-
+        
         private void Start()
         {
             _isDataAsync = CheckAsyncEnemyData();
-            if (_isDataAsync)
-            {
-                return;
-            }
+            if (_isDataAsync) return;
 
             RandomizeTargetPoint();
         }
-
+        
         private void Update()
         {
-            if (_isDataAsync)
-            {
-                return;
-            }
+            if (_isDataAsync) return;
             
             EnemyMove();
             // EnemyAnimation();
@@ -88,13 +84,13 @@ namespace CariHuruf.Entities.Enemy
 
         private bool CheckAsyncEnemyData()
         {
-            if (MovePointTransform.Length > EnemyData.MaxEnemyPoint)
+            if (EnemyType != EnemyData.EnemyPattern|| MovePointTransform.Length > EnemyData.MaxEnemyPoint)
             {
                 Debug.LogError("Enemy data not valid! \n Check your selected enum in enemy data \n " +
                                "Max point Line (2), Elbow (3), Box (4)");
                 return true;
             }
-
+            
             return false;
         }
         

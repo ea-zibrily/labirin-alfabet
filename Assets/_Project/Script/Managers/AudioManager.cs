@@ -2,7 +2,7 @@
 using UnityEngine;
 using CariHuruf.Enum;
 
-namespace CariHuruf.Managers
+namespace CariHuruf.Entities.Item
 {
     public class AudioManager : MonoBehaviour
     {

@@ -11,6 +11,7 @@ namespace CariHuruf.UI
 
         [SerializeField] private RectTransform restrictionRectTransform;
         [field: SerializeField] public RectTransform KnobRectTransform { get; set; }
+        
         public RectTransform JoyRectTransform { get; private set; }
         public Vector2 ScreenRestriction { get; private set; }
         
@@ -30,7 +31,7 @@ namespace CariHuruf.UI
 
         #endregion
 
-        #region Zimbril Callbacks
+        #region CariHuruf Callbacks
 
         private void InitializeJoystick()
         {
