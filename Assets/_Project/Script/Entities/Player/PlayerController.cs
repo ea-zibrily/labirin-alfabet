@@ -9,14 +9,16 @@ namespace CariHuruf.Entities.Player
     {
         #region Variable
 
-        [Header("Player")] 
-        [SerializeField] private PlayerData playerData;
-        [SerializeField] private Vector2 movementDirection;
-        
-        // Const
+        // Const Variable
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
         private const string IS_MOVE = "isMove";
+        
+        [Header("Player")] 
+        [SerializeField] private PlayerData playerData;
+        [SerializeField] private Vector2 movementDirection;
+
+        private bool _canMove;
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
@@ -36,7 +38,7 @@ namespace CariHuruf.Entities.Player
 
         private void Start()
         {
-            gameObject.name = playerData.PlayerName;
+            Initialize();
         }
 
         private void FixedUpdate()
@@ -53,8 +55,18 @@ namespace CariHuruf.Entities.Player
         
         #region CariHuruf Callbacks
         
+        //-- Initialization
+        private void Initialize()
+        {
+            gameObject.name = playerData.PlayerName;
+            _canMove = true;
+        }
+        
+        //-- Core Functionality
         private void PlayerMove()
         {
+            if (!_canMove) return;
+            
             //--- W Enhanced Touch Input
             var moveX = _playerInputHandler.Direction.x;
             var moveY = _playerInputHandler.Direction.y;
@@ -86,9 +98,21 @@ namespace CariHuruf.Entities.Player
                 _playerAnimator.SetBool(IS_MOVE, false);
             }
         }
-
-        private void StopPlayer() => _playerRb.velocity = Vector2.zero;
-
+        
+        
+        //-- Helpers/Utilities
+        public void StartMovement()
+        {
+            _canMove = true;
+        }
+        
+        public void StopMovement()
+        {
+            _canMove = false;
+            _playerRb.velocity = Vector2.zero;
+            movementDirection = Vector2.zero;
+        }
+        
         #endregion
     }
 }

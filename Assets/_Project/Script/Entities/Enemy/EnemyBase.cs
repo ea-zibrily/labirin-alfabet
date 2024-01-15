@@ -8,6 +8,10 @@ namespace CariHuruf.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
+        //Const
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        
         #region Variable
 
         [Header("Data")] 
@@ -21,10 +25,6 @@ namespace CariHuruf.Entities.Enemy
         
         private Vector2 _enemyDirection;
         private bool _isDataAsync;
-        
-        //Const
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
         
         [Header("Reference")] 
         private Animator _enemyAnimator;

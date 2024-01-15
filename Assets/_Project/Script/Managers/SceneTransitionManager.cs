@@ -4,7 +4,7 @@ using CariHuruf.Enum;
 using CariHuruf.Entities.Item;
 using CariHuruf.DesignPattern.Singleton;
 
-namespace TimeTrap.Managers
+namespace CariHuruf.Managers
 {
     public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     {

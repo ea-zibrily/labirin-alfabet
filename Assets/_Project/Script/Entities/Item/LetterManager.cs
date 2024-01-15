@@ -32,7 +32,7 @@ namespace CariHuruf.Entities.Item
 
         private void Start()
         {
-            Initialize();
+            InitializeLetter();
         }
         
         #endregion
@@ -41,7 +41,7 @@ namespace CariHuruf.Entities.Item
         
         public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
         
-        private void Initialize()
+        private void InitializeLetter()
         {
             foreach (var letter in letterItemUI)
             {
@@ -59,8 +59,7 @@ namespace CariHuruf.Entities.Item
             
             if (_currentTakenLetter >= amountOfLetter || IsAllLetterActive())
             {
-                // TODO: Drop event/method for opening door when all letter is taken
-                Debug.Log("buka pintu");
+                GameEventHandler.ObjectiveClearEvent();
             }
         }
         

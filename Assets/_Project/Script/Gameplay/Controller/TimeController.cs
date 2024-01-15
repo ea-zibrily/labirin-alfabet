@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using TMPro;
-using CariHuruf.Gameplay.EventHandler;
 using CariHuruf.Entities.Item;
+using CariHuruf.Gameplay.EventHandler;
 
 namespace CariHuruf.Gameplay.Controller
 {
@@ -39,7 +39,8 @@ namespace CariHuruf.Gameplay.Controller
         #endregion
         
         #region CariHuruf Callbacks
-
+        
+        //-- Initialization
         private void InitializeTimer()
         {
             _fullTime = amountOfTime + GameManager.Instance.GetLatestTime();
@@ -47,8 +48,10 @@ namespace CariHuruf.Gameplay.Controller
             Debug.LogWarning(_currentTime);
             
             timerTextUI.text = "00:00";
+            isTimerStart = true;
         }
         
+        //-- Core Functionality
         private void CountdownTimer()
         {
             if (!isTimerStart) return;
