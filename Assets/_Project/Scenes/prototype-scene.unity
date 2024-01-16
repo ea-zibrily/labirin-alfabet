@@ -298,7 +298,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1413.112, y: 730.6584}
+  m_SizeDelta: {x: 960, y: 720}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &68389496
 MonoBehaviour:
@@ -807,7 +807,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_Follow: {fileID: 8054133920441539219}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4
+    OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -4728,42 +4728,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1882700087}
     m_Modifications:
-    - target: {fileID: 1991178695577519298, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_ChildControlWidth
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1991178695577519298, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_ChildControlHeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1991178695577519298, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_ChildForceExpandHeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 127.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 73.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081963894965095756, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3194363754224492846, guid: 3ec6abc7deb4ebe4dac3eeb2378fdd7a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

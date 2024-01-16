@@ -54,23 +54,25 @@ namespace CariHuruf.Entities.Player
         // NOTE: Dipanggil waktu layar mendapat touch input
         private void TouchOnFingerDown(Finger fingerTouch)
         {
-            var touchRestriction = fingerTouch.screenPosition.x <= _floatJoystick.ScreenRestriction.x 
-                       && fingerTouch.screenPosition.y <= _floatJoystick.ScreenRestriction.y;
-            var isFullScreen = canFullScreen || touchRestriction;
+            var touchScreen = fingerTouch.screenPosition.x <= Screen.width / 2f 
+                              && fingerTouch.screenPosition.y <= Screen.height / 1.2f;
+            var isFullScreen = canFullScreen || touchScreen;
             
             if (_movementFinger == null && isFullScreen)
             {
-                InitializeTouchOn(fingerTouch);
+                InitializeTouchOnScreen(fingerTouch);
             }
         }
         
         // NOTE: Dipanggil waktu touch input terlepas dari layar
         private void TouchOnFingerUp(Finger fingerTouch)
         {
-            if (fingerTouch == _movementFinger)
+            if (fingerTouch != _movementFinger)
             {
-                ResetTouchOn();
+                return;
             }
+            
+            ResetTouchOn();
         }
         
         // NOTE: Dipanggil waktu touch input digerakkan pada layar
@@ -87,7 +89,8 @@ namespace CariHuruf.Entities.Player
         #endregion
         
         #region Zimbril Callbacks
-        
+
+        // NOTE: Pakai method ini jika pakai ui panel restriction
         private void InitializeTouchOn(Finger fingerOn)
         {
             _movementFinger = fingerOn;
@@ -95,6 +98,16 @@ namespace CariHuruf.Entities.Player
             _floatJoystick.gameObject.SetActive(true);
             _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
             _floatJoystick.JoyRectTransform.anchoredPosition = fingerOn.screenPosition;
+        }
+
+        // NOTE: Pakai method ini jika pakai screen restriction
+        private void InitializeTouchOnScreen(Finger fingerOn)
+        {
+            _movementFinger = fingerOn;
+            Direction = Vector2.zero;
+            _floatJoystick.gameObject.SetActive(true);
+            _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
+            _floatJoystick.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
         }
 
         private void MoveTouchOn(Finger fingerMove)
@@ -123,19 +136,6 @@ namespace CariHuruf.Entities.Player
             _floatJoystick.gameObject.SetActive(false);
             Direction = Vector2.zero;
         }
-
-        #endregion
-        
-        #region Screen Restriction Method
-        // NOTE: Pakai method ini jika pakai screen restriction
-        private void InitializeTouchOnScreen(Finger fingerOn)
-        {
-            _movementFinger = fingerOn;
-            Direction = Vector2.zero;
-            _floatJoystick.gameObject.SetActive(true);
-            _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
-            _floatJoystick.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
-        }
         
         private Vector2 ScreenClampStartPosition(Vector2 startPosition)
         {
@@ -159,6 +159,7 @@ namespace CariHuruf.Entities.Player
             
             return startPosition;
         }
+        
         #endregion
     }
 }
