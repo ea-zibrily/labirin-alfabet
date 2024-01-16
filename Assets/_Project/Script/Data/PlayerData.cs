@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CariHuruf.Data
+namespace LabirinKata.Data
 {
     [CreateAssetMenu(fileName = "NewPlayerData", menuName = "ScriptableObject/Entities/New Player Data", order = 0)]
     public class PlayerData : ScriptableObject

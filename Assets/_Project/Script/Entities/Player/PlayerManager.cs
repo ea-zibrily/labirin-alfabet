@@ -1,11 +1,9 @@
-﻿using System;
-using CariHuruf.Gameplay.EventHandler;
-using CariHuruf.Item;
-using KevinCastejon.MoreAttributes;
+﻿using KevinCastejon.MoreAttributes;
+using LabirinKata.Entities.Item;
+using LabirinKata.Gameplay.EventHandler;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace CariHuruf.Entities.Player
+namespace LabirinKata.Entities.Player
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerManager : MonoBehaviour

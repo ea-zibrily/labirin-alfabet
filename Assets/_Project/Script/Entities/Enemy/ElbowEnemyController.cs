@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CariHuruf.Entities.Enemy
+namespace LabirinKata.Entities.Enemy
 {
     public class ElbowEnemyController : EnemyBase
     {

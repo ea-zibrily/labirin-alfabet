@@ -1,14 +1,13 @@
-﻿using System;
+﻿using LabirinKata.Gameplay.Controller;
 using UnityEngine;
-using CariHuruf.Gameplay.Controller;
 
-namespace CariHuruf.Managers
+namespace LabirinKata.Managers
 {
-    public class StarRatingManager : MonoBehaviour
+    public class ScoreManager : MonoBehaviour
     {
         #region Variable
 
-        [Header("Rate")] 
+        [Header("Scoring")] 
         [SerializeField] private GameObject[] starRatingUI;
 
         [Header("Reference")] 
@@ -25,7 +24,7 @@ namespace CariHuruf.Managers
 
         private void Start()
         {
-            // InitializeStarRating();
+            InitializeStarRating();
         }
 
         #endregion
@@ -35,6 +34,12 @@ namespace CariHuruf.Managers
         //-- Initialization
         private void InitializeStarRating()
         {
+            if (starRatingUI == null)
+            {
+                Debug.LogError("star ui null brok!");
+                return;
+            }
+            
             foreach (var starRate in starRatingUI)
             {
                 starRate.SetActive(false);
@@ -47,25 +52,28 @@ namespace CariHuruf.Managers
             var currentTime = _timeController.CurrentTime;
             var quarterTime = _timeController.FullTime * 0.25f;
             var halfTime = _timeController.FullTime * 0.5f;
+            var starCount = 0;
             
             if (currentTime < quarterTime)
             {
+                starCount = 1;
                 Debug.LogWarning($"current: {currentTime} < quarter {quarterTime}");
-                Debug.LogWarning("get 1 star!");
-                // ActivateStarUI(1);
+                Debug.LogWarning($"get {starCount} star! walawe");
             }
             else if (currentTime < halfTime)
             {
+                starCount = 2;
                 Debug.LogWarning($"current: {currentTime} < halftime {halfTime}");
-                Debug.LogWarning("get 2 star!");
-               // ActivateStarUI(2);
+                Debug.LogWarning($"get {starCount} star! jos");
             }
             else if (currentTime >= halfTime)
             {
+                starCount = 3;
                 Debug.LogWarning($"current: {currentTime} >= halftime {halfTime}");
-                Debug.LogWarning("get 3 star! mantap");
-                // ActivateStarUI(3);
+                Debug.LogWarning($"get {starCount} star! mantap bozqku");
             }
+            
+            // ActivateStarUI(starCount);
         }
         
         //-- Helpers/Utilites

@@ -1,17 +1,20 @@
-﻿using System;
+﻿using LabirinKata.Data;
+using LabirinKata.Enum;
+using LabirinKata.Stage;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using CariHuruf.Data;
-using CariHuruf.Enum;
 
-namespace CariHuruf.Entities.Enemy
+namespace LabirinKata.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        //Const
+        #region Const Variable
+
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
-        
+
+        #endregion
+
         #region Variable
 
         [Header("Data")] 
@@ -28,6 +31,7 @@ namespace CariHuruf.Entities.Enemy
         
         [Header("Reference")] 
         private Animator _enemyAnimator;
+        private StageManager _stageManager;
         
         #endregion
 
@@ -36,6 +40,7 @@ namespace CariHuruf.Entities.Enemy
         private void Awake()
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
+            _stageManager = GameObject.Find("LevelManager").GetComponent<StageManager>();
         }
         
         private void Start()
@@ -48,7 +53,7 @@ namespace CariHuruf.Entities.Enemy
         
         private void Update()
         {
-            if (_isDataAsync) return;
+            if (_isDataAsync || !_stageManager.IsStageStart) return;
             
             EnemyMove();
             // EnemyAnimation();
@@ -84,7 +89,7 @@ namespace CariHuruf.Entities.Enemy
 
         private bool CheckAsyncEnemyData()
         {
-            if (EnemyType != EnemyData.EnemyPattern|| MovePointTransform.Length > EnemyData.MaxEnemyPoint)
+            if (EnemyType != EnemyData.EnemyPattern || MovePointTransform.Length > EnemyData.MaxEnemyPoint)
             {
                 Debug.LogError("Enemy data not valid! \n Check your selected enum in enemy data \n " +
                                "Max point Line (2), Elbow (3), Box (4)");

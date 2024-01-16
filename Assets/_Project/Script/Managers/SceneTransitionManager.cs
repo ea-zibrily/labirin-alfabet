@@ -1,10 +1,9 @@
+using LabirinKata.DesignPattern.Singleton;
+using LabirinKata.Enum;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using CariHuruf.Enum;
-using CariHuruf.Entities.Item;
-using CariHuruf.DesignPattern.Singleton;
 
-namespace CariHuruf.Managers
+namespace LabirinKata.Managers
 {
     public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     {
@@ -24,7 +23,7 @@ namespace CariHuruf.Managers
         
         #endregion
 
-        #region Tsukuyomi Callbacks
+        #region Labirin Kata Callbacks
         
         public void LoadCurrentScene()
         {
@@ -38,7 +37,8 @@ namespace CariHuruf.Managers
             OpenNextScene();
         }
         
-        private void StartFader()
+        // TODO: Call when continue stage
+        public void StartFader()
         {
             sceneFader.gameObject.SetActive (true);
         

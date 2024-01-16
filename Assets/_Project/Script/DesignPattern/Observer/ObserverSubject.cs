@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CariHuruf._Project.Script.DesignPattern.Observer
+namespace LabirinKata.DesignPattern.Observer
 {
     public class ObserverSubject : MonoBehaviour
     {

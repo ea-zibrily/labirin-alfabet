@@ -1,9 +1,9 @@
 ﻿using System;
-using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using CariHuruf.Gameplay.EventHandler;
+using LabirinKata.Gameplay.EventHandler;
+using UnityEngine;
 
-namespace CariHuruf.Entities.Item
+namespace LabirinKata.Entities.Item
 {
     public class LetterManager : MonoBehaviour
     {

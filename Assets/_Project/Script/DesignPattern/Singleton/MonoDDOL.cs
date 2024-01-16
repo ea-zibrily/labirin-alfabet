@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CariHuruf.DesignPattern.Singleton
+namespace LabirinKata.DesignPattern.Singleton
 {
     public class MonoDDOL<T> : MonoBehaviour where T: MonoBehaviour
     {

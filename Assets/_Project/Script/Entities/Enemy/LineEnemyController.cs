@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CariHuruf.Entities.Enemy
+namespace LabirinKata.Entities.Enemy
 {
     public class LineEnemyController : EnemyBase
     {

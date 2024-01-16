@@ -1,10 +1,9 @@
-﻿using System;
+﻿using LabirinKata.UI;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
-using CariHuruf.UI;
 
-namespace CariHuruf.Entities.Player
+namespace LabirinKata.Entities.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {

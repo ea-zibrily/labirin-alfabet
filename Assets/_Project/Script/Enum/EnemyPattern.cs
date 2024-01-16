@@ -1,4 +1,4 @@
-﻿namespace CariHuruf.Enum
+﻿namespace LabirinKata.Enum
 {
     public enum EnemyPattern
     {

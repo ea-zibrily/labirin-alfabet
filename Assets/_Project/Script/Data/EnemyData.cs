@@ -1,8 +1,8 @@
 ﻿using System;
-using CariHuruf.Enum;
+using LabirinKata.Enum;
 using UnityEngine;
 
-namespace CariHuruf.Data
+namespace LabirinKata.Data
 {
     [CreateAssetMenu(fileName = "NewEnemyData", menuName = "ScriptableObject/Entities/New Enemy Data", order = 0)]
     public class EnemyData : ScriptableObject

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using LabirinKata.DesignPattern.Singleton;
+using LabirinKata.Entities.Player;
+using LabirinKata.Gameplay.Controller;
+using LabirinKata.Gameplay.EventHandler;
+using LabirinKata.Stage;
 using UnityEngine;
-using CariHuruf.Enum;
-using CariHuruf.Managers;
-using CariHuruf.Entities.Player;
-using CariHuruf.Gameplay.Controller;
-using CariHuruf.Gameplay.EventHandler;
-using CariHuruf.DesignPattern.Singleton;
+using UnityEngine.Serialization;
 
-namespace CariHuruf.Entities.Item
+namespace LabirinKata.Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {
@@ -23,27 +22,23 @@ namespace CariHuruf.Entities.Item
         #endregion
         
         #region Variable
-        
-        [Header("Level Settings")] 
-        public Level CurrentLevel;
-        public Stage CurrentStage;
-        public Stage NextStage;
-        
-        [Space]
-        public Level PreviousLevel;
-        public Stage PreviousStage;
-        
-        private string _timeSaveKey;
 
         [Header("UI")] 
+        [SerializeField] private GameObject openingStagePanel;
         [SerializeField] private GameObject gameWinPanel;
         [SerializeField] private GameObject gameOverPanel;
         
+        [Header("Settings")] 
+        private string _saveKey;
+        
         [Header("Reference")] 
+        //-- Controller
         private PlayerController _playerController;
         private TimeController _timeController;
 
-        private StarRatingManager _starRatingManager;
+        //-- Manager
+        private StageManager _stageManager;
+        private ScoreManager _scoreManager;
         
         #endregion
 
@@ -54,7 +49,9 @@ namespace CariHuruf.Entities.Item
             base.Awake();
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-            _starRatingManager = GameObject.Find("StarRatingManager").GetComponent<StarRatingManager>();
+
+            _stageManager = GameObject.Find("LevelManager").GetComponent<StageManager>();
+            _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         }
 
         private void OnEnable()
@@ -91,14 +88,12 @@ namespace CariHuruf.Entities.Item
         private void GameWin()
         {
             _playerController.StopMovement();
-            _starRatingManager.RateStar();
-            // SaveCurrentTime();
+            _scoreManager.RateStar();
         }
         
         private void ContinueStage()
         {
             _playerController.StopMovement();
-            SaveCurrentTime();
             SceneTransitionManager.Instance.LoadNextScene();
         }
         
@@ -107,42 +102,29 @@ namespace CariHuruf.Entities.Item
         #region Load and Save Callbacks
         
         //-- Initialization
-        private string SetTimePrefsKey(LevelState state)
-        {
-            var currentKey = state switch
-            {
-                LevelState.Current => CurrentLevel + "_" + CurrentStage,
-                LevelState.Previous => PreviousLevel + "_" + PreviousStage,
-                LevelState.None => "None!",
-                _ => ""
-            };
-            
-            return currentKey;
-        }
+        // private string SetScorePrefsKey(LevelState state)
+        // {
+        //     var currentKey = state switch
+        //     {
+        //         LevelState.Current => CurrentLevel + "_" + CurrentStage,
+        //         LevelState.Previous => PreviousLevel + "_" + PreviousStage,
+        //         LevelState.None => "None!",
+        //         _ => ""
+        //     };
+        //     
+        //     return currentKey;
+        // }
         
-        //-- Helpers/Utilities
-        public float GetLatestTime()
-        {
-            _timeSaveKey = SetTimePrefsKey(LevelState.Previous);
-            var lastTime = PlayerPrefs.GetFloat(_timeSaveKey);
-            return lastTime;
-        }
+        //-- Core Functionality
+        // private void SaveCurrentTime()
+        // {
+        //     _saveKey = SetScorePrefsKey(LevelState.Current);
+        //     if (PlayerPrefs.HasKey(_saveKey))
+        //     {
+        //         PlayerPrefs.SetFloat(_saveKey, _timeController.CurrentTime);
+        //     }
+        // }
         
-        private void SaveCurrentTime()
-        {
-            _timeSaveKey = SetTimePrefsKey(LevelState.Current);
-            if (PlayerPrefs.HasKey(_timeSaveKey))
-            {
-                PlayerPrefs.SetFloat(_timeSaveKey, _timeController.CurrentTime);
-            }
-        }
-        
-        #endregion
-
-        #region Utilites
-
-        public bool CanNextStage() => NextStage != Stage.None;
-
         #endregion
     }
 }

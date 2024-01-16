@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using CariHuruf.Entities.Item;
-using CariHuruf.Gameplay.EventHandler;
+using LabirinKata.Gameplay.EventHandler;
 
-namespace CariHuruf.Gameplay.Controller
+namespace LabirinKata.Gameplay.Controller
 {
     public class TimeController : MonoBehaviour
     {
@@ -15,10 +13,16 @@ namespace CariHuruf.Gameplay.Controller
         [SerializeField] private float amountOfTime;
         [SerializeField] private TextMeshProUGUI timerTextUI;
         [SerializeField] private bool isTimerStart;
-
+        
         private float _fullTime;
         private float _currentTime;
-        
+
+        public bool IsTimerStart
+        {
+            get => isTimerStart;
+            set => isTimerStart = value;
+        }
+        public float LatestTime { get; set; }
         public float FullTime { get { return _fullTime; } } 
         public float CurrentTime { get {return _currentTime;} }
         
@@ -38,17 +42,16 @@ namespace CariHuruf.Gameplay.Controller
         
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
         
         //-- Initialization
-        private void InitializeTimer()
+        // TODO: Call when start game/stage
+        public void InitializeTimer()
         {
-            _fullTime = amountOfTime + GameManager.Instance.GetLatestTime();
+            _fullTime = amountOfTime + LatestTime;
             _currentTime = _fullTime;
-            Debug.LogWarning(_currentTime);
             
-            timerTextUI.text = "00:00";
-            isTimerStart = true;
+            TimerDisplay(_currentTime);
         }
         
         //-- Core Functionality

@@ -1,8 +1,8 @@
+using LabirinKata.Managers;
+using LabirinKata.Enum;
 using UnityEngine;
-using CariHuruf.Enum;
-using CariHuruf.Entities.Item;
 
-namespace CariHuruf.Gameplay.Controller
+namespace LabirinKata.Gameplay.Controller
 {
     public class AudioController : MonoBehaviour
     {

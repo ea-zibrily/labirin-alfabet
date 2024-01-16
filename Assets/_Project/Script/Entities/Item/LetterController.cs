@@ -1,8 +1,6 @@
-﻿using System;
-using CariHuruf.Entities.Item;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CariHuruf.Item
+namespace LabirinKata.Entities.Item
 {
     public class LetterController : MonoBehaviour
     {

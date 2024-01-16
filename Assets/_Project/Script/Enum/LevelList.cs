@@ -1,6 +1,6 @@
-﻿namespace CariHuruf.Enum
+﻿namespace LabirinKata.Enum
 {
-    public enum Level
+    public enum LevelList
     {
         Level_01,
         Level_02,
@@ -8,7 +8,7 @@
         None
     }
 
-    public enum Stage
+    public enum StageList
     {
         Stage_1,
         Stage_2,

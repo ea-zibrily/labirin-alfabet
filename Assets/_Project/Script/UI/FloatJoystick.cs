@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CariHuruf.UI
+namespace LabirinKata.UI
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]

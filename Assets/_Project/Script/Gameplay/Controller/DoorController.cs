@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using LabirinKata.Gameplay.EventHandler;
 using UnityEngine;
-using CariHuruf.Entities.Item;
-using CariHuruf.Gameplay.EventHandler;
 
-namespace CariHuruf.Gameplay.Controller
+namespace LabirinKata.Gameplay.Controller
 {
     public class DoorController : MonoBehaviour
     {
@@ -75,14 +73,14 @@ namespace CariHuruf.Gameplay.Controller
         {
             if (other.CompareTag("Player")) return;
             
-            if (GameManager.Instance.CanNextStage())
-            {
-                GameEventHandler.GameWinEvent();
-            }
-            else
-            {
-                GameEventHandler.ContinueStageEvent();
-            }
+            // if (GameManager.Instance.CanNextStage())
+            // {
+            //     GameEventHandler.GameWinEvent();
+            // }
+            // else
+            // {
+            //     GameEventHandler.ContinueStageEvent();
+            // }
         }
         
         #endregion

@@ -1,6 +1,4 @@
-﻿using System.Net.NetworkInformation;
-
-namespace CariHuruf.Gameplay.EventHandler
+﻿namespace LabirinKata.Gameplay.EventHandler
 {
     public static class GameEventHandler
     {

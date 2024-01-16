@@ -1,8 +1,7 @@
-using System;
+using LabirinKata.Data;
 using UnityEngine;
-using CariHuruf.Data;
 
-namespace CariHuruf.Entities.Player
+namespace LabirinKata.Entities.Player
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour

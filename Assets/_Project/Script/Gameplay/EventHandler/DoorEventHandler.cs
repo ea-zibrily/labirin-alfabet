@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CariHuruf.Gameplay.EventHandler
+namespace LabirinKata.Gameplay.EventHandler
 {
     public class DoorEventHandler : MonoBehaviour
     {

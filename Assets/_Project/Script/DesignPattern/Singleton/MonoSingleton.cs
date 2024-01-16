@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Singleton Save Object Reference When Move Scene
-namespace CariHuruf.DesignPattern.Singleton
+namespace LabirinKata.DesignPattern.Singleton
 {
     public class MonoSingleton<T> : MonoBehaviour where T : Component
     {
