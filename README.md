@@ -1,2 +1,2 @@
-# cari-huruf
-Cari Huruf | Maze Casual Minigame Prototype
+# Labirin-Kata
+Labirin Kata | Casual Minigame Prototype
