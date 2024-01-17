@@ -1,4 +1,5 @@
-﻿using KevinCastejon.MoreAttributes;
+﻿using System;
+using KevinCastejon.MoreAttributes;
 using LabirinKata.Entities.Item;
 using LabirinKata.Gameplay.EventHandler;
 using UnityEngine;
@@ -15,10 +16,18 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private GameObject[] healthUI;
 
         private bool _isPlayerDead;
+
+        [Header("Reference")] 
+        private PlayerController _playerController;
         
         #endregion
 
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        }
 
         private void Start()
         {
@@ -52,7 +61,7 @@ namespace LabirinKata.Entities.Player
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_isPlayerDead) return;
+            if (_isPlayerDead || !_playerController.CanMove) return;
             
             if (other.CompareTag("Enemy"))
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using LabirinKata.Enum;
 using TMPro;
 using UnityEngine;
@@ -10,10 +11,9 @@ namespace LabirinKata.Stage
         #region Variable
 
         [Header("UI")] 
+        [SerializeField] private float activateDelayTime;
         [SerializeField] private TextMeshProUGUI levelTextUI;
         [SerializeField] private TextMeshProUGUI stageTextUI;
-
-        public event Action OnAnimationStageDone;
         
         private string _currentLevel;
         private string _currentStage;
@@ -30,46 +30,38 @@ namespace LabirinKata.Stage
             _stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         }
 
-        private void OnEnable()
-        {
-            OnAnimationStageDone += InitializeStagePanel;
-        }
-
-        private void OnDisable()
-        {
-            OnAnimationStageDone -= InitializeStagePanel;
-        }
-
         private void Start()
         {
-            InitializeStagePanel();
+            ActivateStagePanel();
         }
 
         #endregion
 
         #region Labirin Kata Callbacks
-
-        //-- Initialization
-        private void InitializeStagePanel()
-        {
-            levelTextUI.text = "";
-            stageTextUI.text = "";
-            gameObject.SetActive(false);
-        }
         
         //-- Core Functionality
-        // TODO: Call when continue stage
-        public void ActivateStagePanel()
+        private void ActivateStagePanel() => StartCoroutine(ActivateStagePanelRoutine());
+        
+        private IEnumerator ActivateStagePanelRoutine()
         {
+            yield return new WaitForSeconds(activateDelayTime);
             gameObject.SetActive(true);
             
             _currentLevel = GetCurrentLevel(_stageManager.CurrentLevelList);
             _currentStage = GetCurrentStage(_stageManager.CurrentStageList);
             levelTextUI.text = _currentLevel;
-            stageTextUI.text = _currentStage;
+            stageTextUI.text = _currentStage; 
         }
         
-        public void DeactivateStagePanel() => OnAnimationStageDone?.Invoke();
+        private void DeactivateStagePanel()
+        {
+            levelTextUI.text = "";
+            stageTextUI.text = "";
+            levelTextUI.color = new Color(0, 0, 0, 1);
+            stageTextUI.color = new Color(0, 0, 0, 1);
+            
+            gameObject.SetActive(false);
+        }
         
         //-- Helpers/Utilities
         private string GetCurrentLevel(LevelList level)

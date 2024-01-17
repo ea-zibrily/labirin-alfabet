@@ -31,7 +31,6 @@ namespace LabirinKata.Entities.Enemy
         
         [Header("Reference")] 
         private Animator _enemyAnimator;
-        private StageManager _stageManager;
         
         #endregion
 
@@ -40,7 +39,6 @@ namespace LabirinKata.Entities.Enemy
         private void Awake()
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
-            _stageManager = GameObject.Find("LevelManager").GetComponent<StageManager>();
         }
         
         private void Start()
@@ -53,7 +51,7 @@ namespace LabirinKata.Entities.Enemy
         
         private void Update()
         {
-            if (_isDataAsync || !_stageManager.IsStageStart) return;
+            if (_isDataAsync) return;
             
             EnemyMove();
             // EnemyAnimation();

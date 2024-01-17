@@ -1,44 +1,28 @@
-﻿using LabirinKata.DesignPattern.Singleton;
+﻿using System.Collections;
+using UnityEngine;
+using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.Controller;
 using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.Stage;
-using UnityEngine;
-using UnityEngine.Serialization;
+using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {
-        #region Enums
-
-        private enum LevelState
-        {
-            Current,
-            Previous,
-            None
-        }
-
-        #endregion
-        
         #region Variable
 
         [Header("UI")] 
-        [SerializeField] private GameObject openingStagePanel;
         [SerializeField] private GameObject gameWinPanel;
         [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private GameObject notificationStagePanel;
         
         [Header("Settings")] 
         private string _saveKey;
         
         [Header("Reference")] 
-        //-- Controller
         private PlayerController _playerController;
         private TimeController _timeController;
-
-        //-- Manager
-        private StageManager _stageManager;
-        private ScoreManager _scoreManager;
         
         #endregion
 
@@ -47,16 +31,11 @@ namespace LabirinKata.Managers
         protected override void Awake()
         {
             base.Awake();
-            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-
-            _stageManager = GameObject.Find("LevelManager").GetComponent<StageManager>();
-            _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+            InitializeComponent();
         }
 
         private void OnEnable()
         {
-            GameEventHandler.OnGameStart += GameStart;
             GameEventHandler.OnGameWin += GameWin;
             GameEventHandler.OnGameOver += GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
@@ -64,10 +43,20 @@ namespace LabirinKata.Managers
         
         private void OnDisable()
         {
-            GameEventHandler.OnGameStart -= GameStart;
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
+        }
+        
+        #endregion
+
+        #region Labirin Kata Callbacks
+
+        //-- Initialization
+        private void InitializeComponent()
+        {
+            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
         }
         
         #endregion
@@ -75,56 +64,46 @@ namespace LabirinKata.Managers
         #region Game State Callbacks
         
         //-- Core Functionality
-        private void GameStart()
+        private void GameWin()
         {
-            
+            _playerController.StopMovement();
+            gameWinPanel.SetActive(true);
+            Time.timeScale = 0;
         }
         
         private void GameOver()
         {
-            
-        }
-        
-        private void GameWin()
-        {
             _playerController.StopMovement();
-            _scoreManager.RateStar();
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0;
         }
         
         private void ContinueStage()
         {
+            StartCoroutine(ContinueStageRoutine());
+        }
+        
+        private IEnumerator ContinueStageRoutine()
+        {
             _playerController.StopMovement();
-            SceneTransitionManager.Instance.LoadNextScene();
+            _timeController.IsTimerStart = false;
+            _timeController.SetLatestTimer();
+            SceneTransitionManager.Instance.FadeIn();
+            
+            yield return new WaitForSeconds(0.5f);
+            StageManager.Instance.LoadNextStage();
+            _timeController.InitializeTimer();
+            SceneTransitionManager.Instance.FadeOut();
+            
+            yield return new WaitForSeconds(1f);
+            _playerController.StartMovement();
+            _timeController.IsTimerStart = true;
+            
+            yield return new WaitForSeconds(2.5f);
+            notificationStagePanel.SetActive(true);
         }
         
         #endregion
         
-        #region Load and Save Callbacks
-        
-        //-- Initialization
-        // private string SetScorePrefsKey(LevelState state)
-        // {
-        //     var currentKey = state switch
-        //     {
-        //         LevelState.Current => CurrentLevel + "_" + CurrentStage,
-        //         LevelState.Previous => PreviousLevel + "_" + PreviousStage,
-        //         LevelState.None => "None!",
-        //         _ => ""
-        //     };
-        //     
-        //     return currentKey;
-        // }
-        
-        //-- Core Functionality
-        // private void SaveCurrentTime()
-        // {
-        //     _saveKey = SetScorePrefsKey(LevelState.Current);
-        //     if (PlayerPrefs.HasKey(_saveKey))
-        //     {
-        //         PlayerPrefs.SetFloat(_saveKey, _timeController.CurrentTime);
-        //     }
-        // }
-        
-        #endregion
     }
 }

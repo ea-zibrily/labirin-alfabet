@@ -1,24 +1,28 @@
-using LabirinKata.Data;
+using System.Collections;
 using UnityEngine;
+using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
-        #region Variable
+        #region Constant Variable
 
-        // Const Variable
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
         private const string IS_MOVE = "isMove";
+
+        #endregion
+        
+        #region Variable
         
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] private Vector2 movementDirection;
 
-        private bool _canMove;
-        
+        public bool CanMove { get; private set; }
+
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private Animator _playerAnimator;
@@ -37,7 +41,8 @@ namespace LabirinKata.Entities.Player
 
         private void Start()
         {
-            Initialize();
+            InitializePlayer();
+            StartCoroutine(StartPlayerMove());
         }
 
         private void FixedUpdate()
@@ -55,16 +60,21 @@ namespace LabirinKata.Entities.Player
         #region CariHuruf Callbacks
         
         //-- Initialization
-        private void Initialize()
+        private void InitializePlayer()
         {
             gameObject.name = playerData.PlayerName;
-            _canMove = true;
+        }
+        
+        private IEnumerator StartPlayerMove()
+        {
+            yield return new WaitForSeconds(1f);
+            CanMove = true;
         }
         
         //-- Core Functionality
         private void PlayerMove()
         {
-            if (!_canMove) return;
+            if (!CanMove) return;
             
             //--- W Enhanced Touch Input
             var moveX = _playerInputHandler.Direction.x;
@@ -98,16 +108,15 @@ namespace LabirinKata.Entities.Player
             }
         }
         
-        
         //-- Helpers/Utilities
         public void StartMovement()
         {
-            _canMove = true;
+            CanMove = true;
         }
         
         public void StopMovement()
         {
-            _canMove = false;
+            CanMove = false;
             _playerRb.velocity = Vector2.zero;
             movementDirection = Vector2.zero;
         }

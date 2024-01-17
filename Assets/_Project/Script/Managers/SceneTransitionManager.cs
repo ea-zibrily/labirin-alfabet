@@ -1,3 +1,4 @@
+using System.Collections;
 using LabirinKata.DesignPattern.Singleton;
 using LabirinKata.Enum;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace LabirinKata.Managers
     
         [Header("Interface")]
         [SerializeField] private RectTransform sceneFader;
-    
+        
         #endregion
     
         #region MonoBehaviour Callbacks
@@ -23,7 +24,7 @@ namespace LabirinKata.Managers
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Scene Loader Callbacks
         
         public void LoadCurrentScene()
         {
@@ -37,14 +38,43 @@ namespace LabirinKata.Managers
             OpenNextScene();
         }
         
-        // TODO: Call when continue stage
-        public void StartFader()
+        private void StartFader()
         {
             sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 1, 0);
             LeanTween.alpha (sceneFader, 0, 1f).setOnComplete (() => {
                 sceneFader.gameObject.SetActive (false);
+            });
+        }
+
+        public void FadeIn()
+        {
+            sceneFader.gameObject.SetActive (true);
+
+            LeanTween.alpha(sceneFader, 0, 0);
+            LeanTween.alpha (sceneFader, 1, 0.5f);
+        }
+        
+        public void FadeOut()
+        {
+            sceneFader.gameObject.SetActive (true);
+        
+            LeanTween.alpha (sceneFader, 1, 0);
+            LeanTween.alpha (sceneFader, 0, 1f).setOnComplete (() => {
+                sceneFader.gameObject.SetActive (false);
+            });
+        }
+        
+        public void OpenNextStage(IEnumerator routine)
+        {
+            Time.timeScale = 1;
+            sceneFader.gameObject.SetActive (true);
+
+            LeanTween.alpha(sceneFader, 0, 0);
+            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() =>
+            {
+                StartCoroutine(routine);
             });
         }
         

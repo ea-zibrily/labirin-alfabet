@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4731990574746895559}
   - {fileID: 1740460589629807366}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2351329320527068575
 Rigidbody2D:
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61aca36d92eb45269c8c904c486d8b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickSize: {x: 200, y: 200}
+  joystickSize: {x: 300, y: 300}
   canFullScreen: 0
 --- !u!1 &3105554579227310161
 GameObject:

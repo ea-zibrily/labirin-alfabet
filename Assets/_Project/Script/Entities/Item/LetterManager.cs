@@ -1,17 +1,31 @@
 ﻿using System;
-using KevinCastejon.MoreAttributes;
-using LabirinKata.Gameplay.EventHandler;
 using UnityEngine;
+using KevinCastejon.MoreAttributes;
+using LabirinKata.Enum;
+using LabirinKata.Gameplay.EventHandler;
 
 namespace LabirinKata.Entities.Item
 {
     public class LetterManager : MonoBehaviour
     {
-        #region Variable
+        #region Struct
+
+        [Serializable]
+        private struct LetterUI
+        {
+            public StageList StageName;
+            public int AmountOfLetter;
+            public Sprite[] LetterSprites;
+        }
+
+        #endregion
         
+        #region Variable
+
         [Header("Objective")] 
-        [SerializeField] [ReadOnlyOnPlay] private int amountOfLetter;
+        [SerializeField] private LetterUI[] letterInterface;
         [SerializeField] private GameObject[] letterItemUI;
+        [SerializeField] [ReadOnly] private int _currentLetterCount;
         
         public event Action<int> OnLetterTaken;
         private int _currentTakenLetter;
@@ -33,11 +47,12 @@ namespace LabirinKata.Entities.Item
         private void Start()
         {
             InitializeLetter();
+            _currentLetterCount = letterItemUI.Length;
         }
         
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
         
         public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
         
@@ -57,7 +72,7 @@ namespace LabirinKata.Entities.Item
             letterItemUI[itemIndex].SetActive(true);
             _currentTakenLetter++;
             
-            if (_currentTakenLetter >= amountOfLetter || IsAllLetterActive())
+            if (_currentTakenLetter >= _currentLetterCount || IsAllLetterActive())
             {
                 GameEventHandler.ObjectiveClearEvent();
             }
@@ -74,7 +89,7 @@ namespace LabirinKata.Entities.Item
                 }
             }
             
-            return activeLetterNum >= amountOfLetter;
+            return activeLetterNum >= _currentLetterCount;
         }
         
         #endregion

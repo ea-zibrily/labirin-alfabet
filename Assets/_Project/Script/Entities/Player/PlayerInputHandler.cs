@@ -20,6 +20,7 @@ namespace LabirinKata.Entities.Player
         [Header("Reference")] 
         private FloatJoystick _floatJoystick;
         private Finger _movementFinger;
+        private PlayerController _playerController;
 
         #endregion
 
@@ -28,6 +29,7 @@ namespace LabirinKata.Entities.Player
         private void Awake()
         {
             _floatJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatJoystick>();
+            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
         
         private void OnEnable()
@@ -50,7 +52,7 @@ namespace LabirinKata.Entities.Player
         
         #region Enhanced Touch Callbacks
         
-        // NOTE: Dipanggil waktu layar mendapat touch input
+        //-- Core Functionality
         private void TouchOnFingerDown(Finger fingerTouch)
         {
             var touchScreen = fingerTouch.screenPosition.x <= Screen.width / 2f 
@@ -63,7 +65,6 @@ namespace LabirinKata.Entities.Player
             }
         }
         
-        // NOTE: Dipanggil waktu touch input terlepas dari layar
         private void TouchOnFingerUp(Finger fingerTouch)
         {
             if (fingerTouch != _movementFinger)
@@ -74,7 +75,6 @@ namespace LabirinKata.Entities.Player
             ResetTouchOn();
         }
         
-        // NOTE: Dipanggil waktu touch input digerakkan pada layar
         private void TouchOnFingerMove(Finger fingerTouch)
         {
             if (fingerTouch != _movementFinger)
@@ -87,11 +87,13 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region Zimbril Callbacks
+        #region Labirin Kata Callbacks
 
-        // NOTE: Pakai method ini jika pakai ui panel restriction
-        private void InitializeTouchOn(Finger fingerOn)
+        //-- Initialization
+        private void InitializeTouchOnUI(Finger fingerOn)
         {
+            if (!_playerController.CanMove) return;
+            
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _floatJoystick.gameObject.SetActive(true);
@@ -99,9 +101,10 @@ namespace LabirinKata.Entities.Player
             _floatJoystick.JoyRectTransform.anchoredPosition = fingerOn.screenPosition;
         }
 
-        // NOTE: Pakai method ini jika pakai screen restriction
         private void InitializeTouchOnScreen(Finger fingerOn)
         {
+            if (!_playerController.CanMove) return;
+            
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _floatJoystick.gameObject.SetActive(true);
@@ -109,8 +112,11 @@ namespace LabirinKata.Entities.Player
             _floatJoystick.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
         }
 
+        //-- Core Functionality
         private void MoveTouchOn(Finger fingerMove)
         {
+            if (!_playerController.CanMove) return;
+            
             Vector2 knobPosition;
             var maxMovement = joystickSize.x / 2f;
             var currentTouch = fingerMove.currentTouch;
@@ -130,12 +136,15 @@ namespace LabirinKata.Entities.Player
         
         private void ResetTouchOn()
         {
+            if (!_playerController.CanMove) return;
+            
             _movementFinger = null;
             _floatJoystick.KnobRectTransform.anchoredPosition = Vector2.zero;
             _floatJoystick.gameObject.SetActive(false);
             Direction = Vector2.zero;
         }
         
+        //-- Helper/Utilities
         private Vector2 ScreenClampStartPosition(Vector2 startPosition)
         {
             if (startPosition.x < joystickSize.x / 2)
