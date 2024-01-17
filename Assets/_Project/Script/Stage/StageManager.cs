@@ -18,11 +18,7 @@ namespace LabirinKata.Stage
         [Header("Stage")]
         [Tooltip("Isi dengan prefabs stage sesuai dengan stage level")]
         [SerializeField] private GameObject[] stageObjects;
-
-        [Header("Reference")] 
-        [SerializeField] private StagePanelController stagePanelController;
-        public StagePanelController StagePanelController => stagePanelController;
-
+        
         #endregion
         
         #region MonoBehaviour Callbacks

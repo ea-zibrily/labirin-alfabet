@@ -1,5 +1,6 @@
 ﻿using LabirinKata.Data;
 using LabirinKata.Enum;
+using LabirinKata.Managers;
 using LabirinKata.Stage;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,7 +36,7 @@ namespace LabirinKata.Entities.Enemy
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
@@ -51,12 +52,12 @@ namespace LabirinKata.Entities.Enemy
         
         private void Update()
         {
-            if (_isDataAsync) return;
+            if (_isDataAsync || !GameManager.Instance.IsGameStart) return;
             
             EnemyMove();
             // EnemyAnimation();
         }
-
+        
         #endregion
         
         #region CariHuruf Callbacks

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
@@ -17,8 +18,9 @@ namespace LabirinKata.Managers
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private GameObject notificationStagePanel;
         
-        [Header("Settings")] 
+        [Header("Settings")]
         private string _saveKey;
+        public bool IsGameStart { get; private set; }
         
         [Header("Reference")] 
         private PlayerController _playerController;
@@ -47,7 +49,13 @@ namespace LabirinKata.Managers
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
         }
-        
+
+
+        private void Start()
+        {
+            IsGameStart = true;
+        }
+
         #endregion
 
         #region Labirin Kata Callbacks
@@ -67,6 +75,9 @@ namespace LabirinKata.Managers
         private void GameWin()
         {
             _playerController.StopMovement();
+            _timeController.IsTimerStart = false;
+            IsGameStart = false;
+            
             gameWinPanel.SetActive(true);
             Time.timeScale = 0;
         }
@@ -74,6 +85,9 @@ namespace LabirinKata.Managers
         private void GameOver()
         {
             _playerController.StopMovement();
+            _timeController.IsTimerStart = false;
+            IsGameStart = false;
+            
             gameOverPanel.SetActive(true);
             Time.timeScale = 0;
         }
@@ -98,6 +112,7 @@ namespace LabirinKata.Managers
             yield return new WaitForSeconds(1f);
             _playerController.StartMovement();
             _timeController.IsTimerStart = true;
+            IsGameStart = true;
             
             yield return new WaitForSeconds(2.5f);
             notificationStagePanel.SetActive(true);
