@@ -1,6 +1,6 @@
-﻿using LabirinKata.DesignPattern.Singleton;
+﻿using UnityEngine;
 using LabirinKata.Enum;
-using UnityEngine;
+using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Stage
 {
@@ -11,13 +11,12 @@ namespace LabirinKata.Stage
         [Header("Settings")] 
         public LevelList CurrentLevelList;
         public StageList CurrentStageList;
-        
-        [SerializeField] private bool canContinueStage;
-        public bool CanContinueStage => canContinueStage;
 
         [Header("Stage")]
-        [Tooltip("Isi dengan prefabs stage sesuai dengan stage level")]
         [SerializeField] private GameObject[] stageObjects;
+
+        private int _currentStageIndex;
+        public int CurrentStageIndex => _currentStageIndex;
         
         #endregion
         
@@ -43,30 +42,35 @@ namespace LabirinKata.Stage
 
             for (var i = 0; i < stageObjects.Length; i++)
             {
-                stageObjects[i].SetActive(i is 0);
+                if (i is 0)
+                {
+                    stageObjects[i].SetActive(true);
+                    _currentStageIndex = i;
+                    CurrentStageList = StageList.Stage_1;
+                    continue;
+                }
+                
+                stageObjects[i].SetActive(false);
             }
-
-            CurrentStageList = StageList.Stage_1;
         }
         
         //-- Core Functionality
         public void LoadNextStage()
         {
-            if (!canContinueStage) return;
-
-            var currentStageIndex = 0;
+            if (!CheckCanContinueStage()) return;
+            
             for (var i = 0; i < stageObjects.Length; i++)
             {
                 if (!stageObjects[i].activeSelf) continue;
                 
                 stageObjects[i].SetActive(false);
-                currentStageIndex = i;
+                _currentStageIndex = i;
                 break;
             }
             
-            currentStageIndex += 1;
-            CurrentStageList = GetCurrentStage(currentStageIndex);
-            stageObjects[currentStageIndex].SetActive(true);
+            _currentStageIndex += 1;
+            CurrentStageList = GetCurrentStage(_currentStageIndex);
+            stageObjects[_currentStageIndex].SetActive(true);
         }
         
         //-- Helper/Utilities
@@ -81,6 +85,11 @@ namespace LabirinKata.Stage
             };
 
             return stage;
+        }
+        
+        public bool CheckCanContinueStage()
+        {
+            return _currentStageIndex >= stageObjects.Length;
         }
         
         #endregion

@@ -112,6 +112,7 @@ namespace LabirinKata.Entities.Player
         public void StartMovement()
         {
             CanMove = true;
+            _playerInputHandler.EnableTouchInput();
         }
         
         public void StopMovement()
@@ -119,6 +120,7 @@ namespace LabirinKata.Entities.Player
             CanMove = false;
             _playerRb.velocity = Vector2.zero;
             movementDirection = Vector2.zero;
+            _playerInputHandler.DisableTouchInput();
         }
         
         #endregion

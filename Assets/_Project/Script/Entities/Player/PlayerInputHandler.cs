@@ -1,6 +1,7 @@
-﻿using LabirinKata.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using LabirinKata.UI;
+
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace LabirinKata.Entities.Player
@@ -20,7 +21,6 @@ namespace LabirinKata.Entities.Player
         [Header("Reference")] 
         private FloatJoystick _floatJoystick;
         private Finger _movementFinger;
-        private PlayerController _playerController;
 
         #endregion
 
@@ -29,7 +29,6 @@ namespace LabirinKata.Entities.Player
         private void Awake()
         {
             _floatJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatJoystick>();
-            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
         
         private void OnEnable()
@@ -37,7 +36,7 @@ namespace LabirinKata.Entities.Player
             EnhancedTouchSupport.Enable();
             ETouch.Touch.onFingerDown += TouchOnFingerDown;
             ETouch.Touch.onFingerUp += TouchOnFingerUp;
-            ETouch.Touch.onFingerMove+= TouchOnFingerMove;
+            ETouch.Touch.onFingerMove += TouchOnFingerMove;
         }
         
         private void OnDisable()
@@ -92,8 +91,6 @@ namespace LabirinKata.Entities.Player
         //-- Initialization
         private void InitializeTouchOnUI(Finger fingerOn)
         {
-            if (!_playerController.CanMove) return;
-            
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _floatJoystick.gameObject.SetActive(true);
@@ -103,8 +100,6 @@ namespace LabirinKata.Entities.Player
 
         private void InitializeTouchOnScreen(Finger fingerOn)
         {
-            if (!_playerController.CanMove) return;
-            
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _floatJoystick.gameObject.SetActive(true);
@@ -115,8 +110,6 @@ namespace LabirinKata.Entities.Player
         //-- Core Functionality
         private void MoveTouchOn(Finger fingerMove)
         {
-            if (!_playerController.CanMove) return;
-            
             Vector2 knobPosition;
             var maxMovement = joystickSize.x / 2f;
             var currentTouch = fingerMove.currentTouch;
@@ -136,8 +129,6 @@ namespace LabirinKata.Entities.Player
         
         private void ResetTouchOn()
         {
-            if (!_playerController.CanMove) return;
-            
             _movementFinger = null;
             _floatJoystick.KnobRectTransform.anchoredPosition = Vector2.zero;
             _floatJoystick.gameObject.SetActive(false);
@@ -145,6 +136,16 @@ namespace LabirinKata.Entities.Player
         }
         
         //-- Helper/Utilities
+        public void EnableTouchInput()
+        { 
+            EnhancedTouchSupport.Enable();
+        } 
+        public void DisableTouchInput()
+        {
+            ResetTouchOn();
+            EnhancedTouchSupport.Disable();
+        }
+
         private Vector2 ScreenClampStartPosition(Vector2 startPosition)
         {
             if (startPosition.x < joystickSize.x / 2)

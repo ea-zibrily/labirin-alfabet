@@ -23,6 +23,7 @@ namespace LabirinKata.Entities.Enemy
         public EnemyPattern EnemyType;
         public Transform[] MovePointTransform;
         
+        [Header("Other")]
         protected Transform CurrentTarget;
         protected int CurrentTargetIndex;
         protected int EarlyPositionIndex { get; private set; }

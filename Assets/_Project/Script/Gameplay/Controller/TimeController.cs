@@ -16,6 +16,7 @@ namespace LabirinKata.Gameplay.Controller
         [SerializeField] private bool isTimerStart;
         
         private float _fullTime;
+        private float _latestTime;
         private float _currentTime;
 
         public bool IsTimerStart
@@ -23,10 +24,10 @@ namespace LabirinKata.Gameplay.Controller
             get => isTimerStart;
             set => isTimerStart = value;
         }
-        public float LatestTime { get; set; }
-        public float FullTime { get { return _fullTime; } } 
-        public float CurrentTime { get {return _currentTime;} }
-        
+
+        public float FullTime => _fullTime;
+        public float CurrentTime => _currentTime;
+
         #endregion
         
         #region MonoBehaviour Callbacks
@@ -49,7 +50,7 @@ namespace LabirinKata.Gameplay.Controller
         //-- Initialization
         public void InitializeTimer()
         {
-            _fullTime = amountOfTime + LatestTime;
+            _fullTime = amountOfTime + _latestTime;
             _currentTime = _fullTime;
             
             TimerDisplay(_currentTime);
@@ -80,7 +81,7 @@ namespace LabirinKata.Gameplay.Controller
         //-- Helper/Utitilies
         public void SetLatestTimer()
         {
-            LatestTime = _currentTime;
+            _latestTime = _currentTime;
         }
         
         private void TimerDisplay(float time)

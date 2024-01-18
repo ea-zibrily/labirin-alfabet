@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
+using LabirinKata.Stage;
 using LabirinKata.Gameplay.EventHandler;
 
 namespace LabirinKata.Entities.Item
@@ -11,23 +14,26 @@ namespace LabirinKata.Entities.Item
         #region Struct
 
         [Serializable]
-        private struct LetterUI
+        private struct LetterImages
         {
             public StageList StageName;
             public int AmountOfLetter;
             public Sprite[] LetterSprites;
         }
-
+        
         #endregion
         
         #region Variable
 
         [Header("Objective")] 
-        [SerializeField] private LetterUI[] letterInterface;
-        [SerializeField] private GameObject[] letterItemUI;
-        [SerializeField] [ReadOnly] private int _currentLetterCount;
+        [SerializeField] private LetterImages[] letterSprites;
+        [SerializeField] private GameObject[] letterImageUI;
+        [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public event Action<int> OnLetterTaken;
+        public static event Action OnInitializeLetterUI;
+        
+        private GameObject[] _letterBorderImage;
         private int _currentTakenLetter;
         
         #endregion
@@ -37,51 +43,67 @@ namespace LabirinKata.Entities.Item
         private void OnEnable()
         {
             OnLetterTaken += UpdateTakenLetter;
+            OnInitializeLetterUI += InitializeLetter;
         }
 
         private void OnDisable()
         {
             OnLetterTaken -= UpdateTakenLetter;
+            OnInitializeLetterUI -= InitializeLetter;
         }
 
         private void Start()
         {
             InitializeLetter();
-            _currentLetterCount = letterItemUI.Length;
         }
         
         #endregion
         
         #region Labirin Kata Callbacks
         
-        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-        
+        //-- Initialization
         private void InitializeLetter()
         {
-            foreach (var letter in letterItemUI)
+            var currentStage = StageManager.Instance.CurrentStageIndex;
+            _letterBorderImage ??= new GameObject[letterImageUI.Length];
+
+            for (var i = 0; i < letterImageUI.Length; i++)
             {
-                letter.SetActive(false);
+                var letterBorder = letterImageUI[i].transform.parent.gameObject;
+                var letterSprite = letterSprites[currentStage].LetterSprites[i];
+                
+                _letterBorderImage[i] = letterBorder;
+                _letterBorderImage[i].GetComponent<Image>().sprite = letterSprite;
+                
+                letterImageUI[i].GetComponent<Image>().sprite = letterSprite;
+                letterImageUI[i].SetActive(false);
             }
             
+            currentAmountOfLetter = letterSprites[currentStage].AmountOfLetter;
             _currentTakenLetter = 0;
         }
-        
+
+        //-- Core Functionality
+        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
+        public static void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
+
         private void UpdateTakenLetter(int itemId)
         {
             var itemIndex = itemId - 1;
-            letterItemUI[itemIndex].SetActive(true);
+            letterImageUI[itemIndex].SetActive(true);
             _currentTakenLetter++;
             
-            if (_currentTakenLetter >= _currentLetterCount || IsAllLetterActive())
+            if (_currentTakenLetter >= currentAmountOfLetter || IsAllLetterActive())
             {
                 GameEventHandler.ObjectiveClearEvent();
             }
         }
         
+        //-- Helper/Utilities
         private bool IsAllLetterActive()
         {
             var activeLetterNum = 0;
-            foreach (var itemUI in letterItemUI)
+            foreach (var itemUI in letterImageUI)
             {
                 if (itemUI.activeSelf)
                 {
@@ -89,7 +111,7 @@ namespace LabirinKata.Entities.Item
                 }
             }
             
-            return activeLetterNum >= _currentLetterCount;
+            return activeLetterNum >= currentAmountOfLetter;
         }
         
         #endregion

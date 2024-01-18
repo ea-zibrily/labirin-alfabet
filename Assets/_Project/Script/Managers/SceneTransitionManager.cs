@@ -1,8 +1,8 @@
 using System.Collections;
-using LabirinKata.DesignPattern.Singleton;
-using LabirinKata.Enum;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using LabirinKata.Enum;
+using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Managers
 {
@@ -51,21 +51,21 @@ namespace LabirinKata.Managers
         public void FadeIn()
         {
             sceneFader.gameObject.SetActive (true);
-
-            LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f);
-        }
-        
-        public void FadeOut()
-        {
-            sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 1, 0);
             LeanTween.alpha (sceneFader, 0, 1f).setOnComplete (() => {
                 sceneFader.gameObject.SetActive (false);
             });
         }
-        
+
+        public void FadeOut()
+        {
+            sceneFader.gameObject.SetActive (true);
+
+            LeanTween.alpha(sceneFader, 0, 0);
+            LeanTween.alpha (sceneFader, 1, 1f);
+        }
+
         public void OpenNextStage(IEnumerator routine)
         {
             Time.timeScale = 1;

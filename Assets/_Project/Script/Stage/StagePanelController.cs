@@ -34,7 +34,7 @@ namespace LabirinKata.Stage
         {
             ActivateStagePanel();
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks
@@ -47,8 +47,8 @@ namespace LabirinKata.Stage
             yield return new WaitForSeconds(activateDelayTime);
             gameObject.SetActive(true);
             
-            _currentLevel = GetCurrentLevel(_stageManager.CurrentLevelList);
-            _currentStage = GetCurrentStage(_stageManager.CurrentStageList);
+            SetCurrentLevel(_stageManager.CurrentLevelList);
+            SetCurrentStage(_stageManager.CurrentStageList);
             levelTextUI.text = _currentLevel;
             stageTextUI.text = _currentStage; 
         }
@@ -66,51 +66,39 @@ namespace LabirinKata.Stage
         //-- Helpers/Utilities
         private string GetCurrentLevel(LevelList level)
         {
-            var currentLevel = "";
-            switch (level)
+            return level switch
             {
-                case LevelList.Level_01:
-                    currentLevel = "Level 1";
-                    break;
-                case LevelList.Level_02:
-                    currentLevel = "Level 2";
-                    break;
-                case LevelList.Level_03:
-                    currentLevel = "Level 3";
-                    break;
-                case LevelList.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
-            }
-
-            return currentLevel;
+                LevelList.Level_01 => "Level 1",
+                LevelList.Level_02 => "Level 2",
+                LevelList.Level_03 => "Level 3",
+                LevelList.Level_04 => "Level 4",
+                LevelList.Level_05 => "Level 5",
+                LevelList.Level_06 => "Level 6",
+                LevelList.Level_07 => "Level 7",
+                LevelList.Level_08 => "Level 8",
+                LevelList.Level_09 => "Level 9",
+                LevelList.None => " ",
+                _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
+            };
         }
+        
+        private void SetCurrentLevel(LevelList level) => _currentLevel = GetCurrentLevel(level);
         
         private string GetCurrentStage(StageList stage)
         {
-            var currentStage = "";
-            switch (stage)
+            return stage switch
             {
-                case StageList.Stage_1:
-                    currentStage = "Stage 1";
-                    break;
-                case StageList.Stage_2:
-                    currentStage = "Stage 2";
-                    break;
-                case StageList.Stage_3:
-                    currentStage = "Stage e";
-                    break;
-                case StageList.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(stage), stage, null);
-            }
-
-            return currentStage;
+                StageList.Stage_1 => "Stage 1",
+                StageList.Stage_2 => "Stage 2",
+                StageList.Stage_3 => "Stage 3",
+                StageList.None => " ",
+                _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
+            };
         }
 
+        private void SetCurrentStage(StageList stage) => _currentStage = GetCurrentStage(stage);
+
         #endregion
-        
+
     }
 }

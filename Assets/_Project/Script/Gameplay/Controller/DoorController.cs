@@ -1,10 +1,9 @@
 ﻿using System.Collections;
+using UnityEngine;
 using Cinemachine;
+using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.Managers;
-using LabirinKata.Stage;
-using UnityEngine;
 
 namespace LabirinKata.Gameplay.Controller
 {
@@ -68,10 +67,10 @@ namespace LabirinKata.Gameplay.Controller
         //-- Initialization
         private void InitializeDoor()
         {
-            doorVirtualCamera.transform.position = transform.position;
+            doorVirtualCamera.Follow = gameObject.transform;
             _boxCollider2D.isTrigger = false;
         }
-
+        
         //-- Core Functionality
         private void OpenDoor() => StartCoroutine(OpenDoorRoutine());
         private void ActivateDoorTrigger() => StartCoroutine(ActivateDoorTriggerRoutine());
@@ -92,7 +91,7 @@ namespace LabirinKata.Gameplay.Controller
             _playerController.StartMovement();
             
             _boxCollider2D.isTrigger = true;
-            doorVirtualCamera.transform.position = Vector3.zero;
+            doorVirtualCamera.Follow = null;
         }
         
         #endregion
@@ -103,7 +102,7 @@ namespace LabirinKata.Gameplay.Controller
         {
             if (other.CompareTag("Player")) return;
             
-            if (StageManager.Instance.CanContinueStage)
+            if (!StageManager.Instance.CheckCanContinueStage())
             {
                 GameEventHandler.GameWinEvent();
             }
