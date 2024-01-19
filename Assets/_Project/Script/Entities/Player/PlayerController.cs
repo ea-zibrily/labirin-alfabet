@@ -123,6 +123,11 @@ namespace LabirinKata.Entities.Player
             _playerInputHandler.DisableTouchInput();
         }
         
+        public void SetPlayerPosition(Transform playerPos)
+        {
+            transform.position = playerPos.position;
+        }
+        
         #endregion
     }
 }

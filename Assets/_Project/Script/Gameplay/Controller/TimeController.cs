@@ -89,7 +89,7 @@ namespace LabirinKata.Gameplay.Controller
             var timeInMinutes = Mathf.FloorToInt(time / 60);
             var timeInSeconds = Mathf.FloorToInt(time % 60);
             
-            timerTextUI.text = string.Format("{00:00}:{01:00}", timeInMinutes, timeInSeconds);
+            timerTextUI.text = $"{timeInMinutes:00}:{timeInSeconds:00}";
         }
         
         #endregion

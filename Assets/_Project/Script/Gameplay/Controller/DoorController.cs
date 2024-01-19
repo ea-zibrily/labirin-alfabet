@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Cinemachine;
 using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.EventHandler;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Gameplay.Controller
 {
@@ -17,9 +20,11 @@ namespace LabirinKata.Gameplay.Controller
         #endregion
         
         #region Variable
-        
-        [Header("Door")]
-        [SerializeField] private float openDelayTime;
+
+        [Header("Door")] 
+        [SerializeField] private float doorOpenDelay;
+        [SerializeField] private float cameraMoveInDelay;
+        [SerializeField] private float cameraMoveOutDelay;
         
         [Header("Camera")]
         [SerializeField] private CinemachineVirtualCamera doorVirtualCamera;
@@ -59,7 +64,7 @@ namespace LabirinKata.Gameplay.Controller
         {
             InitializeDoor();
         }
-        
+
         #endregion
         
         #region CariHuruf Callbacks
@@ -77,16 +82,17 @@ namespace LabirinKata.Gameplay.Controller
         
         private IEnumerator OpenDoorRoutine()
         {
+            yield return new WaitForSeconds(cameraMoveInDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
             _playerController.StopMovement();
             
-            yield return new WaitForSeconds(openDelayTime);
+            yield return new WaitForSeconds(doorOpenDelay);
             _doorAnimator.SetTrigger(OPEN_DOOR_TRIGGER);
         }
         
         private IEnumerator ActivateDoorTriggerRoutine()
         {
-            yield return new WaitForSeconds(openDelayTime);
+            yield return new WaitForSeconds(cameraMoveOutDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
             _playerController.StartMovement();
             
@@ -102,13 +108,13 @@ namespace LabirinKata.Gameplay.Controller
         {
             if (other.CompareTag("Player")) return;
             
-            if (!StageManager.Instance.CheckCanContinueStage())
+            if (StageManager.Instance.CheckCanContinueStage())
             {
-                GameEventHandler.GameWinEvent();
+                GameEventHandler.ContinueStageEvent();
             }
             else
             {
-                GameEventHandler.ContinueStageEvent();
+                GameEventHandler.GameWinEvent();
             }
         }
         

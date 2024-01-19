@@ -4,7 +4,7 @@ namespace LabirinKata.UI
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]
-    public class FloatJoystick : MonoBehaviour
+    public class FloatingJoystickHandler : MonoBehaviour
     {
         #region Variable
 

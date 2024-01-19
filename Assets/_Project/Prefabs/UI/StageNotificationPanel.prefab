@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e7f24e5dcf4cfa8d49be0c36517142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateDelayTime: 2.5
+  activateDelayTime: 3
   levelTextUI: {fileID: 8605974919853317711}
   stageTextUI: {fileID: 4325176734514549856}
 --- !u!95 &7202860055914324122

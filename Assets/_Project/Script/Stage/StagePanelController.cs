@@ -24,13 +24,13 @@ namespace LabirinKata.Stage
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             _stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         }
-
-        private void Start()
+        
+        private void OnEnable()
         {
             ActivateStagePanel();
         }
@@ -44,13 +44,13 @@ namespace LabirinKata.Stage
         
         private IEnumerator ActivateStagePanelRoutine()
         {
-            yield return new WaitForSeconds(activateDelayTime);
-            gameObject.SetActive(true);
-            
             SetCurrentLevel(_stageManager.CurrentLevelList);
             SetCurrentStage(_stageManager.CurrentStageList);
             levelTextUI.text = _currentLevel;
-            stageTextUI.text = _currentStage; 
+            stageTextUI.text = _currentStage;
+            
+            yield return new WaitForSeconds(activateDelayTime);
+            gameObject.SetActive(true);
         }
         
         private void DeactivateStagePanel()

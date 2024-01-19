@@ -1,5 +1,5 @@
-﻿using LabirinKata.Gameplay.Controller;
-using UnityEngine;
+﻿using UnityEngine;
+using LabirinKata.Gameplay.Controller;
 
 namespace LabirinKata.Managers
 {
@@ -7,8 +7,9 @@ namespace LabirinKata.Managers
     {
         #region Variable
 
-        [Header("Scoring")] 
-        [SerializeField] private GameObject[] starRatingUI;
+        [Header("Score")] 
+        private int _scoreGetCount;
+        public int ScoreGetCount => _scoreGetCount;
 
         [Header("Reference")] 
         private TimeController _timeController;
@@ -16,79 +17,45 @@ namespace LabirinKata.Managers
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
         }
-
+        
         private void Start()
         {
-            InitializeStarRating();
+            InitializeScore();
         }
 
         #endregion
 
         #region CariHuruf Callbacks
-
+        
         //-- Initialization
-        private void InitializeStarRating()
+        private void InitializeScore()
         {
-            if (starRatingUI == null)
-            {
-                Debug.LogError("star ui null brok!");
-                return;
-            }
-            
-            foreach (var starRate in starRatingUI)
-            {
-                starRate.SetActive(false);
-            }
+            _scoreGetCount = 0;
         }
 
         //-- Core Functionality
-        public void RateStar()
+        public void RateLevelScore()
         {
             var currentTime = _timeController.CurrentTime;
             var quarterTime = _timeController.FullTime * 0.25f;
             var halfTime = _timeController.FullTime * 0.5f;
-            var starCount = 0;
             
-            if (currentTime < quarterTime)
+            var starCount = currentTime switch
             {
-                starCount = 1;
-                Debug.LogWarning($"current: {currentTime} < quarter {quarterTime}");
-                Debug.LogWarning($"get {starCount} star! walawe");
-            }
-            else if (currentTime < halfTime)
-            {
-                starCount = 2;
-                Debug.LogWarning($"current: {currentTime} < halftime {halfTime}");
-                Debug.LogWarning($"get {starCount} star! jos");
-            }
-            else if (currentTime >= halfTime)
-            {
-                starCount = 3;
-                Debug.LogWarning($"current: {currentTime} >= halftime {halfTime}");
-                Debug.LogWarning($"get {starCount} star! mantap bozqku");
-            }
-            
-            // ActivateStarUI(starCount);
-        }
-        
-        //-- Helpers/Utilites
-        private void ActivateStarUI(int starCount)
-        {
-            if (starCount >= starRatingUI.Length)
-            {
-                Debug.LogError("start count lebih banyak dari star rating ui!");
-                return;
-            }
+                var c when c < quarterTime => 1,
+                var c when c < halfTime => 2,
+                _ => 3
+            };
 
-            for (var i = 0; i < starCount; i++)
-            {
-                starRatingUI[i].SetActive(true);
-            }
+            Debug.LogWarning($"current: {currentTime} - get {starCount} star! " +
+                             $"{(starCount switch { 1 => "walawe", 2 => "jos", _ => "mantap bozqku" })}");
+
+            _scoreGetCount = starCount;
         }
         
         #endregion

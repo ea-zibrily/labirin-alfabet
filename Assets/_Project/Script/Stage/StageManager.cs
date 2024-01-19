@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 
@@ -74,22 +75,20 @@ namespace LabirinKata.Stage
         }
         
         //-- Helper/Utilities
+        public bool CheckCanContinueStage()
+        {
+            return _currentStageIndex < stageObjects.Length - 1;
+        }
+        
         private StageList GetCurrentStage(int index)
         {
-            var stage = index switch
+            return index switch
             {
                 0 => StageList.Stage_1,
                 1 => StageList.Stage_2,
                 2 => StageList.Stage_3,
-                _ => StageList.None
+                _ => throw new ArgumentOutOfRangeException(nameof(index), index, null)
             };
-
-            return stage;
-        }
-        
-        public bool CheckCanContinueStage()
-        {
-            return _currentStageIndex >= stageObjects.Length;
         }
         
         #endregion

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using LabirinKata.UI;
+using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-using LabirinKata.UI;
-
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace LabirinKata.Entities.Player
@@ -19,7 +18,7 @@ namespace LabirinKata.Entities.Player
         public Vector2 Direction { get; private set; }
         
         [Header("Reference")] 
-        private FloatJoystick _floatJoystick;
+        private FloatingJoystickHandler _floatingJoystickHandler;
         private Finger _movementFinger;
 
         #endregion
@@ -28,7 +27,7 @@ namespace LabirinKata.Entities.Player
         
         private void Awake()
         {
-            _floatJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatJoystick>();
+            _floatingJoystickHandler = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatingJoystickHandler>();
         }
         
         private void OnEnable()
@@ -93,18 +92,18 @@ namespace LabirinKata.Entities.Player
         {
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
-            _floatJoystick.gameObject.SetActive(true);
-            _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
-            _floatJoystick.JoyRectTransform.anchoredPosition = fingerOn.screenPosition;
+            _floatingJoystickHandler.gameObject.SetActive(true);
+            _floatingJoystickHandler.JoyRectTransform.sizeDelta = joystickSize;
+            _floatingJoystickHandler.JoyRectTransform.anchoredPosition = fingerOn.screenPosition;
         }
 
         private void InitializeTouchOnScreen(Finger fingerOn)
         {
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
-            _floatJoystick.gameObject.SetActive(true);
-            _floatJoystick.JoyRectTransform.sizeDelta = joystickSize;
-            _floatJoystick.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
+            _floatingJoystickHandler.gameObject.SetActive(true);
+            _floatingJoystickHandler.JoyRectTransform.sizeDelta = joystickSize;
+            _floatingJoystickHandler.JoyRectTransform.anchoredPosition = ScreenClampStartPosition(fingerOn.screenPosition);
         }
 
         //-- Core Functionality
@@ -114,36 +113,36 @@ namespace LabirinKata.Entities.Player
             var maxMovement = joystickSize.x / 2f;
             var currentTouch = fingerMove.currentTouch;
             
-            if (Vector2.Distance(currentTouch.screenPosition, _floatJoystick.JoyRectTransform.anchoredPosition) > maxMovement)
+            if (Vector2.Distance(currentTouch.screenPosition, _floatingJoystickHandler.JoyRectTransform.anchoredPosition) > maxMovement)
             {
-                knobPosition = (currentTouch.screenPosition - _floatJoystick.JoyRectTransform.anchoredPosition).normalized * maxMovement;
+                knobPosition = (currentTouch.screenPosition - _floatingJoystickHandler.JoyRectTransform.anchoredPosition).normalized * maxMovement;
             }
             else
             {
-                knobPosition = currentTouch.screenPosition - _floatJoystick.JoyRectTransform.anchoredPosition;
+                knobPosition = currentTouch.screenPosition - _floatingJoystickHandler.JoyRectTransform.anchoredPosition;
             }
             
-            _floatJoystick.KnobRectTransform.anchoredPosition = knobPosition;
+            _floatingJoystickHandler.KnobRectTransform.anchoredPosition = knobPosition;
             Direction = knobPosition / maxMovement;
         }
         
         private void ResetTouchOn()
         {
             _movementFinger = null;
-            _floatJoystick.KnobRectTransform.anchoredPosition = Vector2.zero;
-            _floatJoystick.gameObject.SetActive(false);
+            _floatingJoystickHandler.KnobRectTransform.anchoredPosition = Vector2.zero;
+            _floatingJoystickHandler.gameObject.SetActive(false);
             Direction = Vector2.zero;
         }
         
         //-- Helper/Utilities
         public void EnableTouchInput()
-        { 
-            EnhancedTouchSupport.Enable();
+        {
+            this.enabled = true;
         } 
         public void DisableTouchInput()
         {
             ResetTouchOn();
-            EnhancedTouchSupport.Disable();
+            this.enabled = false;
         }
 
         private Vector2 ScreenClampStartPosition(Vector2 startPosition)

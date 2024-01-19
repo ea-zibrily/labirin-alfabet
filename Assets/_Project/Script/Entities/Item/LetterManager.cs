@@ -31,7 +31,7 @@ namespace LabirinKata.Entities.Item
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public event Action<int> OnLetterTaken;
-        public static event Action OnInitializeLetterUI;
+        public event Action OnInitializeLetterUI;
         
         private GameObject[] _letterBorderImage;
         private int _currentTakenLetter;
@@ -85,7 +85,7 @@ namespace LabirinKata.Entities.Item
 
         //-- Core Functionality
         public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-        public static void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
+        public void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
 
         private void UpdateTakenLetter(int itemId)
         {

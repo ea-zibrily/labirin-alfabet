@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cab04344e6144fe96289faaeb8ad197, type: 3}
-  m_Name: Enemy_03
+  m_Name: Enemy_01
   m_EditorClassIdentifier: 
-  EnemyName: Shift
-  <EnemyMove>k__BackingField: 2
+  EnemyName: Chika
+  EnemyPattern: 2
+  <EnemyMove>k__BackingField: 4

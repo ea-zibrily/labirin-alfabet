@@ -26,6 +26,7 @@ namespace LabirinKata.Managers
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
+        private LetterManager _letterManager;
         
         #endregion
 
@@ -50,8 +51,7 @@ namespace LabirinKata.Managers
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
         }
-
-
+        
         private void Start()
         {
             IsGameStart = true;
@@ -66,6 +66,7 @@ namespace LabirinKata.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
+            _letterManager = GameObject.Find("LetterManager").GetComponent<LetterManager>();
         }
         
         #endregion
@@ -105,15 +106,17 @@ namespace LabirinKata.Managers
             _timeController.SetLatestTimer();
             
             SceneTransitionManager.Instance.FadeOut();
-            
-            yield return new WaitForSeconds(0.5f);
+
+            yield return new WaitForSeconds(2.5f);
             StageManager.Instance.LoadNextStage();
-            LetterManager.InitializeLetterEvent();
-            _timeController.InitializeTimer();
-            
+            _letterManager.InitializeLetterEvent();
+            _timeController.InitializeTimer(); 
+            _playerController.transform.position = Vector2.zero;
+
+            yield return new WaitForSeconds(1f);
             SceneTransitionManager.Instance.FadeIn();
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
             _playerController.StartMovement();
             _timeController.IsTimerStart = true;
             IsGameStart = true;
