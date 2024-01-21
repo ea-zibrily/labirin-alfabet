@@ -12,6 +12,16 @@ namespace LabirinKata.Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        #region Constant Variable
+
+        //-- New stage time delay
+        private const float FADE_OUT_DELAY = 2.5f;
+        private const float LOAD_STAGE_DELAY = 1f;
+        private const float FADE_IN_DELAY = 1.5f;
+        private const float LOAD_NOTIFICATION_DELAY = 2.5f;
+
+        #endregion
+        
         #region Variable
 
         [Header("UI")] 
@@ -21,12 +31,14 @@ namespace LabirinKata.Managers
         
         [Header("Settings")]
         private string _saveKey;
-        public bool IsGameStart { get; private set; }
+        public bool IsGameStart { get; set; }
         
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
         private LetterManager _letterManager;
+        
+        public PlayerController PlayerController => _playerController;
         
         #endregion
 
@@ -106,22 +118,22 @@ namespace LabirinKata.Managers
             _timeController.SetLatestTimer();
             
             SceneTransitionManager.Instance.FadeOut();
-
-            yield return new WaitForSeconds(2.5f);
+            
+            yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.LoadNextStage();
             _letterManager.InitializeLetterEvent();
             _timeController.InitializeTimer(); 
             _playerController.transform.position = Vector2.zero;
-
-            yield return new WaitForSeconds(1f);
+            
+            yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(FADE_IN_DELAY);
             _playerController.StartMovement();
             _timeController.IsTimerStart = true;
             IsGameStart = true;
             
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(LOAD_NOTIFICATION_DELAY);
             notificationStagePanelUI.SetActive(true);
         }
         

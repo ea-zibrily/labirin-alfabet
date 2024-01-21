@@ -13,7 +13,7 @@ namespace LabirinKata.Managers
 
         [Header("Reference")] 
         private TimeController _timeController;
-
+        
         #endregion
 
         #region MonoBehaviour Callbacks

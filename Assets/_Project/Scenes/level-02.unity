@@ -8935,6 +8935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorOpenDelay: 1.5
+  reachDoorDelay: 0.5
   cameraMoveInDelay: 0.3
   cameraMoveOutDelay: 1
   doorVirtualCamera: {fileID: 82951835}
@@ -12061,6 +12062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorOpenDelay: 1.5
+  reachDoorDelay: 0.5
   cameraMoveInDelay: 0.3
   cameraMoveOutDelay: 1
   doorVirtualCamera: {fileID: 82951835}

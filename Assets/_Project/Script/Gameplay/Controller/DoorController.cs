@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Cinemachine;
 using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.EventHandler;
-using UnityEngine.Serialization;
 
 namespace LabirinKata.Gameplay.Controller
 {
     public class DoorController : MonoBehaviour
     {
         #region Constant Variable
-
+        
         private const string OPEN_DOOR_TRIGGER = "Open";
         private const string MOVE_CAMERA_TRIGGRER = "IsMove";
 
@@ -23,10 +21,11 @@ namespace LabirinKata.Gameplay.Controller
 
         [Header("Door")] 
         [SerializeField] private float doorOpenDelay;
-        [SerializeField] private float cameraMoveInDelay;
-        [SerializeField] private float cameraMoveOutDelay;
+        [SerializeField] private float reachDoorDelay;
         
         [Header("Camera")]
+        [SerializeField] private float cameraMoveInDelay;
+        [SerializeField] private float cameraMoveOutDelay;
         [SerializeField] private CinemachineVirtualCamera doorVirtualCamera;
         [SerializeField] private Animator doorCameraAnimator;
         
@@ -99,15 +98,10 @@ namespace LabirinKata.Gameplay.Controller
             _boxCollider2D.isTrigger = true;
             doorVirtualCamera.Follow = null;
         }
-        
-        #endregion
-        
-        #region Collider Callbacks
-        
-        private void OnTriggerEnter2D(Collider2D other)
+
+        private IEnumerator ReachDoorRoutine()
         {
-            if (other.CompareTag("Player")) return;
-            
+            yield return new WaitForSeconds(reachDoorDelay);
             if (StageManager.Instance.CheckCanContinueStage())
             {
                 GameEventHandler.ContinueStageEvent();
@@ -116,6 +110,16 @@ namespace LabirinKata.Gameplay.Controller
             {
                 GameEventHandler.GameWinEvent();
             }
+        }
+        
+        #endregion
+        
+        #region Collider Callbacks
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player")) return;
+            StartCoroutine(ReachDoorRoutine());
         }
         
         #endregion
