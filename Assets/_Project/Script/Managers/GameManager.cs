@@ -16,9 +16,8 @@ namespace LabirinKata.Managers
         
         //-- Load stage time delay
         private const float FADE_OUT_DELAY = 2.5f;
-        private const float LOAD_STAGE_DELAY = 1f;
+        private const float LOAD_STAGE_DELAY = 1.2f;
         private const float FADE_IN_DELAY = 1.5f;
-        private const float LOAD_NOTIFICATION_DELAY = 2.5f;
         
         #endregion
         
@@ -96,7 +95,6 @@ namespace LabirinKata.Managers
             
             _scoreManager.RateLevelScore();
             gameWinPanelUI.SetActive(true);
-            Time.timeScale = 0;
         }
         
         private void GameOver()
@@ -135,8 +133,6 @@ namespace LabirinKata.Managers
             _playerController.StartMovement();
             _timeController.IsTimerStart = true;
             IsGameStart = true;
-            
-            yield return new WaitForSeconds(LOAD_NOTIFICATION_DELAY);
             notificationStagePanelUI.SetActive(true);
         }
         

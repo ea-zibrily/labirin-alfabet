@@ -1,6 +1,7 @@
 ﻿using LabirinKata.UI;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace LabirinKata.Entities.Player
@@ -54,7 +55,7 @@ namespace LabirinKata.Entities.Player
         private void TouchOnFingerDown(Finger fingerTouch)
         {
             var touchScreen = fingerTouch.screenPosition.x <= Screen.width / 2f 
-                              && fingerTouch.screenPosition.y <= Screen.height / 1.2f;
+                              && fingerTouch.screenPosition.y <= Screen.height / 1.4f;
             var isFullScreen = canFullScreen || touchScreen;
             
             if (_movementFinger == null && isFullScreen)
@@ -137,12 +138,12 @@ namespace LabirinKata.Entities.Player
         //-- Helper/Utilities
         public void EnableTouchInput()
         {
-            this.enabled = true;
+            enabled = true;
         } 
         public void DisableTouchInput()
         {
             ResetTouchOn();
-            this.enabled = false;
+            enabled = false;
         }
 
         private Vector2 ScreenClampStartPosition(Vector2 startPosition)

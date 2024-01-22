@@ -57,21 +57,25 @@ namespace LabirinKata.UI
                 scoreUI.SetActive(false);
             }
         }
-
+        
         // NOTE: Pakai method ini misal UI scorenya paket
         private void ActivateScoreUI(int score)
         {
-            if (score >= scoringObjectUI.Length)
+            if (score > scoringObjectUI.Length)
             {
                 Debug.LogError("score lebih banyak dari score object ui!");
                 return;
             }
             
             var scoreIndex = score - 1;
-            scoringObjectUI[scoreIndex].SetActive(true);
             
-            LeanTween.scale(scoringObjectUI[scoreIndex], new Vector3(1f, 1f, 1f),2f).setDelay(0.2f)
-                .setEase(LeanTweenType.easeOutElastic);
+            scoringObjectUI[scoreIndex].GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            scoringObjectUI[scoreIndex].SetActive(true);
+            LeanTween.scale(scoringObjectUI[scoreIndex], new Vector3(1f, 1f, 1f),2f).setDelay(0.2f).
+                setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
+                {
+                    Time.timeScale = 0;
+                });
         }
         
         // NOTE: Pakai method ini misal UI scorenya satuan (bintang satuan, tidak satu paket)

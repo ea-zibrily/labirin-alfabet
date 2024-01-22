@@ -30,7 +30,7 @@ namespace LabirinKata.UI
 
         #endregion
 
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
 
         private void InitializeJoystick()
         {
