@@ -37,7 +37,7 @@ namespace LabirinKata.Managers
         {
             _scoreGetCount = 0;
         }
-
+        
         //-- Core Functionality
         public void RateLevelScore()
         {
@@ -47,14 +47,14 @@ namespace LabirinKata.Managers
             
             var starCount = currentTime switch
             {
-                var c when c < quarterTime => 1,
-                var c when c < halfTime => 2,
+                var value when value < quarterTime => 1,
+                var value when value < halfTime => 2,
                 _ => 3
             };
-
+            
             Debug.LogWarning($"current: {currentTime} - get {starCount} star! " +
                              $"{(starCount switch { 1 => "walawe", 2 => "jos", _ => "mantap bozqku" })}");
-
+            
             _scoreGetCount = starCount;
         }
         

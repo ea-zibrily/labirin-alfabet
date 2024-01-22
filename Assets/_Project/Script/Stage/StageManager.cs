@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 
@@ -11,7 +12,7 @@ namespace LabirinKata.Stage
         
         [Header("Settings")] 
         public LevelList CurrentLevelList;
-        public StageList CurrentStageList;
+        [ReadOnly] public StageList CurrentStageList;
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;

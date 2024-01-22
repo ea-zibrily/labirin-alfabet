@@ -13,13 +13,13 @@ namespace LabirinKata.Managers
     public class GameManager : MonoSingleton<GameManager>
     {
         #region Constant Variable
-
-        //-- New stage time delay
+        
+        //-- Load stage time delay
         private const float FADE_OUT_DELAY = 2.5f;
         private const float LOAD_STAGE_DELAY = 1f;
         private const float FADE_IN_DELAY = 1.5f;
         private const float LOAD_NOTIFICATION_DELAY = 2.5f;
-
+        
         #endregion
         
         #region Variable
@@ -31,14 +31,14 @@ namespace LabirinKata.Managers
         
         [Header("Settings")]
         private string _saveKey;
-        public bool IsGameStart { get; set; }
+        public bool IsGameStart { get; private set; }
         
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
-        private LetterManager _letterManager;
         
-        public PlayerController PlayerController => _playerController;
+        private LetterManager _letterManager;
+        private ScoreManager _scoreManager;
         
         #endregion
 
@@ -72,13 +72,15 @@ namespace LabirinKata.Managers
         #endregion
 
         #region Labirin Kata Callbacks
-
+        
         //-- Initialization
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-            _letterManager = GameObject.Find("LetterManager").GetComponent<LetterManager>();
+            
+            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponent<LetterManager>();
+            _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         }
         
         #endregion
@@ -92,6 +94,7 @@ namespace LabirinKata.Managers
             _timeController.IsTimerStart = false;
             IsGameStart = false;
             
+            _scoreManager.RateLevelScore();
             gameWinPanelUI.SetActive(true);
             Time.timeScale = 0;
         }

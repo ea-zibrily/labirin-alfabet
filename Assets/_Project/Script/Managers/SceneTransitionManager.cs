@@ -49,8 +49,8 @@ namespace LabirinKata.Managers
         //-- Core Functionality
         public void LoadSelectedScene(SceneState sceneState)
         {
-            FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
-            Time.timeScale = 1;
+            // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
+            // Time.timeScale = 1;
             
             switch (sceneState)
             {
@@ -111,7 +111,12 @@ namespace LabirinKata.Managers
             });
         }
         
-        private void LoadCurrentGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        private void LoadCurrentGame()
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         private void LoadNextGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         #endregion
