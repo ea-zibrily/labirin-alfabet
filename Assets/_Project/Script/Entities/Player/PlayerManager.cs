@@ -2,6 +2,7 @@
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Entities.Item;
 using LabirinKata.Gameplay.EventHandler;
+using LabirinKata.Item;
 using UnityEngine;
 
 namespace LabirinKata.Entities.Player
@@ -69,11 +70,11 @@ namespace LabirinKata.Entities.Player
             }
             else if (other.CompareTag("Item"))
             {
-                if (!other.TryGetComponent<LetterController>(out var letter)) return;
-                letter.TakeLetter();
+                var interactObject = other.GetComponent<IInteractable>();
+                interactObject.Taken();
             }
         }
-
+        
         #endregion
     }
 }

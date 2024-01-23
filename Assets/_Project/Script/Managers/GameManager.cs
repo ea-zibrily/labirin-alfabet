@@ -36,7 +36,7 @@ namespace LabirinKata.Managers
         private PlayerController _playerController;
         private TimeController _timeController;
         
-        private LetterManager _letterManager;
+        private LetterUIManager _letterUIManager;
         private ScoreManager _scoreManager;
         
         #endregion
@@ -78,7 +78,7 @@ namespace LabirinKata.Managers
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             
-            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponent<LetterManager>();
+            _letterUIManager = GameObject.Find("LetterUIManager").GetComponent<LetterUIManager>();
             _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         }
         
@@ -122,7 +122,7 @@ namespace LabirinKata.Managers
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.LoadNextStage();
-            _letterManager.InitializeLetterEvent();
+            _letterUIManager.InitializeLetterEvent();
             _timeController.InitializeTimer(); 
             _playerController.transform.position = Vector2.zero;
             

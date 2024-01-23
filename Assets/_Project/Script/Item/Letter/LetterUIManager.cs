@@ -9,7 +9,7 @@ using LabirinKata.Gameplay.EventHandler;
 
 namespace LabirinKata.Entities.Item
 {
-    public class LetterManager : MonoBehaviour
+    public class LetterUIManager : MonoBehaviour
     {
         #region Struct
 
@@ -25,16 +25,17 @@ namespace LabirinKata.Entities.Item
         
         #region Variable
 
-        [Header("Objective")] 
+        [Header("Letter UI")] 
         [SerializeField] private LetterImages[] letterSprites;
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
-        public event Action<int> OnLetterTaken;
-        public event Action OnInitializeLetterUI;
-        
         private GameObject[] _letterBorderImage;
         private int _currentTakenLetter;
+        
+        //-- Event
+        public event Action<int> OnLetterTaken;
+        public event Action OnInitializeLetterUI;
         
         #endregion
 
@@ -43,26 +44,34 @@ namespace LabirinKata.Entities.Item
         private void OnEnable()
         {
             OnLetterTaken += UpdateTakenLetter;
-            OnInitializeLetterUI += InitializeLetter;
+            OnInitializeLetterUI += InitializeLetterUI;
         }
 
         private void OnDisable()
         {
             OnLetterTaken -= UpdateTakenLetter;
-            OnInitializeLetterUI -= InitializeLetter;
+            OnInitializeLetterUI -= InitializeLetterUI;
         }
 
         private void Start()
         {
-            InitializeLetter();
+            InitializeLetterUI();
         }
         
+        #endregion
+
+        #region Event Callbacks
+
+        //-- Core Functionality
+        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
+        public void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
+
         #endregion
         
         #region Labirin Kata Callbacks
         
         //-- Initialization
-        private void InitializeLetter()
+        private void InitializeLetterUI()
         {
             var currentStage = StageManager.Instance.CurrentStageIndex;
             _letterBorderImage ??= new GameObject[letterImageUI.Length];
@@ -82,11 +91,8 @@ namespace LabirinKata.Entities.Item
             currentAmountOfLetter = letterSprites[currentStage].AmountOfLetter;
             _currentTakenLetter = 0;
         }
-
+        
         //-- Core Functionality
-        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-        public void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
-
         private void UpdateTakenLetter(int itemId)
         {
             var itemIndex = itemId - 1;

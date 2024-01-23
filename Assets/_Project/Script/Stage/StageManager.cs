@@ -3,6 +3,7 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
+using LabirinKata.Entities.Item;
 
 namespace LabirinKata.Stage
 {
@@ -20,10 +21,20 @@ namespace LabirinKata.Stage
         private int _currentStageIndex;
         public int CurrentStageIndex => _currentStageIndex;
         
+        [Header("Reference")]
+        private LetterManager _letterManager;
+        private LetterUIManager _letterUIManager;
+        
         #endregion
         
         #region MonoBehaviour Callbacks
 
+        protected override void Awake()
+        {
+            _letterManager = GameObject.Find("LetterManager").GetComponent<LetterManager>();
+            _letterUIManager = GameObject.Find("LetterUIManager").GetComponent<LetterUIManager>();
+        }
+        
         private void Start()
         {
             InitializeLeveStage();
@@ -54,6 +65,13 @@ namespace LabirinKata.Stage
                 
                 stageObjects[i].SetActive(false);
             }
+        }
+        
+        public void InitializeNewStage()
+        {
+            LoadNextStage();
+            _letterManager.InitializeLetterObject();
+            _letterUIManager.InitializeLetterEvent();
         }
         
         //-- Core Functionality

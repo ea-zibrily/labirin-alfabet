@@ -54,11 +54,7 @@ namespace LabirinKata.Entities.Player
         //-- Core Functionality
         private void TouchOnFingerDown(Finger fingerTouch)
         {
-            var touchScreen = fingerTouch.screenPosition.x <= Screen.width / 2f 
-                              && fingerTouch.screenPosition.y <= Screen.height / 1.4f;
-            var isFullScreen = canFullScreen || touchScreen;
-            
-            if (_movementFinger == null && isFullScreen)
+            if (_movementFinger == null && IsTouchWithinRestrictedArea(fingerTouch))
             {
                 InitializeTouchOnScreen(fingerTouch);
             }
@@ -82,6 +78,18 @@ namespace LabirinKata.Entities.Player
             } 
             
             MoveTouchOn(fingerTouch);
+        }
+        
+        //-- Helper/Utilities
+        private bool IsTouchWithinRestrictedArea(Finger fingerTouch)
+        {
+            if (canFullScreen)
+            {
+                return fingerTouch.screenPosition.y <= Screen.height / 1.3f;
+            }
+            
+            return fingerTouch.screenPosition.x <= Screen.width / 2f 
+                   && fingerTouch.screenPosition.y <= Screen.height / 1.3f;
         }
         
         #endregion
