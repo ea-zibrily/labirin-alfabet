@@ -4,6 +4,7 @@ using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 using LabirinKata.Entities.Item;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Stage
 {
@@ -17,13 +18,12 @@ namespace LabirinKata.Stage
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
-
-        private int _currentStageIndex;
-        public int CurrentStageIndex => _currentStageIndex;
+        [SerializeField] [ReadOnly] private int currentStageIndex;
+        public int CurrentStageIndex => currentStageIndex;
         
         [Header("Reference")]
         private LetterManager _letterManager;
-        private LetterUIManager _letterUIManager;
+        public LetterManager LetterManager => _letterManager;
         
         #endregion
         
@@ -31,8 +31,7 @@ namespace LabirinKata.Stage
 
         protected override void Awake()
         {
-            _letterManager = GameObject.Find("LetterManager").GetComponent<LetterManager>();
-            _letterUIManager = GameObject.Find("LetterUIManager").GetComponent<LetterUIManager>();
+            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponentInChildren<LetterManager>();
         }
         
         private void Start()
@@ -58,7 +57,7 @@ namespace LabirinKata.Stage
                 if (i is 0)
                 {
                     stageObjects[i].SetActive(true);
-                    _currentStageIndex = i;
+                    currentStageIndex = i;
                     CurrentStageList = StageList.Stage_1;
                     continue;
                 }
@@ -66,16 +65,15 @@ namespace LabirinKata.Stage
                 stageObjects[i].SetActive(false);
             }
         }
-        
+
+        //-- Core Functionality
         public void InitializeNewStage()
         {
             LoadNextStage();
-            _letterManager.InitializeLetterObject();
-            _letterUIManager.InitializeLetterEvent();
+            _letterManager.SpawnLetter();
         }
         
-        //-- Core Functionality
-        public void LoadNextStage()
+        private void LoadNextStage()
         {
             if (!CheckCanContinueStage()) return;
             
@@ -84,19 +82,19 @@ namespace LabirinKata.Stage
                 if (!stageObjects[i].activeSelf) continue;
                 
                 stageObjects[i].SetActive(false);
-                _currentStageIndex = i;
+                currentStageIndex = i;
                 break;
             }
             
-            _currentStageIndex += 1;
-            CurrentStageList = GetCurrentStage(_currentStageIndex);
-            stageObjects[_currentStageIndex].SetActive(true);
+            currentStageIndex += 1;
+            CurrentStageList = GetCurrentStage(currentStageIndex);
+            stageObjects[currentStageIndex].SetActive(true);
         }
         
         //-- Helper/Utilities
         public bool CheckCanContinueStage()
         {
-            return _currentStageIndex < stageObjects.Length - 1;
+            return currentStageIndex < stageObjects.Length - 1;
         }
         
         private StageList GetCurrentStage(int index)

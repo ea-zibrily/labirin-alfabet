@@ -37,7 +37,7 @@ namespace LabirinKata.Managers
                 sceneFader.gameObject.SetActive (false);
             });
         }
-
+        
         public void FadeOut()
         {
             sceneFader.gameObject.SetActive (true);

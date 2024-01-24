@@ -36,9 +36,6 @@ namespace LabirinKata.Managers
         private PlayerController _playerController;
         private TimeController _timeController;
         
-        private LetterUIManager _letterUIManager;
-        private ScoreManager _scoreManager;
-        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -68,6 +65,11 @@ namespace LabirinKata.Managers
             IsGameStart = true;
         }
 
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
         #endregion
 
         #region Labirin Kata Callbacks
@@ -77,9 +79,6 @@ namespace LabirinKata.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-            
-            _letterUIManager = GameObject.Find("LetterUIManager").GetComponent<LetterUIManager>();
-            _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         }
         
         #endregion
@@ -92,8 +91,8 @@ namespace LabirinKata.Managers
             _playerController.StopMovement();
             _timeController.IsTimerStart = false;
             IsGameStart = false;
-            
-            _scoreManager.RateLevelScore();
+
+            StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }
         
@@ -121,8 +120,7 @@ namespace LabirinKata.Managers
             SceneTransitionManager.Instance.FadeOut();
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
-            StageManager.Instance.LoadNextStage();
-            _letterUIManager.InitializeLetterEvent();
+            StageManager.Instance.InitializeNewStage();
             _timeController.InitializeTimer(); 
             _playerController.transform.position = Vector2.zero;
             

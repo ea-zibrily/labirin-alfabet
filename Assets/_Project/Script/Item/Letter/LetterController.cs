@@ -1,6 +1,5 @@
-﻿using LabirinKata.Item;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
+using LabirinKata.Item;
 
 namespace LabirinKata.Entities.Item
 {
@@ -24,13 +23,15 @@ namespace LabirinKata.Entities.Item
         private LetterUIManager _letterUIManager;
         
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         
         private void Awake()
         {
-            _letterManager = GameObject.Find("LetterManager").GetComponent<LetterManager>();
-            _letterUIManager = GameObject.Find("LetterUIManager").GetComponent<LetterUIManager>();
+            var letterManagementObject = GameObject.FindGameObjectWithTag("LetterManager");
+            
+            _letterManager = letterManagementObject.GetComponentInChildren<LetterManager>();
+            _letterUIManager = letterManagementObject.GetComponentInChildren<LetterUIManager>();
         }
         
         private void Start()
@@ -41,11 +42,11 @@ namespace LabirinKata.Entities.Item
         #endregion
         
         #region Labirin Kata Callbacks
-
+        
         public void Taken()
         {
-            _letterUIManager.LetterTakenEvent(letterId);
-            _letterManager.AddUnlockLetter(gameObject);
+            _letterUIManager.TakeLetterEvent(LetterId);
+            _letterManager.TakeLetterEvent(gameObject);
             
             gameObject.SetActive(false);
         }

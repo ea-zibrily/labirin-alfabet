@@ -3,30 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Enum;
-using LabirinKata.Stage;
 using LabirinKata.Gameplay.EventHandler;
 
 namespace LabirinKata.Entities.Item
 {
     public class LetterUIManager : MonoBehaviour
     {
-        #region Struct
-
-        [Serializable]
-        private struct LetterImages
-        {
-            public StageList StageName;
-            public int AmountOfLetter;
-            public Sprite[] LetterSprites;
-        }
-        
-        #endregion
-        
         #region Variable
 
         [Header("Letter UI")] 
-        [SerializeField] private LetterImages[] letterSprites;
+        [SerializeField] private Sprite[] letterSprites;
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
@@ -35,64 +21,48 @@ namespace LabirinKata.Entities.Item
         
         //-- Event
         public event Action<int> OnLetterTaken;
-        public event Action OnInitializeLetterUI;
         
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void OnEnable()
         {
             OnLetterTaken += UpdateTakenLetter;
-            OnInitializeLetterUI += InitializeLetterUI;
         }
-
+        
         private void OnDisable()
         {
             OnLetterTaken -= UpdateTakenLetter;
-            OnInitializeLetterUI -= InitializeLetterUI;
-        }
-
-        private void Start()
-        {
-            InitializeLetterUI();
         }
         
-        #endregion
-
-        #region Event Callbacks
-
-        //-- Core Functionality
-        public void LetterTakenEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-        public void InitializeLetterEvent() => OnInitializeLetterUI?.Invoke();
-
         #endregion
         
         #region Labirin Kata Callbacks
         
         //-- Initialization
-        private void InitializeLetterUI()
+        public void InitializeLetterUI(IReadOnlyList<int> index)
         {
-            var currentStage = StageManager.Instance.CurrentStageIndex;
             _letterBorderImage ??= new GameObject[letterImageUI.Length];
-
+            
             for (var i = 0; i < letterImageUI.Length; i++)
             {
                 var letterBorder = letterImageUI[i].transform.parent.gameObject;
-                var letterSprite = letterSprites[currentStage].LetterSprites[i];
+                var spriteIndex = index[i];
                 
                 _letterBorderImage[i] = letterBorder;
-                _letterBorderImage[i].GetComponent<Image>().sprite = letterSprite;
+                _letterBorderImage[i].GetComponent<Image>().sprite = letterSprites[spriteIndex];
                 
-                letterImageUI[i].GetComponent<Image>().sprite = letterSprite;
+                letterImageUI[i].GetComponent<Image>().sprite = letterSprites[spriteIndex];
                 letterImageUI[i].SetActive(false);
             }
             
-            currentAmountOfLetter = letterSprites[currentStage].AmountOfLetter;
             _currentTakenLetter = 0;
         }
         
         //-- Core Functionality
+        public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
+
         private void UpdateTakenLetter(int itemId)
         {
             var itemIndex = itemId - 1;
