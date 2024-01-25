@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using KevinCastejon.MoreAttributes;
 using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
@@ -20,7 +21,14 @@ namespace LabirinKata.Entities.Player
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] private Vector2 movementDirection;
+        [SerializeField] [ReadOnly] private float currentMoveSpeed;
 
+        public float DefaultMoveSpeed => playerData.MoveSpeed;
+        public float CurrentMoveSpeed
+        {
+            get => currentMoveSpeed;
+            set => currentMoveSpeed = value;
+        }
         public bool CanMove { get; private set; }
 
         [Header("Reference")] 
@@ -63,6 +71,7 @@ namespace LabirinKata.Entities.Player
         private void InitializePlayer()
         {
             gameObject.name = playerData.PlayerName;
+            CurrentMoveSpeed = playerData.MoveSpeed;
         }
         
         private IEnumerator StartPlayerMove()
@@ -91,7 +100,7 @@ namespace LabirinKata.Entities.Player
             
             movementDirection = new Vector2(moveX, moveY);
             movementDirection.Normalize();
-            _playerRb.velocity = movementDirection * playerData.MoveSpeed;
+            _playerRb.velocity = movementDirection * currentMoveSpeed;
         }
         
         private void PlayerAnimation()

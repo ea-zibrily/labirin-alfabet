@@ -1,6 +1,6 @@
 ﻿namespace LabirinKata.Item
 {
-    public interface IInteractable
+    public interface ITakeable
     {
         public void Taken();
     }

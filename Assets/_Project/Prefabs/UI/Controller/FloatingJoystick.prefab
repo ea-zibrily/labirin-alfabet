@@ -120,12 +120,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4150391308671766494}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5179831078190323820}
   - {fileID: 2904797164560084462}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -200,53 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3790f7991448cfa94707c3fa0cf3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restrictionRectTransform: {fileID: 5179831078190323820}
   <KnobRectTransform>k__BackingField: {fileID: 2904797164560084462}
---- !u!1 &8300080613469166465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5179831078190323820}
-  - component: {fileID: 8354738404444883750}
-  m_Layer: 5
-  m_Name: Restriction
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &5179831078190323820
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300080613469166465}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 727192468152371524}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -120.000015, y: -70.00004}
-  m_SizeDelta: {x: 960, y: 814}
-  m_Pivot: {x: 0, y: 0}
---- !u!222 &8354738404444883750
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300080613469166465}
-  m_CullTransparentMesh: 1
 --- !u!1 &8501694588455883091
 GameObject:
   m_ObjectHideFlags: 0

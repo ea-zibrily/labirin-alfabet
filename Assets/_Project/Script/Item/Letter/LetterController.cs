@@ -3,7 +3,7 @@ using LabirinKata.Item;
 
 namespace LabirinKata.Entities.Item
 {
-    public class LetterController : MonoBehaviour, IInteractable
+    public class LetterController : MonoBehaviour, ITakeable
     {
         #region Variable
 

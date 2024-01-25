@@ -111,6 +111,8 @@ namespace LabirinKata.Entities.Item
         public void SpawnLetter()
         {
             // TODO: Ubah parameter generate letter sesuai kondisi level (selesai atau tidak)
+            // TODO: Selesai = unlocked, Tidak = locked
+            
             _letterGenerator.InitializeGenerator(_lockedLetterObject);
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);

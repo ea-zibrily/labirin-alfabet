@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   PlayerName: Senku
-  <MoveSpeed>k__BackingField: 5
+  <MoveSpeed>k__BackingField: 4

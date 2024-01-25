@@ -7,12 +7,9 @@ namespace LabirinKata.UI
     public class FloatingJoystickHandler : MonoBehaviour
     {
         #region Variable
-
-        [SerializeField] private RectTransform restrictionRectTransform;
-        [field: SerializeField] public RectTransform KnobRectTransform { get; set; }
         
+        [field: SerializeField] public RectTransform KnobRectTransform { get; set; }
         public RectTransform JoyRectTransform { get; private set; }
-        public Vector2 ScreenRestriction { get; private set; }
         
         #endregion
 
@@ -41,9 +38,6 @@ namespace LabirinKata.UI
             KnobRectTransform.anchorMax = centerPoint;
             KnobRectTransform.pivot = centerPoint;
             KnobRectTransform.anchoredPosition = Vector2.zero;
-
-            var rect = restrictionRectTransform.rect;
-            ScreenRestriction = new Vector2(rect.width, rect.height);
             
             gameObject.SetActive(false);
         }

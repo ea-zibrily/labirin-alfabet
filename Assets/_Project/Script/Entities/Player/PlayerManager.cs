@@ -1,9 +1,9 @@
 ﻿using System;
+using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Entities.Item;
 using LabirinKata.Gameplay.EventHandler;
 using LabirinKata.Item;
-using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Entities.Player
 {
@@ -13,11 +13,19 @@ namespace LabirinKata.Entities.Player
         #region Variable
         
         [Header("Health")] 
-        [SerializeField] [ReadOnlyOnPlay] private int currentHealthCount;
-        [SerializeField] private GameObject[] healthUI;
+        [SerializeField] private int healthCount;
+        [SerializeField] [ReadOnly] private int currentHealthCount;
+        [SerializeField] private GameObject[] healthUIObjects;
 
         private bool _isPlayerDead;
 
+        public GameObject[] HealthUIObjects => healthUIObjects;
+        public int CurrentHealthCount
+        {
+            get => currentHealthCount;
+            set => currentHealthCount = value;
+        }
+        
         [Header("Reference")] 
         private PlayerController _playerController;
         
@@ -32,26 +40,36 @@ namespace LabirinKata.Entities.Player
 
         private void Start()
         {
-            var maxHealthCount = healthUI.Length;
-            currentHealthCount = maxHealthCount - 1;
+           InitializeHealth();
+        }
+        
+        #endregion
+        
+        #region Labirin Kata Callbacks
+        
+        private void InitializeHealth()
+        {
+            if (healthCount != healthUIObjects.Length)
+            {
+                Debug.LogWarning("health count ga sama dgn isi health ui lur");
+                return;
+            }
             
+            currentHealthCount = healthCount;
             _isPlayerDead = false;
         }
-
-        #endregion
-
-        #region CariHuruf Callbacks
         
+        //-- Core Functionality
         private void DecreaseHealth()
         {
-            healthUI[currentHealthCount].gameObject.SetActive(false);
+            var healthIndex = currentHealthCount - 1;
+            healthUIObjects[healthIndex].gameObject.SetActive(false);
             currentHealthCount--;
             
             if (currentHealthCount < 0)
             {
                 currentHealthCount = 0;
                 _isPlayerDead = true;
-                Debug.LogWarning("hp habis boszz");
                 GameEventHandler.GameOverEvent();
             }
         }
@@ -70,7 +88,8 @@ namespace LabirinKata.Entities.Player
             }
             else if (other.CompareTag("Item"))
             {
-                var interactObject = other.GetComponent<IInteractable>();
+                var interactObject = other.GetComponent<ITakeable>();
+                Debug.Log($"take {other.name}");
                 interactObject.Taken();
             }
         }

@@ -87,8 +87,6 @@ namespace LabirinKata.Entities.Item
                 GameObject letterObject = Mono.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().LetterId = i;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
-                
-                Debug.LogWarning($"generate -{i}: {letterObject.name}");
             }
         }
         

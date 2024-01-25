@@ -4,7 +4,6 @@ using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 using LabirinKata.Entities.Item;
-using UnityEngine.Serialization;
 
 namespace LabirinKata.Stage
 {
@@ -65,7 +64,7 @@ namespace LabirinKata.Stage
                 stageObjects[i].SetActive(false);
             }
         }
-
+        
         //-- Core Functionality
         public void InitializeNewStage()
         {
