@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Stage;
-using UnityEngine.Serialization;
+
 using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Item
@@ -27,17 +27,23 @@ namespace LabirinKata.Entities.Item
         //-- Temp Letter Object Data
         private List<GameObject> _lockedLetterObject;
         private List<GameObject> _unlockedLetterObject;
-        private List<int> _spawnedLetterIndex;
 
         //-- Event
         public event Action<GameObject> OnTakeLetter;
 
         [Header("Reference")] 
         private LetterUIManager _letterUIManager;
+        private LetterGenerator _letterGenerator;
         
         #endregion
         
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            var letterManagerObject = GameObject.FindGameObjectWithTag("LetterManager");
+            _letterUIManager = letterManagerObject.GetComponentInChildren<LetterUIManager>();
+        }
 
         private void OnEnable()
         {
@@ -51,8 +57,7 @@ namespace LabirinKata.Entities.Item
         
         private void Start()
         {
-            _spawnedLetterIndex = new List<int>();
-            
+            InitializeLetterData();
             InitializeLetterObject();
             SpawnLetter();
         }
@@ -62,11 +67,19 @@ namespace LabirinKata.Entities.Item
         #region Labirin Kata Callbacks
         
         //-- Initialization
+        private void InitializeLetterData()
+        {
+            _letterGenerator = new LetterGenerator(letterSpawns);
+            
+            _lockedLetterObject = new List<GameObject>();
+            _unlockedLetterObject = new List<GameObject>();
+        }
+        
         private void InitializeLetterObject()
         {
-            for (var i = 0; i < letterPrefabs.Length; i++)
+            foreach (var letter in letterPrefabs)
             {
-                var prefabName = letterPrefabs[i].GetComponent<LetterController>().LetterName;
+                var prefabName = letter.GetComponent<LetterController>().LetterName;
                 var latestLetter = GetLatestLetterCount();
                 
                 if (latestLetter > 0)
@@ -78,87 +91,47 @@ namespace LabirinKata.Entities.Item
                         
                         if (prefabName == letterUnlockName)
                         {
-                            _unlockedLetterObject.Add(letterPrefabs[i]);
+                            _unlockedLetterObject.Add(letter);
+                            Debug.LogWarning($"add unlock {letter}");
                             continue;
                         }
-                        _lockedLetterObject.Add(letterPrefabs[i]);
+                        
+                        _lockedLetterObject.Add(letter);
+                        Debug.LogWarning($"add lock {letter}");
                     }
                 }
                 else
                 {
-                    _lockedLetterObject.Add(letterPrefabs[i]);
+                    _lockedLetterObject.Add(letter);
                 }
             }
-        }
-        
-        //-- Core Functionality
-        public void TakeLetterEvent(GameObject letterObject) => OnTakeLetter?.Invoke(letterObject);
-        
-        private void TakeLetter(GameObject value)
-        {
-            _unlockedLetterObject.Add(value);
-            
-            if (_lockedLetterObject.Contains(value))
-            {
-                Debug.LogWarning("remove value masze");
-                _lockedLetterObject.Remove(value);
-            }
-        }
-        
-        #endregion
-
-        #region Letter Spawner Callbacks
-        
-        //-- Initialization
-        private void InitializeSpawner()
-        {
-            currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
-            _spawnedLetterIndex.Clear();
         }
         
         //-- Core Functionality
         public void SpawnLetter()
         {
             // TODO: Ubah parameter generate letter sesuai kondisi level (selesai atau tidak)
-            
-            InitializeSpawner();
-            GenerateLetter(true);
-            _letterUIManager.InitializeLetterUI(_spawnedLetterIndex);
-            Debug.Log("spawn bro gasken");
+            _letterGenerator.InitializeGenerator(_lockedLetterObject);
+            _letterGenerator.GenerateLetter();
+            _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
+
+            currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         
-        private void GenerateLetter(bool isLetterLock)
+        public void TakeLetterEvent(GameObject letterObject) => OnTakeLetter?.Invoke(letterObject);
+        
+        private void TakeLetter(GameObject value)
         {
-            var latestLetterIndices = new HashSet<int>();
-            var latestPointIndices = new HashSet<int>();
+            Debug.LogWarning($"add unlock {value}");
+            _unlockedLetterObject.Add(value);
             
-            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
-            var tempLetterObjects = isLetterLock ? _lockedLetterObject : _unlockedLetterObject;
-            
-            for (var i = 0; i < currentAmountOfLetter; i++)
+            if (_lockedLetterObject.Contains(value))
             {
-                int randomLetterIndex;
-                int randomPointIndex;
-                
-                do
-                {
-                    randomLetterIndex = Random.Range(0, tempLetterObjects.Count - 1);
-                    randomPointIndex = Random.Range(0, letterSpawns[currentStageIndex].SpawnPointTransforms.Length - 1);
-                } while (latestLetterIndices.Contains(randomLetterIndex) || latestPointIndices.Contains(randomPointIndex));
-                
-                latestLetterIndices.Add(randomLetterIndex);
-                latestPointIndices.Add(randomPointIndex);
-                
-                _spawnedLetterIndex.Add(randomLetterIndex);
-                
-                GameObject letterObject = Instantiate(tempLetterObjects[randomLetterIndex], letterSpawns[currentStageIndex].SpawnParentTransform, false);
-                letterObject.GetComponent<LetterController>().LetterId = i;
-                letterObject.transform.position = letterSpawns[currentStageIndex].SpawnPointTransforms[randomPointIndex].transform.position;
-                
-                Debug.LogWarning($"instantiate -{i}: {letterObject.name}");
+                Debug.LogWarning($"remove lock {value}");
+                _lockedLetterObject.Remove(value);
             }
         }
-
+        
         #endregion
         
         #region Save Letter Callbacks

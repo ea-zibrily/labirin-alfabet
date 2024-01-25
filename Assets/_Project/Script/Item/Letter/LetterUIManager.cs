@@ -25,7 +25,7 @@ namespace LabirinKata.Entities.Item
         #endregion
 
         #region MonoBehaviour Callbacks
-        
+
         private void OnEnable()
         {
             OnLetterTaken += UpdateTakenLetter;
@@ -35,7 +35,7 @@ namespace LabirinKata.Entities.Item
         {
             OnLetterTaken -= UpdateTakenLetter;
         }
-        
+
         #endregion
         
         #region Labirin Kata Callbacks
@@ -62,7 +62,7 @@ namespace LabirinKata.Entities.Item
         
         //-- Core Functionality
         public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-
+        
         private void UpdateTakenLetter(int itemId)
         {
             var itemIndex = itemId - 1;

@@ -1144,15 +1144,33 @@ MonoBehaviour:
   letterSpawns:
   - StageName: 0
     AmountOfLetter: 3
-    SpawnParentTransform: {fileID: 0}
-    SpawnPointTransforms: []
+    SpawnParentTransform: {fileID: 930710346}
+    SpawnPointTransforms:
+    - {fileID: 164896659}
+    - {fileID: 2023652401}
+    - {fileID: 656592850}
+    - {fileID: 1362548779}
+    - {fileID: 679472623}
+    - {fileID: 12087617}
+    - {fileID: 427632211}
+    - {fileID: 2064408075}
+    - {fileID: 1110242585}
+    - {fileID: 798878067}
   - StageName: 1
     AmountOfLetter: 3
-    SpawnParentTransform: {fileID: 0}
-    SpawnPointTransforms: []
-  currentAmountOfItem: 0
-  lockedLetterObject: []
-  unlockedLetterObject: []
+    SpawnParentTransform: {fileID: 182553984}
+    SpawnPointTransforms:
+    - {fileID: 874646273}
+    - {fileID: 1829176698}
+    - {fileID: 473291060}
+    - {fileID: 1321134644}
+    - {fileID: 1392594855}
+    - {fileID: 2040601681}
+    - {fileID: 1354777397}
+    - {fileID: 836965730}
+  currentAmountOfLetter: 0
+  _lockedLetterObject: []
+  _unlockedLetterObject: []
 --- !u!1 &396492078 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2094789542742635626, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
