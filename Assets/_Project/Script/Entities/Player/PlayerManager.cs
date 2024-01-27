@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Gameplay.EventHandler;
@@ -18,24 +19,34 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private GameObject[] healthUIObjects;
 
         private bool _isPlayerDead;
-
+        
         public GameObject[] HealthUIObjects => healthUIObjects;
         public int CurrentHealthCount
         {
             get => currentHealthCount;
             set => currentHealthCount = value;
         }
-        
+
+        [Header("Invulnerability Frame")] 
+        [SerializeField] private int flashNumber;
+        [SerializeField] private float flashDuration;
+        [SerializeField] private Color defaultColor;
+        [SerializeField] private Color flashColor;
+
         [Header("Reference")] 
+        private GameObject _playerObject;
         private PlayerController _playerController;
-        
+        private PlayerKnockBack _playerKnockBack;
+
         #endregion
 
         #region MonoBehaviour Callbacks
 
         private void Awake()
         {
-            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _playerObject = GameObject.FindGameObjectWithTag("Player");
+            _playerController = _playerObject.GetComponent<PlayerController>();
+            _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
         }
 
         private void Start()
@@ -47,6 +58,7 @@ namespace LabirinKata.Entities.Player
         
         #region Labirin Kata Callbacks
         
+        //-- Initialization
         private void InitializeHealth()
         {
             if (healthCount != healthUIObjects.Length)
@@ -66,12 +78,40 @@ namespace LabirinKata.Entities.Player
             healthUIObjects[healthIndex].gameObject.SetActive(false);
             currentHealthCount--;
             
-            if (currentHealthCount < 0)
+            if (currentHealthCount <= 0)
             {
                 currentHealthCount = 0;
                 _isPlayerDead = true;
                 GameEventHandler.GameOverEvent();
             }
+        }
+
+        private void KnockedBack(GameObject triggeredObject)
+        {
+            var playerDirection = _playerController.PlayerInputHandler.Direction;
+            var enemyDirection = _playerObject.transform.position - triggeredObject.transform.position;
+            enemyDirection.Normalize();
+            
+            _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
+        }
+        
+        private IEnumerator IframeRoutine()
+        {
+            var tempFlashNum = 0;
+            var playerSpriteRenderer = _playerObject.GetComponentInChildren<SpriteRenderer>();
+            Physics2D.IgnoreLayerCollision(6, 7, true);
+            
+            while (tempFlashNum < flashNumber)
+            {
+                playerSpriteRenderer.color  = flashColor;
+                yield return new WaitForSeconds(flashDuration);
+                
+                playerSpriteRenderer.color = defaultColor;
+                yield return new WaitForSeconds(flashDuration);
+                tempFlashNum++;
+            }
+            
+            Physics2D.IgnoreLayerCollision(6, 7, false);
         }
         
         #endregion
@@ -84,12 +124,14 @@ namespace LabirinKata.Entities.Player
             
             if (other.CompareTag("Enemy"))
             {
+                _playerController.StopMovement();
                 DecreaseHealth();
+                KnockedBack(other.gameObject);
+                StartCoroutine(IframeRoutine());
             }
             else if (other.CompareTag("Item"))
             {
                 var interactObject = other.GetComponent<ITakeable>();
-                Debug.Log($"take {other.name}");
                 interactObject.Taken();
             }
         }

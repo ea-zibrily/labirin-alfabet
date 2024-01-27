@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
@@ -35,6 +36,7 @@ namespace LabirinKata.Entities.Player
         private Rigidbody2D _playerRb;
         private Animator _playerAnimator;
         private PlayerInputHandler _playerInputHandler;
+        public PlayerInputHandler PlayerInputHandler => _playerInputHandler;
         
         #endregion
 
@@ -76,8 +78,9 @@ namespace LabirinKata.Entities.Player
         
         private IEnumerator StartPlayerMove()
         {
+            StopMovement();
             yield return new WaitForSeconds(1f);
-            CanMove = true;
+            StartMovement();
         }
         
         //-- Core Functionality

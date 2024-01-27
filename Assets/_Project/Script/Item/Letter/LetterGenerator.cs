@@ -2,7 +2,7 @@
 using UnityEngine;
 using LabirinKata.Stage;
 
-using Mono = UnityEngine.Object;
+using MonoUnity = UnityEngine.Object;
 
 namespace LabirinKata.Entities.Item
 {
@@ -84,13 +84,12 @@ namespace LabirinKata.Entities.Item
                 
                 SpawnedLetterIndex.Add(randomLetterIndex);
                 
-                GameObject letterObject = Mono.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
+                GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().LetterId = i;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
             }
         }
         
-
         #endregion
     }
 }
