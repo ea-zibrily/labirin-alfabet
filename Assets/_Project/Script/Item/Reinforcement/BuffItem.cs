@@ -13,6 +13,13 @@ namespace LabirinKata.Item.Reinforcement
         [Header("Buff")] 
         public BuffType BuffType;
         [SerializeField] private Transform[] spawnPointTransforms;
+        [SerializeField] private bool isBuffActive;
+
+        public bool IsBuffActive
+        {
+            get => isBuffActive;
+            protected set => isBuffActive = value;
+        }
         
         [Header("Reference")]
         protected PlayerController PlayerController;
@@ -51,6 +58,18 @@ namespace LabirinKata.Item.Reinforcement
         }
         
         //-- Core Functionality
+        protected virtual void ActivateBuff()
+        {
+            IsBuffActive = true;
+        }
+
+        protected virtual void DeactivateBuff()
+        {
+            IsBuffActive = false;
+        }
+
+        public virtual void BuffComplete() { }
+        
         private void RandomizeBuffPosition()
         {
             var randomSpawnIndex = Random.Range(0, spawnPointTransforms.Length - 1);

@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using LabirinKata.Stage;
-using LabirinKata.Entities.Item;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.Controller;
 using LabirinKata.Gameplay.EventHandler;

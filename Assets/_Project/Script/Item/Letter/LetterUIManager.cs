@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Gameplay.EventHandler;
 
-namespace LabirinKata.Entities.Item
+namespace LabirinKata.Item.Letter
 {
     public class LetterUIManager : MonoBehaviour
     {
@@ -21,6 +21,7 @@ namespace LabirinKata.Entities.Item
         
         //-- Event
         public event Action<int> OnLetterTaken;
+        public event Action<int> OnLetterLost;
         
         #endregion
 
@@ -28,12 +29,14 @@ namespace LabirinKata.Entities.Item
 
         private void OnEnable()
         {
-            OnLetterTaken += UpdateTakenLetter;
+            OnLetterTaken += TakeLetter;
+            OnLetterLost += LostLetter;
         }
         
         private void OnDisable()
         {
-            OnLetterTaken -= UpdateTakenLetter;
+            OnLetterTaken -= TakeLetter;
+            OnLetterLost -= LostLetter;
         }
 
         #endregion
@@ -62,8 +65,9 @@ namespace LabirinKata.Entities.Item
         
         //-- Core Functionality
         public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
+        public void LostLetterEvent(int itemId) => OnLetterLost?.Invoke(itemId);
         
-        private void UpdateTakenLetter(int itemId)
+        private void TakeLetter(int itemId)
         {
             var itemIndex = itemId - 1;
             letterImageUI[itemIndex].SetActive(true);
@@ -73,6 +77,13 @@ namespace LabirinKata.Entities.Item
             {
                 GameEventHandler.ObjectiveClearEvent();
             }
+        }
+        
+        private void LostLetter(int itemId)
+        {
+            var itemIndex = itemId - 1;
+            letterImageUI[itemIndex].SetActive(false);
+            _currentTakenLetter--;
         }
         
         //-- Helper/Utilities

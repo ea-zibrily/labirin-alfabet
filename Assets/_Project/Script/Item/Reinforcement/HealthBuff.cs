@@ -6,7 +6,7 @@ namespace LabirinKata.Item.Reinforcement
     public class HealthBuff : BuffItem, ITakeable
     {
         #region Variable
-
+        
         [Header("Health Buff")]
         [SerializeField] private int maxHealth;
         
@@ -19,20 +19,22 @@ namespace LabirinKata.Item.Reinforcement
         {
             if (PlayerManager.CurrentHealthCount > maxHealth || CheckActiveHealthUI()) return;
             
-            IncreaseHealth();
+            ActivateBuff();
             DeactivateBuff();
         }
-
-        private void DeactivateBuff()
-        {
-            gameObject.SetActive(false);
-        }
         
-        private void IncreaseHealth()
+        protected override void ActivateBuff()
         {
+            base.ActivateBuff();
             PlayerManager.CurrentHealthCount++;
             var healthIndex = PlayerManager.CurrentHealthCount - 1;
             PlayerManager.HealthUIObjects[healthIndex].SetActive(true);
+        }
+        
+        protected override void DeactivateBuff()
+        {
+            base.DeactivateBuff();
+            gameObject.SetActive(false);
         }
         
         //-- Helper/Utilites

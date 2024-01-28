@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using LabirinKata.Stage;
-
+using UnityEngine;
 using MonoUnity = UnityEngine.Object;
 
-namespace LabirinKata.Entities.Item
+namespace LabirinKata.Item.Letter
 {
     public class LetterGenerator
     {

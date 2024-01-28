@@ -21,8 +21,8 @@ namespace LabirinKata.Entities.Player
         
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private Vector2 movementDirection;
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
+        [SerializeField] private Vector2 movementDirection;
 
         public float DefaultMoveSpeed => playerData.MoveSpeed;
         public float CurrentMoveSpeed
@@ -31,13 +31,13 @@ namespace LabirinKata.Entities.Player
             set => currentMoveSpeed = value;
         }
         public bool CanMove { get; private set; }
-
+        
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private Animator _playerAnimator;
-        private PlayerInputHandler _playerInputHandler;
-        public PlayerInputHandler PlayerInputHandler => _playerInputHandler;
         
+        public PlayerInputHandler PlayerInputHandler { get; private set; }
+
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -45,7 +45,7 @@ namespace LabirinKata.Entities.Player
         private void Awake()
         {
             _playerRb = GetComponent<Rigidbody2D>();
-            _playerInputHandler = GetComponentInChildren<PlayerInputHandler>();
+            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
             _playerAnimator = GetComponentInChildren<Animator>();
         }
 
@@ -67,7 +67,7 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
         
         //-- Initialization
         private void InitializePlayer()
@@ -89,8 +89,8 @@ namespace LabirinKata.Entities.Player
             if (!CanMove) return;
             
             //--- W Enhanced Touch Input
-            var moveX = _playerInputHandler.Direction.x;
-            var moveY = _playerInputHandler.Direction.y;
+            var moveX = PlayerInputHandler.Direction.x;
+            var moveY = PlayerInputHandler.Direction.y;
             
             if (Mathf.Abs(moveX) > Mathf.Abs(moveY))
             {
@@ -124,7 +124,7 @@ namespace LabirinKata.Entities.Player
         public void StartMovement()
         {
             CanMove = true;
-            _playerInputHandler.EnableTouchInput();
+            PlayerInputHandler.EnableTouchInput();
         }
         
         public void StopMovement()
@@ -132,7 +132,7 @@ namespace LabirinKata.Entities.Player
             CanMove = false;
             _playerRb.velocity = Vector2.zero;
             movementDirection = Vector2.zero;
-            _playerInputHandler.DisableTouchInput();
+            PlayerInputHandler.DisableTouchInput();
         }
         
         public void SetPlayerPosition(Transform playerPos)

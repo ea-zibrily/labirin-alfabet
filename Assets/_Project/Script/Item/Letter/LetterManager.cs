@@ -4,9 +4,7 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Stage;
 
-using Random = UnityEngine.Random;
-
-namespace LabirinKata.Entities.Item
+namespace LabirinKata.Item.Letter
 {
     public class LetterManager : MonoBehaviour
     {
@@ -23,7 +21,9 @@ namespace LabirinKata.Entities.Item
         [SerializeField] private GameObject[] letterPrefabs;
         [SerializeField] private LetterSpawns[] letterSpawns;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
-        
+
+        public LetterSpawns[] LetterSpawns => letterSpawns;
+
         //-- Temp Letter Object Data
         private List<GameObject> _lockedLetterObject;
         private List<GameObject> _unlockedLetterObject;
@@ -116,7 +116,7 @@ namespace LabirinKata.Entities.Item
             _letterGenerator.InitializeGenerator(_lockedLetterObject);
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
-
+            
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         

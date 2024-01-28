@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Gameplay.EventHandler;
 using LabirinKata.Item;
-using UnityEngine.Serialization;
+using LabirinKata.Stage;
+using LabirinKata.Item.Letter;
+using LabirinKata.Item.Reinforcement;
+using LabirinKata.Gameplay.EventHandler;
 
 namespace LabirinKata.Entities.Player
 {
@@ -33,6 +35,10 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private Color defaultColor;
         [SerializeField] private Color flashColor;
 
+        [Header("Objective")] 
+        [Tooltip("Sesuaikan jumlah variable ini dengan jumlah stage")]
+        [SerializeField] private LetterObject[] letterObjects;
+        
         [Header("Reference")] 
         private GameObject _playerObject;
         private PlayerController _playerController;
@@ -41,7 +47,7 @@ namespace LabirinKata.Entities.Player
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             _playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -56,7 +62,7 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Health Callbacks
         
         //-- Initialization
         private void InitializeHealth()
@@ -114,6 +120,47 @@ namespace LabirinKata.Entities.Player
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
         
+        private void CanceledBuff()
+        {
+            var buffObjects = GameObject.FindGameObjectsWithTag("Item");
+            foreach (var buff in buffObjects)
+            {
+                var buffItem = buff.GetComponent<BuffItem>();
+                if (buffItem == null) continue;
+                
+                if (buffItem.gameObject.activeSelf && buffItem.IsBuffActive)
+                {
+                    buffItem.BuffComplete();
+                    break;
+                }
+            }
+        }
+        
+        #endregion
+
+        #region Objective Callbacks
+        
+        //-- Core Functionality
+        private void CollectLetter(GameObject letter)
+        {
+            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
+            letterObjects[currentStageIndex].LetterObjects.Add(letter);
+        }
+        
+        private void LostLetter()
+        {
+            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
+            var letterCollects = letterObjects[currentStageIndex].LetterObjects;
+            
+            if (letterCollects.Count < 1) return;
+            
+            foreach (var letter in letterCollects)
+            {
+                letter.transform.position = _playerObject.transform.position;
+                letter.GetComponent<LetterController>().Lost();
+            }
+        }
+        
         #endregion
         
         #region Collider Callbacks
@@ -128,11 +175,17 @@ namespace LabirinKata.Entities.Player
                 DecreaseHealth();
                 KnockedBack(other.gameObject);
                 StartCoroutine(IframeRoutine());
+                CanceledBuff();
+                LostLetter();
             }
             else if (other.CompareTag("Item"))
             {
-                var interactObject = other.GetComponent<ITakeable>();
-                interactObject.Taken();
+                var takeableObject = other.GetComponent<ITakeable>();
+                takeableObject.Taken();
+                
+                if (!(takeableObject as LetterController)) return;
+                CollectLetter(other.gameObject);
+                Debug.LogWarning(other.gameObject.name);
             }
         }
         

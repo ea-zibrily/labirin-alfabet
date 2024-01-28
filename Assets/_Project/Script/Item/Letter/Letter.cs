@@ -1,10 +1,19 @@
 ﻿using System;
-using UnityEngine;
+using System.Collections.Generic;
+using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
+using UnityEngine;
 
-namespace LabirinKata.Entities.Item
+namespace LabirinKata.Item.Letter
 {
     //-- Letter Struct
+
+    [Serializable]
+    public struct LetterObject
+    {
+        public StageList StageName;
+        [ReadOnly] public List<GameObject> LetterObjects;
+    }
     
     [Serializable]
     public struct LetterSpawns
