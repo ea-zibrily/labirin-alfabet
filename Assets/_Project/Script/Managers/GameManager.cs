@@ -56,11 +56,12 @@ namespace LabirinKata.Managers
         {
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
-            GameEventHandler.OnContinueStage += ContinueStage;
+            GameEventHandler.OnContinueStage -= ContinueStage;
         }
         
         private void Start()
         {
+            Debug.Log("star gim manaher");
             IsGameStart = true;
         }
 

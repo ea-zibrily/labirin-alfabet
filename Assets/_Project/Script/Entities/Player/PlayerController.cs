@@ -23,7 +23,7 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private PlayerData playerData;
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
         [SerializeField] private Vector2 movementDirection;
-
+        
         public float DefaultMoveSpeed => playerData.MoveSpeed;
         public float CurrentMoveSpeed
         {
@@ -103,7 +103,7 @@ namespace LabirinKata.Entities.Player
             
             movementDirection = new Vector2(moveX, moveY);
             movementDirection.Normalize();
-            _playerRb.velocity = movementDirection * currentMoveSpeed;
+            _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
         
         private void PlayerAnimation()

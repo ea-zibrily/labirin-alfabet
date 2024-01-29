@@ -1,7 +1,8 @@
-﻿using LabirinKata.Enum;
-using LabirinKata.Managers;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using LabirinKata.Enum;
+using LabirinKata.Managers;
 
 namespace LabirinKata.UI
 {
@@ -10,6 +11,7 @@ namespace LabirinKata.UI
         #region Variable
         
         [SerializeField] private Button nextButtonUI;
+        [SerializeField] private GameObject developmentPanelUI;
         
         #endregion
         
@@ -25,7 +27,15 @@ namespace LabirinKata.UI
         //-- Core Functionality
         private void OnNextButton()
         {
-            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
+            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
+            StartCoroutine(DevelopmentRoutine());
+        }
+        
+        private IEnumerator DevelopmentRoutine()
+        {
+            developmentPanelUI.SetActive(true);
+            yield return new WaitForSeconds(2.5f);
+            developmentPanelUI.SetActive(false);
         }
         
         #endregion

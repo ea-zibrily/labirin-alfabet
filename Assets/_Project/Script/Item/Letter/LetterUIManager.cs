@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Gameplay.EventHandler;
+using LabirinKata.Stage;
 
 namespace LabirinKata.Item.Letter
 {
@@ -18,14 +19,25 @@ namespace LabirinKata.Item.Letter
         
         private GameObject[] _letterBorderImage;
         private int _currentTakenLetter;
+
+        public int CurrentTakenLetter => _currentTakenLetter;
         
         //-- Event
         public event Action<int> OnLetterTaken;
         public event Action<int> OnLetterLost;
+
+        [Header("Reference")] 
+        private LetterManager _letterManager;
         
         #endregion
 
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            var letterManagerObject = GameObject.FindGameObjectWithTag("LetterManager");
+            _letterManager = letterManagerObject.GetComponentInChildren<LetterManager>();
+        }
 
         private void OnEnable()
         {
@@ -59,7 +71,8 @@ namespace LabirinKata.Item.Letter
                 letterImageUI[i].GetComponent<Image>().sprite = letterSprites[spriteIndex];
                 letterImageUI[i].SetActive(false);
             }
-            
+
+            currentAmountOfLetter = _letterManager.LetterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
             _currentTakenLetter = 0;
         }
         

@@ -98,7 +98,7 @@ namespace LabirinKata.Gameplay.Controller
             _boxCollider2D.isTrigger = true;
             doorVirtualCamera.Follow = null;
         }
-
+        
         private IEnumerator ReachDoorRoutine()
         {
             if (StageManager.Instance.CheckCanContinueStage())
@@ -108,6 +108,7 @@ namespace LabirinKata.Gameplay.Controller
             }
             else
             {
+                Debug.Log("call game win event");
                 GameEventHandler.GameWinEvent();
             }
         }

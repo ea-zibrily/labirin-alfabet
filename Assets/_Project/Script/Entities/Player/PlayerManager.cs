@@ -28,13 +28,13 @@ namespace LabirinKata.Entities.Player
             get => currentHealthCount;
             set => currentHealthCount = value;
         }
-
+        
         [Header("Invulnerability Frame")] 
         [SerializeField] private int flashNumber;
         [SerializeField] private float flashDuration;
         [SerializeField] private Color defaultColor;
         [SerializeField] private Color flashColor;
-
+        
         [Header("Objective")] 
         [Tooltip("Sesuaikan jumlah variable ini dengan jumlah stage")]
         [SerializeField] private LetterObject[] letterObjects;
@@ -87,11 +87,17 @@ namespace LabirinKata.Entities.Player
             if (currentHealthCount <= 0)
             {
                 currentHealthCount = 0;
-                _isPlayerDead = true;
-                GameEventHandler.GameOverEvent();
+                StartCoroutine(PlayerDieRoutine());
             }
         }
-
+        
+        private IEnumerator PlayerDieRoutine()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isPlayerDead = true;
+            GameEventHandler.GameOverEvent();
+        }
+        
         private void KnockedBack(GameObject triggeredObject)
         {
             var playerDirection = _playerController.PlayerInputHandler.Direction;
@@ -151,7 +157,7 @@ namespace LabirinKata.Entities.Player
         {
             var currentStageIndex = StageManager.Instance.CurrentStageIndex;
             var letterCollects = letterObjects[currentStageIndex].LetterObjects;
-            
+
             if (letterCollects.Count < 1) return;
             
             foreach (var letter in letterCollects)
@@ -159,6 +165,8 @@ namespace LabirinKata.Entities.Player
                 letter.transform.position = _playerObject.transform.position;
                 letter.GetComponent<LetterController>().Lost();
             }
+            
+            letterObjects[currentStageIndex].LetterObjects.Clear();
         }
         
         #endregion
@@ -185,7 +193,6 @@ namespace LabirinKata.Entities.Player
                 
                 if (!(takeableObject as LetterController)) return;
                 CollectLetter(other.gameObject);
-                Debug.LogWarning(other.gameObject.name);
             }
         }
         

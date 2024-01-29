@@ -106,8 +106,6 @@ namespace LabirinKata.Entities.Player
             _floatingJoystickHandler.gameObject.SetActive(true);
             _floatingJoystickHandler.JoyRectTransform.sizeDelta = joystickSize;
             _floatingJoystickHandler.JoyRectTransform.anchoredPosition = ClampStartPosition(fingerOn.screenPosition);
-            
-            Debug.Log("init touch on");
         }
         
         //-- Core Functionality

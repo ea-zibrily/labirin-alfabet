@@ -15,6 +15,12 @@ namespace LabirinKata.Item.Letter
         [SerializeField] private string letterName;
         [SerializeField] private bool hasLetterTaken;
 
+        [Header("Lost")] 
+        [SerializeField] private float minRange;
+        [SerializeField] private float maxRange;
+        [SerializeField] private float moveDelay;
+        [SerializeField] private float lerpDuration;
+        
         public string LetterName => letterName;
         public int LetterId
         {
@@ -75,22 +81,31 @@ namespace LabirinKata.Item.Letter
         /// </summary>
         public void Lost()
         {
+            gameObject.SetActive(true);
             StartCoroutine(LostRoutine());
         }
         
         private IEnumerator LostRoutine()
         {
-            gameObject.SetActive(true);
             _letterUIManager.LostLetterEvent(letterId);
             
-            var position = transform.position;
-            var randomizeX = Random.Range(position.x - 4f, position.x + 4f);
-            var randomizeY = Random.Range(position.y - 4f, position.y + 4f);
-            var target = new Vector2(randomizeX, randomizeY);
+            var elapsedTime = 0f;
+            var lerpRatio = 0f;
+            var randomPosition = transform.position + new Vector3(
+                Random.Range(minRange, maxRange),
+                Random.Range(minRange, maxRange),
+                Random.Range(minRange, maxRange)
+            );
             
-            transform.position = Vector2.MoveTowards(position, target, 7f);
+            while (lerpRatio < moveDelay)
+            {
+                elapsedTime += Time.deltaTime;
+                lerpRatio = elapsedTime / lerpDuration;
+                transform.position = Vector3.Lerp(transform.position, randomPosition, lerpRatio);
+                yield return null;
+            }
             
-            yield return new WaitForSeconds(0.5f);
+            transform.position = randomPosition;
             RandomizePosition();
         }
         
@@ -114,20 +129,12 @@ namespace LabirinKata.Item.Letter
             
             foreach (var collider in colliderArea)
             {
-                if (collider.CompareTag("Item"))
-                {
-                    Debug.Log($"triggered with {collider.name}");
-                    return true;
-                }
+                if (!collider.CompareTag("Item")) continue;
+                Debug.Log($"triggered with {collider.name}");
+                return true;
             }
 
             return false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireCube(transform.position, _boxCollider2D.size);
-            Gizmos.color = Color.red;
         }
 
         #endregion

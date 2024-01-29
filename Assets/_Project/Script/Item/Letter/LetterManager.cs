@@ -21,12 +21,12 @@ namespace LabirinKata.Item.Letter
         [SerializeField] private GameObject[] letterPrefabs;
         [SerializeField] private LetterSpawns[] letterSpawns;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
-
+        
         public LetterSpawns[] LetterSpawns => letterSpawns;
-
+        
         //-- Temp Letter Object Data
-        private List<GameObject> _lockedLetterObject;
-        private List<GameObject> _unlockedLetterObject;
+        [SerializeField] [ReadOnly] private List<GameObject> _lockedLetterObject;
+        [SerializeField] [ReadOnly] private List<GameObject> _unlockedLetterObject;
 
         //-- Event
         public event Action<GameObject> OnTakeLetter;
@@ -59,6 +59,8 @@ namespace LabirinKata.Item.Letter
         {
             InitializeLetterData();
             InitializeLetterObject();
+            InitializeLetterGenerator();
+            
             SpawnLetter();
         }
         
@@ -69,10 +71,14 @@ namespace LabirinKata.Item.Letter
         //-- Initialization
         private void InitializeLetterData()
         {
-            _letterGenerator = new LetterGenerator(letterSpawns);
-            
             _lockedLetterObject = new List<GameObject>();
             _unlockedLetterObject = new List<GameObject>();
+        }
+        
+        private void InitializeLetterGenerator()
+        {
+            // TODO: Ubah parameter generate letter sesuai kondisi level (selesai atau tidak)
+            _letterGenerator = new LetterGenerator(letterSpawns, _lockedLetterObject);
         }
         
         private void InitializeLetterObject()
@@ -110,10 +116,8 @@ namespace LabirinKata.Item.Letter
         //-- Core Functionality
         public void SpawnLetter()
         {
-            // TODO: Ubah parameter generate letter sesuai kondisi level (selesai atau tidak)
-            // TODO: Selesai = unlocked, Tidak = locked
-            
-            _letterGenerator.InitializeGenerator(_lockedLetterObject);
+            Debug.LogWarning("spawn letter breks");
+            _letterGenerator.InitializeGenerator();
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
             
@@ -124,13 +128,16 @@ namespace LabirinKata.Item.Letter
         
         private void TakeLetter(GameObject value)
         {
-            Debug.LogWarning($"add unlock {value}");
             _unlockedLetterObject.Add(value);
-            
-            if (_lockedLetterObject.Contains(value))
+
+            var valueName = value.GetComponent<LetterController>().LetterName;
+            foreach (var lockLetter in _lockedLetterObject)
             {
-                Debug.LogWarning($"remove lock {value}");
-                _lockedLetterObject.Remove(value);
+                var lockLetterName = lockLetter.GetComponent<LetterController>().LetterName;
+                
+                if (lockLetterName != valueName) continue;
+                _lockedLetterObject.Remove(lockLetter);
+                break;
             }
         }
         

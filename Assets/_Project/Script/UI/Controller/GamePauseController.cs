@@ -22,7 +22,6 @@ namespace LabirinKata.UI
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
-            
             pausePanelUI.SetActive(false);
             
             pauseButtonUI.onClick.AddListener(OnPauseButton);
@@ -45,7 +44,7 @@ namespace LabirinKata.UI
             
             Time.timeScale = 1;
         }
-
+        
         #endregion
     }
 }

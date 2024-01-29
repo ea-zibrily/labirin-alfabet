@@ -1,7 +1,7 @@
-﻿using LabirinKata.Enum;
-using LabirinKata.Managers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using LabirinKata.Enum;
+using LabirinKata.Managers;
 
 namespace LabirinKata.UI
 {

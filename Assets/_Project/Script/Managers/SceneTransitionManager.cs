@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using LabirinKata.Enum;
@@ -57,7 +56,7 @@ namespace LabirinKata.Managers
                 case SceneState.MainMenu:
                     OpenMainMenuScene();
                     break;
-                case SceneState.CollectionMenu:
+                case SceneState.LevelSelectionMenu:
                     OpenCollectionMenuScene();
                     break;
                 case SceneState.CurrentLevel:
@@ -97,7 +96,7 @@ namespace LabirinKata.Managers
 
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke ("LoadCurrentGame", 0.5f);
+                Invoke (nameof(LoadCurrentGame), 0.5f);
             });
         }
         
@@ -107,7 +106,7 @@ namespace LabirinKata.Managers
 
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke ("LoadNextGame", 0.5f);
+                Invoke (nameof(LoadNextGame), 0.5f);
             });
         }
         

@@ -23,9 +23,10 @@ namespace LabirinKata.Item.Letter
         #region Labirin Kata Callbacks
         
         //-- Initialization
-        public LetterGenerator(LetterSpawns[] spawns)
+        public LetterGenerator(LetterSpawns[] spawns, List<GameObject> objects)
         {
             _letterSpawns = spawns;
+            _letterObjects = objects;
         }
         
         //-- Core Functionality
@@ -33,22 +34,15 @@ namespace LabirinKata.Item.Letter
         /// <summary>
         /// Panggil method ini terlebih dahulu saat akan melakukan generate letter
         /// </summary>
-        /// <param name="objects">Parameter value untuk mengisi internal variable objects list.</param>
-        public void InitializeGenerator(List<GameObject> objects)
+        public void InitializeGenerator()
         {
             if (SpawnedLetterIndex == null)
             {
                 SpawnedLetterIndex = new List<int>();
             }
-
-            if (_letterObjects != null)
-            {
-                _letterObjects.Clear();
-            }
             
             SpawnedLetterIndex.Clear();
             
-            _letterObjects = objects;
             _stageIndex = StageManager.Instance.CurrentStageIndex;
             _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
         }
@@ -84,7 +78,7 @@ namespace LabirinKata.Item.Letter
                 SpawnedLetterIndex.Add(randomLetterIndex);
                 
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
-                letterObject.GetComponent<LetterController>().LetterId = i;
+                letterObject.GetComponent<LetterController>().LetterId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
             }
         }
