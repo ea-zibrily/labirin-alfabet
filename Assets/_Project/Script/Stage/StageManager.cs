@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Database;
 using LabirinKata.Item.Letter;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
@@ -72,6 +73,12 @@ namespace LabirinKata.Stage
         {
             LoadNextStage();
             _letterManager.SpawnLetter();
+        }
+
+        public void SaveClearedLevel()
+        {
+            var currentLevel = CurrentLevelList.ToString();
+            GameDatabase.Instance.SaveLevelConditions(currentLevel, true);
         }
         
         private void LoadNextStage()

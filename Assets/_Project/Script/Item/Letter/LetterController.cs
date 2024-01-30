@@ -89,7 +89,7 @@ namespace LabirinKata.Item.Letter
         
         private IEnumerator LostRoutine()
         {
-            _letterUIManager.LostLetterEvent(letterId);
+            _letterUIManager.LostLetterEvent(SpawnId);
             
             var elapsedTime = 0f;
             var lerpRatio = 0f;

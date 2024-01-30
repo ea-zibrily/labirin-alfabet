@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Database;
 using LabirinKata.Stage;
 
 namespace LabirinKata.Item.Letter
@@ -74,45 +75,37 @@ namespace LabirinKata.Item.Letter
         {
             _lockedLetterObject = new List<GameObject>();
             _unlockedLetterObject = new List<GameObject>();
+            AvailableSpawnPoint = new List<Transform>();
         }
         
         private void InitializeLetterGenerator()
         {
-            // TODO: Ubah parameter generate letter sesuai kondisi level (selesai atau tidak)
-            _letterGenerator = new LetterGenerator(letterSpawns, _lockedLetterObject);
+            var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
+            var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
+            Debug.LogWarning(isLevelCleared);
+
+            _letterGenerator = isLevelCleared ? 
+                new LetterGenerator(letterSpawns, _unlockedLetterObject) :
+                new LetterGenerator(letterSpawns, _lockedLetterObject);
         }
         
         private void InitializeLetterObject()
         {
             //-- TODO: Ubah prefs jadi class ddol untuk simpen temporary unlock key
-            
             foreach (var letter in letterPrefabs)
             {
-                var prefabName = letter.GetComponent<LetterController>().LetterName;
-                var latestLetter = GetLatestLetterCount();
+                var letterId = letter.GetComponent<LetterController>().LetterId;
+                var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
+                Debug.Log($"letter: {letter.name} | id: {letterId}");
                 
-                if (latestLetter > 0)
+                if (isLetterUnlock)
                 {
-                    for (var j = 0; j < latestLetter; j++)
-                    {
-                        var letterKey = LETTER_KEY_PREFFIX + j;
-                        var letterUnlockName = GetLetterSaveName(letterKey);
-                        
-                        if (prefabName == letterUnlockName)
-                        {
-                            _unlockedLetterObject.Add(letter);
-                            Debug.LogWarning($"add unlock {letter}");
-                            continue;
-                        }
-                        
-                        _lockedLetterObject.Add(letter);
-                        Debug.LogWarning($"add lock {letter}");
-                    }
+                    _unlockedLetterObject.Add(letter);
+                    Debug.LogWarning($"add unlock {letter}");
+                    continue;
                 }
-                else
-                {
-                    _lockedLetterObject.Add(letter);
-                }
+                _lockedLetterObject.Add(letter);
+                Debug.LogWarning($"add lock {letter}");
             }
         }
         
@@ -122,8 +115,11 @@ namespace LabirinKata.Item.Letter
             _letterGenerator.InitializeGenerator();
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
-            
-            AvailableSpawnPoint.Clear();
+
+            if (AvailableSpawnPoint.Count < 0)
+            {
+                AvailableSpawnPoint.Clear();
+            }
             AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoint;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
@@ -163,26 +159,14 @@ namespace LabirinKata.Item.Letter
         //-- Core Functionality
         public void SaveUnlockedLetters()
         {
-            var latestUnlockIndex = GetLatestLetterCount() is 0 ? GetLatestLetterCount() : GetLatestLetterCount() - 1;
-            Debug.Log(latestUnlockIndex);
-            
             if (_unlockedLetterObject == null) return;
+            
             foreach (var unlockLetter in _unlockedLetterObject)
             {
-                var letterKey = LETTER_KEY_PREFFIX + latestUnlockIndex;
-                SetLetterSaveName(letterKey, unlockLetter.GetComponent<LetterController>().LetterName);
-                latestUnlockIndex++;
+                var unlockLetterId = unlockLetter.GetComponent<LetterController>().LetterId;
+                GameDatabase.Instance.SaveLetterConditions(unlockLetterId, true);
             }
-            
-            SetLatestLetterCount(_unlockedLetterObject.Count);
         }
-        
-        //-- Helper/Utilities
-        private void SetLetterSaveName(string key, string value) => PlayerPrefs.SetString(key, value);
-        private string GetLetterSaveName(string key) => PlayerPrefs.GetString(key);
-        
-        private void SetLatestLetterCount(int value) => PlayerPrefs.SetInt(LATEST_LETTER_KEY_INDEX, value);
-        private int GetLatestLetterCount() => PlayerPrefs.GetInt(LATEST_LETTER_KEY_INDEX);
         
         #endregion
     }
