@@ -23,11 +23,12 @@ namespace LabirinKata.Item.Letter
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
+        public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
         [SerializeField] [ReadOnly] private List<GameObject> _lockedLetterObject;
         [SerializeField] [ReadOnly] private List<GameObject> _unlockedLetterObject;
-
+        
         //-- Event
         public event Action<GameObject> OnTakeLetter;
 
@@ -83,6 +84,8 @@ namespace LabirinKata.Item.Letter
         
         private void InitializeLetterObject()
         {
+            //-- TODO: Ubah prefs jadi class ddol untuk simpen temporary unlock key
+            
             foreach (var letter in letterPrefabs)
             {
                 var prefabName = letter.GetComponent<LetterController>().LetterName;
@@ -116,11 +119,12 @@ namespace LabirinKata.Item.Letter
         //-- Core Functionality
         public void SpawnLetter()
         {
-            Debug.LogWarning("spawn letter breks");
             _letterGenerator.InitializeGenerator();
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
             
+            AvailableSpawnPoint.Clear();
+            AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoint;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         
@@ -139,6 +143,17 @@ namespace LabirinKata.Item.Letter
                 _lockedLetterObject.Remove(lockLetter);
                 break;
             }
+        }
+        
+        //-- Helper/Utilities
+        public void AddAvailableSpawnPoint(Transform value)
+        {
+            AvailableSpawnPoint.Add(value);
+        }
+        
+        public void RemoveAvailableSpawnPoint(int value)
+        {
+            AvailableSpawnPoint.RemoveAt(value);
         }
         
         #endregion

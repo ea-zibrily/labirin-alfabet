@@ -9,15 +9,16 @@ namespace LabirinKata.Item.Letter
     {
         #region Variable
 
-        private List<GameObject> _letterObjects;
-        private Transform _letterParentTransform;
-        private  int _letterGenerateCount;
-        private int _stageIndex;
-        
+        private readonly List<GameObject> _letterObjects;
         private readonly LetterSpawns[] _letterSpawns;
         
+        private int _letterGenerateCount;
+        private int _stageIndex;
+        private Transform _letterParentTransform;
+        
         public List<int> SpawnedLetterIndex { get; private set; }
-
+        public List<Transform> AvailableSpawnPoint { get; private set; }
+        
         #endregion
 
         #region Labirin Kata Callbacks
@@ -40,11 +41,25 @@ namespace LabirinKata.Item.Letter
             {
                 SpawnedLetterIndex = new List<int>();
             }
-            
             SpawnedLetterIndex.Clear();
+
+            if (AvailableSpawnPoint == null)
+            {
+                AvailableSpawnPoint = new List<Transform>();
+            }
+            AvailableSpawnPoint.Clear();
             
             _stageIndex = StageManager.Instance.CurrentStageIndex;
             _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
+            AddAvailableSpawn();
+        }
+        
+        private void AddAvailableSpawn()
+        {
+            foreach (var spawnPoint in _letterSpawns[_stageIndex].SpawnPointTransforms)
+            {
+                AvailableSpawnPoint.Add(spawnPoint);
+            }
         }
         
         /// <summary>
@@ -76,9 +91,10 @@ namespace LabirinKata.Item.Letter
                 latestPointIndices.Add(randomPointIndex);
                 
                 SpawnedLetterIndex.Add(randomLetterIndex);
+                AvailableSpawnPoint.RemoveAt(randomPointIndex);
                 
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
-                letterObject.GetComponent<LetterController>().LetterId = i + 1;
+                letterObject.GetComponent<LetterController>().SpawnId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
             }
         }

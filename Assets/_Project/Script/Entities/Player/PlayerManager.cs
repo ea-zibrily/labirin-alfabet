@@ -7,6 +7,7 @@ using LabirinKata.Stage;
 using LabirinKata.Item.Letter;
 using LabirinKata.Item.Reinforcement;
 using LabirinKata.Gameplay.EventHandler;
+using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Player
 {
@@ -36,7 +37,6 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private Color flashColor;
         
         [Header("Objective")] 
-        [Tooltip("Sesuaikan jumlah variable ini dengan jumlah stage")]
         [SerializeField] private LetterObject[] letterObjects;
         
         [Header("Reference")] 
@@ -58,6 +58,7 @@ namespace LabirinKata.Entities.Player
         private void Start()
         {
            InitializeHealth();
+           InitializeLetterObject();
         }
         
         #endregion
@@ -146,6 +147,16 @@ namespace LabirinKata.Entities.Player
 
         #region Objective Callbacks
         
+        //-- Initialization
+        private void InitializeLetterObject()
+        {
+            if (letterObjects == null)
+            {
+                var objectSize = StageManager.Instance.StageCount;
+                letterObjects = new LetterObject[objectSize];
+            }
+        }
+        
         //-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
@@ -155,18 +166,16 @@ namespace LabirinKata.Entities.Player
         
         private void LostLetter()
         {
-            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
-            var letterCollects = letterObjects[currentStageIndex].LetterObjects;
+            var stageIndex = StageManager.Instance.CurrentStageIndex;
+            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
+            var letterCollects = letterObjects[stageIndex].LetterObjects;
 
-            if (letterCollects.Count < 1) return;
-            
-            foreach (var letter in letterCollects)
-            {
-                letter.transform.position = _playerObject.transform.position;
-                letter.GetComponent<LetterController>().Lost();
-            }
-            
-            letterObjects[currentStageIndex].LetterObjects.Clear();
+            if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
+
+            var randomLetter = Random.Range(0, letterCollects.Count - 1);
+            letterCollects[randomLetter].transform.position = _playerObject.transform.position;
+            letterCollects[randomLetter].GetComponent<LetterController>().Lost();
+            letterCollects.RemoveAt(randomLetter);
         }
         
         #endregion

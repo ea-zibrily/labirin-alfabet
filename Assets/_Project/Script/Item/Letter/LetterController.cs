@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using LabirinKata.Stage;
+using KevinCastejon.MoreAttributes;
 
 using Random = UnityEngine.Random;
 
@@ -11,7 +11,8 @@ namespace LabirinKata.Item.Letter
         #region Variable
 
         [Header("Settings")] 
-        [SerializeField] private int letterId;
+        [SerializeField] [ReadOnlyOnPlay] private int letterId;
+        [SerializeField] [ReadOnlyOnPlay] private int spawnId;
         [SerializeField] private string letterName;
         [SerializeField] private bool hasLetterTaken;
 
@@ -21,13 +22,14 @@ namespace LabirinKata.Item.Letter
         [SerializeField] private float moveDelay;
         [SerializeField] private float lerpDuration;
         
+        public int LetterId => letterId;
         public string LetterName => letterName;
-        public int LetterId
+        public int SpawnId
         {
-            get => letterId;
-            set => letterId = value;
+            get => spawnId;
+            set => spawnId = value;
         }
-
+        
         [Header("Reference")] 
         private BoxCollider2D _boxCollider2D;
         private LetterManager _letterManager;
@@ -60,7 +62,6 @@ namespace LabirinKata.Item.Letter
         {
             gameObject.name = letterName;
             hasLetterTaken = false;
-            Debug.Log("init letter obj");
         }
         
         //-- Core Functionality
@@ -71,7 +72,8 @@ namespace LabirinKata.Item.Letter
                 _letterManager.TakeLetterEvent(gameObject);
                 hasLetterTaken = true;
             }
-            _letterUIManager.TakeLetterEvent(LetterId);
+            _letterManager.AddAvailableSpawnPoint(transform);
+            _letterUIManager.TakeLetterEvent(SpawnId);
             
             gameObject.SetActive(false);
         }
@@ -106,35 +108,16 @@ namespace LabirinKata.Item.Letter
             }
             
             transform.position = randomPosition;
-            RandomizePosition();
+            Reposition();
         }
         
-        private void RandomizePosition()
+        private void Reposition()
         {
-            var stageIndex = StageManager.Instance.CurrentStageIndex;
-            var spawnPoints = _letterManager.LetterSpawns[stageIndex].SpawnPointTransforms;
+            var spawnPoints = _letterManager.AvailableSpawnPoint;
+            var randomPosition = Random.Range(0, spawnPoints.Count - 1);
             
-            do
-            {
-                var randomizePosition = Random.Range(0, spawnPoints.Length - 1);
-                transform.position = spawnPoints[randomizePosition].position;
-            } while (CheckTriggeredCollider());
-        }
-        
-        //-- Helper/Utilities
-        private bool CheckTriggeredCollider()
-        {
-            var boxSize = _boxCollider2D.size;
-            var colliderArea = Physics2D.OverlapBoxAll(transform.position, boxSize, 0);
-            
-            foreach (var collider in colliderArea)
-            {
-                if (!collider.CompareTag("Item")) continue;
-                Debug.Log($"triggered with {collider.name}");
-                return true;
-            }
-
-            return false;
+            transform.position = spawnPoints[randomPosition].position;
+            _letterManager.RemoveAvailableSpawnPoint(randomPosition);
         }
 
         #endregion

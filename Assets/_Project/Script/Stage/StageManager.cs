@@ -18,7 +18,9 @@ namespace LabirinKata.Stage
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
         [SerializeField] [ReadOnly] private int currentStageIndex;
+        
         public int CurrentStageIndex => currentStageIndex;
+        public int StageCount => stageObjects.Length;
         
         [Header("Reference")]
         private LetterManager _letterManager;
