@@ -8,9 +8,9 @@ TagManager:
   - Enemy
   - GameManager
   - AudioManager
-  - Joystick
-  - Wall
   - LetterManager
+  - Joystick
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -18,8 +18,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 

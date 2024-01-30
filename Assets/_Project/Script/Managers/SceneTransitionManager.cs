@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using LabirinKata.Enum;
@@ -37,7 +36,7 @@ namespace LabirinKata.Managers
                 sceneFader.gameObject.SetActive (false);
             });
         }
-
+        
         public void FadeOut()
         {
             sceneFader.gameObject.SetActive (true);
@@ -50,14 +49,14 @@ namespace LabirinKata.Managers
         public void LoadSelectedScene(SceneState sceneState)
         {
             // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
-            // Time.timeScale = 1;
+            Time.timeScale = 1;
             
             switch (sceneState)
             {
                 case SceneState.MainMenu:
                     OpenMainMenuScene();
                     break;
-                case SceneState.CollectionMenu:
+                case SceneState.LevelSelectionMenu:
                     OpenCollectionMenuScene();
                     break;
                 case SceneState.CurrentLevel:
@@ -97,7 +96,7 @@ namespace LabirinKata.Managers
 
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke ("LoadCurrentGame", 0.5f);
+                Invoke (nameof(LoadCurrentGame), 0.5f);
             });
         }
         
@@ -107,16 +106,11 @@ namespace LabirinKata.Managers
 
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke ("LoadNextGame", 0.5f);
+                Invoke (nameof(LoadNextGame), 0.5f);
             });
         }
         
-        private void LoadCurrentGame()
-        {
-            Time.timeScale = 1;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
+        private void LoadCurrentGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         private void LoadNextGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         #endregion

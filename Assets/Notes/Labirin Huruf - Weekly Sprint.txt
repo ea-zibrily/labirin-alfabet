@@ -13,3 +13,16 @@ Weekly Sprint Meeting
 - Beri panel UI buat penanda sedang di level/stage berapa
 - Apk dibuat lock landscape (gabisa portrait)
 - Coba apply level 2
+
+30/01/2024
+- Speed buff ubah ke-8
+- Random spawn huruf pas hit feedback ada yang numpuk atau punya posisi yang sama
+- Bikin restriction tile buat timer UI agar player gabisa masuk ke UI
+- Saat player terkena hit, 
+jika objective belum selesai: Huruf keluar 1 random
+jika objective selesai: Huruf tidak keluar
+- Stage notification jadikan tengah aga kebawah, soalnya player spawn d center
+- Collection menu disarankan bisa bikin 1 class DDOL buat nyimpen semua data letter yang lock atau unlock
+note: bisa pake dictionary/list buat add remove
+- Letter controller bisa nambah SpawnId sama LetterId
+SpawnId untuk indexing ui, LetterId untuk load collectionmenu

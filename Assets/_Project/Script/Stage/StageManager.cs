@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Item.Letter;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 
@@ -16,14 +17,24 @@ namespace LabirinKata.Stage
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
-
-        private int _currentStageIndex;
-        public int CurrentStageIndex => _currentStageIndex;
+        [SerializeField] [ReadOnly] private int currentStageIndex;
+        
+        public int CurrentStageIndex => currentStageIndex;
+        public int StageCount => stageObjects.Length;
+        
+        [Header("Reference")]
+        private LetterManager _letterManager;
+        public LetterManager LetterManager => _letterManager;
         
         #endregion
         
         #region MonoBehaviour Callbacks
 
+        protected override void Awake()
+        {
+            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponentInChildren<LetterManager>();
+        }
+        
         private void Start()
         {
             InitializeLeveStage();
@@ -47,7 +58,7 @@ namespace LabirinKata.Stage
                 if (i is 0)
                 {
                     stageObjects[i].SetActive(true);
-                    _currentStageIndex = i;
+                    currentStageIndex = i;
                     CurrentStageList = StageList.Stage_1;
                     continue;
                 }
@@ -57,7 +68,13 @@ namespace LabirinKata.Stage
         }
         
         //-- Core Functionality
-        public void LoadNextStage()
+        public void InitializeNewStage()
+        {
+            LoadNextStage();
+            _letterManager.SpawnLetter();
+        }
+        
+        private void LoadNextStage()
         {
             if (!CheckCanContinueStage()) return;
             
@@ -66,19 +83,19 @@ namespace LabirinKata.Stage
                 if (!stageObjects[i].activeSelf) continue;
                 
                 stageObjects[i].SetActive(false);
-                _currentStageIndex = i;
+                currentStageIndex = i;
                 break;
             }
             
-            _currentStageIndex += 1;
-            CurrentStageList = GetCurrentStage(_currentStageIndex);
-            stageObjects[_currentStageIndex].SetActive(true);
+            currentStageIndex += 1;
+            CurrentStageList = GetCurrentStage(currentStageIndex);
+            stageObjects[currentStageIndex].SetActive(true);
         }
         
         //-- Helper/Utilities
         public bool CheckCanContinueStage()
         {
-            return _currentStageIndex < stageObjects.Length - 1;
+            return currentStageIndex < stageObjects.Length - 1;
         }
         
         private StageList GetCurrentStage(int index)

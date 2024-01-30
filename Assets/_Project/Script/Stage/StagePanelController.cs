@@ -71,12 +71,6 @@ namespace LabirinKata.Stage
                 LevelList.Level_01 => "Level 1",
                 LevelList.Level_02 => "Level 2",
                 LevelList.Level_03 => "Level 3",
-                LevelList.Level_04 => "Level 4",
-                LevelList.Level_05 => "Level 5",
-                LevelList.Level_06 => "Level 6",
-                LevelList.Level_07 => "Level 7",
-                LevelList.Level_08 => "Level 8",
-                LevelList.Level_09 => "Level 9",
                 LevelList.None => " ",
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };

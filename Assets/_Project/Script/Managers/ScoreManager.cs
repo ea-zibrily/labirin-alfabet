@@ -30,7 +30,7 @@ namespace LabirinKata.Managers
 
         #endregion
 
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
         
         //-- Initialization
         private void InitializeScore()

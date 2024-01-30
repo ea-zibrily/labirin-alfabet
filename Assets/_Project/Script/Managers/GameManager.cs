@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using LabirinKata.Stage;
-using LabirinKata.Entities.Item;
 using LabirinKata.Entities.Player;
 using LabirinKata.Gameplay.Controller;
 using LabirinKata.Gameplay.EventHandler;
@@ -36,9 +35,6 @@ namespace LabirinKata.Managers
         private PlayerController _playerController;
         private TimeController _timeController;
         
-        private LetterManager _letterManager;
-        private ScoreManager _scoreManager;
-        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -60,12 +56,18 @@ namespace LabirinKata.Managers
         {
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
-            GameEventHandler.OnContinueStage += ContinueStage;
+            GameEventHandler.OnContinueStage -= ContinueStage;
         }
         
         private void Start()
         {
+            Debug.Log("star gim manaher");
             IsGameStart = true;
+        }
+
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.DeleteAll();
         }
 
         #endregion
@@ -77,9 +79,6 @@ namespace LabirinKata.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-            
-            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponent<LetterManager>();
-            _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         }
         
         #endregion
@@ -92,8 +91,8 @@ namespace LabirinKata.Managers
             _playerController.StopMovement();
             _timeController.IsTimerStart = false;
             IsGameStart = false;
-            
-            _scoreManager.RateLevelScore();
+
+            StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }
         
@@ -121,8 +120,7 @@ namespace LabirinKata.Managers
             SceneTransitionManager.Instance.FadeOut();
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
-            StageManager.Instance.LoadNextStage();
-            _letterManager.InitializeLetterEvent();
+            StageManager.Instance.InitializeNewStage();
             _timeController.InitializeTimer(); 
             _playerController.transform.position = Vector2.zero;
             

@@ -68,14 +68,14 @@ namespace LabirinKata.Gameplay.Controller
             if (!IsTimerStart) return;
 
             _currentTime -= Time.deltaTime;
-            TimerDisplay(_currentTime);
-            
-            if (_currentTime <= 0)
+            if (_currentTime < 1)
             {
                 _currentTime = 0;
                 isTimerStart = false;
                 GameEventHandler.GameOverEvent();
             }
+            
+            TimerDisplay(_currentTime);
         }
         
         //-- Helper/Utitilies

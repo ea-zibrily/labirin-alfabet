@@ -1,4 +1,5 @@
-﻿using LabirinKata.Data;
+﻿using System;
+using LabirinKata.Data;
 using LabirinKata.Enum;
 using LabirinKata.Managers;
 using LabirinKata.Stage;
@@ -61,7 +62,7 @@ namespace LabirinKata.Entities.Enemy
         
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Labirin Kata Callbacks
         
         protected virtual void EnemyMove()
         {
@@ -100,5 +101,6 @@ namespace LabirinKata.Entities.Enemy
         }
         
         #endregion
+        
     }
 }
