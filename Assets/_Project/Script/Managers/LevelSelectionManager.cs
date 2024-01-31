@@ -2,35 +2,43 @@
 using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Enum;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Managers
 {
     public class LevelSelectionManager : MonoBehaviour
     {
         #region Variable
-
+        
         [Header("UI")] 
         [SerializeField] private Button levelButtonUI;
-        [SerializeField] private Button colletionButtonUI;
+        [SerializeField] private Button collectionButtonUI;
         [SerializeField] private GameObject collectionPanelUI;
-
-        [SerializeField] private GameObject developmentPanel;
         
         #endregion
         
         #region MonoBehaviour Callbacks
-
+        
         private void Start()
         {
-            levelButtonUI.onClick.AddListener(OnPlayButton);
-            colletionButtonUI.onClick.AddListener(OnCollectionButton);
+            InitializeLevelSelection();
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks
         
         //-- Initialization
+        private void InitializeLevelSelection()
+        {
+            collectionPanelUI.SetActive(false);
+            
+            levelButtonUI.onClick.AddListener(OnPlayButton);
+            collectionButtonUI.onClick.AddListener(OnCollectionButton);
+        }
+        
+        
+        //-- Core Functionality
         private void OnPlayButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
@@ -38,15 +46,7 @@ namespace LabirinKata.Managers
 
         private void OnCollectionButton()
         {
-            StartCoroutine(DevelopmentRoutine());
-        }
-        
-        //-- Core Functionality
-        private IEnumerator DevelopmentRoutine()
-        {
-            developmentPanel.SetActive(true);
-            yield return new WaitForSeconds(2.5f);
-            developmentPanel.SetActive(false);
+            collectionPanelUI.SetActive(true);
         }
         
         #endregion
