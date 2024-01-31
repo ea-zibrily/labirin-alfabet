@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Database;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Collection
 {
@@ -9,11 +11,11 @@ namespace LabirinKata.Collection
         #region Variable
         
         [Header("UI")] 
-        [SerializeField] private GameObject[] letterImageUI;
+        [SerializeField] private GameObject[] letterObjectUI;
         [SerializeField] private Button closeButtonUI;
         
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         
         private void Start()
@@ -35,13 +37,14 @@ namespace LabirinKata.Collection
         //-- Core Functionality
         private void SetUnlockedCollection()
         {
-            for (var i = 0; i < letterImageUI.Length; i++)
+            for (var i = 0; i < letterObjectUI.Length; i++)
             {
                 var letterId = i + 1;
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-                
-                letterImageUI[i].SetActive(isLetterUnlock);
-                Debug.Log($"{letterImageUI[i]} is {isLetterUnlock}");
+
+                letterObjectUI[i].GetComponent<Button>().interactable = isLetterUnlock;
+                letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(false);
+                Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");
             }
         }
         

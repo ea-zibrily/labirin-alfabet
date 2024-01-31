@@ -1,4 +1,5 @@
 ﻿using System;
+using LabirinKata.Enum;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,12 @@ namespace LabirinKata.Collection
         #region Variable
 
         [Header("Settings")] 
+        [SerializeField] private Letter letterName;
         private Button _buttonUI;
-
+        
+        [Header("Reference")] 
+        private CollectionAudioManager _collectionAudioManager;
+        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -18,6 +23,8 @@ namespace LabirinKata.Collection
         private void Awake()
         {
             _buttonUI = GetComponent<Button>();
+            var collectionObject = GameObject.FindGameObjectWithTag("Collection");
+            _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
 
         private void Start()
@@ -28,7 +35,7 @@ namespace LabirinKata.Collection
         #endregion
 
         #region Labirin Kata Callbacks
-
+        
         //-- Initialization
         private void InitializeButton()
         {
@@ -40,11 +47,12 @@ namespace LabirinKata.Collection
          * TODO: bikin logic buat efek letter jika ditekan
          * Efek list:
          * 1. Animasi scaling
-         * 2. Suara VO sesuai letter
+         * 2. Sound effect VO sesuai nama letter
          */
         private void ClickObject()
         {
-            //-- Drop logic here
+            Debug.Log($"click {letterName}");
+            // _collectionAudioManager.PlayCollectionAudio(letterName);
         }
 
         #endregion
