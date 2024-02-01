@@ -43,7 +43,7 @@ namespace LabirinKata.Managers
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
-
+        
         private void OnCollectionButton()
         {
             collectionPanelUI.SetActive(true);

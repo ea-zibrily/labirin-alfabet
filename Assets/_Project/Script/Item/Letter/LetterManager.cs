@@ -24,7 +24,7 @@ namespace LabirinKata.Item.Letter
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        public List<Transform> AvailableSpawnPoint { get; private set; }
+        [field: SerializeField] public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
         [SerializeField] [ReadOnly] private List<GameObject> _lockedLetterObject;
@@ -82,21 +82,26 @@ namespace LabirinKata.Item.Letter
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
-            Debug.LogWarning(isLevelCleared);
 
             _letterGenerator = isLevelCleared ? 
                 new LetterGenerator(letterSpawns, _unlockedLetterObject) :
                 new LetterGenerator(letterSpawns, _lockedLetterObject);
+            
+            Debug.Log(isLevelCleared);
         }
         
         private void InitializeLetterObject()
         {
-            //-- TODO: Ubah prefs jadi class ddol untuk simpen temporary unlock key
+            if (letterPrefabs.Length < GameDatabase.LETTER_COUNT)
+            {
+                Debug.LogError("letter prefabs kurenx breks");
+                return;
+            }
+            
             foreach (var letter in letterPrefabs)
             {
                 var letterId = letter.GetComponent<LetterController>().LetterId;
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-                Debug.Log($"letter: {letter.name} | id: {letterId}");
                 
                 if (isLetterUnlock)
                 {
@@ -114,13 +119,14 @@ namespace LabirinKata.Item.Letter
         {
             _letterGenerator.InitializeGenerator();
             _letterGenerator.GenerateLetter();
-            _letterUIManager.InitializeLetterUI(_letterGenerator.SpawnedLetterIndex);
-
-            if (AvailableSpawnPoint.Count < 0)
+            _letterUIManager.InitializeLetterInterface(_letterGenerator.AvailableLetterObjects);
+            // _letterUIManager.SetLetterInterface(_letterGenerator.SpawnedLetterIndex);
+            
+            if (AvailableSpawnPoint.Count > 0)
             {
                 AvailableSpawnPoint.Clear();
             }
-            AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoint;
+            AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoints;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         

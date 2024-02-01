@@ -26,12 +26,12 @@ namespace LabirinKata.Collection
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
-
+        
         private void Start()
         {
             InitializeButton();
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks

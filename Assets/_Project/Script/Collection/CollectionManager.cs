@@ -12,6 +12,7 @@ namespace LabirinKata.Collection
         
         [Header("UI")] 
         [SerializeField] private GameObject[] letterObjectUI;
+        [SerializeField] private GameObject collectionPanelUI;
         [SerializeField] private Button closeButtonUI;
         
         #endregion
@@ -43,14 +44,14 @@ namespace LabirinKata.Collection
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
 
                 letterObjectUI[i].GetComponent<Button>().interactable = isLetterUnlock;
-                letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(false);
+                letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(isLetterUnlock);
                 Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");
             }
         }
         
         private void CloseCollectionPanel()
         {
-            gameObject.SetActive(false);
+            collectionPanelUI.SetActive(false);
         }
 
         #endregion

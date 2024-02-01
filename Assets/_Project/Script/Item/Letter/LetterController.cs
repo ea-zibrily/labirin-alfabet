@@ -117,6 +117,7 @@ namespace LabirinKata.Item.Letter
             var randomPosition = Random.Range(0, spawnPoints.Count - 1);
             
             transform.position = spawnPoints[randomPosition].position;
+            Debug.Log("reposition after hit");
             _letterManager.RemoveAvailableSpawnPoint(randomPosition);
         }
 
