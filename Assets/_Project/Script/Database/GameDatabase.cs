@@ -19,7 +19,7 @@ namespace LabirinKata.Database
         public const int LETTER_COUNT = 26;
         
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         
         private void Start()

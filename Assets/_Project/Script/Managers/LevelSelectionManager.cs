@@ -11,7 +11,8 @@ namespace LabirinKata.Managers
         #region Variable
         
         [Header("UI")] 
-        [SerializeField] private Button levelButtonUI;
+        [SerializeField] private Button backButtonUI;
+        [SerializeField] private Button exploreButtonUI;
         [SerializeField] private Button collectionButtonUI;
         [SerializeField] private GameObject collectionPanelUI;
         
@@ -33,10 +34,10 @@ namespace LabirinKata.Managers
         {
             collectionPanelUI.SetActive(false);
             
-            levelButtonUI.onClick.AddListener(OnPlayButton);
+            exploreButtonUI.onClick.AddListener(OnPlayButton);
             collectionButtonUI.onClick.AddListener(OnCollectionButton);
+            backButtonUI.onClick.AddListener(OnBackButton);
         }
-        
         
         //-- Core Functionality
         private void OnPlayButton()
@@ -47,6 +48,11 @@ namespace LabirinKata.Managers
         private void OnCollectionButton()
         {
             collectionPanelUI.SetActive(true);
+        }
+
+        private void OnBackButton()
+        {
+            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);
         }
         
         #endregion

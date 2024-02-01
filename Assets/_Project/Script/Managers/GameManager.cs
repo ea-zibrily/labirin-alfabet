@@ -22,7 +22,7 @@ namespace LabirinKata.Managers
         #endregion
         
         #region Variable
-
+        
         [Header("UI")] 
         [SerializeField] private GameObject gameWinPanelUI;
         [SerializeField] private GameObject gameOverPanelUI;
