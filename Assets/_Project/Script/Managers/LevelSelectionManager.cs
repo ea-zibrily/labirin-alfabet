@@ -29,7 +29,7 @@ namespace LabirinKata.Managers
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLevelSelection()
         {
             collectionPanelUI.SetActive(false);
@@ -39,7 +39,7 @@ namespace LabirinKata.Managers
             backButtonUI.onClick.AddListener(OnBackButton);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void OnPlayButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);

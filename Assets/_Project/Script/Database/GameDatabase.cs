@@ -31,7 +31,7 @@ namespace LabirinKata.Database
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeData()
         {
             if (_letterConditions != null && _levelConditions != null) return;
@@ -66,7 +66,7 @@ namespace LabirinKata.Database
             return levelConditions;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void SaveLetterConditions(int letterId, bool value)
         {
             if (_letterConditions.ContainsKey(letterId))

@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using LabirinKata.Data;
+using LabirinKata.Enum;
+using LabirinKata.Managers;
+
+using Random = UnityEngine.Random;
+
+namespace LabirinKata.Entities.Enemy
+{
+    public class EnemyBase : MonoBehaviour
+    {
+        #region Struct
+
+        [Serializable]
+        public struct EnemyPattern
+        {
+            public string PatternNumber;
+            public List<Transform> MovePointTransforms;
+        }
+
+        #endregion
+
+        #region Const Variable
+
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+
+        #endregion
+
+        #region Fields & Properties
+
+        [Header("Data")] 
+        public EnemyData EnemyData;
+        public EnemyType EnemyType;
+        [SerializeField] private EnemyPattern[] enemyPattern;
+
+        public EnemyPattern[] EnemeyPattern => enemyPattern;
+        public int MaxEnemyPattern
+        {
+            get
+            {
+                var maxPattern = EnemyType switch
+                {
+                    EnemyType.Linear => 1,
+                    EnemyType.SemiLinear => 1,
+                    EnemyType.Multiple => 2,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                return maxPattern;
+            }
+        }
+
+        [Header("Target Point")]
+        protected Transform CurrentTarget;
+        [field: SerializeField] protected int CurrentTargetIndex;
+
+        [field: SerializeField] protected int CurrentPatternIndex { get; set;}
+        protected int EarlyPositionIndex { get; private set; }
+
+        private Vector2 _enemyDirection;
+        
+        [Header("Reference")] 
+        private Animator _enemyAnimator;
+        
+        #endregion
+
+        #region MonoBehaviour Callbacks
+        
+        private void Awake()
+        {
+            _enemyAnimator = GetComponentInChildren<Animator>();
+        }
+        
+        private void Start()
+        {
+            InitializeEnemy();
+        }
+        
+        private void Update()
+        {
+            if (CheckPatternCount() || !GameManager.Instance.IsGameStart) return;
+            
+            EnemyMove();
+            // EnemyAnimation();
+        }
+        
+        #endregion
+        
+        #region Labirin Kata Callbacks
+        
+        // !-- Initialization
+        protected virtual void InitializeEnemy()
+        {
+            gameObject.transform.parent.name = EnemyData.EnemyName;
+
+            //*-- Enemy Early Position
+            CurrentPatternIndex = EnemeyPattern.Length > 1 ? 0 : Random.Range(0, EnemeyPattern.Length - 1);
+            var enemyPoints = EnemeyPattern[CurrentPatternIndex].MovePointTransforms;
+
+            EarlyPositionIndex = Random.Range(0, enemyPoints.Count - 1);
+            transform.position = enemyPoints[EarlyPositionIndex].position;
+        }
+        
+        // !-- Core Functionality
+        protected virtual void EnemyMove()
+        {
+            var enemyPosition = transform.position;
+            var targetPosition = CurrentTarget.position;
+            var currentSpeed = EnemyData.EnemyMoveSpeed * Time.deltaTime;
+            
+            _enemyDirection = targetPosition - enemyPosition;
+            _enemyDirection.Normalize();
+            
+            transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
+        }
+
+        // TODO: Aktifken method animasi pas animasi dah ada lur
+        private void EnemyAnimation()
+        {
+            _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
+            _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
+        }
+        
+        // !-- Helpers/Utilities
+        private bool CheckPatternCount()
+        {
+            if (EnemeyPattern.Length > MaxEnemyPattern)
+            {
+                Debug.LogError("jumlah pattern kebanyakan kang \n 1. Linear & Semi-Linear max 1 \n 2. Multiple max 2");
+                return true;
+            }
+
+            return false;
+        }
+        
+        #endregion
+        
+    }
+}

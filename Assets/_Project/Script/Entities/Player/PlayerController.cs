@@ -69,7 +69,7 @@ namespace LabirinKata.Entities.Player
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializePlayer()
         {
             gameObject.name = playerData.PlayerName;
@@ -83,12 +83,12 @@ namespace LabirinKata.Entities.Player
             StartMovement();
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void PlayerMove()
         {
             if (!CanMove) return;
             
-            //--- W Enhanced Touch Input
+            //*-- W Enhanced Touch Input
             var moveX = PlayerInputHandler.Direction.x;
             var moveY = PlayerInputHandler.Direction.y;
             
@@ -120,7 +120,7 @@ namespace LabirinKata.Entities.Player
             }
         }
         
-        //-- Helpers/Utilities
+        // !-- Helpers/Utilities
         public void StartMovement()
         {
             CanMove = true;
@@ -138,6 +138,16 @@ namespace LabirinKata.Entities.Player
         public void SetPlayerPosition(Transform playerPos)
         {
             transform.position = playerPos.position;
+        }
+
+        // TODO: Pake method ini buat ngatur direksi player pas pintu labirin buka
+        public void SetPlayerDirection(Transform value)
+        {
+            var direction = value.transform.position - transform.position;
+            direction.Normalize();
+
+            _playerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
+            _playerAnimator.SetFloat(VERTICAL_KEY, direction.y);
         }
         
         #endregion
