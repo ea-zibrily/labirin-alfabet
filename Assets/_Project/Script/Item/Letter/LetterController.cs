@@ -8,7 +8,7 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterController : MonoBehaviour, ITakeable
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Settings")] 
         [SerializeField] [ReadOnlyOnPlay] private int letterId;
@@ -31,7 +31,6 @@ namespace LabirinKata.Item.Letter
         }
         
         [Header("Reference")] 
-        private BoxCollider2D _boxCollider2D;
         private LetterManager _letterManager;
         private LetterUIManager _letterUIManager;
         
@@ -41,7 +40,6 @@ namespace LabirinKata.Item.Letter
         
         private void Awake()
         {
-            _boxCollider2D = GetComponent<BoxCollider2D>();
             var letterManagementObject = GameObject.FindGameObjectWithTag("LetterManager");
             
             _letterManager = letterManagementObject.GetComponentInChildren<LetterManager>();
@@ -57,14 +55,14 @@ namespace LabirinKata.Item.Letter
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLetter()
         {
             gameObject.name = letterName;
             hasLetterTaken = false;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void Taken()
         {
             if (!hasLetterTaken)
@@ -93,6 +91,36 @@ namespace LabirinKata.Item.Letter
             
             var elapsedTime = 0f;
             var lerpRatio = 0f;
+            var randomPosition = GetAvailablePosition();
+            
+            while (lerpRatio < moveDelay)
+            {
+                elapsedTime += Time.deltaTime;
+                lerpRatio = elapsedTime / lerpDuration;
+                transform.position = Vector3.Lerp(transform.position, randomPosition, lerpRatio);
+                yield return null;
+            }
+            
+            transform.position = randomPosition;
+        }
+
+        // !-- Helper/Utilities
+        private Vector3 GetAvailablePosition()
+        {
+            var spawnPoints = _letterManager.AvailableSpawnPoint;
+            var randomPosition = Random.Range(0, spawnPoints.Count - 1);
+            
+            _letterManager.RemoveAvailableSpawnPoint(randomPosition);
+            return spawnPoints[randomPosition].position;
+        }
+
+        /* Reposition with Delay & Teleport
+        private IEnumerator LostRoutine()
+        {
+            _letterUIManager.LostLetterEvent(SpawnId);
+            
+            var elapsedTime = 0f;
+            var lerpRatio = 0f;
             var randomPosition = transform.position + new Vector3(
                 Random.Range(minRange, maxRange),
                 Random.Range(minRange, maxRange),
@@ -111,6 +139,7 @@ namespace LabirinKata.Item.Letter
             Reposition();
         }
         
+        // !-- Helper/Utilities
         private void Reposition()
         {
             var spawnPoints = _letterManager.AvailableSpawnPoint;
@@ -120,6 +149,7 @@ namespace LabirinKata.Item.Letter
             Debug.Log("reposition after hit");
             _letterManager.RemoveAvailableSpawnPoint(randomPosition);
         }
+        */
 
         #endregion
     }

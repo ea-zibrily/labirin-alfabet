@@ -10,7 +10,7 @@ namespace LabirinKata.Stage
 {
     public class StageManager : MonoSingleton<StageManager>
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Settings")] 
         public LevelList CurrentLevelList;
@@ -45,7 +45,7 @@ namespace LabirinKata.Stage
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLeveStage()
         {
             if (stageObjects == null)
@@ -68,7 +68,7 @@ namespace LabirinKata.Stage
             }
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void InitializeNewStage()
         {
             LoadNextStage();
@@ -99,7 +99,7 @@ namespace LabirinKata.Stage
             stageObjects[currentStageIndex].SetActive(true);
         }
         
-        //-- Helper/Utilities
+        // !-- Helper/Utilities
         public bool CheckCanContinueStage()
         {
             return currentStageIndex < stageObjects.Length - 1;

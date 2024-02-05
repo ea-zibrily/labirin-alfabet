@@ -8,7 +8,7 @@ namespace LabirinKata.Managers
 {
     public class AudioManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         public Sound[] Musics;
         public Sound[] SoundEffects;

@@ -17,7 +17,7 @@ namespace LabirinKata.Entities.Player
 
         #endregion
         
-        #region Variable
+        #region Fields & Properties
         
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;

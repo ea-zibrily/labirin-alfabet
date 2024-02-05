@@ -5,7 +5,7 @@ namespace LabirinKata.Item.Reinforcement
     [RequireComponent(typeof(BoxCollider2D))]
     public class HealthBuff : BuffItem, ITakeable
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Health Buff")]
         [SerializeField] private int maxHealth;
@@ -14,7 +14,7 @@ namespace LabirinKata.Item.Reinforcement
         
         #region Labirin Kata Callbacks
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void Taken()
         {
             if (PlayerManager.CurrentHealthCount > maxHealth || CheckActiveHealthUI()) return;
@@ -37,7 +37,7 @@ namespace LabirinKata.Item.Reinforcement
             gameObject.SetActive(false);
         }
         
-        //-- Helper/Utilites
+        // !-- Helper/Utilites
         private bool CheckActiveHealthUI()
         {
             var activeCount = 0;

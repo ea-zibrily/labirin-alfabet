@@ -144,9 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterId: 0
+  spawnId: 0
   letterName: 
   hasLetterTaken: 0
   minRange: -3
   maxRange: 3
-  moveDelay: 0.3
-  lerpDuration: 4
+  moveDelay: 1.3
+  lerpDuration: 15

@@ -27,6 +27,7 @@ namespace LabirinKata.Entities.Enemy
         private void MoveEnemyPattern()
         {
             var maxTargetIndex = EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count;
+            
             if (Vector2.Distance(transform.position, EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex].position) <= 0.01f)
             {
                 CurrentTargetIndex = (CurrentTargetIndex + 1) % maxTargetIndex;

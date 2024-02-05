@@ -8,7 +8,7 @@ namespace LabirinKata.Managers
 {
     public class GameStatsManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("UI")] 
         [SerializeField] private TextMeshProUGUI speedTextUI;

@@ -9,14 +9,7 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterManager : MonoBehaviour
     {
-        #region Constant Variable
-
-        private const string LETTER_KEY_PREFFIX = "Letter_";
-        private const string LATEST_LETTER_KEY_INDEX = "Latest";
-
-        #endregion
-        
-        #region Variable
+        #region Fields & Properties
         
         [Header("Letter")] 
         [SerializeField] private GameObject[] letterPrefabs;
@@ -24,11 +17,11 @@ namespace LabirinKata.Item.Letter
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        [field: SerializeField] public List<Transform> AvailableSpawnPoint { get; private set; }
+        public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
-        [SerializeField] [ReadOnly] private List<GameObject> _lockedLetterObject;
-        [SerializeField] [ReadOnly] private List<GameObject> _unlockedLetterObject;
+        private List<GameObject> _lockedLetterObject;
+        private List<GameObject> _unlockedLetterObject;
         
         //-- Event
         public event Action<GameObject> OnTakeLetter;
@@ -70,7 +63,7 @@ namespace LabirinKata.Item.Letter
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLetterData()
         {
             _lockedLetterObject = new List<GameObject>();
@@ -114,13 +107,12 @@ namespace LabirinKata.Item.Letter
             }
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void SpawnLetter()
         {
             _letterGenerator.InitializeGenerator();
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterInterface(_letterGenerator.AvailableLetterObjects);
-            // _letterUIManager.SetLetterInterface(_letterGenerator.SpawnedLetterIndex);
             
             if (AvailableSpawnPoint.Count > 0)
             {
@@ -147,7 +139,7 @@ namespace LabirinKata.Item.Letter
             }
         }
         
-        //-- Helper/Utilities
+        // !-- Helper/Utilities
         public void AddAvailableSpawnPoint(Transform value)
         {
             AvailableSpawnPoint.Add(value);

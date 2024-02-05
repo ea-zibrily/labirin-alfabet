@@ -10,22 +10,16 @@ namespace LabirinKata.Entities.Enemy
 {
     public class SemiEnemy : EnemyBase
     {
-        #region  Fields & Properties
+        #region Fields & Properties
         
         [Header("Semi-Linear")]
         [SerializeField] private int maxChange;
-        [SerializeField] [ReadOnly] private int currentChange;
         [SerializeField] private float changeDirectionDelayTime;
         
+        private int _currentChange;
         private int _maxTargetIndex;
-        private int _randomPointIndex;
         private bool _isDefaultWay;
-        private bool  _hasCurrentChangeZero;
-
-        private bool CanChangeDirection
-        {
-            get => Random.value > 0.5f;
-        }
+        private bool  _canChange;
 
         #endregion
 
@@ -33,13 +27,6 @@ namespace LabirinKata.Entities.Enemy
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();
-
-            if (IsPointLessThanThree())
-            {
-                Debug.LogError("move pointnya kurenx dr 3 banh");
-                return;
-            }
-
             if (EarlyPositionIndex >= EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1)
             {
                 CurrentTargetIndex = EarlyPositionIndex - 1;
@@ -51,7 +38,8 @@ namespace LabirinKata.Entities.Enemy
                 _isDefaultWay = true;
             }
 
-            currentChange = 0;
+            _currentChange = 0;
+            _canChange = true;
             _maxTargetIndex = EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1;
             CurrentTarget = EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex];
         }
@@ -83,49 +71,59 @@ namespace LabirinKata.Entities.Enemy
                     _isDefaultWay = isCurrentZero;
                 }
                 DecreaseChangeCount();
-                StartCoroutine(ChangeDirection(changeDirectionDelayTime));
+                StartCoroutine(ChangeDirectionRoutine(changeDirectionDelayTime));
 
                 CurrentTarget = EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex];
             }
         }
         
-        private IEnumerator ChangeDirection(float delayTime)
+        private IEnumerator ChangeDirectionRoutine(float delayTime)
         {
-            if (!CanChangeDirection ||_hasCurrentChangeZero) yield return null;
+            if (_currentChange >= maxChange || !_canChange) yield break;
 
             var enemyMovePoint = EnemeyPattern[CurrentPatternIndex].MovePointTransforms;
-            _randomPointIndex = _maxTargetIndex < 2 ? 1 : Random.Range(1, enemyMovePoint.Count - 2);
-            
-            if (Vector2.Distance(transform.position , enemyMovePoint[_randomPointIndex].position) < 0.01f)
-            {
-                var randomDirection = Random.Range(0, 1);
+            var randomPointIndex = Random.Range(1, Mathf.Max(2, enemyMovePoint.Count - 2));
 
-                CurrentTargetIndex = randomDirection is 1 ? 1 : -1;
+            if (Vector2.Distance(transform.position , enemyMovePoint[randomPointIndex].position) < 0.01f)
+            {
+                if (!EnemyHelper.IsChangeDirection()) yield break;
+
+                CurrentTargetIndex += _isDefaultWay ? -2 : 2;
                 _isDefaultWay = !_isDefaultWay;
-                currentChange++;
-                _hasCurrentChangeZero = false;
-                Debug.Log("change direction");
+                IncreaseChangeCount();
+                CanMove = false;
 
                 yield return new WaitForSeconds(delayTime);
+                CanMove = true;
             }
         }
         
         // !--Helpers/Utilities
+        private void IncreaseChangeCount()
+        {
+            _currentChange++;
+            if (_currentChange >= maxChange)
+            {
+                _currentChange = maxChange;
+                _canChange = false;
+            }
+        }
+        
         private void DecreaseChangeCount()
         {
-            if (currentChange < maxChange || _hasCurrentChangeZero) return;
+            if (_currentChange < maxChange || _canChange) return;
             
-            currentChange--;
-            if (currentChange <= 0)
+            _currentChange--;
+            if (_currentChange <= 0)
             {
-                currentChange = 0;
-                _hasCurrentChangeZero = true;
+                _currentChange = 0;
+                _canChange = true;
             }
         }
 
         private bool IsPointLessThanThree()
         {
-            return EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1 > 1;
+            return EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1 < 2;
         }
     }
 }

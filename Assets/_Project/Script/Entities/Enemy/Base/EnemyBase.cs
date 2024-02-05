@@ -37,7 +37,7 @@ namespace LabirinKata.Entities.Enemy
         [SerializeField] private EnemyPattern[] enemyPattern;
 
         public EnemyPattern[] EnemeyPattern => enemyPattern;
-        public int MaxEnemyPattern
+        protected int MaxEnemyPattern
         {
             get
             {
@@ -53,17 +53,20 @@ namespace LabirinKata.Entities.Enemy
             }
         }
 
+        protected bool CanMove;
+
         [Header("Target Point")]
         protected Transform CurrentTarget;
-        [field: SerializeField] protected int CurrentTargetIndex;
+        protected int CurrentTargetIndex;
 
-        [field: SerializeField] protected int CurrentPatternIndex { get; set;}
+        protected int CurrentPatternIndex { get; set;}
         protected int EarlyPositionIndex { get; private set; }
 
         private Vector2 _enemyDirection;
         
         [Header("Reference")] 
         private Animator _enemyAnimator;
+        protected EnemyHelper EnemyHelper { get; private set; }
         
         #endregion
 
@@ -71,6 +74,7 @@ namespace LabirinKata.Entities.Enemy
         
         private void Awake()
         {
+            EnemyHelper = new EnemyHelper();
             _enemyAnimator = GetComponentInChildren<Animator>();
         }
         
@@ -95,6 +99,7 @@ namespace LabirinKata.Entities.Enemy
         protected virtual void InitializeEnemy()
         {
             gameObject.transform.parent.name = EnemyData.EnemyName;
+            CanMove = true;
 
             //*-- Enemy Early Position
             CurrentPatternIndex = EnemeyPattern.Length > 1 ? 0 : Random.Range(0, EnemeyPattern.Length - 1);
@@ -113,7 +118,8 @@ namespace LabirinKata.Entities.Enemy
             
             _enemyDirection = targetPosition - enemyPosition;
             _enemyDirection.Normalize();
-            
+
+            if (!CanMove) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
 

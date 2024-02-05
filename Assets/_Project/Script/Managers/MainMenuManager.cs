@@ -7,7 +7,7 @@ namespace LabirinKata.Managers
 {
     public class MainMenuManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("UI")] 
         [SerializeField] private Button playButtonUI;
@@ -25,7 +25,7 @@ namespace LabirinKata.Managers
 
         #region Labirin Kata Callbacks
 
-        //-- Initialization
+        // !-- Initialization
         private void OnPlayButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);

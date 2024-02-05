@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
 
 using Random = UnityEngine.Random;
 
@@ -10,18 +9,15 @@ namespace LabirinKata.Entities.Enemy
 {
     public class SemiConnectedEnemy : EnemyBase
     {
+        #region Fields & Properties
+
         [Header("Semi-Linear")]
-        [SerializeField] private int maxChange;
-        [SerializeField] [ReadOnly] private int currentChange;
         [SerializeField] private float changeDirectionDelayTime;
 
         private int _maxTargetIndex;
         private bool _isDefaultWay;
 
-         private bool CanChangeDirection
-        {
-            get => Random.value > 0.5f;
-        }
+        #endregion
         
         // !-- Initialization
         protected override void InitializeEnemy()
@@ -53,33 +49,25 @@ namespace LabirinKata.Entities.Enemy
                                     (CurrentTargetIndex + 1) % maxTargetIndex :
                                     (CurrentTargetIndex - 1 + maxTargetIndex) % maxTargetIndex;
 
+                StartCoroutine(ChangeDirectionRoutine(changeDirectionDelayTime));
                 CurrentTarget = EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex];
             }
         }
         
-        private IEnumerator ChangeDirection(float delayTime)
+        private IEnumerator ChangeDirectionRoutine(float delayTime)
         {
-            if (!CanChangeDirection) yield return null;
-
             var enemyMovePoint = EnemeyPattern[CurrentPatternIndex].MovePointTransforms;
+
             if (Vector2.Distance(transform.position , enemyMovePoint[_maxTargetIndex].position) < 0.01f)
             {
-                var randomDirection = Random.Range(0, 1);
+                if (!EnemyHelper.IsChangeDirection()) yield break;
 
-                switch (randomDirection)
-                {
-                    case 0:
-                        CurrentTargetIndex = _maxTargetIndex - 1;
-                        _isDefaultWay = false;
-                        break;
-                    case 1:
-                        CurrentTargetIndex = 0;
-                        _isDefaultWay = true;
-                        break;
-                }
+                CurrentTargetIndex = _isDefaultWay ? _maxTargetIndex - 1 : 0;
+                _isDefaultWay = !_isDefaultWay;
+                CanMove = false;
 
-                Debug.Log($"change direction: {_isDefaultWay}");
                 yield return new WaitForSeconds(delayTime);
+                CanMove = true;
             }
         }
     }

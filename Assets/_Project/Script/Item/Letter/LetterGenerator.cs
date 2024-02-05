@@ -7,14 +7,13 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterGenerator
     {
-        #region Variable
+        #region Fields & Properties
 
         private readonly List<GameObject> _letterObjects;
         private readonly LetterSpawns[] _letterSpawns;
         
         private int _letterGenerateCount;
         private int _stageIndex;
-        private Transform _letterParentTransform;
         
         public List<GameObject> AvailableLetterObjects { get; private set; }
         public List<Transform> AvailableSpawnPoints { get; private set; }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Database;
 using LabirinKata.Gameplay.EventHandler;
 using LabirinKata.Stage;
 
@@ -11,12 +10,12 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterUIManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Letter UI")] 
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
-
+        
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
 
@@ -60,7 +59,7 @@ namespace LabirinKata.Item.Letter
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         public void InitializeLetterInterface(IReadOnlyList<GameObject> objects)
         {
             _letterFillImage ??= new GameObject[letterImageUI.Length];
@@ -89,7 +88,7 @@ namespace LabirinKata.Item.Letter
             }
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
         public void LostLetterEvent(int itemId) => OnLetterLost?.Invoke(itemId);
         

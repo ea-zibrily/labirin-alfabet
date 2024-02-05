@@ -8,7 +8,7 @@ namespace LabirinKata.Collection
 {
     public class CollectionManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("UI")] 
         [SerializeField] private GameObject[] letterObjectUI;

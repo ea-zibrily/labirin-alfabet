@@ -1,13 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using LabirinKata.Enum;
-using UnityEngine.Serialization;
 
 namespace LabirinKata.Collection
 {
     public class CollectionAudioManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [SerializeField] private CollectionSound[] collectionSounds;
         private AudioSource _audioSource;

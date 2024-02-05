@@ -8,7 +8,7 @@ namespace LabirinKata.Managers
 {
     public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     {
-        #region Variable
+        #region Fields & Properties
     
         [Header("Interface")]
         [SerializeField] private RectTransform sceneFader;

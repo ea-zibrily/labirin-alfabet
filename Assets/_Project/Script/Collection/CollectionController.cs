@@ -7,7 +7,7 @@ namespace LabirinKata.Collection
 {
     public class CollectionController : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Settings")] 
         [SerializeField] private Letter letterName;

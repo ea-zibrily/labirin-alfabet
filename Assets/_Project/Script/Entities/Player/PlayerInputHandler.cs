@@ -1,7 +1,7 @@
 ﻿using LabirinKata.UI;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
@@ -9,7 +9,7 @@ namespace LabirinKata.Entities.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Joystick Settings")] 
         [Tooltip("Isi dengan ukuran Rect Transform joystick yang diinginkan")]

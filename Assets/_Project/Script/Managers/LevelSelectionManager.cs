@@ -8,7 +8,7 @@ namespace LabirinKata.Managers
 {
     public class LevelSelectionManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("UI")] 
         [SerializeField] private Button backButtonUI;

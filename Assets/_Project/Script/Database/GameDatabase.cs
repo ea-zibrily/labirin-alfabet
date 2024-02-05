@@ -9,7 +9,7 @@ namespace LabirinKata.Database
 {
     public class GameDatabase : MonoDDOL<GameDatabase>
     {
-        #region Variable
+        #region Fields & Properties
 
         //-- Main Database
         private Dictionary<int, bool> _letterConditions;
