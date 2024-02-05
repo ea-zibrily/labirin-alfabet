@@ -7,17 +7,16 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterGenerator
     {
-        #region Variable
+        #region Fields & Properties
 
         private readonly List<GameObject> _letterObjects;
         private readonly LetterSpawns[] _letterSpawns;
         
         private int _letterGenerateCount;
         private int _stageIndex;
-        private Transform _letterParentTransform;
         
-        public List<int> SpawnedLetterIndex { get; private set; }
-        public List<Transform> AvailableSpawnPoint { get; private set; }
+        public List<GameObject> AvailableLetterObjects { get; private set; }
+        public List<Transform> AvailableSpawnPoints { get; private set; }
         
         #endregion
 
@@ -37,28 +36,29 @@ namespace LabirinKata.Item.Letter
         /// </summary>
         public void InitializeGenerator()
         {
-            if (SpawnedLetterIndex == null)
+            if (AvailableLetterObjects == null)
             {
-                SpawnedLetterIndex = new List<int>();
+                AvailableLetterObjects = new List<GameObject>();
             }
-            SpawnedLetterIndex.Clear();
-
-            if (AvailableSpawnPoint == null)
+            
+            if (AvailableSpawnPoints == null)
             {
-                AvailableSpawnPoint = new List<Transform>();
+                AvailableSpawnPoints = new List<Transform>();
             }
-            AvailableSpawnPoint.Clear();
+            
+            AvailableLetterObjects.Clear();
+            AvailableSpawnPoints.Clear();
             
             _stageIndex = StageManager.Instance.CurrentStageIndex;
             _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
-            AddAvailableSpawn();
+            AddAvailableSpawnPoint();
         }
         
-        private void AddAvailableSpawn()
+        private void AddAvailableSpawnPoint()
         {
             foreach (var spawnPoint in _letterSpawns[_stageIndex].SpawnPointTransforms)
             {
-                AvailableSpawnPoint.Add(spawnPoint);
+                AvailableSpawnPoints.Add(spawnPoint);
             }
         }
         
@@ -69,7 +69,7 @@ namespace LabirinKata.Item.Letter
         {
             if (_letterObjects == null)
             {
-                Debug.LogWarning("objects null!");
+                Debug.LogError("objects null!");
                 return;
             }
             
@@ -90,12 +90,12 @@ namespace LabirinKata.Item.Letter
                 latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
                 
-                SpawnedLetterIndex.Add(randomLetterIndex);
-                AvailableSpawnPoint.RemoveAt(randomPointIndex);
-                
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().SpawnId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
+                
+                AvailableLetterObjects.Add(letterObject);
+                AvailableSpawnPoints.RemoveAt(randomPointIndex);
             }
         }
         

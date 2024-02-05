@@ -275,6 +275,7 @@ MonoBehaviour:
   spawnPointTransforms:
   - {fileID: 4580730730764213000}
   - {fileID: 6567163086841029311}
-  moveSpeedUp: 7
+  isBuffActive: 0
+  moveSpeedUp: 8
   speedUpTimeDuration: 5
   speedUpMultiplier: 2

@@ -101,14 +101,13 @@ namespace LabirinKata.Gameplay.Controller
         
         private IEnumerator ReachDoorRoutine()
         {
+            yield return new WaitForSeconds(reachDoorDelay);
             if (StageManager.Instance.CheckCanContinueStage())
             {
-                yield return new WaitForSeconds(reachDoorDelay);
                 GameEventHandler.ContinueStageEvent();
             }
             else
-            {
-                Debug.Log("call game win event");
+            { 
                 GameEventHandler.GameWinEvent();
             }
         }

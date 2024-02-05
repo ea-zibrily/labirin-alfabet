@@ -6,7 +6,7 @@ namespace LabirinKata.Item.Reinforcement
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Speed Buff")]
         [SerializeField] private float moveSpeedUp;

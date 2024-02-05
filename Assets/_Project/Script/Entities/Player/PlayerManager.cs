@@ -7,6 +7,7 @@ using LabirinKata.Stage;
 using LabirinKata.Item.Letter;
 using LabirinKata.Item.Reinforcement;
 using LabirinKata.Gameplay.EventHandler;
+
 using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Player
@@ -14,7 +15,7 @@ namespace LabirinKata.Entities.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Health")] 
         [SerializeField] private int healthCount;

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Database;
 using LabirinKata.Item.Letter;
 using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
@@ -9,7 +10,7 @@ namespace LabirinKata.Stage
 {
     public class StageManager : MonoSingleton<StageManager>
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Settings")] 
         public LevelList CurrentLevelList;
@@ -44,7 +45,7 @@ namespace LabirinKata.Stage
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLeveStage()
         {
             if (stageObjects == null)
@@ -67,11 +68,17 @@ namespace LabirinKata.Stage
             }
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void InitializeNewStage()
         {
             LoadNextStage();
             _letterManager.SpawnLetter();
+        }
+
+        public void SaveClearedLevel()
+        {
+            var currentLevel = CurrentLevelList.ToString();
+            GameDatabase.Instance.SaveLevelConditions(currentLevel, true);
         }
         
         private void LoadNextStage()
@@ -92,7 +99,7 @@ namespace LabirinKata.Stage
             stageObjects[currentStageIndex].SetActive(true);
         }
         
-        //-- Helper/Utilities
+        // !-- Helper/Utilities
         public bool CheckCanContinueStage()
         {
             return currentStageIndex < stageObjects.Length - 1;

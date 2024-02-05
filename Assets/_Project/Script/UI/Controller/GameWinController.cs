@@ -11,7 +11,6 @@ namespace LabirinKata.UI
         #region Variable
         
         [SerializeField] private Button nextButtonUI;
-        [SerializeField] private GameObject developmentPanelUI;
         
         #endregion
         
@@ -27,15 +26,7 @@ namespace LabirinKata.UI
         //-- Core Functionality
         private void OnNextButton()
         {
-            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
-            StartCoroutine(DevelopmentRoutine());
-        }
-        
-        private IEnumerator DevelopmentRoutine()
-        {
-            developmentPanelUI.SetActive(true);
-            yield return new WaitForSeconds(2.5f);
-            developmentPanelUI.SetActive(false);
+            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
         
         #endregion

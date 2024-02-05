@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using LabirinKata.Database;
 using UnityEngine;
 using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
@@ -20,8 +21,8 @@ namespace LabirinKata.Managers
         
         #endregion
         
-        #region Variable
-
+        #region Fields & Properties
+        
         [Header("UI")] 
         [SerializeField] private GameObject gameWinPanelUI;
         [SerializeField] private GameObject gameOverPanelUI;
@@ -61,15 +62,9 @@ namespace LabirinKata.Managers
         
         private void Start()
         {
-            Debug.Log("star gim manaher");
             IsGameStart = true;
         }
-
-        private void OnApplicationQuit()
-        {
-            PlayerPrefs.DeleteAll();
-        }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks
@@ -91,7 +86,8 @@ namespace LabirinKata.Managers
             _playerController.StopMovement();
             _timeController.IsTimerStart = false;
             IsGameStart = false;
-
+            
+            StageManager.Instance.SaveClearedLevel();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }

@@ -6,7 +6,7 @@ namespace LabirinKata.Entities.Player
 {
     public class PlayerKnockBack : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Data")] 
         [SerializeField] private float knockBackTime;

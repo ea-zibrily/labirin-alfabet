@@ -8,7 +8,7 @@ namespace LabirinKata.Item.Reinforcement
 {
     public class BuffItem : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Buff")] 
         public BuffType BuffType;

@@ -2,51 +2,57 @@
 using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Enum;
+using UnityEngine.Serialization;
 
 namespace LabirinKata.Managers
 {
     public class LevelSelectionManager : MonoBehaviour
     {
-        #region Variable
-
+        #region Fields & Properties
+        
         [Header("UI")] 
-        [SerializeField] private Button levelButtonUI;
-        [SerializeField] private Button colletionButtonUI;
+        [SerializeField] private Button backButtonUI;
+        [SerializeField] private Button exploreButtonUI;
+        [SerializeField] private Button collectionButtonUI;
         [SerializeField] private GameObject collectionPanelUI;
-
-        [SerializeField] private GameObject developmentPanel;
         
         #endregion
         
         #region MonoBehaviour Callbacks
-
+        
         private void Start()
         {
-            levelButtonUI.onClick.AddListener(OnPlayButton);
-            colletionButtonUI.onClick.AddListener(OnCollectionButton);
+            InitializeLevelSelection();
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
+        private void InitializeLevelSelection()
+        {
+            collectionPanelUI.SetActive(false);
+            
+            exploreButtonUI.onClick.AddListener(OnPlayButton);
+            collectionButtonUI.onClick.AddListener(OnCollectionButton);
+            backButtonUI.onClick.AddListener(OnBackButton);
+        }
+        
+        // !-- Core Functionality
         private void OnPlayButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
-
+        
         private void OnCollectionButton()
         {
-            StartCoroutine(DevelopmentRoutine());
+            collectionPanelUI.SetActive(true);
         }
-        
-        //-- Core Functionality
-        private IEnumerator DevelopmentRoutine()
+
+        private void OnBackButton()
         {
-            developmentPanel.SetActive(true);
-            yield return new WaitForSeconds(2.5f);
-            developmentPanel.SetActive(false);
+            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);
         }
         
         #endregion

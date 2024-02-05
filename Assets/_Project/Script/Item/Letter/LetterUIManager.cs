@@ -10,14 +10,13 @@ namespace LabirinKata.Item.Letter
 {
     public class LetterUIManager : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [Header("Letter UI")] 
-        [SerializeField] private Sprite[] letterSprites;
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
-        private GameObject[] _letterBorderImage;
+        private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
 
         public int CurrentTakenLetter => _currentTakenLetter;
@@ -51,42 +50,55 @@ namespace LabirinKata.Item.Letter
             OnLetterLost -= LostLetter;
         }
 
+        private void Start()
+        {
+            InitializeLetterImage();
+        }
+
         #endregion
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
-        public void InitializeLetterUI(IReadOnlyList<int> index)
+        // !-- Initialization
+        public void InitializeLetterInterface(IReadOnlyList<GameObject> objects)
         {
-            _letterBorderImage ??= new GameObject[letterImageUI.Length];
-            
-            for (var i = 0; i < letterImageUI.Length; i++)
-            {
-                var letterBorder = letterImageUI[i].transform.parent.gameObject;
-                var spriteIndex = index[i];
-                
-                _letterBorderImage[i] = letterBorder;
-                _letterBorderImage[i].GetComponent<Image>().sprite = letterSprites[spriteIndex];
-                
-                letterImageUI[i].GetComponent<Image>().sprite = letterSprites[spriteIndex];
-                letterImageUI[i].SetActive(false);
-            }
-
+            _letterFillImage ??= new GameObject[letterImageUI.Length];
             currentAmountOfLetter = _letterManager.LetterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
             _currentTakenLetter = 0;
+            
+            for (var i = 0; i < currentAmountOfLetter; i++)
+            {
+                var letterObject = objects[i].GetComponent<SpriteRenderer>();
+                var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
+                
+                letterImageUI[i].SetActive(true);
+                letterImageUI[i].GetComponent<Image>().sprite = letterObject.sprite;
+                
+                _letterFillImage[i] = letterFill;
+                _letterFillImage[i].GetComponent<Image>().sprite = letterObject.sprite;
+                _letterFillImage[i].SetActive(false);
+            }
         }
         
-        //-- Core Functionality
+        private void InitializeLetterImage()
+        {
+            foreach (var image in letterImageUI)
+            {
+                image.SetActive(false);
+            }
+        }
+        
+        // !-- Core Functionality
         public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
         public void LostLetterEvent(int itemId) => OnLetterLost?.Invoke(itemId);
         
         private void TakeLetter(int itemId)
         {
             var itemIndex = itemId - 1;
-            letterImageUI[itemIndex].SetActive(true);
+            _letterFillImage[itemIndex].SetActive(true);
             _currentTakenLetter++;
             
-            if (_currentTakenLetter >= currentAmountOfLetter || IsAllLetterActive())
+            if (_currentTakenLetter >= currentAmountOfLetter)
             {
                 GameEventHandler.ObjectiveClearEvent();
             }
@@ -95,23 +107,8 @@ namespace LabirinKata.Item.Letter
         private void LostLetter(int itemId)
         {
             var itemIndex = itemId - 1;
-            letterImageUI[itemIndex].SetActive(false);
+            _letterFillImage[itemIndex].SetActive(false);
             _currentTakenLetter--;
-        }
-        
-        //-- Helper/Utilities
-        private bool IsAllLetterActive()
-        {
-            var activeLetterNum = 0;
-            foreach (var itemUI in letterImageUI)
-            {
-                if (itemUI.activeSelf)
-                {
-                    activeLetterNum++;
-                }
-            }
-            
-            return activeLetterNum >= currentAmountOfLetter;
         }
         
         #endregion
