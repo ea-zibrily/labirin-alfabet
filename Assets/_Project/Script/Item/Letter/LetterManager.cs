@@ -17,13 +17,13 @@ namespace LabirinKata.Item.Letter
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        public List<Transform> AvailableSpawnPoint { get; private set; }
+        [field: SerializeField] public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
         private List<GameObject> _lockedLetterObject;
         private List<GameObject> _unlockedLetterObject;
         
-        //-- Event
+        //-- Letter Event
         public event Action<GameObject> OnTakeLetter;
 
         [Header("Reference")] 

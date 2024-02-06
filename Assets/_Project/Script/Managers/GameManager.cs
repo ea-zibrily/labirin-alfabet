@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using LabirinKata.Database;
 using UnityEngine;
 using LabirinKata.Stage;
 using LabirinKata.Entities.Player;
@@ -28,8 +27,6 @@ namespace LabirinKata.Managers
         [SerializeField] private GameObject gameOverPanelUI;
         [SerializeField] private GameObject notificationStagePanelUI;
         
-        [Header("Settings")]
-        private string _saveKey;
         public bool IsGameStart { get; private set; }
         
         [Header("Reference")] 
@@ -59,17 +56,12 @@ namespace LabirinKata.Managers
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage -= ContinueStage;
         }
-        
-        private void Start()
-        {
-            IsGameStart = true;
-        }
-        
+
         #endregion
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -80,7 +72,7 @@ namespace LabirinKata.Managers
         
         #region Game State Callbacks
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void GameWin()
         {
             _playerController.StopMovement();

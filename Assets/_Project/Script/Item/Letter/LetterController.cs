@@ -16,12 +16,6 @@ namespace LabirinKata.Item.Letter
         [SerializeField] private string letterName;
         [SerializeField] private bool hasLetterTaken;
 
-        [Header("Lost")] 
-        [SerializeField] private float minRange;
-        [SerializeField] private float maxRange;
-        [SerializeField] private float moveDelay;
-        [SerializeField] private float lerpDuration;
-        
         public int LetterId => letterId;
         public string LetterName => letterName;
         public int SpawnId
@@ -29,7 +23,14 @@ namespace LabirinKata.Item.Letter
             get => spawnId;
             set => spawnId = value;
         }
-        
+         
+        [Header("Lost")] 
+        [SerializeField] private float minRange;
+        [SerializeField] private float maxRange;
+        [SerializeField] private float moveDelay;
+        [SerializeField] private float lerpDuration;
+
+
         [Header("Reference")] 
         private LetterManager _letterManager;
         private LetterUIManager _letterUIManager;
@@ -72,6 +73,7 @@ namespace LabirinKata.Item.Letter
             }
             _letterManager.AddAvailableSpawnPoint(transform);
             _letterUIManager.TakeLetterEvent(SpawnId);
+            Debug.LogWarning($"add spawn point");
             
             gameObject.SetActive(false);
         }
@@ -88,68 +90,35 @@ namespace LabirinKata.Item.Letter
         private IEnumerator LostRoutine()
         {
             _letterUIManager.LostLetterEvent(SpawnId);
-            
-            var elapsedTime = 0f;
+
             var lerpRatio = 0f;
-            var randomPosition = GetAvailablePosition();
+            var elapsedTime = 0f;
+
+            var spawnPoints = _letterManager.AvailableSpawnPoint;
+            var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);
+            var randomPoint = spawnPoints[randomPointIndex].position;
             
             while (lerpRatio < moveDelay)
             {
                 elapsedTime += Time.deltaTime;
                 lerpRatio = elapsedTime / lerpDuration;
-                transform.position = Vector3.Lerp(transform.position, randomPosition, lerpRatio);
+                transform.position = Vector3.Lerp(transform.position, randomPoint, lerpRatio);
                 yield return null;
             }
             
-            transform.position = randomPosition;
+            transform.position = randomPoint;
+            Debug.LogWarning($"remove spawn point at {randomPointIndex}");
+            _letterManager.RemoveAvailableSpawnPoint(randomPointIndex);
         }
-
+        
         // !-- Helper/Utilities
         private Vector3 GetAvailablePosition()
         {
             var spawnPoints = _letterManager.AvailableSpawnPoint;
-            var randomPosition = Random.Range(0, spawnPoints.Count - 1);
-            
-            _letterManager.RemoveAvailableSpawnPoint(randomPosition);
-            return spawnPoints[randomPosition].position;
-        }
+            var randomIndex = Random.Range(0, spawnPoints.Count - 1);
 
-        /* Reposition with Delay & Teleport
-        private IEnumerator LostRoutine()
-        {
-            _letterUIManager.LostLetterEvent(SpawnId);
-            
-            var elapsedTime = 0f;
-            var lerpRatio = 0f;
-            var randomPosition = transform.position + new Vector3(
-                Random.Range(minRange, maxRange),
-                Random.Range(minRange, maxRange),
-                Random.Range(minRange, maxRange)
-            );
-            
-            while (lerpRatio < moveDelay)
-            {
-                elapsedTime += Time.deltaTime;
-                lerpRatio = elapsedTime / lerpDuration;
-                transform.position = Vector3.Lerp(transform.position, randomPosition, lerpRatio);
-                yield return null;
-            }
-            
-            transform.position = randomPosition;
-            Reposition();
+            return spawnPoints[randomIndex].position;
         }
-        
-        // !-- Helper/Utilities
-        private void Reposition()
-        {
-            var spawnPoints = _letterManager.AvailableSpawnPoint;
-            var randomPosition = Random.Range(0, spawnPoints.Count - 1);
-            
-            transform.position = spawnPoints[randomPosition].position;
-            Debug.Log("reposition after hit");
-            _letterManager.RemoveAvailableSpawnPoint(randomPosition);
-        }
-        */
 
         #endregion
     }

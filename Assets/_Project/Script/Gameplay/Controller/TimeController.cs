@@ -47,7 +47,7 @@ namespace LabirinKata.Gameplay.Controller
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         public void InitializeTimer()
         {
             _fullTime = amountOfTime + _latestTime;
@@ -62,7 +62,7 @@ namespace LabirinKata.Gameplay.Controller
             IsTimerStart = true;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void CountdownTimer()
         {
             if (!IsTimerStart) return;
@@ -78,7 +78,7 @@ namespace LabirinKata.Gameplay.Controller
             TimerDisplay(_currentTime);
         }
         
-        //-- Helper/Utitilies
+        // !-- Helper/Utitilies
         public void SetLatestTimer()
         {
             _latestTime = _currentTime;

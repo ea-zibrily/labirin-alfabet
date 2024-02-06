@@ -6,7 +6,9 @@ using LabirinKata.Item;
 using LabirinKata.Stage;
 using LabirinKata.Item.Letter;
 using LabirinKata.Item.Reinforcement;
+using LabirinKata.Gameplay.Controller;
 using LabirinKata.Gameplay.EventHandler;
+
 
 using Random = UnityEngine.Random;
 
@@ -46,7 +48,7 @@ namespace LabirinKata.Entities.Player
         private PlayerKnockBack _playerKnockBack;
 
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         
         private void Awake()
@@ -54,6 +56,18 @@ namespace LabirinKata.Entities.Player
             _playerObject = GameObject.FindGameObjectWithTag("Player");
             _playerController = _playerObject.GetComponent<PlayerController>();
             _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
+        }
+
+        private void OnEnable()
+        {
+            DoorController.OnCameraShiftIn += _playerController.StopMovement;
+            DoorController.OnCameraShiftOut += _playerController.StartMovement;
+        }
+
+        private void OnDisable()
+        {
+            DoorController.OnCameraShiftIn -= _playerController.StopMovement;
+            DoorController.OnCameraShiftOut -= _playerController.StartMovement;
         }
 
         private void Start()
@@ -66,7 +80,7 @@ namespace LabirinKata.Entities.Player
         
         #region Health Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeHealth()
         {
             if (healthCount != healthUIObjects.Length)
@@ -79,7 +93,7 @@ namespace LabirinKata.Entities.Player
             _isPlayerDead = false;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void DecreaseHealth()
         {
             var healthIndex = currentHealthCount - 1;
@@ -148,17 +162,16 @@ namespace LabirinKata.Entities.Player
 
         #region Objective Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLetterObject()
         {
-            if (letterObjects == null)
-            {
-                var objectSize = StageManager.Instance.StageCount;
-                letterObjects = new LetterObject[objectSize];
-            }
+            if (letterObjects != null) return;
+            
+            var objectSize = StageManager.Instance.StageCount;
+            letterObjects = new LetterObject[objectSize];
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
             var currentStageIndex = StageManager.Instance.CurrentStageIndex;

@@ -149,5 +149,5 @@ MonoBehaviour:
   hasLetterTaken: 0
   minRange: -3
   maxRange: 3
-  moveDelay: 1.3
+  moveDelay: 0.3
   lerpDuration: 15

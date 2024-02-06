@@ -22,32 +22,30 @@ namespace LabirinKata.Item.Letter
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         public LetterGenerator(LetterSpawns[] spawns, List<GameObject> objects)
         {
             _letterSpawns = spawns;
             _letterObjects = objects;
+
+            AvailableLetterObjects = new List<GameObject>();
+            AvailableSpawnPoints = new List<Transform>();
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         
         /// <summary>
         /// Panggil method ini terlebih dahulu saat akan melakukan generate letter
         /// </summary>
         public void InitializeGenerator()
         {
-            if (AvailableLetterObjects == null)
+            if (AvailableLetterObjects.Count > 0 || AvailableSpawnPoints.Count > 0)
             {
-                AvailableLetterObjects = new List<GameObject>();
+                Debug.Log("clear available brow");
+
+                AvailableLetterObjects.Clear();
+                AvailableSpawnPoints.Clear();
             }
-            
-            if (AvailableSpawnPoints == null)
-            {
-                AvailableSpawnPoints = new List<Transform>();
-            }
-            
-            AvailableLetterObjects.Clear();
-            AvailableSpawnPoints.Clear();
             
             _stageIndex = StageManager.Instance.CurrentStageIndex;
             _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
@@ -60,6 +58,7 @@ namespace LabirinKata.Item.Letter
             {
                 AvailableSpawnPoints.Add(spawnPoint);
             }
+            Debug.Log("add spawn point ava");
         }
         
         /// <summary>

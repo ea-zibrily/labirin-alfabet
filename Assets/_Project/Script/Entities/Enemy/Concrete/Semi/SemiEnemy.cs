@@ -27,6 +27,8 @@ namespace LabirinKata.Entities.Enemy
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();
+
+            if (IsPointLessThanThree()) return;
             if (EarlyPositionIndex >= EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1)
             {
                 CurrentTargetIndex = EarlyPositionIndex - 1;

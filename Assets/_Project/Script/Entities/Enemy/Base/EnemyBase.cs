@@ -6,6 +6,7 @@ using LabirinKata.Enum;
 using LabirinKata.Managers;
 
 using Random = UnityEngine.Random;
+using LabirinKata.Gameplay.Controller;
 
 namespace LabirinKata.Entities.Enemy
 {
@@ -78,6 +79,18 @@ namespace LabirinKata.Entities.Enemy
             _enemyAnimator = GetComponentInChildren<Animator>();
         }
         
+        private void OnEnable()
+        {
+            DoorController.OnCameraShiftIn += StopMovement;
+            DoorController.OnCameraShiftOut += StartMovement;
+        }
+
+        private void OnDisable()
+        {
+            DoorController.OnCameraShiftIn -= StopMovement;
+            DoorController.OnCameraShiftOut -= StartMovement;
+        }
+
         private void Start()
         {
             InitializeEnemy();
@@ -99,7 +112,7 @@ namespace LabirinKata.Entities.Enemy
         protected virtual void InitializeEnemy()
         {
             gameObject.transform.parent.name = EnemyData.EnemyName;
-            CanMove = true;
+            StartMovement();
 
             //*-- Enemy Early Position
             CurrentPatternIndex = EnemeyPattern.Length > 1 ? 0 : Random.Range(0, EnemeyPattern.Length - 1);
@@ -131,6 +144,9 @@ namespace LabirinKata.Entities.Enemy
         }
         
         // !-- Helpers/Utilities
+        public void StartMovement() => CanMove = true;
+        public void StopMovement() => CanMove = false;
+
         private bool CheckPatternCount()
         {
             if (EnemeyPattern.Length > MaxEnemyPattern)
