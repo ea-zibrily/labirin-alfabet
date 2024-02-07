@@ -204,6 +204,7 @@ namespace LabirinKata.Entities.Player
             {
                 _playerController.StopMovement();
                 DecreaseHealth();
+                CameraEventHandler.CameraShakeEvent();
                 KnockedBack(other.gameObject);
                 StartCoroutine(IframeRoutine());
                 CanceledBuff();

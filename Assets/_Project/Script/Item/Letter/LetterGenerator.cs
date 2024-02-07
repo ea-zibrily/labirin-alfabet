@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LabirinKata.Stage;
 using UnityEngine;
 using MonoUnity = UnityEngine.Object;
@@ -32,8 +33,6 @@ namespace LabirinKata.Item.Letter
             AvailableSpawnPoints = new List<Transform>();
         }
         
-        // !-- Core Functionality
-        
         /// <summary>
         /// Panggil method ini terlebih dahulu saat akan melakukan generate letter
         /// </summary>
@@ -42,25 +41,16 @@ namespace LabirinKata.Item.Letter
             if (AvailableLetterObjects.Count > 0 || AvailableSpawnPoints.Count > 0)
             {
                 Debug.Log("clear available brow");
-
                 AvailableLetterObjects.Clear();
                 AvailableSpawnPoints.Clear();
             }
             
             _stageIndex = StageManager.Instance.CurrentStageIndex;
             _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
-            AddAvailableSpawnPoint();
         }
         
-        private void AddAvailableSpawnPoint()
-        {
-            foreach (var spawnPoint in _letterSpawns[_stageIndex].SpawnPointTransforms)
-            {
-                AvailableSpawnPoints.Add(spawnPoint);
-            }
-            Debug.Log("add spawn point ava");
-        }
-        
+        // !-- Core Functionality
+
         /// <summary>
         /// Pastikan sudah memanggil method InitializeGenerator saat akan memanggil method ini
         /// </summary>
@@ -88,13 +78,29 @@ namespace LabirinKata.Item.Letter
                 
                 latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
+
+                Debug.LogWarning($"remove point index {randomPointIndex}");
                 
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().SpawnId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
                 
                 AvailableLetterObjects.Add(letterObject);
-                AvailableSpawnPoints.RemoveAt(randomPointIndex);
+            }
+
+            SetAvailableSpawnPoint(latestPointIndices);            
+        }
+        
+        // !-- Helper/Utilities
+        private void SetAvailableSpawnPoint(HashSet<int> value)
+        {
+            var removedPointIndex = value.ToList();
+            var spawnPoints = _letterSpawns[_stageIndex].SpawnPointTransforms;
+
+            for (int i = 0; i < spawnPoints.Length; i++)
+            {
+                if (removedPointIndex.Contains(i)) continue;
+                AvailableSpawnPoints.Add(spawnPoints[i]);
             }
         }
         

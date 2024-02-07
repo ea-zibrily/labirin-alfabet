@@ -57,6 +57,11 @@ namespace LabirinKata.Managers
             GameEventHandler.OnContinueStage -= ContinueStage;
         }
 
+        private void Start()
+        {
+            IsGameStart = true;
+        }
+
         #endregion
 
         #region Labirin Kata Callbacks

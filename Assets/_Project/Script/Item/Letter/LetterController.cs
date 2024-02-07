@@ -73,7 +73,8 @@ namespace LabirinKata.Item.Letter
             }
             _letterManager.AddAvailableSpawnPoint(transform);
             _letterUIManager.TakeLetterEvent(SpawnId);
-            Debug.LogWarning($"add spawn point");
+
+            Debug.LogWarning($"add spawn point on {transform.position}");
             
             gameObject.SetActive(false);
         }
@@ -107,7 +108,6 @@ namespace LabirinKata.Item.Letter
             }
             
             transform.position = randomPoint;
-            Debug.LogWarning($"remove spawn point at {randomPointIndex}");
             _letterManager.RemoveAvailableSpawnPoint(randomPointIndex);
         }
         
@@ -116,7 +116,7 @@ namespace LabirinKata.Item.Letter
         {
             var spawnPoints = _letterManager.AvailableSpawnPoint;
             var randomIndex = Random.Range(0, spawnPoints.Count - 1);
-
+            
             return spawnPoints[randomIndex].position;
         }
 

@@ -27,6 +27,7 @@ namespace LabirinKata.Entities.Enemy
 
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "IsMove";
 
         #endregion
 
@@ -101,7 +102,7 @@ namespace LabirinKata.Entities.Enemy
             if (CheckPatternCount() || !GameManager.Instance.IsGameStart) return;
             
             EnemyMove();
-            // EnemyAnimation();
+            EnemyAnimation();
         }
         
         #endregion
@@ -139,8 +140,17 @@ namespace LabirinKata.Entities.Enemy
         // TODO: Aktifken method animasi pas animasi dah ada lur
         private void EnemyAnimation()
         {
-            _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
-            _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
+            if (CanMove)
+            {
+                _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
+                _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
+                _enemyAnimator.SetBool(IS_MOVE, true);
+            }
+            else
+            {
+                _enemyAnimator.SetBool(IS_MOVE, false);
+            }
+            
         }
         
         // !-- Helpers/Utilities

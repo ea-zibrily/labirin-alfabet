@@ -79,8 +79,6 @@ namespace LabirinKata.Item.Letter
             _letterGenerator = isLevelCleared ? 
                 new LetterGenerator(letterSpawns, _unlockedLetterObject) :
                 new LetterGenerator(letterSpawns, _lockedLetterObject);
-            
-            Debug.Log(isLevelCleared);
         }
         
         private void InitializeLetterObject()
@@ -140,21 +138,15 @@ namespace LabirinKata.Item.Letter
         }
         
         // !-- Helper/Utilities
-        public void AddAvailableSpawnPoint(Transform value)
-        {
-            AvailableSpawnPoint.Add(value);
-        }
-        
-        public void RemoveAvailableSpawnPoint(int value)
-        {
-            AvailableSpawnPoint.RemoveAt(value);
-        }
+        public void AddAvailableSpawnPoint(Transform value) =>  AvailableSpawnPoint.Add(value);
+
+        public void RemoveAvailableSpawnPoint(int value) => AvailableSpawnPoint.RemoveAt(value);
         
         #endregion
         
         #region Save Letter Callbacks
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void SaveUnlockedLetters()
         {
             if (_unlockedLetterObject == null) return;
