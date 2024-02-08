@@ -6,7 +6,6 @@ using LabirinKata.Item;
 using LabirinKata.Stage;
 using LabirinKata.Item.Letter;
 using LabirinKata.Item.Reinforcement;
-using LabirinKata.Gameplay.Controller;
 using LabirinKata.Gameplay.EventHandler;
 
 
@@ -53,21 +52,22 @@ namespace LabirinKata.Entities.Player
         
         private void Awake()
         {
-            _playerObject = GameObject.FindGameObjectWithTag("Player");
+            // _playerObject = GameObject.FindGameObjectWithTag("Player");
+            _playerObject = transform.parent.gameObject;;
             _playerController = _playerObject.GetComponent<PlayerController>();
             _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
         }
 
         private void OnEnable()
         {
-            DoorController.OnCameraShiftIn += _playerController.StopMovement;
-            DoorController.OnCameraShiftOut += _playerController.StartMovement;
+            CameraEventHandler.OnCameraShiftIn += _playerController.StopMovement;
+            CameraEventHandler.OnCameraShiftOut += _playerController.StartMovement;
         }
 
         private void OnDisable()
         {
-            DoorController.OnCameraShiftIn -= _playerController.StopMovement;
-            DoorController.OnCameraShiftOut -= _playerController.StartMovement;
+            CameraEventHandler.OnCameraShiftIn -= _playerController.StopMovement;
+            CameraEventHandler.OnCameraShiftOut -= _playerController.StartMovement;
         }
 
         private void Start()
@@ -97,7 +97,7 @@ namespace LabirinKata.Entities.Player
         private void DecreaseHealth()
         {
             var healthIndex = currentHealthCount - 1;
-            healthUIObjects[healthIndex].gameObject.SetActive(false);
+            healthUIObjects[healthIndex].SetActive(false);
             currentHealthCount--;
             
             if (currentHealthCount <= 0)
@@ -147,8 +147,7 @@ namespace LabirinKata.Entities.Player
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
             foreach (var buff in buffObjects)
             {
-                var buffItem = buff.GetComponent<BuffItem>();
-                if (buffItem == null) continue;
+                if (!buff.TryGetComponent<BuffItem>(out var buffItem)) continue;
                 
                 if (buffItem.gameObject.activeSelf && buffItem.IsBuffActive)
                 {

@@ -64,14 +64,6 @@ namespace LabirinKata.Gameplay.Controller
         #region Labirin Kata Callbacks
 
         // !-- Core Functionality
-        private void ShakeCamera()
-        {
-            _myVirtualCameraNoise.m_AmplitudeGain = hitAmplitudeGain;
-            _myVirtualCameraNoise.m_FrequencyGain = hitFrequencyGain;
-
-            isShaking = true;
-        }
-
         private void ResetShakeCamera()
         {
             _myVirtualCameraNoise.m_AmplitudeGain = 0f;
@@ -79,6 +71,14 @@ namespace LabirinKata.Gameplay.Controller
 
             _shakeTimeElapse = 0f;
             isShaking = false;
+        }
+
+        private void ShakeCamera()
+        {
+            _myVirtualCameraNoise.m_AmplitudeGain = hitAmplitudeGain;
+            _myVirtualCameraNoise.m_FrequencyGain = hitFrequencyGain;
+
+            isShaking = true;
         }
 
         #endregion

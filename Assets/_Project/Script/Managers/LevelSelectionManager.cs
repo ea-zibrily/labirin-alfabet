@@ -13,9 +13,7 @@ namespace LabirinKata.Managers
         [Header("UI")] 
         [SerializeField] private Button backButtonUI;
         [SerializeField] private Button exploreButtonUI;
-        [SerializeField] private Button collectionButtonUI;
-        [SerializeField] private GameObject collectionPanelUI;
-        
+
         #endregion
         
         #region MonoBehaviour Callbacks
@@ -31,12 +29,9 @@ namespace LabirinKata.Managers
         
         // !-- Initialization
         private void InitializeLevelSelection()
-        {
-            collectionPanelUI.SetActive(false);
-            
-            exploreButtonUI.onClick.AddListener(OnPlayButton);
-            collectionButtonUI.onClick.AddListener(OnCollectionButton);
+        {            
             backButtonUI.onClick.AddListener(OnBackButton);
+            exploreButtonUI.onClick.AddListener(OnPlayButton);
         }
         
         // !-- Core Functionality
@@ -45,11 +40,6 @@ namespace LabirinKata.Managers
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
         
-        private void OnCollectionButton()
-        {
-            collectionPanelUI.SetActive(true);
-        }
-
         private void OnBackButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);

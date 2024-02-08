@@ -24,9 +24,9 @@ namespace LabirinKata.Collection
 
         #region Labirin Kata Callbacks
         
-        public void PlayCollectionAudio(Letter letter)
+        public void PlayCollectionAudio(string letterName)
         {
-            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letter.ToString());
+            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
             
             if (sound == null)
             {

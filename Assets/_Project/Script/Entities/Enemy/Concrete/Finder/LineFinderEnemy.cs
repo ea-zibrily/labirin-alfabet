@@ -2,24 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
 
 using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Enemy
 {
-    public class SemiEnemy : EnemyBase
+    public class LineFinderEnemy : EnemyBase
     {
         #region Fields & Properties
         
-        [Header("Semi-Linear")]
+        [SerializeField] private Transform[] movePointTransforms;
         [SerializeField] private int maxChange;
         [SerializeField] private float changeDirectionDelayTime;
         
         private int _currentChange;
         private int _maxTargetIndex;
         private bool _isDefaultWay;
-        private bool  _canChange;
+        private bool _canChangeDir;
 
         #endregion
 
@@ -27,36 +26,24 @@ namespace LabirinKata.Entities.Enemy
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();
-
             if (IsPointLessThanThree()) return;
-            if (EarlyPositionIndex >= EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1)
-            {
-                CurrentTargetIndex = EarlyPositionIndex - 1;
-                _isDefaultWay = false;
-            }
-            else
-            {
-                CurrentTargetIndex = EarlyPositionIndex + 1;
-                _isDefaultWay = true;
-            }
+
+            SetEnemyPosition(movePointTransforms);
 
             _currentChange = 0;
-            _canChange = true;
-            _maxTargetIndex = EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1;
-            CurrentTarget = EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex];
+            _canChangeDir = true;
+            _maxTargetIndex = movePointTransforms.Length - 1;
+            _isDefaultWay = EarlyPositionIndex < movePointTransforms.Length - 1;
+            
+            CurrentTargetIndex = _isDefaultWay ? EarlyPositionIndex + 1 : EarlyPositionIndex - 1;
+            CurrentTarget = movePointTransforms[CurrentTargetIndex];
         }
-        
+
         // !-- Core Functionality
-        protected override void EnemyMove()
+        protected override void EnemyPatternDirection()
         {
-            base.EnemyMove();
-            // TODO: Test play jangan lupa lekku
-            MoveEnemyPattern();
-        }
-        
-        private void MoveEnemyPattern()
-        {
-            if (Vector2.Distance(transform.position, EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex].position) <= 0.01f)
+            base.EnemyPatternDirection();
+            if (Vector2.Distance(transform.position, movePointTransforms[CurrentTargetIndex].position) <= 0.01f)
             {
                 if (_isDefaultWay)
                 {
@@ -72,60 +59,60 @@ namespace LabirinKata.Entities.Enemy
                     CurrentTargetIndex += isCurrentZero ? 1 : -1;
                     _isDefaultWay = isCurrentZero;
                 }
-                DecreaseChangeCount();
+                DecreaseChangeLength();
                 StartCoroutine(ChangeDirectionRoutine(changeDirectionDelayTime));
 
-                CurrentTarget = EnemeyPattern[CurrentPatternIndex].MovePointTransforms[CurrentTargetIndex];
+                CurrentTarget = movePointTransforms[CurrentTargetIndex];
             }
         }
         
         private IEnumerator ChangeDirectionRoutine(float delayTime)
         {
-            if (_currentChange >= maxChange || !_canChange) yield break;
+            if (_currentChange >= maxChange || !_canChangeDir) yield break;
 
-            var enemyMovePoint = EnemeyPattern[CurrentPatternIndex].MovePointTransforms;
-            var randomPointIndex = Random.Range(1, Mathf.Max(2, enemyMovePoint.Count - 2));
+            var randomPointIndex = Random.Range(1, Mathf.Max(2, movePointTransforms.Length - 2));
 
-            if (Vector2.Distance(transform.position , enemyMovePoint[randomPointIndex].position) < 0.01f)
+            if (Vector2.Distance(transform.position , movePointTransforms[randomPointIndex].position) < 0.01f)
             {
                 if (!EnemyHelper.IsChangeDirection()) yield break;
 
                 CurrentTargetIndex += _isDefaultWay ? -2 : 2;
                 _isDefaultWay = !_isDefaultWay;
-                IncreaseChangeCount();
-                CanMove = false;
+
+                IncreaseChangeLength();
+                StopMovement();
 
                 yield return new WaitForSeconds(delayTime);
-                CanMove = true;
+                StartMovement();
             }
         }
         
         // !--Helpers/Utilities
-        private void IncreaseChangeCount()
+        private void IncreaseChangeLength()
         {
             _currentChange++;
             if (_currentChange >= maxChange)
             {
                 _currentChange = maxChange;
-                _canChange = false;
+                _canChangeDir = false;
             }
         }
         
-        private void DecreaseChangeCount()
+        private void DecreaseChangeLength()
         {
-            if (_currentChange < maxChange || _canChange) return;
+            if (_currentChange < maxChange || _canChangeDir) return;
             
             _currentChange--;
             if (_currentChange <= 0)
             {
                 _currentChange = 0;
-                _canChange = true;
+                _canChangeDir = true;
             }
         }
 
         private bool IsPointLessThanThree()
         {
-            return EnemeyPattern[CurrentPatternIndex].MovePointTransforms.Count - 1 < 2;
+            return movePointTransforms.Length - 1 < 2;
         }
     }
 }

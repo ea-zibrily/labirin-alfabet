@@ -2,8 +2,14 @@
 {
     public enum EnemyType
     {
-        Linear,
-        SemiLinear,
-        Multiple
+        Trap,
+        Finder,
+        Wanderer
+    }
+
+    public enum EnemyPatternType
+    {
+        Line,
+        Connected
     }
 }

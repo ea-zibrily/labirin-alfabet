@@ -28,10 +28,6 @@ namespace LabirinKata.Gameplay.Controller
         [SerializeField] private float cameraMoveOutDelay;
         [SerializeField] private CinemachineVirtualCamera doorVirtualCamera;
         [SerializeField] private Animator doorCameraAnimator;
-        
-        //-- Camera Event
-        public static event Action OnCameraShiftIn;
-        public static event Action OnCameraShiftOut;
 
         [Header("Reference")] 
         private BoxCollider2D _boxCollider2D;
@@ -88,7 +84,7 @@ namespace LabirinKata.Gameplay.Controller
             yield return new WaitForSeconds(cameraMoveInDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
             _playerController.SetPlayerDirection(gameObject.transform);
-            OnCameraShiftIn?.Invoke();
+            CameraEventHandler.CameraShiftInEvent();
             
             yield return new WaitForSeconds(doorOpenDelay);
             _doorAnimator.SetTrigger(OPEN_DOOR_TRIGGER);
@@ -98,8 +94,8 @@ namespace LabirinKata.Gameplay.Controller
         {
             yield return new WaitForSeconds(cameraMoveOutDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
-            OnCameraShiftOut?.Invoke();
-            
+            CameraEventHandler.CameraShiftOutEvent();
+                        
             _boxCollider2D.isTrigger = true;
             doorVirtualCamera.Follow = null;
         }
