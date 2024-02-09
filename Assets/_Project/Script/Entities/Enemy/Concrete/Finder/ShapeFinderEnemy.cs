@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-using Random = UnityEngine.Random;
-
 namespace LabirinKata.Entities.Enemy
 {
     public class ShapeFinderEnemy : EnemyBase
@@ -20,6 +18,8 @@ namespace LabirinKata.Entities.Enemy
         
         #endregion
         
+        #region Labirin Kata Callbacks
+
         // !-- Initialization
         protected override void InitializeEnemy()
         {
@@ -64,5 +64,7 @@ namespace LabirinKata.Entities.Enemy
                 StartMovement();
             }
         }
+
+        #endregion
     }
 }

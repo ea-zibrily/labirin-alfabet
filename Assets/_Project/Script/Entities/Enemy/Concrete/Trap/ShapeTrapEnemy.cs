@@ -10,6 +10,8 @@ namespace LabirinKata.Entities.Enemy
         
         private int _movePointLength;
 
+        #region Labirin Kata CaLlbacks
+
         // !-- Initialization
         protected override void InitializeEnemy()
         {
@@ -34,5 +36,7 @@ namespace LabirinKata.Entities.Enemy
             }
 
         }
+
+        #endregion
     }
 }

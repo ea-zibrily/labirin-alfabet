@@ -96,7 +96,7 @@ namespace LabirinKata.Item.Letter
         {
             var removedPointIndex = value.ToList();
             var spawnPoints = _letterSpawns[_stageIndex].SpawnPointTransforms;
-
+            
             for (int i = 0; i < spawnPoints.Length; i++)
             {
                 if (removedPointIndex.Contains(i)) continue;

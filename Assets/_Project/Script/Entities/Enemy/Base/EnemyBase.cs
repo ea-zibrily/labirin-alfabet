@@ -33,7 +33,7 @@ namespace LabirinKata.Entities.Enemy
         protected Transform CurrentTarget;
         protected int CurrentTargetIndex;
         
-        protected int EarlyPositionIndex { get; private set; }
+        protected int EarlyPositionIndex { get; set; }
 
         [Header("Reference")] 
         private Animator _enemyAnimator;
@@ -68,7 +68,7 @@ namespace LabirinKata.Entities.Enemy
         
         private void Update()
         {
-            if (!GameManager.Instance.IsGameStart) return;
+            // if (!GameManager.Instance.IsGameStart) return;
 
             EnemyMove();
             EnemyPatternDirection();

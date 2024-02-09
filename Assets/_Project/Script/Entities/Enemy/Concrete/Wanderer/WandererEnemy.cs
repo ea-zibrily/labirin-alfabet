@@ -5,6 +5,7 @@ using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 
 using Random = UnityEngine.Random;
+using System.Collections;
 
 namespace LabirinKata.Entities.Enemy
 {
@@ -20,16 +21,21 @@ namespace LabirinKata.Entities.Enemy
         }
         #endregion
 
+        #region Fields & Properties
+
         [SerializeField] private EnemyPattern[] enemyPattern;
+        [SerializeField] private float changeDirectionDelayTime;
         [SerializeField] [ReadOnly] private int currentPatternIndex;
 
         private Transform[] _currentMovePattern;
-        private bool _canChangePattern;
+        private int _iterationCount;
 
         [Header("Another Enemy Pattern")]
         private int _movePointLength;
         private int _maxTargetIndex;
         private bool _isDefaultWay; 
+
+        #endregion
 
         #region Labirin Kata Callbacks
 
@@ -38,7 +44,7 @@ namespace LabirinKata.Entities.Enemy
         {
             base.InitializeEnemy();
             currentPatternIndex = Random.Range(0, enemyPattern.Length - 1);
-            _canChangePattern = false;
+            _iterationCount = 0;
             _currentMovePattern = enemyPattern[currentPatternIndex].MovePointTransforms;
 
             SetEnemyPosition(_currentMovePattern);
@@ -51,29 +57,41 @@ namespace LabirinKata.Entities.Enemy
             base.EnemyPatternDirection();
             SwitchDirectionType(enemyPattern[currentPatternIndex].PatternType);
             
-            if (!_canChangePattern) return;
+            if (!CanChangePattern()) return;
             ChangeEnemyPattern();
         }
 
-        private void ChangeEnemyPattern()
+        private void ChangeEnemyPattern() => StartCoroutine(ChangeEnemyPatternRoutine());
+
+        private IEnumerator ChangeEnemyPatternRoutine()
         {
             Debug.Log("bisa change ayo coba");
             var decisionPointIndex = enemyPattern[currentPatternIndex].DecisionPointIndex;
 
             if (Vector2.Distance(transform.position, _currentMovePattern[decisionPointIndex].position) <= 0.01f)
             {
-                if (!EnemyHelper.IsChangeDirection()) return;
+                if (!EnemyHelper.IsChangeDirection()) yield break;
 
                 currentPatternIndex += currentPatternIndex >= enemyPattern.Length - 1 ? -1 : 1;
                 _currentMovePattern = enemyPattern[currentPatternIndex].MovePointTransforms;
-                _canChangePattern = false;
-                SwitchInitializeType(enemyPattern[currentPatternIndex].PatternType);
+                _iterationCount = 0;
 
+                SwitchReInitializeType(enemyPattern[currentPatternIndex].PatternType);
+                StopMovement();
                 Debug.LogWarning($"change pattern ke {currentPatternIndex} bertipe {enemyPattern[currentPatternIndex].PatternType}");
+
+                yield return new WaitForSeconds(changeDirectionDelayTime);
+                StartMovement();
+                Debug.LogWarning("gas maju lagi");
             }
         }
         
         // !-- Helper/Utilities
+        private bool CanChangePattern()
+        {
+            return _iterationCount >= 2;
+        }
+
         private void SwitchInitializeType(EnemyPatternType type)
         {
              switch (type)
@@ -81,8 +99,21 @@ namespace LabirinKata.Entities.Enemy
                 case EnemyPatternType.Line:
                     InitializeLineEnemy();
                     break;
-                case EnemyPatternType.Connected:
+                case EnemyPatternType.Shape:
                     InitializeConnectedEnemy();
+                    break;
+            }
+        }
+
+        private void SwitchReInitializeType(EnemyPatternType type)
+        {
+             switch (type)
+            {
+                case EnemyPatternType.Line:
+                    ReInitializeLineEnemy();
+                    break;
+                case EnemyPatternType.Shape:
+                    ReInitializeShapeEnemy();
                     break;
             }
         }
@@ -94,18 +125,28 @@ namespace LabirinKata.Entities.Enemy
                 case EnemyPatternType.Line:
                     LineEnemyPatternDirection();
                     break;
-                case EnemyPatternType.Connected:
-                    ConnectedEnemyPatternDirection();
+                case EnemyPatternType.Shape:
+                    ShapeEnemyPatternDirection();
                     break;
             }
         }
 
         #endregion
 
-        #region Line Pattern Callbacks
+        #region Line Pattern
         
         private void InitializeLineEnemy()
         {   
+            _maxTargetIndex = _currentMovePattern.Length - 1;
+            _isDefaultWay = EarlyPositionIndex < _currentMovePattern.Length - 1;
+            
+            CurrentTargetIndex = _isDefaultWay ? EarlyPositionIndex + 1 : EarlyPositionIndex - 1;
+            CurrentTarget = _currentMovePattern[CurrentTargetIndex];
+        }
+
+        private void ReInitializeLineEnemy()
+        {
+            EarlyPositionIndex = enemyPattern[currentPatternIndex].DecisionPointIndex;
             _maxTargetIndex = _currentMovePattern.Length - 1;
             _isDefaultWay = EarlyPositionIndex < _currentMovePattern.Length - 1;
             
@@ -122,7 +163,7 @@ namespace LabirinKata.Entities.Enemy
                     var isCurrentMax = CurrentTargetIndex >= _maxTargetIndex;
 
                     CurrentTargetIndex += isCurrentMax ? -1 : 1;
-                    _canChangePattern = isCurrentMax;
+                    _iterationCount += isCurrentMax ? 1 : 0;
                     _isDefaultWay = !isCurrentMax;
                 }
                 else
@@ -139,7 +180,7 @@ namespace LabirinKata.Entities.Enemy
 
         #endregion
 
-        #region Shape Pattern Callbacks
+        #region Shape Pattern
 
         private void InitializeConnectedEnemy()
         {   
@@ -150,13 +191,25 @@ namespace LabirinKata.Entities.Enemy
             CurrentTarget = _currentMovePattern[CurrentTargetIndex];
         }
 
-        private void ConnectedEnemyPatternDirection()
+        private void ReInitializeShapeEnemy()
+        {   
+            EarlyPositionIndex = enemyPattern[currentPatternIndex].DecisionPointIndex;
+            _movePointLength = _currentMovePattern.Length;
+            _maxTargetIndex = _currentMovePattern.Length - 1;
+            
+            CurrentTargetIndex = EarlyPositionIndex < _currentMovePattern.Length - 1 
+                                ? EarlyPositionIndex + 1 : EarlyPositionIndex - 1;
+            CurrentTarget = _currentMovePattern[CurrentTargetIndex];
+        }
+
+        private void ShapeEnemyPatternDirection()
         {
             if (Vector2.Distance(transform.position, _currentMovePattern[CurrentTargetIndex].position) <= 0.01f)
             {
-                _canChangePattern = CurrentTargetIndex >= _movePointLength - 1;
                 CurrentTargetIndex = (CurrentTargetIndex + 1) % _movePointLength;
                 CurrentTarget = _currentMovePattern[CurrentTargetIndex];
+
+                _iterationCount += CurrentTargetIndex >=  _maxTargetIndex ? 1: 0;
             }
 
         }

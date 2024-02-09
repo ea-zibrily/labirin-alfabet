@@ -22,6 +22,8 @@ namespace LabirinKata.Entities.Enemy
 
         #endregion
 
+        #region Labirin Kata Callbacks
+        
         // !-- Initialization
         protected override void InitializeEnemy()
         {
@@ -114,5 +116,7 @@ namespace LabirinKata.Entities.Enemy
         {
             return movePointTransforms.Length - 1 < 2;
         }
+
+        #endregion
     }
 }

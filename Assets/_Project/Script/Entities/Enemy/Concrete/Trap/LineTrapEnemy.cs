@@ -6,10 +6,14 @@ namespace LabirinKata.Entities.Enemy
 {
     public class LineTrapEnemy : EnemyBase
     {
+        #region Fields & Properties
+        
         [SerializeField] private Transform[] movePointTransforms;
 
         private int _maxTargetIndex;
-        private bool _isDefaultWay;
+        private bool _isDefaultWay; 
+
+        #endregion
 
         #region Labirin Kata Callbacks
         

@@ -10,6 +10,6 @@
     public enum EnemyPatternType
     {
         Line,
-        Connected
+        Shape
     }
 }
