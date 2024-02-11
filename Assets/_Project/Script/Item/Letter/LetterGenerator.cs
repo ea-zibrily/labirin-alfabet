@@ -79,7 +79,7 @@ namespace LabirinKata.Item.Letter
                 latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
 
-                Debug.LogWarning($"remove point index {randomPointIndex}");
+                // Debug.LogWarning($"remove point index {randomPointIndex}");
                 
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().SpawnId = i + 1;

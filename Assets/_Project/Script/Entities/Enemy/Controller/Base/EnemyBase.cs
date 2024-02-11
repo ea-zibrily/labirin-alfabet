@@ -24,17 +24,15 @@ namespace LabirinKata.Entities.Enemy
 
         [Header("Data")] 
         public EnemyData EnemyData;
-        public EnemyType EnemyType;
 
         private bool _canMove;
         private Vector2 _enemyDirection;
 
-        [Header("Target Point")]
-        protected Transform CurrentTarget;
-        protected int CurrentTargetIndex;
+        protected PatternBase CurrentPattern { get; set; }
+        public Transform CurrentTarget { get; set; }
+        public int CurrentTargetIndex { get; set; }
+        public int FirstPositionIndex { get; set; }
         
-        protected int EarlyPositionIndex { get; set; }
-
         [Header("Reference")] 
         private Animator _enemyAnimator;
         protected EnemyHelper EnemyHelper { get; private set; }
@@ -68,7 +66,7 @@ namespace LabirinKata.Entities.Enemy
         
         private void Update()
         {
-            // if (!GameManager.Instance.IsGameStart) return;
+            if (!GameManager.Instance.IsGameStart) return;
 
             EnemyMove();
             EnemyPatternDirection();
@@ -82,17 +80,19 @@ namespace LabirinKata.Entities.Enemy
         // !-- Initialization
         protected virtual void InitializeEnemy() 
         {
-            gameObject.transform.parent.name = EnemyData.EnemyName;
+            transform.parent.name = EnemyData.EnemyName;
             StartMovement();
         }
 
-        protected void SetEnemyPosition(Transform[] wayPoints)
+        protected void SetFirstPosition(Transform[] wayPoints)
         {
-            EarlyPositionIndex = Random.Range(0, wayPoints.Length - 1);
-            transform.position = wayPoints[EarlyPositionIndex].position;
+            FirstPositionIndex = Random.Range(0, wayPoints.Length - 1);
+            transform.position = wayPoints[FirstPositionIndex].position;
         }
         
         // !-- Core Functionality
+        protected virtual void EnemyPatternDirection() { }
+
         private void EnemyMove()
         {
             var enemyPosition = transform.position;
@@ -105,8 +105,6 @@ namespace LabirinKata.Entities.Enemy
             if (!_canMove) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
-
-        protected virtual void EnemyPatternDirection() { }
 
         private void EnemyAnimation()
         {
@@ -126,6 +124,26 @@ namespace LabirinKata.Entities.Enemy
         // !-- Helpers/Utilities
         public void StartMovement() => _canMove = true;
         public void StopMovement() => _canMove = false;
+
+        protected void SwitchPattern(PatternBase newPattern)
+        {
+            CurrentPattern = newPattern;
+        }
+
+        protected void InitializePattern() 
+        {
+            CurrentPattern.InitializePattern(isReInitialize: false);
+        }
+
+        protected void ReInitializePattern() 
+        {
+            CurrentPattern.InitializePattern(isReInitialize: true);
+        }
+        
+        protected void UpdatePattern()
+        {
+            CurrentPattern.UpdatePattern();
+        }
         
         #endregion
         
