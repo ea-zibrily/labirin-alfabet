@@ -33,7 +33,7 @@ namespace LabirinKata.Collection
         }
         
         #endregion
-
+        
         #region Labirin Kata Callbacks
         
         // !-- Initialization
@@ -51,7 +51,6 @@ namespace LabirinKata.Collection
          */
         private void ClickObject()
         {
-            Debug.Log($"click {letterName}");
             _collectionAudioManager.PlayCollectionAudio(letterName);
         }
 

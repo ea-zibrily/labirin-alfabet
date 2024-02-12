@@ -6,6 +6,7 @@ using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
 {
+    [AddComponentMenu("LabirinKata/Entities/Player/PlayerController")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {

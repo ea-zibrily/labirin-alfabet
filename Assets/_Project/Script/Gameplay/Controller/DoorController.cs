@@ -17,7 +17,7 @@ namespace LabirinKata.Gameplay.Controller
 
         #endregion
         
-        #region Variable
+        #region Fields & Properties
 
         [Header("Door")] 
         [SerializeField] private float doorOpenDelay;
@@ -100,14 +100,9 @@ namespace LabirinKata.Gameplay.Controller
             doorVirtualCamera.Follow = null;
         }
         
-        #endregion
-        
-        #region Collider Callbacks
-        
-        private void OnTriggerEnter2D(Collider2D other)
+        private IEnumerator EnterDoorRoutine()
         {
-            if (other.CompareTag("Player")) return;
-
+            yield return new WaitForSeconds(0.5f);
             if (StageManager.Instance.CheckCanContinueStage())
             {
                 GameEventHandler.ContinueStageEvent();
@@ -116,6 +111,16 @@ namespace LabirinKata.Gameplay.Controller
             { 
                 GameEventHandler.GameWinEvent();
             }
+        }
+
+        #endregion
+        
+        #region Collider Callbacks
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player")) return;
+            StartCoroutine(EnterDoorRoutine());
         }
         
         #endregion

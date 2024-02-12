@@ -35,8 +35,7 @@ namespace LabirinKata.Database
         private void InitializeData()
         {
             if (_letterConditions != null && _levelConditions != null) return;
-
-            Debug.Log("initialize database");
+            
             _letterConditions = InitializeLetterConditions();
             _levelConditions = InitializeLevelConditions();
         }

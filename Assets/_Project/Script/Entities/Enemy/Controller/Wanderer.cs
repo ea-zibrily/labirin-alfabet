@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Enemy
 {
+    [AddComponentMenu("LabirinKata/Entities/Enemy/Wanderer")]
     public class Wanderer : EnemyBase
     {
         #region Struct

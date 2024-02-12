@@ -279,3 +279,6 @@ MonoBehaviour:
   moveSpeedUp: 8
   speedUpTimeDuration: 5
   speedUpMultiplier: 2
+  flashDuration: 0.07
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 0, g: 1, b: 1, a: 0.69803923}

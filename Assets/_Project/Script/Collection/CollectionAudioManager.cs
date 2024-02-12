@@ -21,7 +21,7 @@ namespace LabirinKata.Collection
         }
 
         #endregion
-
+        
         #region Labirin Kata Callbacks
         
         public void PlayCollectionAudio(string letterName)
@@ -34,9 +34,9 @@ namespace LabirinKata.Collection
                 return;
             }
 
+            Debug.Log($"gas sound letter {sound.LetterName}");
             _audioSource.clip = sound.LetterSound;
             _audioSource.Play();
-
         }
         
         #endregion

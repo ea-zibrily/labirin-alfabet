@@ -29,13 +29,13 @@ namespace LabirinKata.Collection
 
         #region Labirin Kata Callbacks
 
-        //-- Initialization
+        // !-- Initialization
         private void InitializeButton()
         {
             closeButtonUI.onClick.AddListener(CloseCollectionPanel);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void SetUnlockedCollection()
         {
             for (var i = 0; i < letterObjectUI.Length; i++)

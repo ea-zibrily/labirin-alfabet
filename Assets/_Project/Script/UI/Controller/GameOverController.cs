@@ -7,7 +7,7 @@ namespace LabirinKata.UI
 {
     public class GameOverController : GameUIBase
     {
-        #region Variable
+        #region Fields & Properties
         
         [SerializeField] private Button retryButtonUI;
         
@@ -15,14 +15,14 @@ namespace LabirinKata.UI
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
             retryButtonUI.onClick.AddListener(OnRetryButton);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void OnRetryButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.CurrentLevel);

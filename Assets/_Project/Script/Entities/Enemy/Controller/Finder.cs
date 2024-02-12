@@ -5,6 +5,7 @@ using LabirinKata.Enum;
 
 namespace LabirinKata.Entities.Enemy
 {
+    [AddComponentMenu("LabirinKata/Entities/Enemy/Finder")]
     public class Finder : EnemyBase
     {
         #region Fields & Property
@@ -22,7 +23,7 @@ namespace LabirinKata.Entities.Enemy
         #endregion
 
         #region Labirin Kata Callbacks
-
+        
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();

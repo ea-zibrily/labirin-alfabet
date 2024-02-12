@@ -8,11 +8,11 @@ using LabirinKata.Item.Letter;
 using LabirinKata.Item.Reinforcement;
 using LabirinKata.Gameplay.EventHandler;
 
-
 using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Player
 {
+    [AddComponentMenu("LabirinKata/Entities/Player/PlayerManager")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
@@ -52,8 +52,7 @@ namespace LabirinKata.Entities.Player
         
         private void Awake()
         {
-            // _playerObject = GameObject.FindGameObjectWithTag("Player");
-            _playerObject = transform.parent.gameObject;;
+            _playerObject = transform.parent.gameObject;
             _playerController = _playerObject.GetComponent<PlayerController>();
             _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
         }
@@ -151,7 +150,7 @@ namespace LabirinKata.Entities.Player
                 
                 if (buffItem.gameObject.activeSelf && buffItem.IsBuffActive)
                 {
-                    buffItem.BuffComplete();
+                    buffItem.DeactivateBuff();
                     break;
                 }
             }
@@ -168,6 +167,7 @@ namespace LabirinKata.Entities.Player
             
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
+            Debug.LogWarning(letterObjects.Length);
         }
         
         // !-- Core Functionality

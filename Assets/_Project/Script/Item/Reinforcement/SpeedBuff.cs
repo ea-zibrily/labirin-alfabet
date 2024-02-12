@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LabirinKata.Item.Reinforcement
@@ -13,12 +14,20 @@ namespace LabirinKata.Item.Reinforcement
         [SerializeField] private float speedUpTimeDuration;
         [SerializeField] private float speedUpMultiplier;
         
+        [Header("Buff Effect")]
+        [SerializeField] private float flashDuration;
+        [SerializeField] private Color defaultColor;
+        [SerializeField] private Color flashColor;
+
         private float _normalMoveSpeed;
         private float _currentTime;
         
         private bool _isTimerStart;
         private bool _isSpeedUpComplete;
         
+        [Header("Reference")]
+        private SpriteRenderer playerSpriteRenderer;
+
         #endregion
         
         #region MonoBehaviour Callbacks
@@ -46,12 +55,18 @@ namespace LabirinKata.Item.Reinforcement
                 SlowDown();
             }
         }
-        
+
         #endregion
-        
+
         #region Labirin Kata Callbacks
-        
-        //-- Initialization
+
+        // !-- Initialization
+        protected override void InitializeOnAwake()
+        {
+            base.InitializeOnAwake();
+            playerSpriteRenderer = PlayerController.GetComponentInChildren<SpriteRenderer>();
+        }
+
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
@@ -67,7 +82,7 @@ namespace LabirinKata.Item.Reinforcement
             _isSpeedUpComplete = false;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void Taken()
         {
             ActivateBuff();
@@ -76,23 +91,19 @@ namespace LabirinKata.Item.Reinforcement
         protected override void ActivateBuff()
         {
             base.ActivateBuff();
+
             gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            StartSpeedEffect();
         }
 
-        protected override void DeactivateBuff()
+        public override void DeactivateBuff()
         {
             base.DeactivateBuff();
-            Debug.Log($"{gameObject.name} is deactive brok");
+
+            StopSpeedEffect();
+            PlayerController.CurrentMoveSpeed = _normalMoveSpeed;
             gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
             gameObject.SetActive(false);
-        }
-
-        public override void BuffComplete()
-        {
-            base.BuffComplete();
-            PlayerController.CurrentMoveSpeed = _normalMoveSpeed;
-            DeactivateBuff();
-            Debug.LogWarning("buff complete");
         }
 
         private void SpeedUp()
@@ -110,10 +121,35 @@ namespace LabirinKata.Item.Reinforcement
             PlayerController.CurrentMoveSpeed -= Time.deltaTime * speedUpMultiplier;
             if (PlayerController.CurrentMoveSpeed <= _normalMoveSpeed)
             {
-                BuffComplete();
+                DeactivateBuff();
             }
         }
+
+        private void StartSpeedEffect()
+        {
+            StartCoroutine(StartSpeedEffectRoutine());
+        }
         
+        private IEnumerator StartSpeedEffectRoutine()
+        {
+            Debug.LogWarning("start!");
+            while (IsBuffActive)
+            {
+                yield return new WaitForSeconds(flashDuration);
+                playerSpriteRenderer.color  = flashColor;
+                
+                yield return new WaitForSeconds(flashDuration);
+                playerSpriteRenderer.color = defaultColor;
+                Debug.LogWarning("i frame lego!");
+            }
+        }
+
+        private void StopSpeedEffect()
+        {
+            playerSpriteRenderer.color = defaultColor;
+            Debug.LogWarning("stop!");
+        }
+
         #endregion
     }
 }

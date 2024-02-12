@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockBackTime: 0.2
-  hitDirectionForce: 10
+  hitDirectionForce: 10.7
   constForce: 3
   inputForce: 7.5
 --- !u!1 &1935479398348759522
@@ -261,7 +261,7 @@ SpriteRenderer:
   m_SortingLayerID: 1770701309
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 20c3d01e1e854c447b68d2f1a804c155, type: 3}
+  m_Sprite: {fileID: 693769062, guid: 810c7ea28506a5e44aa45726098e7c6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -394,7 +394,5 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   flashColor: {r: 1, g: 0, b: 0, a: 0.6}
   letterObjects:
-  - StageName: 0
-    LetterObjects: []
-  - StageName: 1
-    LetterObjects: []
+  - LetterObjects: []
+  - LetterObjects: []

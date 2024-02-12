@@ -5,6 +5,7 @@ using LabirinKata.Enum;
 
 namespace LabirinKata.Entities.Enemy
 {
+    [AddComponentMenu("LabirinKata/Entities/Enemy/Trap")]
     public class Trap : EnemyBase
     {
         #region Fields & Property
