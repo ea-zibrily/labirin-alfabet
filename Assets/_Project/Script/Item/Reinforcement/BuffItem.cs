@@ -1,7 +1,8 @@
 ﻿using System;
-using LabirinKata.Entities.Player;
-using LabirinKata.Enum;
 using UnityEngine;
+using LabirinKata.Enum;
+using LabirinKata.Entities.Player;
+
 using Random = UnityEngine.Random;
 
 namespace LabirinKata.Item.Reinforcement
@@ -43,7 +44,7 @@ namespace LabirinKata.Item.Reinforcement
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         protected virtual void InitializeOnAwake()
         {
             var playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -57,18 +58,16 @@ namespace LabirinKata.Item.Reinforcement
             RandomizeBuffPosition();
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         protected virtual void ActivateBuff()
         {
             IsBuffActive = true;
         }
 
-        protected virtual void DeactivateBuff()
+        public virtual void DeactivateBuff()
         {
             IsBuffActive = false;
         }
-
-        public virtual void BuffComplete() { }
         
         private void RandomizeBuffPosition()
         {

@@ -10,7 +10,7 @@ namespace LabirinKata.Collection
         #region Fields & Properties
 
         [Header("Settings")] 
-        [SerializeField] private Letter letterName;
+        [SerializeField] private string letterName;
         private Button _buttonUI;
         
         [Header("Reference")] 
@@ -33,16 +33,16 @@ namespace LabirinKata.Collection
         }
         
         #endregion
-
+        
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeButton()
         {
             _buttonUI.onClick.AddListener(ClickObject);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         /*
          * TODO: bikin logic buat efek letter jika ditekan
          * Efek list:
@@ -51,8 +51,7 @@ namespace LabirinKata.Collection
          */
         private void ClickObject()
         {
-            Debug.Log($"click {letterName}");
-            // _collectionAudioManager.PlayCollectionAudio(letterName);
+            _collectionAudioManager.PlayCollectionAudio(letterName);
         }
 
         #endregion

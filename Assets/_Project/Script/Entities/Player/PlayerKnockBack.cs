@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace LabirinKata.Entities.Player
 {
+    [AddComponentMenu("LabirinKata/Entities/Player/PlayerKnockback")]
     public class PlayerKnockBack : MonoBehaviour
     {
         #region Fields & Properties

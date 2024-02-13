@@ -6,6 +6,7 @@ using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
 {
+    [AddComponentMenu("LabirinKata/Entities/Player/PlayerController")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
@@ -31,6 +32,7 @@ namespace LabirinKata.Entities.Player
             set => currentMoveSpeed = value;
         }
         public bool CanMove { get; private set; }
+
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
@@ -135,12 +137,6 @@ namespace LabirinKata.Entities.Player
             PlayerInputHandler.DisableTouchInput();
         }
         
-        public void SetPlayerPosition(Transform playerPos)
-        {
-            transform.position = playerPos.position;
-        }
-
-        // TODO: Pake method ini buat ngatur direksi player pas pintu labirin buka
         public void SetPlayerDirection(Transform value)
         {
             var direction = value.transform.position - transform.position;

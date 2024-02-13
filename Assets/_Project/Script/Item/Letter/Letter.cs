@@ -6,13 +6,10 @@ using UnityEngine;
 
 namespace LabirinKata.Item.Letter
 {
-    //-- Letter Struct
-
     [Serializable]
     public struct LetterObject
     {
-        public StageList StageName;
-        [ReadOnly] public List<GameObject> LetterObjects;
+        public List<GameObject> LetterObjects;
     }
     
     [Serializable]

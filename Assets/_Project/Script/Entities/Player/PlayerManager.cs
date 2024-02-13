@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Player
 {
+    [AddComponentMenu("LabirinKata/Entities/Player/PlayerManager")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
@@ -46,14 +47,26 @@ namespace LabirinKata.Entities.Player
         private PlayerKnockBack _playerKnockBack;
 
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         
         private void Awake()
         {
-            _playerObject = GameObject.FindGameObjectWithTag("Player");
+            _playerObject = transform.parent.gameObject;
             _playerController = _playerObject.GetComponent<PlayerController>();
             _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
+        }
+
+        private void OnEnable()
+        {
+            CameraEventHandler.OnCameraShiftIn += _playerController.StopMovement;
+            CameraEventHandler.OnCameraShiftOut += _playerController.StartMovement;
+        }
+
+        private void OnDisable()
+        {
+            CameraEventHandler.OnCameraShiftIn -= _playerController.StopMovement;
+            CameraEventHandler.OnCameraShiftOut -= _playerController.StartMovement;
         }
 
         private void Start()
@@ -66,7 +79,7 @@ namespace LabirinKata.Entities.Player
         
         #region Health Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeHealth()
         {
             if (healthCount != healthUIObjects.Length)
@@ -79,11 +92,11 @@ namespace LabirinKata.Entities.Player
             _isPlayerDead = false;
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void DecreaseHealth()
         {
             var healthIndex = currentHealthCount - 1;
-            healthUIObjects[healthIndex].gameObject.SetActive(false);
+            healthUIObjects[healthIndex].SetActive(false);
             currentHealthCount--;
             
             if (currentHealthCount <= 0)
@@ -133,32 +146,31 @@ namespace LabirinKata.Entities.Player
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
             foreach (var buff in buffObjects)
             {
-                var buffItem = buff.GetComponent<BuffItem>();
-                if (buffItem == null) continue;
+                if (!buff.TryGetComponent<BuffItem>(out var buffItem)) continue;
                 
                 if (buffItem.gameObject.activeSelf && buffItem.IsBuffActive)
                 {
-                    buffItem.BuffComplete();
+                    buffItem.DeactivateBuff();
                     break;
                 }
             }
         }
         
         #endregion
-
+        
         #region Objective Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         private void InitializeLetterObject()
         {
-            if (letterObjects == null)
-            {
-                var objectSize = StageManager.Instance.StageCount;
-                letterObjects = new LetterObject[objectSize];
-            }
+            if (letterObjects != null) return;
+            
+            var objectSize = StageManager.Instance.StageCount;
+            letterObjects = new LetterObject[objectSize];
+            Debug.LogWarning(letterObjects.Length);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
             var currentStageIndex = StageManager.Instance.CurrentStageIndex;
@@ -191,6 +203,7 @@ namespace LabirinKata.Entities.Player
             {
                 _playerController.StopMovement();
                 DecreaseHealth();
+                CameraEventHandler.CameraShakeEvent();
                 KnockedBack(other.gameObject);
                 StartCoroutine(IframeRoutine());
                 CanceledBuff();

@@ -5,12 +5,11 @@ namespace LabirinKata.UI
 {
     public class GamePauseController : GameUIBase
     {
-        #region Variable
+        #region Fields & Properties
 
-        [SerializeField] private Button resumeButtonUI;
-        
         [Header("Pause")] 
         [SerializeField] private Button pauseButtonUI;
+        [SerializeField] private Button resumeButtonUI;
         [SerializeField] private GameObject pausePanelUI;
         [SerializeField] private GameObject touchCanvas;
         
@@ -18,7 +17,7 @@ namespace LabirinKata.UI
 
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
@@ -28,7 +27,7 @@ namespace LabirinKata.UI
             resumeButtonUI.onClick.AddListener(OnResumeButton);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void OnPauseButton()
         {
             pausePanelUI.SetActive(true);

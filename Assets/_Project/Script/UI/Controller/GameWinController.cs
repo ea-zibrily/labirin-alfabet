@@ -8,7 +8,7 @@ namespace LabirinKata.UI
 {
     public class GameWinController : GameUIBase
     {
-        #region Variable
+        #region Fields & Properties
         
         [SerializeField] private Button nextButtonUI;
         
@@ -16,17 +16,17 @@ namespace LabirinKata.UI
         
         #region Labirin Kata Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
             nextButtonUI.onClick.AddListener(OnNextButton);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void OnNextButton()
         {
-            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
+            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
         
         #endregion

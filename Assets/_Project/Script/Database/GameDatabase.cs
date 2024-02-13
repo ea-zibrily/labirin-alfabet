@@ -22,20 +22,20 @@ namespace LabirinKata.Database
         
         #region MonoBehaviour Callbacks
         
-        private void Start()
+        private void OnEnable()
         {
             InitializeData();
         }
         
         #endregion
-        
+
         #region Labirin Kata Callbacks
-        
+
         // !-- Initialization
         private void InitializeData()
         {
             if (_letterConditions != null && _levelConditions != null) return;
-    
+            
             _letterConditions = InitializeLetterConditions();
             _levelConditions = InitializeLevelConditions();
         }

@@ -31,7 +31,7 @@ namespace LabirinKata.Item.Reinforcement
             PlayerManager.HealthUIObjects[healthIndex].SetActive(true);
         }
         
-        protected override void DeactivateBuff()
+        public override void DeactivateBuff()
         {
             base.DeactivateBuff();
             gameObject.SetActive(false);

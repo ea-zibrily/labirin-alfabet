@@ -29,20 +29,20 @@ namespace LabirinKata.Collection
 
         #region Labirin Kata Callbacks
 
-        //-- Initialization
+        // !-- Initialization
         private void InitializeButton()
         {
             closeButtonUI.onClick.AddListener(CloseCollectionPanel);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void SetUnlockedCollection()
         {
             for (var i = 0; i < letterObjectUI.Length; i++)
             {
                 var letterId = i + 1;
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-
+                
                 letterObjectUI[i].GetComponent<Button>().interactable = isLetterUnlock;
                 letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(isLetterUnlock);
                 Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");

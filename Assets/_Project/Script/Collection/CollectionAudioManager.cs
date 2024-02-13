@@ -21,12 +21,12 @@ namespace LabirinKata.Collection
         }
 
         #endregion
-
+        
         #region Labirin Kata Callbacks
         
-        public void PlayCollectionAudio(Letter letter)
+        public void PlayCollectionAudio(string letterName)
         {
-            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letter.ToString());
+            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
             
             if (sound == null)
             {
@@ -34,9 +34,9 @@ namespace LabirinKata.Collection
                 return;
             }
 
+            Debug.Log($"gas sound letter {sound.LetterName}");
             _audioSource.clip = sound.LetterSound;
             _audioSource.Play();
-
         }
         
         #endregion

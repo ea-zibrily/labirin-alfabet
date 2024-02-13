@@ -17,13 +17,13 @@ namespace LabirinKata.Item.Letter
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        public List<Transform> AvailableSpawnPoint { get; private set; }
+        [field: SerializeField] public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
         private List<GameObject> _lockedLetterObject;
         private List<GameObject> _unlockedLetterObject;
         
-        //-- Event
+        //-- Letter Event
         public event Action<GameObject> OnTakeLetter;
 
         [Header("Reference")] 
@@ -33,7 +33,7 @@ namespace LabirinKata.Item.Letter
         #endregion
         
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             var letterManagerObject = GameObject.FindGameObjectWithTag("LetterManager");
@@ -79,8 +79,6 @@ namespace LabirinKata.Item.Letter
             _letterGenerator = isLevelCleared ? 
                 new LetterGenerator(letterSpawns, _unlockedLetterObject) :
                 new LetterGenerator(letterSpawns, _lockedLetterObject);
-            
-            Debug.Log(isLevelCleared);
         }
         
         private void InitializeLetterObject()
@@ -114,10 +112,6 @@ namespace LabirinKata.Item.Letter
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterInterface(_letterGenerator.AvailableLetterObjects);
             
-            if (AvailableSpawnPoint.Count > 0)
-            {
-                AvailableSpawnPoint.Clear();
-            }
             AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoints;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
@@ -142,19 +136,25 @@ namespace LabirinKata.Item.Letter
         // !-- Helper/Utilities
         public void AddAvailableSpawnPoint(Transform value)
         {
-            AvailableSpawnPoint.Add(value);
+            var originPoints = letterSpawns[StageManager.Instance.CurrentStageIndex].SpawnPointTransforms;
+            foreach (var point in originPoints)
+            {
+                if (value.position != point.position) continue;
+                AvailableSpawnPoint.Add(point);
+                return;
+            }
         }
-        
+
         public void RemoveAvailableSpawnPoint(int value)
         {
             AvailableSpawnPoint.RemoveAt(value);
-        }
+        } 
         
         #endregion
         
         #region Save Letter Callbacks
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void SaveUnlockedLetters()
         {
             if (_unlockedLetterObject == null) return;
