@@ -1,0 +1,28 @@
+Labirin Huruf - Project Note
+Weekly Sprint Meeting
+-----------------------------
+
+16/01/2024
+- Huruf sudah ditentukan karena objective akan membentuk sebuah kata, misal APA, ITU
+- Posisi huruf sudah ditentukan titik spawn, belum tau akan dirandom posisi atau tidak
+- Camera agak Zoom Out, karena terlalu dekat dgn player
+- Waktu semua huruf didapatkan, camera move ke pintu lalu tampil animasi pintu kebuka 
+(player gabisa gerak waktu ada movement camera)
+- Tiap stage jadi 1 scene
+- Beri pembatas map
+- Beri panel UI buat penanda sedang di level/stage berapa
+- Apk dibuat lock landscape (gabisa portrait)
+- Coba apply level 2
+
+30/01/2024
+- Speed buff ubah ke-8
+- Random spawn huruf pas hit feedback ada yang numpuk atau punya posisi yang sama
+- Bikin restriction tile buat timer UI agar player gabisa masuk ke UI
+- Saat player terkena hit, 
+jika objective belum selesai: Huruf keluar 1 random
+jika objective selesai: Huruf tidak keluar
+- Stage notification jadikan tengah aga kebawah, soalnya player spawn d center
+- Collection menu disarankan bisa bikin 1 class DDOL buat nyimpen semua data letter yang lock atau unlock
+note: bisa pake dictionary/list buat add remove
+- Letter controller bisa nambah SpawnId sama LetterId
+SpawnId untuk indexing ui, LetterId untuk load collectionmenu

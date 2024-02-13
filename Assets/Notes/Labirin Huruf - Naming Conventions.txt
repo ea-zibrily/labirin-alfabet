@@ -1,0 +1,11 @@
+File Conventions
+-----------------
+
+// Level/Stage
+
+Level Number_Stage Number_Name Stage
+example: 01_01_Cave, 01_02_Cave
+
+// Enemy Prefabs
+Enemy Type_Enemy Number_Point Number
+example: Linear_01_02, Linear_02_03
