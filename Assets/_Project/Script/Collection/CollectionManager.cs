@@ -42,7 +42,7 @@ namespace LabirinKata.Collection
             {
                 var letterId = i + 1;
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-
+                
                 letterObjectUI[i].GetComponent<Button>().interactable = isLetterUnlock;
                 letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(isLetterUnlock);
                 Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");

@@ -33,7 +33,7 @@ namespace LabirinKata.Item.Letter
         #endregion
         
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             var letterManagerObject = GameObject.FindGameObjectWithTag("LetterManager");
@@ -112,10 +112,6 @@ namespace LabirinKata.Item.Letter
             _letterGenerator.GenerateLetter();
             _letterUIManager.InitializeLetterInterface(_letterGenerator.AvailableLetterObjects);
             
-            if (AvailableSpawnPoint.Count > 0)
-            {
-                AvailableSpawnPoint.Clear();
-            }
             AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoints;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
@@ -138,9 +134,21 @@ namespace LabirinKata.Item.Letter
         }
         
         // !-- Helper/Utilities
-        public void AddAvailableSpawnPoint(Transform value) =>  AvailableSpawnPoint.Add(value);
+        public void AddAvailableSpawnPoint(Transform value)
+        {
+            var originPoints = letterSpawns[StageManager.Instance.CurrentStageIndex].SpawnPointTransforms;
+            foreach (var point in originPoints)
+            {
+                if (value.position != point.position) continue;
+                AvailableSpawnPoint.Add(point);
+                return;
+            }
+        }
 
-        public void RemoveAvailableSpawnPoint(int value) => AvailableSpawnPoint.RemoveAt(value);
+        public void RemoveAvailableSpawnPoint(int value)
+        {
+            AvailableSpawnPoint.RemoveAt(value);
+        } 
         
         #endregion
         

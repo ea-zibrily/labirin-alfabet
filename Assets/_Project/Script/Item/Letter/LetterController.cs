@@ -74,7 +74,7 @@ namespace LabirinKata.Item.Letter
             _letterManager.AddAvailableSpawnPoint(transform);
             _letterUIManager.TakeLetterEvent(SpawnId);
             
-            Debug.LogWarning($"add spawn point on {transform.position}");
+            // Debug.LogWarning($"add spawn point on {transform.position}");
             
             gameObject.SetActive(false);
         }
@@ -85,12 +85,7 @@ namespace LabirinKata.Item.Letter
         public void Lost()
         {
             gameObject.SetActive(true);
-            StartCoroutine(LostRoutine());
-        }
-        
-        private IEnumerator LostRoutine()
-        {
-            _letterUIManager.LostLetterEvent(SpawnId);
+             _letterUIManager.LostLetterEvent(SpawnId);
 
             var lerpRatio = 0f;
             var elapsedTime = 0f;
@@ -104,10 +99,10 @@ namespace LabirinKata.Item.Letter
                 elapsedTime += Time.deltaTime;
                 lerpRatio = elapsedTime / lerpDuration;
                 transform.position = Vector3.Lerp(transform.position, randomPoint, lerpRatio);
-                yield return null;
             }
             
             transform.position = randomPoint;
+            Debug.LogWarning($"remove available point index {randomPointIndex}");
             _letterManager.RemoveAvailableSpawnPoint(randomPointIndex);
         }
 

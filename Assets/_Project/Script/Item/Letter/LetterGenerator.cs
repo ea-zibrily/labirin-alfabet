@@ -78,9 +78,7 @@ namespace LabirinKata.Item.Letter
                 
                 latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
-
-                // Debug.LogWarning($"remove point index {randomPointIndex}");
-                
+                                
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
                 letterObject.GetComponent<LetterController>().SpawnId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
@@ -102,6 +100,7 @@ namespace LabirinKata.Item.Letter
                 if (removedPointIndex.Contains(i)) continue;
                 AvailableSpawnPoints.Add(spawnPoints[i]);
             }
+            Debug.Log("set lesgpo");
         }
         
         #endregion

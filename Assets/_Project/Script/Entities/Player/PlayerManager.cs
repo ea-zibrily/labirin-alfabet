@@ -157,7 +157,7 @@ namespace LabirinKata.Entities.Player
         }
         
         #endregion
-
+        
         #region Objective Callbacks
         
         // !-- Initialization

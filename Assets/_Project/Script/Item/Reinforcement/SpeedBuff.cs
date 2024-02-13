@@ -105,7 +105,7 @@ namespace LabirinKata.Item.Reinforcement
             gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
             gameObject.SetActive(false);
         }
-
+        
         private void SpeedUp()
         {
             PlayerController.CurrentMoveSpeed += Time.deltaTime * speedUpMultiplier;
@@ -132,7 +132,6 @@ namespace LabirinKata.Item.Reinforcement
         
         private IEnumerator StartSpeedEffectRoutine()
         {
-            Debug.LogWarning("start!");
             while (IsBuffActive)
             {
                 yield return new WaitForSeconds(flashDuration);
@@ -140,14 +139,12 @@ namespace LabirinKata.Item.Reinforcement
                 
                 yield return new WaitForSeconds(flashDuration);
                 playerSpriteRenderer.color = defaultColor;
-                Debug.LogWarning("i frame lego!");
             }
         }
 
         private void StopSpeedEffect()
         {
             playerSpriteRenderer.color = defaultColor;
-            Debug.LogWarning("stop!");
         }
 
         #endregion
