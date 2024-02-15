@@ -2,6 +2,7 @@
 using System.Linq;
 using LabirinKata.Stage;
 using UnityEngine;
+
 using MonoUnity = UnityEngine.Object;
 
 namespace LabirinKata.Item.Letter

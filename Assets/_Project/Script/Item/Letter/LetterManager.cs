@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Database;
 using LabirinKata.Stage;
+using LabirinKata.Database;
 
 namespace LabirinKata.Item.Letter
 {

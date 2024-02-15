@@ -24,6 +24,7 @@ namespace LabirinKata.Collection
         
         #region Labirin Kata Callbacks
         
+        // !-- Core Functionality
         public void PlayCollectionAudio(string letterName)
         {
             var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
@@ -37,6 +38,17 @@ namespace LabirinKata.Collection
             Debug.Log($"gas sound letter {sound.LetterName}");
             _audioSource.clip = sound.LetterSound;
             _audioSource.Play();
+        }
+
+        public void StopCollectionAudio()
+        {
+            _audioSource.Stop();
+        }
+
+        // !-- Helper/Utilities
+        public bool IsAudioPlaying()
+        {
+            return _audioSource.isPlaying;
         }
         
         #endregion

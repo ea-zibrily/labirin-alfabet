@@ -2176,8 +2176,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1378491726}
   - {fileID: 283580743}
+  - {fileID: 1378491726}
   - {fileID: 936433405}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -4118,8 +4118,10 @@ MonoBehaviour:
   - {fileID: 1985870472}
   - {fileID: 2039267613}
   - {fileID: 2014786406}
+  mainMenuPanelUI: {fileID: 1378491725}
   collectionPanelUI: {fileID: 283580742}
   closeButtonUI: {fileID: 56448775}
+  simpleScrollSnap: {fileID: 5681489238814719163}
 --- !u!1 &918486404
 GameObject:
   m_ObjectHideFlags: 0
@@ -5807,7 +5809,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378491726}
   m_Layer: 5
-  m_Name: MainMenu
+  m_Name: MainMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6567,9 +6569,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46dd07c06b1f48f4a3db4fcaf8bed1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuPanelUI: {fileID: 1378491725}
   playButtonUI: {fileID: 65287720}
-  collectionButtonUI: {fileID: 1258081}
   collectionPanelUI: {fileID: 283580742}
+  collectionButtonUI: {fileID: 1258081}
 --- !u!1 &1626188367
 GameObject:
   m_ObjectHideFlags: 0

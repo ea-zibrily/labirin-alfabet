@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Enum;
+using DanielLochner.Assets.SimpleScrollSnap;
 
 namespace LabirinKata.Managers
 {
@@ -10,11 +11,12 @@ namespace LabirinKata.Managers
         #region Fields & Properties
 
         [Header("UI")] 
+        [SerializeField] private GameObject mainMenuPanelUI;
         [SerializeField] private Button playButtonUI;
-
+        
         [Space]
-        [SerializeField] private Button collectionButtonUI;
         [SerializeField] private GameObject collectionPanelUI;
+        [SerializeField] private Button collectionButtonUI;
 
         #endregion
 
@@ -47,6 +49,7 @@ namespace LabirinKata.Managers
         private void OnCollectionButton()
         {
             collectionPanelUI.SetActive(true);
+            mainMenuPanelUI.SetActive(false);
         }
 
         #endregion
