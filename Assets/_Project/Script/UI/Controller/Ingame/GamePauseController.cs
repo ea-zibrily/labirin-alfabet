@@ -8,16 +8,23 @@ namespace LabirinKata.UI
         #region Fields & Properties
 
         [Header("Pause")] 
-        [SerializeField] private Button pauseButtonUI;
         [SerializeField] private Button resumeButtonUI;
         [SerializeField] private GameObject pausePanelUI;
         [SerializeField] private GameObject touchCanvas;
         
+        private Button pauseButtonUI;
+        
         #endregion
 
         #region Labirin Kata Callbacks
-        
+
         // !-- Initialization
+        protected override void InitializeOnAwake()
+        {
+            base.InitializeOnAwake();
+            pauseButtonUI = GetComponent<Button>();
+        }
+
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();

@@ -16,6 +16,11 @@ namespace LabirinKata.UI
 
         #region MonoBehaviour Callbacks
 
+        private void Awake()
+        {
+            InitializeOnAwake();
+        }
+
         private void Start()
         {
             InitializeOnStart();
@@ -25,6 +30,8 @@ namespace LabirinKata.UI
         
         #region Labirin Kata Callbacks
         
+        protected virtual void InitializeOnAwake() { }
+
         protected virtual void InitializeOnStart()
         {
             homeButtonUI.onClick.AddListener(OnHomeButton);

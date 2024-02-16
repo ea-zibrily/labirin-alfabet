@@ -4,15 +4,13 @@
     {
         Level_01,
         Level_02,
-        Level_03,
-        None
+        Level_03
     }
     
     public enum StageList
     {
         Stage_1,
         Stage_2,
-        Stage_3,
-        None
+        Stage_3
     }
 }

@@ -16,6 +16,13 @@ namespace LabirinKata.Entities.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
+
+        #region Const Variable
+        
+        private const float DIE_DELAY = 0.5f;
+
+        #endregion
+
         #region Fields & Properties
         
         [Header("Health")] 
@@ -25,7 +32,7 @@ namespace LabirinKata.Entities.Player
 
         private bool _isPlayerDead;
         
-        public GameObject[] HealthUIObjects => healthUIObjects;
+        public GameObject[] HealthUIFills { get; private set; }
         public int CurrentHealthCount
         {
             get => currentHealthCount;
@@ -84,10 +91,17 @@ namespace LabirinKata.Entities.Player
         {
             if (healthCount != healthUIObjects.Length)
             {
-                Debug.LogWarning("health count ga sama dgn isi health ui lur");
+                Debug.LogWarning("health count ga sesuai!");
                 return;
             }
             
+            HealthUIFills = new GameObject[healthUIObjects.Length];
+            for (var i = 0; i < HealthUIFills.Length; i++)
+            {
+                var healthFill = healthUIObjects[i].transform.GetChild(0).gameObject;
+                HealthUIFills[i] = healthFill;
+            }
+
             currentHealthCount = healthCount;
             _isPlayerDead = false;
         }
@@ -96,7 +110,7 @@ namespace LabirinKata.Entities.Player
         private void DecreaseHealth()
         {
             var healthIndex = currentHealthCount - 1;
-            healthUIObjects[healthIndex].SetActive(false);
+            HealthUIFills[healthIndex].SetActive(false);
             currentHealthCount--;
             
             if (currentHealthCount <= 0)
@@ -108,7 +122,7 @@ namespace LabirinKata.Entities.Player
         
         private IEnumerator PlayerDieRoutine()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(DIE_DELAY);
             _isPlayerDead = true;
             GameEventHandler.GameOverEvent();
         }

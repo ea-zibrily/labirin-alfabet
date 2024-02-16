@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using LabirinKata.Enum;
-using TMPro;
 using UnityEngine;
+using TMPro;
+using LabirinKata.Enum;
 
 namespace LabirinKata.Stage
 {
@@ -11,67 +11,31 @@ namespace LabirinKata.Stage
         #region Variable
 
         [Header("UI")] 
-        [SerializeField] private float activateDelayTime;
-        [SerializeField] private TextMeshProUGUI levelTextUI;
         [SerializeField] private TextMeshProUGUI stageTextUI;
         
         private string _currentLevel;
         private string _currentStage;
-        
-        [Header("Reference")] 
-        private StageManager _stageManager;
 
-        #endregion
-
-        #region MonoBehaviour Callbacks
-        
-        private void Awake()
-        {
-            _stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
-        }
-        
-        private void OnEnable()
-        {
-            ActivateStagePanel();
-        }
-        
         #endregion
 
         #region Labirin Kata Callbacks
         
-        //-- Core Functionality
-        private void ActivateStagePanel() => StartCoroutine(ActivateStagePanelRoutine());
-        
-        private IEnumerator ActivateStagePanelRoutine()
+        // !-- Core Functionality
+        public void SetStageNotification()
         {
-            SetCurrentLevel(_stageManager.CurrentLevelList);
-            SetCurrentStage(_stageManager.CurrentStageList);
-            levelTextUI.text = _currentLevel;
-            stageTextUI.text = _currentStage;
-            
-            yield return new WaitForSeconds(activateDelayTime);
-            gameObject.SetActive(true);
+            SetCurrentLevel(StageManager.Instance.CurrentLevelList);
+            SetCurrentStage(StageManager.Instance.CurrentStageList);
+            stageTextUI.text = _currentLevel.ToUpper() + " - " + _currentStage;
         }
         
-        private void DeactivateStagePanel()
-        {
-            levelTextUI.text = "";
-            stageTextUI.text = "";
-            levelTextUI.color = new Color(0, 0, 0, 1);
-            stageTextUI.color = new Color(0, 0, 0, 1);
-            
-            gameObject.SetActive(false);
-        }
-        
-        //-- Helpers/Utilities
+        // !-- Helpers/Utilities
         private string GetCurrentLevel(LevelList level)
         {
             return level switch
             {
-                LevelList.Level_01 => "Level 1",
-                LevelList.Level_02 => "Level 2",
-                LevelList.Level_03 => "Level 3",
-                LevelList.None => " ",
+                LevelList.Level_01 => "Cave",
+                LevelList.Level_02 => "Forest",
+                LevelList.Level_03 => "Ruins",
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };
         }
@@ -82,10 +46,9 @@ namespace LabirinKata.Stage
         {
             return stage switch
             {
-                StageList.Stage_1 => "Stage 1",
-                StageList.Stage_2 => "Stage 2",
-                StageList.Stage_3 => "Stage 3",
-                StageList.None => " ",
+                StageList.Stage_1 => "1",
+                StageList.Stage_2 => "2",
+                StageList.Stage_3 => "3",
                 _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
             };
         }
@@ -93,6 +56,5 @@ namespace LabirinKata.Stage
         private void SetCurrentStage(StageList stage) => _currentStage = GetCurrentStage(stage);
 
         #endregion
-
     }
 }

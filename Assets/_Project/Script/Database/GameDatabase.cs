@@ -58,8 +58,6 @@ namespace LabirinKata.Database
     
             foreach (LevelList level in System.Enum.GetValues(typeof(LevelList)))
             {
-                if (level == LevelList.None) continue;
-                
                 var levelString = level.ToString();
                 levelConditions.Add(levelString, false);
             }

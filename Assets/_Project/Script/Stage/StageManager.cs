@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Enum;
 using LabirinKata.Database;
 using LabirinKata.Item.Letter;
-using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Stage
