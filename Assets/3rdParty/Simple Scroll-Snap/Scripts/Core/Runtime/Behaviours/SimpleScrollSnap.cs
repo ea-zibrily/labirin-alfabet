@@ -49,7 +49,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
         [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
-        // *--Labirin Kata Events
+        // *--Labirin Kata Customize
+        public int SelectedPanelIndex { get; set; }
         public event Action OnSnappingBegin;
 
         private ScrollRect scrollRect;
@@ -417,6 +418,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             Vector2 offset = new Vector2(xOffset, yOffset);
             prevAnchoredPosition = Content.anchoredPosition = -Panels[startingPanel].anchoredPosition + offset;
             SelectedPanel = CenteredPanel = startingPanel;
+            SelectedPanelIndex = startingPanel;
 
             // Buttons
             if (previousButton != null)
@@ -613,6 +615,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public void GoToPanel(int panelNumber)
         {
             CenteredPanel = panelNumber;
+            SelectedPanelIndex = panelNumber;
+
             OnSnappingBegin?.Invoke();
             isSelected = true;
             onPanelSelected.Invoke(SelectedPanel);

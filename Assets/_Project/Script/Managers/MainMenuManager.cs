@@ -12,10 +12,11 @@ namespace LabirinKata.Managers
 
         [Header("UI")] 
         [SerializeField] private GameObject mainMenuPanelUI;
-        [SerializeField] private Button playButtonUI;
-        
-        [Space]
         [SerializeField] private GameObject collectionPanelUI;
+        [SerializeField] private GameObject selectStagePanelUI;
+
+        [Space]
+        [SerializeField] private Button playButtonUI;
         [SerializeField] private Button collectionButtonUI;
 
         #endregion
@@ -43,7 +44,8 @@ namespace LabirinKata.Managers
         // !-- Core Functionality
         private void OnPlayButton()
         {
-            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);
+            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);
+            selectStagePanelUI.SetActive(true);
         }
 
         private void OnCollectionButton()

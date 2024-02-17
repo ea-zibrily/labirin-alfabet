@@ -6,7 +6,7 @@ using LabirinKata.Enum;
 
 namespace LabirinKata.Stage
 {
-    public class StagePanelController : MonoBehaviour
+    public class StageNotificationController : MonoBehaviour
     {
         #region Variable
 

@@ -32,7 +32,7 @@ namespace LabirinKata.Managers
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
-        private StagePanelController _stagePanelController;
+        private StageNotificationController _stagePanelController;
         
         #endregion
 
@@ -72,7 +72,7 @@ namespace LabirinKata.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
-            _stagePanelController = GameObject.Find("StagePanelController").GetComponent<StagePanelController>();
+            _stagePanelController = GameObject.Find("StagePanelController").GetComponent<StageNotificationController>();
         }
         
         #endregion
