@@ -6,7 +6,7 @@ using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerController")]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Controller")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
@@ -31,8 +31,8 @@ namespace LabirinKata.Entities.Player
             get => currentMoveSpeed;
             set => currentMoveSpeed = value;
         }
+        
         public bool CanMove { get; private set; }
-
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
@@ -47,8 +47,8 @@ namespace LabirinKata.Entities.Player
         private void Awake()
         {
             _playerRb = GetComponent<Rigidbody2D>();
-            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
             _playerAnimator = GetComponentInChildren<Animator>();
+            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
         }
 
         private void Start()

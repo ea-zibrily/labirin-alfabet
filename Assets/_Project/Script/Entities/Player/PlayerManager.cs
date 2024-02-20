@@ -12,8 +12,8 @@ using Random = UnityEngine.Random;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerManager")]
-    [RequireComponent(typeof(BoxCollider2D))]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Manager")]
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
 
@@ -194,11 +194,11 @@ namespace LabirinKata.Entities.Player
         private void LostLetter()
         {
             var stageIndex = StageManager.Instance.CurrentStageIndex;
-            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
             var letterCollects = letterObjects[stageIndex].LetterObjects;
+            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
 
             if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
-
+            
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
             letterCollects[randomLetter].transform.position = _playerObject.transform.position;
             letterCollects[randomLetter].GetComponent<LetterController>().Lost();

@@ -162,7 +162,7 @@ namespace LabirinKata.Item.Letter
             foreach (var unlockLetter in _unlockedLetterObject)
             {
                 var unlockLetterId = unlockLetter.GetComponent<LetterController>().LetterId;
-                GameDatabase.Instance.SaveLetterConditions(unlockLetterId, true);
+                GameDatabase.Instance.SaveLetterCollected(unlockLetterId, true);
             }
         }
         

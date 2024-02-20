@@ -7,7 +7,7 @@ using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerInputHandler")]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Input Handler")]
     public class PlayerInputHandler : MonoBehaviour
     {
         #region Fields & Properties

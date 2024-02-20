@@ -81,7 +81,7 @@ namespace LabirinKata.Stage
             var currentLevel = CurrentLevelList.ToString();
             var nextLevel = NextLevelList.ToString();
 
-            GameDatabase.Instance.SaveLevelConditions(currentLevel, true);
+            GameDatabase.Instance.SaveLevelClear(currentLevel, true);
             GameDatabase.Instance.SaveLevelUnlocked(nextLevel, true);
         }
 

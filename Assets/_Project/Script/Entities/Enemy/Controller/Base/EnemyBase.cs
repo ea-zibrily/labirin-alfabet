@@ -52,7 +52,7 @@ namespace LabirinKata.Entities.Enemy
             CameraEventHandler.OnCameraShiftIn += StopMovement;
             CameraEventHandler.OnCameraShiftOut += StartMovement;
         }
-
+        
         private void OnDisable()
         {
             CameraEventHandler.OnCameraShiftIn -= StopMovement;
