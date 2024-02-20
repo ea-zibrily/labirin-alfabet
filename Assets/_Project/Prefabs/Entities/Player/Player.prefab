@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61aca36d92eb45269c8c904c486d8b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickSize: {x: 250, y: 250}
+  joystickSize: {x: 300, y: 300}
   isHalfScreen: 0
 --- !u!1 &3105554579227310161
 GameObject:

@@ -13,7 +13,8 @@ namespace LabirinKata.Database
 
         //-- Main Database
         private Dictionary<int, bool> _letterConditions;
-        private Dictionary<string, bool> _levelConditions ;
+        private Dictionary<string, bool> _levelConditions;
+        private Dictionary<string, bool> _isLevelUnlocked;
         
         //-- Constant Variable
         public const int LETTER_COUNT = 26;
@@ -34,10 +35,11 @@ namespace LabirinKata.Database
         // !-- Initialization
         private void InitializeData()
         {
-            if (_letterConditions != null && _levelConditions != null) return;
+            if (_letterConditions != null && _levelConditions != null && _isLevelUnlocked != null) return;
             
             _letterConditions = InitializeLetterConditions();
             _levelConditions = InitializeLevelConditions();
+            _isLevelUnlocked = InitializeLevelUnlocked();
         }
         
         private Dictionary<int, bool> InitializeLetterConditions()
@@ -56,14 +58,28 @@ namespace LabirinKata.Database
         {
             var levelConditions = new Dictionary<string, bool>();
     
-            foreach (LevelList level in System.Enum.GetValues(typeof(LevelList)))
+            foreach (Level level in System.Enum.GetValues(typeof(Level)))
             {
-                var levelString = level.ToString();
-                levelConditions.Add(levelString, false);
+                var key = level.ToString();
+                levelConditions.Add(key, false);
             }
             return levelConditions;
         }
         
+        private Dictionary<string, bool> InitializeLevelUnlocked()
+        {
+            var isLevelUnlocked = new Dictionary<string, bool>();
+    
+            foreach (Level level in System.Enum.GetValues(typeof(Level)))
+            {
+                var key = level.ToString();
+                var value = key is "Cave";
+
+                isLevelUnlocked.Add(key, value);
+            }
+            return isLevelUnlocked;
+        }
+
         // !-- Core Functionality
         public void SaveLetterConditions(int letterId, bool value)
         {
@@ -91,6 +107,19 @@ namespace LabirinKata.Database
             return _levelConditions[levelName];
         }
         
+        public void SaveLevelUnlocked(string levelName, bool value)
+        {
+            if (_isLevelUnlocked.ContainsKey(levelName))
+            {
+                _isLevelUnlocked[levelName] = value;
+            }
+        }
+
+        public bool LoadLevelUnlocked(string levelName)
+        {
+            return _isLevelUnlocked[levelName];
+        }
+
         #endregion
     }
 }

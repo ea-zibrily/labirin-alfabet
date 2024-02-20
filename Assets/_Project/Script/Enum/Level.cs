@@ -1,13 +1,13 @@
 ﻿namespace LabirinKata.Enum
 {
-    public enum LevelList
+    public enum Level
     {
-        Level_01,
-        Level_02,
-        Level_03
+        Cave,
+        Forest,
+        Ruins
     }
     
-    public enum StageList
+    public enum StageNum
     {
         Stage_1,
         Stage_2,

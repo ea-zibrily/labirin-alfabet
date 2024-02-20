@@ -30,7 +30,7 @@ namespace LabirinKata.Gameplay.Controller
         [SerializeField] private Animator doorCameraAnimator;
 
         [Header("Reference")] 
-        private BoxCollider2D _boxCollider2D;
+        private CapsuleCollider2D _capsuleCollider2D;
         private Animator _doorAnimator;
         private DoorEventHandler _doorEventHandler;
         private PlayerController _playerController;
@@ -41,7 +41,7 @@ namespace LabirinKata.Gameplay.Controller
         
         private void Awake()
         {
-            _boxCollider2D = GetComponent<BoxCollider2D>();
+            _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             _doorAnimator = GetComponentInChildren<Animator>();
             _doorEventHandler = GetComponentInChildren<DoorEventHandler>();
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -72,7 +72,8 @@ namespace LabirinKata.Gameplay.Controller
         private void InitializeDoor()
         {
             doorVirtualCamera.Follow = gameObject.transform;
-            _boxCollider2D.isTrigger = false;
+            _capsuleCollider2D.enabled = false;
+            _capsuleCollider2D.isTrigger = false;
         }
         
         // !-- Core Functionality
@@ -95,8 +96,9 @@ namespace LabirinKata.Gameplay.Controller
             yield return new WaitForSeconds(cameraMoveOutDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
             CameraEventHandler.CameraShiftOutEvent();
-                        
-            _boxCollider2D.isTrigger = true;
+
+            _capsuleCollider2D.enabled = true;
+            _capsuleCollider2D.isTrigger = true;
             doorVirtualCamera.Follow = null;
         }
         
