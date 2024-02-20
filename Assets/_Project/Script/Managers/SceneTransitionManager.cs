@@ -26,7 +26,7 @@ namespace LabirinKata.Managers
 
         #region Scene Loader Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         public void FadeIn()
         {
             sceneFader.gameObject.SetActive (true);
@@ -45,7 +45,7 @@ namespace LabirinKata.Managers
             LeanTween.alpha (sceneFader, 1, 1f);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void LoadSelectedScene(SceneState sceneState)
         {
             // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
@@ -63,13 +63,25 @@ namespace LabirinKata.Managers
                     OpenCurrentGameScene();
                     break;
                 case SceneState.NextLevel:
-                    OpenNextGameScene();
+                    OpenNextLevelScene();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sceneState), sceneState, null);
             }
         }
         
+         public void LoadSelectedLevel(int levelIndex)
+        {
+            // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
+            Time.timeScale = 1;
+            sceneFader.gameObject.SetActive(true);
+
+            LeanTween.alpha(sceneFader, 0, 0);
+            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
+                SceneManager.LoadScene(levelIndex);
+            });
+        }
+
         private void OpenMainMenuScene () 
         {
             sceneFader.gameObject.SetActive (true);
@@ -100,7 +112,7 @@ namespace LabirinKata.Managers
             });
         }
         
-        private void OpenNextGameScene()
+        private void OpenNextLevelScene()
         {
             sceneFader.gameObject.SetActive (true);
 

@@ -19,7 +19,7 @@ namespace LabirinKata.UI
         {
             JoyRectTransform = GetComponent<RectTransform>();
         }
-
+        
         private void Start()
         {
             InitializeJoystick();
@@ -38,8 +38,6 @@ namespace LabirinKata.UI
             KnobRectTransform.anchorMax = centerPoint;
             KnobRectTransform.pivot = centerPoint;
             KnobRectTransform.anchoredPosition = Vector2.zero;
-            
-            gameObject.SetActive(false);
         }
 
         #endregion

@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Enum;
 using LabirinKata.Database;
 using LabirinKata.Item.Letter;
-using LabirinKata.Enum;
 using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Stage
@@ -13,8 +13,9 @@ namespace LabirinKata.Stage
         #region Fields & Properties
         
         [Header("Settings")] 
-        public LevelList CurrentLevelList;
-        [ReadOnly] public StageList CurrentStageList;
+        public Level CurrentLevelList;
+        public Level NextLevelList;
+        [ReadOnly] public StageNum CurrentStageList;
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
@@ -60,7 +61,7 @@ namespace LabirinKata.Stage
                 {
                     stageObjects[i].SetActive(true);
                     currentStageIndex = i;
-                    CurrentStageList = StageList.Stage_1;
+                    CurrentStageList = Enum.StageNum.Stage_1;
                     continue;
                 }
                 
@@ -78,9 +79,12 @@ namespace LabirinKata.Stage
         public void SaveClearedLevel()
         {
             var currentLevel = CurrentLevelList.ToString();
+            var nextLevel = NextLevelList.ToString();
+
             GameDatabase.Instance.SaveLevelConditions(currentLevel, true);
+            GameDatabase.Instance.SaveLevelUnlocked(nextLevel, true);
         }
-        
+
         private void LoadNextStage()
         {
             if (!CheckCanContinueStage()) return;
@@ -105,13 +109,13 @@ namespace LabirinKata.Stage
             return currentStageIndex < stageObjects.Length - 1;
         }
         
-        private StageList GetCurrentStage(int index)
+        private StageNum GetCurrentStage(int index)
         {
             return index switch
             {
-                0 => StageList.Stage_1,
-                1 => StageList.Stage_2,
-                2 => StageList.Stage_3,
+                0 => StageNum.Stage_1,
+                1 => StageNum.Stage_2,
+                2 => StageNum.Stage_3,
                 _ => throw new ArgumentOutOfRangeException(nameof(index), index, null)
             };
         }

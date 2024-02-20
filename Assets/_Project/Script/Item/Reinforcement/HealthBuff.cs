@@ -28,7 +28,7 @@ namespace LabirinKata.Item.Reinforcement
             base.ActivateBuff();
             PlayerManager.CurrentHealthCount++;
             var healthIndex = PlayerManager.CurrentHealthCount - 1;
-            PlayerManager.HealthUIObjects[healthIndex].SetActive(true);
+            PlayerManager.HealthUIFills[healthIndex].SetActive(true);
         }
         
         public override void DeactivateBuff()
@@ -41,7 +41,7 @@ namespace LabirinKata.Item.Reinforcement
         private bool CheckActiveHealthUI()
         {
             var activeCount = 0;
-            foreach (var healthUI in PlayerManager.HealthUIObjects)
+            foreach (var healthUI in PlayerManager.HealthUIFills)
             {
                 if (healthUI.activeSelf)
                 {

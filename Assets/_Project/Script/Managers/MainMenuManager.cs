@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Enum;
+using DanielLochner.Assets.SimpleScrollSnap;
 
 namespace LabirinKata.Managers
 {
@@ -10,11 +11,13 @@ namespace LabirinKata.Managers
         #region Fields & Properties
 
         [Header("UI")] 
-        [SerializeField] private Button playButtonUI;
+        [SerializeField] private GameObject mainMenuPanelUI;
+        [SerializeField] private GameObject collectionPanelUI;
+        [SerializeField] private GameObject selectStagePanelUI;
 
         [Space]
+        [SerializeField] private Button playButtonUI;
         [SerializeField] private Button collectionButtonUI;
-        [SerializeField] private GameObject collectionPanelUI;
 
         #endregion
 
@@ -41,12 +44,14 @@ namespace LabirinKata.Managers
         // !-- Core Functionality
         private void OnPlayButton()
         {
-            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);
+            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);
+            selectStagePanelUI.SetActive(true);
         }
 
         private void OnCollectionButton()
         {
             collectionPanelUI.SetActive(true);
+            mainMenuPanelUI.SetActive(false);
         }
 
         #endregion

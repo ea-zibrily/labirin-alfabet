@@ -1,27 +1,42 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using KevinCastejon.MoreAttributes;
+using DanielLochner.Assets.SimpleScrollSnap;
 using LabirinKata.Database;
-using UnityEngine.Serialization;
 
 namespace LabirinKata.Collection
 {
     public class CollectionManager : MonoBehaviour
     {
         #region Fields & Properties
-        
+
         [Header("UI")] 
         [SerializeField] private GameObject[] letterObjectUI;
+        [SerializeField] private GameObject mainMenuPanelUI;
         [SerializeField] private GameObject collectionPanelUI;
         [SerializeField] private Button closeButtonUI;
+
+        [Header("Reference")]
+        [SerializeField] private SimpleScrollSnap simpleScrollSnap;
+        private CollectionAudioManager _collectionAudioManager;
+
+        public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
         
         #endregion
         
         #region MonoBehaviour Callbacks
+
+        private void Awake() 
+        {
+            var collectionObject = GameObject.FindGameObjectWithTag("Collection");
+            _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
+        }
         
         private void Start()
         {
-            InitializeButton();
+            InitializeCollection();
             SetUnlockedCollection();
         }
         
@@ -30,9 +45,9 @@ namespace LabirinKata.Collection
         #region Labirin Kata Callbacks
 
         // !-- Initialization
-        private void InitializeButton()
+        private void InitializeCollection()
         {
-            closeButtonUI.onClick.AddListener(CloseCollectionPanel);
+            closeButtonUI.onClick.AddListener(CloseCollection);
         }
         
         // !-- Core Functionality
@@ -48,10 +63,26 @@ namespace LabirinKata.Collection
                 Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");
             }
         }
-        
-        private void CloseCollectionPanel()
+
+        private void CloseCollection()
         {
+            _collectionAudioManager.StopCollectionAudio();
+            mainMenuPanelUI.SetActive(true);
+
+            ReSetupScrollSnap();
             collectionPanelUI.SetActive(false);
+        }
+
+        private void ReSetupScrollSnap()
+        {
+            if (simpleScrollSnap.ValidConfig)
+            {
+                simpleScrollSnap.Setup();
+            }
+            else
+            {
+                throw new Exception("Invalid configuration.");
+            }
         }
 
         #endregion

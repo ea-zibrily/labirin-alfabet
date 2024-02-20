@@ -22,16 +22,18 @@ namespace LabirinKata.Entities.Player
         public Vector2 Direction { get; private set; }
         
         [Header("Reference")] 
+        private GameObject _joystickObjectUI;
         private FloatingJoystickHandler _floatingJoystickHandler;
         private Finger _movementFinger;
-
+        
         #endregion
 
         #region MonoBehaviour Callbacks
         
         private void Awake()
         {
-            _floatingJoystickHandler = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatingJoystickHandler>();
+            _joystickObjectUI = GameObject.FindGameObjectWithTag("Joystick");
+            _floatingJoystickHandler = _joystickObjectUI.GetComponent<FloatingJoystickHandler>();
         }
         
         private void OnEnable()
@@ -54,7 +56,7 @@ namespace LabirinKata.Entities.Player
         
         #region Enhanced Touch Callbacks
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void TouchOnFingerDown(Finger fingerTouch)
         {
             if (_movementFinger == null && IsTouchWithinRestrictedArea(fingerTouch))
@@ -83,7 +85,7 @@ namespace LabirinKata.Entities.Player
             MoveTouchOn(fingerTouch);
         }
         
-        //-- Helper/Utilities
+        // !-- Helper/Utilities
         private bool IsTouchWithinRestrictedArea(Finger fingerTouch)
         {
             if (isHalfScreen)
@@ -99,17 +101,17 @@ namespace LabirinKata.Entities.Player
         
         #region Labirin Kata Callbacks
 
-        //-- Initialization
+        // !-- Initialization
         private void InitializeTouchOnScreen(Finger fingerOn)
         {
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
-            _floatingJoystickHandler.gameObject.SetActive(true);
+            _joystickObjectUI.SetActive(true);
             _floatingJoystickHandler.JoyRectTransform.sizeDelta = joystickSize;
             _floatingJoystickHandler.JoyRectTransform.anchoredPosition = ClampStartPosition(fingerOn.screenPosition);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         private void MoveTouchOn(Finger fingerMove)
         {
             Vector2 knobPosition;
@@ -133,11 +135,11 @@ namespace LabirinKata.Entities.Player
         {
             _movementFinger = null;
             _floatingJoystickHandler.KnobRectTransform.anchoredPosition = Vector2.zero;
-            _floatingJoystickHandler.gameObject.SetActive(false);
+            _joystickObjectUI.SetActive(false);
             Direction = Vector2.zero;
         }
         
-        //-- Helper/Utilities
+        // !-- Helper/Utilities
         public void EnableTouchInput()
         {
             enabled = true;

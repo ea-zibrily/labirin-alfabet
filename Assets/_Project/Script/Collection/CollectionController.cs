@@ -11,9 +11,12 @@ namespace LabirinKata.Collection
 
         [Header("Settings")] 
         [SerializeField] private string letterName;
+
+        private bool canInteract;
         private Button _buttonUI;
         
         [Header("Reference")] 
+        private CollectionManager _collectionManager;
         private CollectionAudioManager _collectionAudioManager;
         
         #endregion
@@ -24,12 +27,23 @@ namespace LabirinKata.Collection
         {
             _buttonUI = GetComponent<Button>();
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
+            _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
+        }
+
+        private void OnEnable() 
+        {
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin += StopAudio;
+        }
+
+        private void OnDisable() 
+        {
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= StopAudio;
         }
         
         private void Start()
         {
-            InitializeButton();
+            InitializeCollection();
         }
         
         #endregion
@@ -37,21 +51,35 @@ namespace LabirinKata.Collection
         #region Labirin Kata Callbacks
         
         // !-- Initialization
-        private void InitializeButton()
+        private void InitializeCollection()
         {
+            canInteract = true;
             _buttonUI.onClick.AddListener(ClickObject);
         }
         
         // !-- Core Functionality
-        /*
-         * TODO: bikin logic buat efek letter jika ditekan
-         * Efek list:
-         * 1. Animasi scaling
-         * 2. Sound effect VO sesuai nama letter
-         */
         private void ClickObject()
         {
-            _collectionAudioManager.PlayCollectionAudio(letterName);
+            if (!canInteract) return;
+
+            canInteract = false;
+            LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).
+                    setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
+                    {
+                        _collectionAudioManager.PlayCollectionAudio(letterName);
+                    });
+            
+            LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.5f).setDelay(1.5f).
+                    setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
+                    {
+                        canInteract = true;
+                    });       
+        }
+
+        private void StopAudio()
+        {
+            if (!_collectionAudioManager.IsAudioPlaying()) return;
+            _collectionAudioManager.StopCollectionAudio();
         }
 
         #endregion

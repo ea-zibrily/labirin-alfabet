@@ -49,6 +49,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
         [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
+        // *--Labirin Kata Customize
+        public int SelectedPanelIndex { get; set; }
+        public event Action OnSnappingBegin;
+
         private ScrollRect scrollRect;
         private Vector2 contentSize, prevAnchoredPosition, velocity;
         private Direction releaseDirection;
@@ -215,7 +219,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             get => Content.childCount;
         }
-        private bool ValidConfig
+        public bool ValidConfig
         {
             get
             {
@@ -337,7 +341,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             releaseSpeed = Velocity.magnitude;
         }
 
-        private void Setup()
+        public void Setup()
         {
             if (NumberOfPanels == 0) return;
 
@@ -414,6 +418,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             Vector2 offset = new Vector2(xOffset, yOffset);
             prevAnchoredPosition = Content.anchoredPosition = -Panels[startingPanel].anchoredPosition + offset;
             SelectedPanel = CenteredPanel = startingPanel;
+            SelectedPanelIndex = startingPanel;
 
             // Buttons
             if (previousButton != null)
@@ -458,6 +463,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 SelectPanel();
             }
         }
+        
         private void HandleOcclusionCulling(bool forceUpdate = false)
         {
             if (useOcclusionCulling && (Velocity.magnitude > 0f || forceUpdate))
@@ -609,6 +615,9 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public void GoToPanel(int panelNumber)
         {
             CenteredPanel = panelNumber;
+            SelectedPanelIndex = panelNumber;
+
+            OnSnappingBegin?.Invoke();
             isSelected = true;
             onPanelSelected.Invoke(SelectedPanel);
 

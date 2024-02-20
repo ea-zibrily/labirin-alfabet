@@ -25,13 +25,13 @@ namespace LabirinKata.Managers
         [Header("UI")] 
         [SerializeField] private GameObject gameWinPanelUI;
         [SerializeField] private GameObject gameOverPanelUI;
-        [SerializeField] private GameObject notificationStagePanelUI;
-        
+
         public bool IsGameStart { get; private set; }
         
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
+        private StageMarker _stageMarker;
         
         #endregion
 
@@ -71,6 +71,7 @@ namespace LabirinKata.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
+            _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
         
         #endregion
@@ -114,6 +115,7 @@ namespace LabirinKata.Managers
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.InitializeNewStage();
+            _stageMarker.SetStageNotification();
             _timeController.InitializeTimer(); 
             _playerController.transform.position = Vector2.zero;
             
@@ -124,7 +126,6 @@ namespace LabirinKata.Managers
             _playerController.StartMovement();
             _timeController.IsTimerStart = true;
             IsGameStart = true;
-            notificationStagePanelUI.SetActive(true);
         }
         
         #endregion
