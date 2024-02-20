@@ -23,7 +23,7 @@ namespace LabirinKata.Entities.Player
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
-        [SerializeField] [ReadOnly] private Vector2 movementDirection;
+        [SerializeField] private Vector2 movementDirection;
         
         public float DefaultMoveSpeed => playerData.MoveSpeed;
         public float CurrentMoveSpeed
