@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace LabirinKata.Item.Reinforcement
+namespace LabirinKata.Item
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable

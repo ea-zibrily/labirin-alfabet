@@ -4,7 +4,7 @@ using KevinCastejon.MoreAttributes;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Item.Letter
+namespace LabirinKata.Item
 {
     public class LetterController : MonoBehaviour, ITakeable
     {

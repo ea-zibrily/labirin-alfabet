@@ -4,8 +4,6 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Item;
 using LabirinKata.Stage;
-using LabirinKata.Item.Letter;
-using LabirinKata.Item.Reinforcement;
 using LabirinKata.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;

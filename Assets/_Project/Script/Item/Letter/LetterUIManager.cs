@@ -6,7 +6,7 @@ using KevinCastejon.MoreAttributes;
 using LabirinKata.Gameplay.EventHandler;
 using LabirinKata.Stage;
 
-namespace LabirinKata.Item.Letter
+namespace LabirinKata.Item
 {
     public class LetterUIManager : MonoBehaviour
     {

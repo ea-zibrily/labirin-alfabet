@@ -5,7 +5,7 @@ using KevinCastejon.MoreAttributes;
 using LabirinKata.Stage;
 using LabirinKata.Database;
 
-namespace LabirinKata.Item.Letter
+namespace LabirinKata.Item
 {
     public class LetterManager : MonoBehaviour
     {

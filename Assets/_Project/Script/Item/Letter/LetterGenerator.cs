@@ -5,7 +5,7 @@ using UnityEngine;
 
 using MonoUnity = UnityEngine.Object;
 
-namespace LabirinKata.Item.Letter
+namespace LabirinKata.Item
 {
     public class LetterGenerator
     {

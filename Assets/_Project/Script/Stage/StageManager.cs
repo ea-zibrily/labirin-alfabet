@@ -3,7 +3,7 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Enum;
 using LabirinKata.Database;
-using LabirinKata.Item.Letter;
+using LabirinKata.Item;
 using LabirinKata.DesignPattern.Singleton;
 
 namespace LabirinKata.Stage
