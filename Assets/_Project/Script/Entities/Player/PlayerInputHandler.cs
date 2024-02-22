@@ -91,10 +91,12 @@ namespace LabirinKata.Entities.Player
             if (isHalfScreen)
             {
                 return fingerTouch.screenPosition.x <= Screen.width / 2f 
-                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f;
+                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f
+                       && fingerTouch.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
             }
             
-            return fingerTouch.screenPosition.y <= Screen.height / 1.3f;
+            return fingerTouch.screenPosition.y <= Screen.height / 1.3f 
+                    && fingerTouch.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
         }
         
         #endregion

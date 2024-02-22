@@ -37,7 +37,8 @@ namespace LabirinKata.Entities.Player
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private Animator _playerAnimator;
-        
+        private PlayerPickThrow _playerPickThrow;
+
         public PlayerInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
@@ -48,6 +49,7 @@ namespace LabirinKata.Entities.Player
         {
             _playerRb = GetComponent<Rigidbody2D>();
             _playerAnimator = GetComponentInChildren<Animator>();
+            _playerPickThrow = GetComponentInChildren<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
         }
 
@@ -105,6 +107,11 @@ namespace LabirinKata.Entities.Player
             
             movementDirection = new Vector2(moveX, moveY);
             movementDirection.Normalize();
+            if (movementDirection.sqrMagnitude > 0.5f)
+            {
+                _playerPickThrow.PickDirection = movementDirection;
+            }
+            
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
         

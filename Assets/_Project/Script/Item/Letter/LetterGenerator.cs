@@ -101,7 +101,6 @@ namespace LabirinKata.Item
                 if (removedPointIndex.Contains(i)) continue;
                 AvailableSpawnPoints.Add(spawnPoints[i]);
             }
-            Debug.Log("set lesgpo");
         }
         
         #endregion
