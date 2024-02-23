@@ -13,34 +13,23 @@ namespace LabirinKata.Item
         [SerializeField] private float stunDuration;
         [SerializeField] private GameObject hitEffect;
 
-        private float _currentTime;
         private bool _isItemThrowed;
-        private bool _isCollideWithAnother;
+
+        public bool IsCollideWithAnother { get; private set; }
+        public SpriteRenderer SpriteRenderer { get; set; }
 
         #endregion
 
         #region MonoBehaviour Callbacks
 
+        private void Awake()
+        {
+            SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
         private void Start()
         {
             InitializeStun();
-        }
-
-        private void Update()
-        {
-            if (!_isItemThrowed || _isCollideWithAnother) return;
-            
-            Debug.Log("go stun");
-            GetComponentInChildren<SpriteRenderer>().enabled = false;
-            StartCoroutine(HitOtherRoutine(gameObject));
-
-            _currentTime += Time.deltaTime;
-            if (_currentTime >= stunDuration)
-            {
-                _currentTime = 0;
-                InitializeStun();
-                gameObject.SetActive(false);
-            }
         }
 
         #endregion
@@ -49,7 +38,7 @@ namespace LabirinKata.Item
 
         private void InitializeStun()
         {
-            _isCollideWithAnother = false;
+            IsCollideWithAnother = false;
             _isItemThrowed = false;
         }
 
@@ -58,15 +47,34 @@ namespace LabirinKata.Item
             _isItemThrowed = true;
         }
         
+        public void MissOther()
+        {
+            StartCoroutine(HitOtherRoutine(gameObject));
+        }
+
+        private IEnumerator HitEnemyRoutine(EnemyBase enemy)
+        {
+            enemy.StopMovement();
+            StartCoroutine(HitOtherRoutine(enemy.gameObject));
+
+            yield return new WaitForSeconds(stunDuration);
+            enemy.StartMovement();
+        }
+
         private IEnumerator HitOtherRoutine(GameObject otherObject)
         {
+            SpriteRenderer.enabled = false;
             var stunEffectObject = Instantiate(hitEffect, transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
 
             yield return new WaitForSeconds(stunDuration);
-            Destroy(stunEffectObject);
-            InitializeStun();
-            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+
+        // !-- Helper/Utilities
+        private bool CheckColliderTag(Collider2D other)
+        {
+            return other.CompareTag("Player") || !other.CompareTag("Wall") || !other.CompareTag("Enemy");
         }
 
         #endregion
@@ -75,20 +83,24 @@ namespace LabirinKata.Item
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!_isItemThrowed || other.CompareTag("Player")) return;
+            // TODO: ganti penentu tag ke benda physisc (donn)
+            if (!_isItemThrowed || CheckColliderTag(other)) return;
 
-            _isCollideWithAnother = true;
-            GetComponentInChildren<SpriteRenderer>().enabled = false;
-            if (other.TryGetComponent<EnemyBase>(out EnemyBase enemy))
+            IsCollideWithAnother = true;
+            SpriteRenderer.sortingOrder--;
+
+            if (other.TryGetComponent(out EnemyBase enemy))
             {
-                enemy.StopMovement();
-                StartCoroutine(HitOtherRoutine(other.gameObject));
-                enemy.StartMovement();
+                Debug.LogWarning($"go stun when collide w {enemy.name}");
+                StartCoroutine(HitEnemyRoutine(enemy));
             }
             else
             {
-                StartCoroutine(HitOtherRoutine(other.gameObject));
+                Debug.LogWarning($"go stun when collide w {other.gameObject.name}");
+                StartCoroutine(HitOtherRoutine(gameObject));
             }
+
+            _isItemThrowed = false;
         }
 
         #endregion

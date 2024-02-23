@@ -15,7 +15,7 @@ namespace LabirinKata.Item
     [Serializable]
     public struct LetterSpawns
     {
-        public Enum.StageNum StageName;
+        public StageNum StageName;
         public int AmountOfLetter;
         public Transform SpawnParentTransform;
         public Transform[] SpawnPointTransforms;

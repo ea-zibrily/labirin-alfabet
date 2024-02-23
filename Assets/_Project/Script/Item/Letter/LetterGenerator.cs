@@ -86,7 +86,7 @@ namespace LabirinKata.Item
                 
                 AvailableLetterObjects.Add(letterObject);
             }
-
+            
             SetAvailableSpawnPoint(latestPointIndices);            
         }
         

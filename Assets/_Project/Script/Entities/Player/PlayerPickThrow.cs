@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using LabirinKata.Item;
 using UnityEngine;
 using UnityEngine.UI;
+using LabirinKata.Item;
 
 namespace LabirinKata.Entities.Player
 {
@@ -11,17 +11,20 @@ namespace LabirinKata.Entities.Player
     {
         #region Fields & Property
         
-        [Header("Pick & Throw")]
+        [Header("Pick")]
         [SerializeField] private Transform pickAreaTransform;
         [SerializeField] private float pickAreaRadius;
-        [SerializeField] private float throwDuration;
         [SerializeField] private LayerMask itemLayerMask;
 
-        private Vector3 _centerPointPosition;
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
         public Vector3 PickDirection { get; set; }
+
+        [Header("Throw")]
+        [SerializeField] private float throwRange;
+        [SerializeField] private float throwDuration;
+        [SerializeField] private float throwDelay;
         
         [Header("UI")]
         [SerializeField] private Button interactButtonUI;
@@ -48,7 +51,6 @@ namespace LabirinKata.Entities.Player
                 if (pickAreaCollder)
                 {
                     _pickItemObject = pickAreaCollder.gameObject;
-                    Debug.Log($"item {_pickItemObject.name} dalam jangkauan brok");
                     interactButtonUI.gameObject.SetActive(pickAreaCollder.CompareTag("Pick"));
                 }
                 else
@@ -57,7 +59,7 @@ namespace LabirinKata.Entities.Player
                 }
             }
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks
@@ -77,12 +79,10 @@ namespace LabirinKata.Entities.Player
         {
             if (_holdedItemObject)
             {
-                Debug.LogWarning("throw");
                 ThrowItem();
             }
             else
             {
-                Debug.LogWarning("pick");
                 PickItem();
             }
         }
@@ -93,9 +93,10 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject.transform.position = pickAreaTransform.transform.position;
             _holdedItemObject.transform.parent = transform;
 
-            if (_pickItemObject.TryGetComponent<Rigidbody2D>(out var itemRb))
+            if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
-                itemRb.simulated = false;
+                stunItem.SpriteRenderer.sortingOrder++;
+                stunItem.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
 
@@ -109,33 +110,32 @@ namespace LabirinKata.Entities.Player
         {
             var elapsedTime = 0f;
             var startPoint = item.transform.position;
-            var endPoint = transform.position + PickDirection * 2;
+            var endPoint = transform.position + PickDirection * throwRange;
 
-            while (elapsedTime < throwDuration)
+            // TODO: Drop logic to ref item script here!
+            if (item.TryGetComponent<StunUnique>(out var stunItem))
             {
+                stunItem.ThrowItem();
+                stunItem.GetComponent<Rigidbody2D>().simulated = true;
+            }
+
+            while (elapsedTime < throwDelay)
+            {   
+                if (stunItem.IsCollideWithAnother) yield break;
+                
                 item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * 0.04f);
                 elapsedTime++;
                 yield return null;
             }
 
-            if (_pickItemObject.TryGetComponent<Rigidbody2D>(out var itemRb))
-            {
-                itemRb.simulated = true;
-            }
-
-            // TODO: Drop logic to destroy item here!
-            if (_pickItemObject.TryGetComponent<StunUnique>(out var stunUnique))
-            {
-                Debug.LogWarning("tthrow lesgo");
-                stunUnique.ThrowItem();
-            }
+            stunItem.MissOther();
         }
 
         // !-- Helper/Utilities
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(transform.position + PickDirection, pickAreaRadius);
-            Gizmos.color = Color.cyan;
+            Gizmos.color = Color.red;
         }
         
         #endregion

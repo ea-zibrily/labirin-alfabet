@@ -47,7 +47,6 @@ namespace LabirinKata.Gameplay.Controller
         private void Start()
         {
            InitializeTimer();
-           StartCoroutine(StartTimerRoutine());
         }
         
         private void Update()
@@ -64,18 +63,10 @@ namespace LabirinKata.Gameplay.Controller
         {
             _fullTime = amountOfTime + _latestTime;
             _currentTime = _fullTime;
-            
+
             TimerDisplay(_currentTime);
-        }
-        
-        private IEnumerator StartTimerRoutine()
-        {
-            yield return new WaitForSeconds(1.5f);
             StartTimer();
         }
-
-        private void StartTimer() => IsTimerStart = true;
-        private void StopTimer() => IsTimerStart = false;
 
         // !-- Core Functionality
         private void CountdownTimer()
@@ -99,6 +90,9 @@ namespace LabirinKata.Gameplay.Controller
             _latestTime = _currentTime;
         }
         
+        private void StartTimer() => IsTimerStart = true;
+        private void StopTimer() => IsTimerStart = false;
+
         private void TimerDisplay(float time)
         {
             var timeInMinutes = Mathf.FloorToInt(time / 60);

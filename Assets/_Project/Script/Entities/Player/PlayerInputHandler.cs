@@ -15,7 +15,7 @@ namespace LabirinKata.Entities.Player
         [Header("Joystick Settings")] 
         [Tooltip("Isi dengan ukuran Rect Transform joystick yang diinginkan")]
         [SerializeField] private Vector2 joystickSize;
-        [FormerlySerializedAs("canFullScreen")]
+        
         [Tooltip("Aktifkan jika ingin mengakses joystick dalam half screen")]
         [SerializeField] private bool isHalfScreen;
         

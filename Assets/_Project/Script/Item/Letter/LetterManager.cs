@@ -47,7 +47,7 @@ namespace LabirinKata.Item
         
         private void OnDisable()
         {
-            OnTakeLetter += TakeLetter;
+            OnTakeLetter -= TakeLetter;
         }
         
         private void Start()

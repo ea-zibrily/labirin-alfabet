@@ -56,7 +56,6 @@ namespace LabirinKata.Entities.Player
         private void Start()
         {
             InitializePlayer();
-            StartCoroutine(StartPlayerMove());
         }
 
         private void FixedUpdate()
@@ -78,12 +77,6 @@ namespace LabirinKata.Entities.Player
         {
             gameObject.name = playerData.PlayerName;
             CurrentMoveSpeed = playerData.MoveSpeed;
-        }
-        
-        private IEnumerator StartPlayerMove()
-        {
-            StopMovement();
-            yield return new WaitForSeconds(1f);
             StartMovement();
         }
         

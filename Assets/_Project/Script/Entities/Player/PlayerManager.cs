@@ -14,7 +14,6 @@ namespace LabirinKata.Entities.Player
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
-
         #region Const Variable
         
         private const float DIE_DELAY = 0.5f;

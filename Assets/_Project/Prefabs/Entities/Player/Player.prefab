@@ -157,10 +157,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickAreaTransform: {fileID: 7807138492438561508}
   pickAreaRadius: 0.7
-  throwDuration: 25
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  throwRange: 5
+  throwDuration: 0.04
+  throwDelay: 25
   interactButtonUI: {fileID: 0}
 --- !u!1 &1935479398348759522
 GameObject:

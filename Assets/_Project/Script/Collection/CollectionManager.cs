@@ -63,7 +63,7 @@ namespace LabirinKata.Collection
                 Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");
             }
         }
-
+        
         private void CloseCollection()
         {
             _collectionAudioManager.StopCollectionAudio();
