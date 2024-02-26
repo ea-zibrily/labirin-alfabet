@@ -222,16 +222,18 @@ namespace LabirinKata.Entities.Player
                     CameraEventHandler.CameraShakeEvent();
                     KnockedBack(triggerObject);
                     StartCoroutine(IframeRoutine());
+
                     CanceledBuff();
                     LostLetter();
                     break;
                 case TagFeedback.Item:
-
-                    break;
-                default:
+                    var takeableObject = triggerObject.GetComponent<ITakeable>();
+                    takeableObject.Taken();
+                    
+                    if (!(takeableObject as LetterController)) return;
+                    CollectLetter(triggerObject);
                     break;
             }
-            
         }
 
         #endregion
@@ -245,22 +247,12 @@ namespace LabirinKata.Entities.Player
             if (other.CompareTag("Enemy"))
             {
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
-
-                _playerController.StopMovement();
-                DecreaseHealth();
-                CameraEventHandler.CameraShakeEvent();
-                KnockedBack(other.gameObject);
-                StartCoroutine(IframeRoutine());
-                CanceledBuff();
-                LostLetter();
+               
+               TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
             }
             else if (other.CompareTag("Item"))
             {
-                var takeableObject = other.GetComponent<ITakeable>();
-                takeableObject.Taken();
-                
-                if (!(takeableObject as LetterController)) return;
-                CollectLetter(other.gameObject);
+                TriggeredFeedback(TagFeedback.Item, other.gameObject);
             }
         }
         
