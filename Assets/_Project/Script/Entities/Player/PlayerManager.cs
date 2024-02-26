@@ -7,6 +7,7 @@ using LabirinKata.Stage;
 using LabirinKata.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
+using LabirinKata.Entities.Enemy;
 
 namespace LabirinKata.Entities.Player
 {
@@ -14,10 +15,14 @@ namespace LabirinKata.Entities.Player
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
-        #region Const Variable
-        
-        private const float DIE_DELAY = 0.5f;
+        #region Enum
 
+        public enum TagFeedback
+        {
+            Enemy,
+            Item
+        }
+        
         #endregion
 
         #region Fields & Properties
@@ -28,6 +33,7 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private GameObject[] healthUIObjects;
 
         private bool _isPlayerDead;
+        private const float DIE_DELAY = 0.5f;
         
         public GameObject[] HealthUIFills { get; private set; }
         public int CurrentHealthCount
@@ -203,6 +209,32 @@ namespace LabirinKata.Entities.Player
         }
         
         #endregion
+
+        #region Utilities
+
+        private void TriggeredFeedback(TagFeedback tag, GameObject triggerObject)
+        {
+            switch (tag)
+            {
+                case TagFeedback.Enemy:
+                    _playerController.StopMovement();
+                    DecreaseHealth();
+                    CameraEventHandler.CameraShakeEvent();
+                    KnockedBack(triggerObject);
+                    StartCoroutine(IframeRoutine());
+                    CanceledBuff();
+                    LostLetter();
+                    break;
+                case TagFeedback.Item:
+
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
+        #endregion
         
         #region Collider Callbacks
         
@@ -212,6 +244,8 @@ namespace LabirinKata.Entities.Player
             
             if (other.CompareTag("Enemy"))
             {
+               if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
+
                 _playerController.StopMovement();
                 DecreaseHealth();
                 CameraEventHandler.CameraShakeEvent();

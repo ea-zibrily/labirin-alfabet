@@ -25,8 +25,8 @@ namespace LabirinKata.Entities.Enemy
         [Header("Data")] 
         public EnemyData EnemyData;
 
-        private bool _canMove;
         private Vector2 _enemyDirection;
+        public bool CanMove { get; private set; }
 
         protected PatternBase CurrentPattern { get; set; }
         public Transform CurrentTarget { get; set; }
@@ -102,13 +102,13 @@ namespace LabirinKata.Entities.Enemy
             _enemyDirection = targetPosition - enemyPosition;
             _enemyDirection.Normalize();
 
-            if (!_canMove) return;
+            if (!CanMove) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
 
         private void EnemyAnimation()
         {
-            if (_canMove)
+            if (CanMove)
             {
                 _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
                 _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
@@ -122,8 +122,8 @@ namespace LabirinKata.Entities.Enemy
         }
         
         // !-- Helpers/Utilities
-        public void StartMovement() => _canMove = true;
-        public void StopMovement() => _canMove = false;
+        public void StartMovement() => CanMove = true;
+        public void StopMovement() => CanMove = false;
 
         protected void SwitchPattern(PatternBase newPattern)
         {

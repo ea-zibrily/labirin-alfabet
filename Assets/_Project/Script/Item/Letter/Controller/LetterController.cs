@@ -3,6 +3,7 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 
 using Random = UnityEngine.Random;
+using LabirinKata.Data;
 
 namespace LabirinKata.Item
 {
@@ -10,11 +11,12 @@ namespace LabirinKata.Item
     {
         #region Fields & Properties
 
-        [Header("Settings")] 
+        [Header("Data")] 
         [SerializeField] [ReadOnlyOnPlay] private int letterId;
         [SerializeField] [ReadOnlyOnPlay] private int spawnId;
         [SerializeField] private string letterName;
         [SerializeField] private bool hasLetterTaken;
+        private LetterData _letterData;
 
         public int LetterId => letterId;
         public string LetterName => letterName;
@@ -30,10 +32,11 @@ namespace LabirinKata.Item
         [SerializeField] private float moveDelay;
         [SerializeField] private float lerpDuration;
 
+        [Header("Reference")]
+        private SpriteRenderer _spriteRenderer;
 
-        [Header("Reference")] 
-        private LetterManager _letterManager;
-        private LetterUIManager _letterUIManager;
+        public LetterManager LetterManager { get; private set; }
+        public LetterUIManager LetterUIManager { get; private set; }
         
         #endregion
         
@@ -41,14 +44,16 @@ namespace LabirinKata.Item
         
         private void Awake()
         {
-            var letterManagementObject = GameObject.FindGameObjectWithTag("LetterManager");
-            
-            _letterManager = letterManagementObject.GetComponentInChildren<LetterManager>();
-            _letterUIManager = letterManagementObject.GetComponentInChildren<LetterUIManager>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            var managerObject = GameObject.FindGameObjectWithTag("LetterManager");   
+            LetterManager = managerObject.GetComponentInChildren<LetterManager>();
+            LetterUIManager = managerObject.GetComponentInChildren<LetterUIManager>();
         }
         
         private void Start()
         {
+            Debug.LogWarning("strat");
             InitializeLetter();
         }
         
@@ -57,6 +62,8 @@ namespace LabirinKata.Item
         #region Labirin Kata Callbacks
         
         // !-- Initialization
+        public void InitializeData(LetterData data) => _letterData = data;
+
         private void InitializeLetter()
         {
             gameObject.name = letterName;
@@ -68,11 +75,11 @@ namespace LabirinKata.Item
         {
             if (!hasLetterTaken)
             {
-                _letterManager.TakeLetterEvent(gameObject);
+                LetterManager.TakeLetterEvent(gameObject);
                 hasLetterTaken = true;
             }
-            _letterManager.AddAvailableSpawnPoint(transform);
-            _letterUIManager.TakeLetterEvent(SpawnId);
+            LetterManager.AddAvailableSpawnPoint(transform);
+            LetterUIManager.TakeLetterEvent(SpawnId);
                         
             gameObject.SetActive(false);
         }
@@ -83,9 +90,9 @@ namespace LabirinKata.Item
         public void Lost()
         {
             gameObject.SetActive(true);
-            _letterUIManager.LostLetterEvent(SpawnId);
+            LetterUIManager.LostLetterEvent(SpawnId);
 
-            var spawnPoints = _letterManager.AvailableSpawnPoint;
+            var spawnPoints = LetterManager.AvailableSpawnPoint;
             var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);
             var randomPoint = spawnPoints[randomPointIndex].position;
 
@@ -107,7 +114,7 @@ namespace LabirinKata.Item
             }
 
             transform.position = randomPoint;
-            _letterManager.RemoveAvailableSpawnPoint(randomPointIndex);
+            LetterManager.RemoveAvailableSpawnPoint(randomPointIndex);
             Debug.LogWarning($"remove available point index {randomPointIndex}");
         }
 

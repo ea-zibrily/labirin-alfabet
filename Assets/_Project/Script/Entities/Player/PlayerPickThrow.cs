@@ -48,13 +48,15 @@ namespace LabirinKata.Entities.Player
             else
             {
                 var pickAreaCollder = Physics2D.OverlapCircle(transform.position + PickDirection, pickAreaRadius, itemLayerMask);
-                if (pickAreaCollder)
+                if (pickAreaCollder && pickAreaCollder.CompareTag("Pick"))
                 {
+                    Debug.Log("on area");
                     _pickItemObject = pickAreaCollder.gameObject;
-                    interactButtonUI.gameObject.SetActive(pickAreaCollder.CompareTag("Pick"));
+                    interactButtonUI.gameObject.SetActive(true);
                 }
                 else
                 {
+                    Debug.Log("not on area");
                     interactButtonUI.gameObject.SetActive(false);
                 }
             }
@@ -115,8 +117,8 @@ namespace LabirinKata.Entities.Player
             // TODO: Drop logic to ref item script here!
             if (item.TryGetComponent<StunUnique>(out var stunItem))
             {
-                stunItem.ThrowItem();
                 stunItem.GetComponent<Rigidbody2D>().simulated = true;
+                stunItem.ThrowItem();
             }
 
             while (elapsedTime < throwDelay)

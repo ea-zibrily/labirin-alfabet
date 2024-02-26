@@ -49,7 +49,8 @@ namespace LabirinKata.Entities.Player
         {
             _playerRb = GetComponent<Rigidbody2D>();
             _playerAnimator = GetComponentInChildren<Animator>();
-            _playerPickThrow = GetComponentInChildren<PlayerPickThrow>();
+
+            _playerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
         }
 

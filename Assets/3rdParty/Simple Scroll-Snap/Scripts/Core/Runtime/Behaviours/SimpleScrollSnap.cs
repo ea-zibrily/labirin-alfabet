@@ -52,6 +52,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         // *--Labirin Kata Customize
         public int SelectedPanelIndex { get; set; }
         public event Action OnSnappingBegin;
+        public event Action OnSnappingEnd;
 
         private ScrollRect scrollRect;
         private Vector2 contentSize, prevAnchoredPosition, velocity;
@@ -604,6 +605,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 {
                     onPanelCentered.Invoke(CenteredPanel, SelectedPanel);
                     SelectedPanel = CenteredPanel;
+                    OnSnappingEnd?.Invoke();
                 }
             }
             else

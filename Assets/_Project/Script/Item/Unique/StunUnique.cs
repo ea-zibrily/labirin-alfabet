@@ -14,8 +14,11 @@ namespace LabirinKata.Item
         [SerializeField] private GameObject hitEffect;
 
         private bool _isItemThrowed;
-
+        
         public bool IsCollideWithAnother { get; private set; }
+
+        [Header("Reference")]
+        private CapsuleCollider2D _capsuleCollider;
         public SpriteRenderer SpriteRenderer { get; set; }
 
         #endregion
@@ -24,6 +27,7 @@ namespace LabirinKata.Item
 
         private void Awake()
         {
+            _capsuleCollider = GetComponent<CapsuleCollider2D>();
             SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
@@ -40,10 +44,12 @@ namespace LabirinKata.Item
         {
             IsCollideWithAnother = false;
             _isItemThrowed = false;
+            _capsuleCollider.isTrigger = false;
         }
 
         public void ThrowItem()
         {
+            _capsuleCollider.isTrigger = true;
             _isItemThrowed = true;
         }
         
@@ -74,7 +80,7 @@ namespace LabirinKata.Item
         // !-- Helper/Utilities
         private bool CheckColliderTag(Collider2D other)
         {
-            return other.CompareTag("Player") || !other.CompareTag("Wall") || !other.CompareTag("Enemy");
+            return other.CompareTag("Wall") || other.CompareTag("Enemy");
         }
 
         #endregion
@@ -84,7 +90,8 @@ namespace LabirinKata.Item
         private void OnTriggerEnter2D(Collider2D other)
         {
             // TODO: ganti penentu tag ke benda physisc (donn)
-            if (!_isItemThrowed || CheckColliderTag(other)) return;
+            if (!_isItemThrowed) return;
+            if (!CheckColliderTag(other)) return;
 
             IsCollideWithAnother = true;
             SpriteRenderer.sortingOrder--;
@@ -102,7 +109,7 @@ namespace LabirinKata.Item
 
             _isItemThrowed = false;
         }
-
+        
         #endregion
     }
 }

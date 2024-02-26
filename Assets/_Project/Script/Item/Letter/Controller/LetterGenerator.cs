@@ -81,6 +81,7 @@ namespace LabirinKata.Item
                 latestPointIndices.Add(randomPointIndex);
                                 
                 GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
+                Debug.Log("instantiet");
                 letterObject.GetComponent<LetterController>().SpawnId = i + 1;
                 letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
                 
