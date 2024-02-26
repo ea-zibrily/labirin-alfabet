@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using LabirinKata.Enum;
 using DanielLochner.Assets.SimpleScrollSnap;
 
-namespace LabirinKata.Managers
+namespace LabirinKata.UI
 {
     public class MainMenuManager : MonoBehaviour
     {
@@ -44,7 +44,6 @@ namespace LabirinKata.Managers
         // !-- Core Functionality
         private void OnPlayButton()
         {
-            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.LevelSelectionMenu);
             selectStagePanelUI.SetActive(true);
         }
 
