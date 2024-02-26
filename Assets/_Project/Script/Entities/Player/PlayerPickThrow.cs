@@ -50,13 +50,11 @@ namespace LabirinKata.Entities.Player
                 var pickAreaCollder = Physics2D.OverlapCircle(transform.position + PickDirection, pickAreaRadius, itemLayerMask);
                 if (pickAreaCollder && pickAreaCollder.CompareTag("Pick"))
                 {
-                    Debug.Log("on area");
                     _pickItemObject = pickAreaCollder.gameObject;
                     interactButtonUI.gameObject.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log("not on area");
                     interactButtonUI.gameObject.SetActive(false);
                 }
             }

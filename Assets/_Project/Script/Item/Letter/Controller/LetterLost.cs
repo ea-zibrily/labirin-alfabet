@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LabirinKata.Entities.Player;
 using UnityEngine;
 
 namespace LabirinKata.Item
@@ -14,12 +15,14 @@ namespace LabirinKata.Item
 
         [Header("Reference")]
         private LetterController _letterController;
+        private GameObject _playerObject;
 
         #region MonoBehaviour Callbacks
 
         private void Awake()
         {
             _letterController = GetComponent<LetterController>();
+            _playerObject = GameObject.FindGameObjectWithTag("Player");
         }
 
         #endregion
@@ -31,8 +34,10 @@ namespace LabirinKata.Item
         /// </summary>
         public void Lost()
         {
-            gameObject.SetActive(true);
-            _letterController.LetterUIManager.LostLetterEvent(_letterController.SpawnId);
+            _letterController.ObjectPool.Get();
+            transform.position = _playerObject.transform.position;
+            _letterController.LetterInterfaceManager.LostLetterEvent(_letterController.SpawnId);
+            Debug.LogWarning("re-pool letter");
 
             var spawnPoints = _letterController.LetterManager.AvailableSpawnPoint;
             var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);

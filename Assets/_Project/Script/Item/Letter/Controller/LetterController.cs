@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
+using LabirinKata.Data;
 
 using Random = UnityEngine.Random;
-using LabirinKata.Data;
+using Unity.VisualScripting;
 
 namespace LabirinKata.Item
 {
@@ -12,31 +14,25 @@ namespace LabirinKata.Item
         #region Fields & Properties
 
         [Header("Data")] 
-        [SerializeField] [ReadOnlyOnPlay] private int letterId;
-        [SerializeField] [ReadOnlyOnPlay] private int spawnId;
-        [SerializeField] private string letterName;
+        [SerializeField] [ReadOnly] private int spawnId;
         [SerializeField] private bool hasLetterTaken;
-        private LetterData _letterData;
 
-        public int LetterId => letterId;
-        public string LetterName => letterName;
+        private LetterData _letterData;
+        private string _letterName;
+
         public int SpawnId
         {
             get => spawnId;
             set => spawnId = value;
         }
-         
-        [Header("Lost")] 
-        [SerializeField] private float minRange;
-        [SerializeField] private float maxRange;
-        [SerializeField] private float moveDelay;
-        [SerializeField] private float lerpDuration;
+
+        public ObjectPool<LetterController> ObjectPool { get; set; }
 
         [Header("Reference")]
         private SpriteRenderer _spriteRenderer;
 
         public LetterManager LetterManager { get; private set; }
-        public LetterUIManager LetterUIManager { get; private set; }
+        public LetterInterfaceManager LetterInterfaceManager { get; private set; }
         
         #endregion
         
@@ -46,14 +42,13 @@ namespace LabirinKata.Item
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-            var managerObject = GameObject.FindGameObjectWithTag("LetterManager");   
-            LetterManager = managerObject.GetComponentInChildren<LetterManager>();
-            LetterUIManager = managerObject.GetComponentInChildren<LetterUIManager>();
+            var letter = LetterHelper.GetLetterManagerObject();
+            LetterManager = letter.GetComponent<LetterManager>();
+            LetterInterfaceManager = letter.GetComponent<LetterInterfaceManager>();
         }
         
         private void Start()
         {
-            Debug.LogWarning("strat");
             InitializeLetter();
         }
         
@@ -62,12 +57,19 @@ namespace LabirinKata.Item
         #region Labirin Kata Callbacks
         
         // !-- Initialization
-        public void InitializeData(LetterData data) => _letterData = data;
+        public void InitializeData(LetterData data, int spawnNum)
+        {
+            _letterData = data;
+            spawnId = spawnNum;
+        }
 
         private void InitializeLetter()
         {
-            gameObject.name = letterName;
-            hasLetterTaken = false;
+            _letterName = _letterData.LetterName;
+            hasLetterTaken = _letterData.HasTaken;
+            
+            gameObject.name = _letterName;
+            _spriteRenderer.sprite = _letterData.LetterSprite;
         }
         
         // !-- Core Functionality
@@ -75,49 +77,17 @@ namespace LabirinKata.Item
         {
             if (!hasLetterTaken)
             {
-                LetterManager.TakeLetterEvent(gameObject);
+                LetterManager.TakeLetterEvent(_letterData);
                 hasLetterTaken = true;
             }
             LetterManager.AddAvailableSpawnPoint(transform);
-            LetterUIManager.TakeLetterEvent(SpawnId);
-                        
-            gameObject.SetActive(false);
+            LetterInterfaceManager.TakeLetterEvent(SpawnId);
+
+            // Release obstacle back to the pool
+            Debug.LogWarning("take item");            
+            ObjectPool.Release(this);
         }
         
-        /// <summary>
-        /// Panggil method ini jika player bertabrakan dengan enemy
-        /// </summary>
-        public void Lost()
-        {
-            gameObject.SetActive(true);
-            LetterUIManager.LostLetterEvent(SpawnId);
-
-            var spawnPoints = LetterManager.AvailableSpawnPoint;
-            var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);
-            var randomPoint = spawnPoints[randomPointIndex].position;
-
-            StartCoroutine(LerpToRandomPointRoutine(randomPoint, randomPointIndex));
-        }
-
-
-        // TODO: Coba pake moveDelay = 1, lerpDur= 0.5f
-        private IEnumerator LerpToRandomPointRoutine(Vector3 randomPoint, int randomPointIndex)
-        {
-            var elapsedTime = 0f;
-
-            while (elapsedTime < moveDelay)
-            {
-                yield return null;
-                elapsedTime += Time.deltaTime;
-                var lerpRatio = elapsedTime / lerpDuration;
-                transform.position = Vector3.Lerp(transform.position, randomPoint, lerpRatio);
-            }
-
-            transform.position = randomPoint;
-            LetterManager.RemoveAvailableSpawnPoint(randomPointIndex);
-            Debug.LogWarning($"remove available point index {randomPointIndex}");
-        }
-
         #endregion
     }
 }

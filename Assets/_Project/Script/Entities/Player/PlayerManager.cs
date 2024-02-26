@@ -203,8 +203,8 @@ namespace LabirinKata.Entities.Player
             if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
             
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
-            letterCollects[randomLetter].transform.position = _playerObject.transform.position;
-            letterCollects[randomLetter].GetComponent<LetterController>().Lost();
+            // letterCollects[randomLetter].transform.position = _playerObject.transform.position;
+            letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
         }
         

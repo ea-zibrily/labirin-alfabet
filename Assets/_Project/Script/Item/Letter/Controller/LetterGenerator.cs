@@ -80,12 +80,12 @@ namespace LabirinKata.Item
                 latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
                                 
-                GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
-                Debug.Log("instantiet");
-                letterObject.GetComponent<LetterController>().SpawnId = i + 1;
-                letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
+                // GameObject letterObject = MonoUnity.Instantiate(_letterObjects[randomLetterIndex], _letterSpawns[_stageIndex].SpawnParentTransform, false);
+                // Debug.Log("instantiet");
+                // letterObject.GetComponent<LetterController>().SpawnId = i + 1;
+                // letterObject.transform.position = _letterSpawns[_stageIndex].SpawnPointTransforms[randomPointIndex].position;
                 
-                AvailableLetterObjects.Add(letterObject);
+                // AvailableLetterObjects.Add(letterObject);
             }
             
             SetAvailableSpawnPoint(latestPointIndices);            

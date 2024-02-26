@@ -4,6 +4,8 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Stage;
 using LabirinKata.Database;
+using LabirinKata.Data;
+using LabirinKata.Enum;
 
 namespace LabirinKata.Item
 {
@@ -11,24 +13,25 @@ namespace LabirinKata.Item
     {
         #region Fields & Properties
         
-        [Header("Letter")] 
-        [SerializeField] private GameObject[] letterPrefabs;
+        [Header("Spawn Data")] 
         [SerializeField] private LetterSpawns[] letterSpawns;
         [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        [field: SerializeField] public List<Transform> AvailableSpawnPoint { get; private set; }
+        public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
-        private List<GameObject> _lockedLetterObject;
-        private List<GameObject> _unlockedLetterObject;
+        private List<LetterData> _lockedLetterDatas;
+        private List<LetterData> _unlockedLetterDatas;
         
         //-- Letter Event
-        public event Action<GameObject> OnTakeLetter;
+        public event Action<LetterData> OnTakeLetter;
 
         [Header("Reference")] 
-        private LetterUIManager _letterUIManager;
-        private LetterGenerator _letterGenerator;
+        private LetterInterfaceManager _letterUIManager;
+        private LetterPooler _letterPooler;
+        [SerializeField] private LetterContainer _letterContainer;
+        public LetterContainer LetterContainer => _letterContainer;
         
         #endregion
         
@@ -36,8 +39,8 @@ namespace LabirinKata.Item
         
         private void Awake()
         {
-            var letterManagerObject = GameObject.FindGameObjectWithTag("LetterManager");
-            _letterUIManager = letterManagerObject.GetComponentInChildren<LetterUIManager>();
+            _letterPooler = GameObject.FindGameObjectWithTag("Pooler").GetComponent<LetterPooler>();
+            _letterUIManager = GetComponent<LetterInterfaceManager>();
         }
 
         private void OnEnable()
@@ -53,8 +56,8 @@ namespace LabirinKata.Item
         private void Start()
         {
             InitializeLetterData();
-            InitializeLetterObject();
-            InitializeLetterGenerator();
+            InitializeLetterDatas();
+            InitializeLetterPooler();
             
             SpawnLetter();
         }
@@ -66,41 +69,40 @@ namespace LabirinKata.Item
         // !-- Initialization
         private void InitializeLetterData()
         {
-            _lockedLetterObject = new List<GameObject>();
-            _unlockedLetterObject = new List<GameObject>();
+            _lockedLetterDatas = new List<LetterData>();
+            _unlockedLetterDatas = new List<LetterData>();
+
             AvailableSpawnPoint = new List<Transform>();
         }
         
-        private void InitializeLetterGenerator()
+        private void InitializeLetterPooler()
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
 
-            _letterGenerator = isLevelCleared ? 
-                new LetterGenerator(letterSpawns, _unlockedLetterObject) :
-                new LetterGenerator(letterSpawns, _lockedLetterObject);
+            _letterPooler.InitializeSpawnDatas(LetterSpawns, isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas);
         }
         
-        private void InitializeLetterObject()
+        private void InitializeLetterDatas()
         {
-            if (letterPrefabs.Length < GameDatabase.LETTER_COUNT)
+            if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
             {
                 Debug.LogError("letter prefabs kurenx breks");
                 return;
             }
             
-            foreach (var letter in letterPrefabs)
+            foreach (var letter in LetterContainer.LetterDatas)
             {
-                var letterId = letter.GetComponent<LetterController>().LetterId;
+                var letterId = letter.LetterId;
                 var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
                 
                 if (isLetterUnlock)
                 {
-                    _unlockedLetterObject.Add(letter);
+                    _unlockedLetterDatas.Add(letter);
                     Debug.LogWarning($"add unlock {letter}");
                     continue;
                 }
-                _lockedLetterObject.Add(letter);
+                _lockedLetterDatas.Add(letter);
                 Debug.LogWarning($"add lock {letter}");
             }
         }
@@ -108,27 +110,27 @@ namespace LabirinKata.Item
         // !-- Core Functionality
         public void SpawnLetter()
         {
-            _letterGenerator.InitializeGenerator();
-            _letterGenerator.GenerateLetter();
-            _letterUIManager.InitializeLetterInterface(_letterGenerator.AvailableLetterObjects);
+            _letterPooler.InitializeGenerator();
+            _letterPooler.GenerateLetter();
+            _letterUIManager.SetLetterInterface(_letterPooler.AvailableLetterDatas);
             
-            AvailableSpawnPoint = _letterGenerator.AvailableSpawnPoints;
+            AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
             currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         
-        public void TakeLetterEvent(GameObject letterObject) => OnTakeLetter?.Invoke(letterObject);
+        public void TakeLetterEvent(LetterData letterData) => OnTakeLetter?.Invoke(letterData);
         
-        private void TakeLetter(GameObject value)
+        private void TakeLetter(LetterData value)
         {
-            _unlockedLetterObject.Add(value);
+            _unlockedLetterDatas.Add(value);
 
-            var valueName = value.GetComponent<LetterController>().LetterName;
-            foreach (var lockLetter in _lockedLetterObject)
+            var valueName = value.LetterName;
+            foreach (var lockLetter in _lockedLetterDatas)
             {
-                var lockLetterName = lockLetter.GetComponent<LetterController>().LetterName;
+                var lockLetterName = lockLetter.LetterName;
                 
                 if (lockLetterName != valueName) continue;
-                _lockedLetterObject.Remove(lockLetter);
+                _lockedLetterDatas.Remove(lockLetter);
                 break;
             }
         }
@@ -157,11 +159,11 @@ namespace LabirinKata.Item
         // !-- Core Functionality
         public void SaveUnlockedLetters()
         {
-            if (_unlockedLetterObject == null) return;
+            if (_unlockedLetterDatas == null) return;
             
-            foreach (var unlockLetter in _unlockedLetterObject)
+            foreach (var unlockLetter in _unlockedLetterDatas)
             {
-                var unlockLetterId = unlockLetter.GetComponent<LetterController>().LetterId;
+                var unlockLetterId = unlockLetter.LetterId;
                 GameDatabase.Instance.SaveLetterCollected(unlockLetterId, true);
             }
         }

@@ -34,7 +34,8 @@ namespace LabirinKata.Stage
 
         protected override void Awake()
         {
-            _letterManager = GameObject.FindGameObjectWithTag("LetterManager").GetComponentInChildren<LetterManager>();
+            var letter = LetterHelper.GetLetterManagerObject();
+            _letterManager = letter.GetComponent<LetterManager>();
         }
         
         private void Start()
@@ -61,7 +62,7 @@ namespace LabirinKata.Stage
                 {
                     stageObjects[i].SetActive(true);
                     currentStageIndex = i;
-                    CurrentStageList = Enum.StageNum.Stage_1;
+                    CurrentStageList = StageNum.Stage_1;
                     continue;
                 }
                 

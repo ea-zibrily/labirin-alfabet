@@ -10,11 +10,11 @@ namespace LabirinKata.Data
         [Header("Data")]
         [SerializeField] private string letterName;
         [SerializeField] private int letterId;
-        [SerializeField] private bool isLetterTaken;
+        [SerializeField] private bool hasTaken;
 
         public string LetterName => letterName;
         public int LetterId => letterId;
-        public bool IsLetterTaken => isLetterTaken;
+        public bool HasTaken => hasTaken;
 
         [Header("Reference")]
         [SerializeField] private Sprite letterSprite;

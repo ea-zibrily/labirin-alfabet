@@ -17,7 +17,6 @@ namespace LabirinKata.Item
     {
         public StageNum StageName;
         public int AmountOfLetter;
-        public Transform SpawnParentTransform;
         public Transform[] SpawnPointTransforms;
     }
 
