@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LabirinKata.Data;
-using LabirinKata.Enum;
 using LabirinKata.Managers;
-using LabirinKata.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
 
@@ -12,14 +10,6 @@ namespace LabirinKata.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        #region Const Variable
-
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "IsMove";
-
-        #endregion
-
         #region Fields & Properties
 
         [Header("Data")] 
@@ -28,6 +18,12 @@ namespace LabirinKata.Entities.Enemy
         private Vector2 _enemyDirection;
         public bool CanMove { get; private set; }
 
+        //-- Const Variable
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "IsMove";
+
+        // -- Pattern Targeting
         protected PatternBase CurrentPattern { get; set; }
         public Transform CurrentTarget { get; set; }
         public int CurrentTargetIndex { get; set; }
@@ -45,18 +41,6 @@ namespace LabirinKata.Entities.Enemy
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
             EnemyHelper = new EnemyHelper();
-        }
-        
-        private void OnEnable()
-        {
-            CameraEventHandler.OnCameraShiftIn += StopMovement;
-            CameraEventHandler.OnCameraShiftOut += StartMovement;
-        }
-        
-        private void OnDisable()
-        {
-            CameraEventHandler.OnCameraShiftIn -= StopMovement;
-            CameraEventHandler.OnCameraShiftOut -= StartMovement;
         }
 
         private void Start()
