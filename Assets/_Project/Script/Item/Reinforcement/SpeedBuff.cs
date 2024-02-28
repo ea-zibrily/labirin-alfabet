@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using LabirinKata.Entities.Player;
 using UnityEngine;
 
 namespace LabirinKata.Item
@@ -10,28 +11,40 @@ namespace LabirinKata.Item
         #region Fields & Properties
 
         [Header("Speed Buff")]
-        [SerializeField] private float moveSpeedUp;
-        [SerializeField] private float speedUpTimeDuration;
         [SerializeField] private float speedUpMultiplier;
+        [SerializeField] private float timeDuration;
+        [SerializeField] private float timeMultiplier;
         
-        [Header("Buff Effect")]
-        [SerializeField] private float flashDuration;
-        [SerializeField] private Color defaultColor;
-        [SerializeField] private Color flashColor;
-
-        private float _normalMoveSpeed;
+        private float _upgradeMoveSpeed;
+        private float _defaultMoveSpeed;
         private float _currentTime;
         
         private bool _isTimerStart;
         private bool _isSpeedUpComplete;
         
+        [Header("Buff Effect")]
+        [SerializeField] private float flashDuration;
+        [SerializeField] private Color defaultColor;
+        [SerializeField] private Color flashColor;
+        
         [Header("Reference")]
-        private SpriteRenderer playerSpriteRenderer;
+        private SpriteRenderer _playerSpriteRenderer;
+        private PlayerPickThrow _playerPickThrow;
 
         #endregion
         
         #region MonoBehaviour Callbacks
-        
+
+        private void OnEnable()
+        {
+            _playerPickThrow.OnPickAndThrow += InitializeSpeed;
+        }
+
+        private void OnDisable()
+        {
+            _playerPickThrow.OnPickAndThrow -= InitializeSpeed;
+        }
+
         private void Update()
         {
             if (!IsBuffActive) return;
@@ -43,7 +56,7 @@ namespace LabirinKata.Item
                 if (!_isTimerStart) return;
                 
                 _currentTime += Time.deltaTime;
-                if (_currentTime >= speedUpTimeDuration)
+                if (_currentTime >= timeDuration)
                 {
                     _currentTime = 0;
                     _isTimerStart = false;
@@ -64,22 +77,23 @@ namespace LabirinKata.Item
         protected override void InitializeOnAwake()
         {
             base.InitializeOnAwake();
-            playerSpriteRenderer = PlayerController.GetComponentInChildren<SpriteRenderer>();
+            _playerPickThrow = PlayerController.GetComponent<PlayerPickThrow>();
+            _playerSpriteRenderer = PlayerController.GetComponentInChildren<SpriteRenderer>();
         }
 
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
-            InitializeSpeedBuff();
-        }
-        
-        private void InitializeSpeedBuff()
-        {
-            _normalMoveSpeed = PlayerController.DefaultMoveSpeed;
-            _currentTime = 0;
+             _currentTime = 0;
             
             _isTimerStart = false;
             _isSpeedUpComplete = false;
+        }
+        
+        private void InitializeSpeed()
+        {
+            _defaultMoveSpeed = PlayerController.CurrentMoveSpeed;
+            _upgradeMoveSpeed = _defaultMoveSpeed * speedUpMultiplier;
         }
         
         // !-- Core Functionality
@@ -90,9 +104,10 @@ namespace LabirinKata.Item
 
         protected override void ActivateBuff()
         {
-            base.ActivateBuff();
+            InitializeSpeed();
 
-            gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            base.ActivateBuff();
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
             StartSpeedEffect();
         }
 
@@ -101,33 +116,42 @@ namespace LabirinKata.Item
             base.DeactivateBuff();
 
             StopSpeedEffect();
-            PlayerController.CurrentMoveSpeed = _normalMoveSpeed;
-            gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
+            PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
             gameObject.SetActive(false);
         }
         
         private void SpeedUp()
         {
-            PlayerController.CurrentMoveSpeed += Time.deltaTime * speedUpMultiplier;
-            if (PlayerController.CurrentMoveSpeed >= moveSpeedUp)
+            PlayerController.CurrentMoveSpeed += Time.deltaTime * timeMultiplier;
+            if (PlayerController.CurrentMoveSpeed >= _upgradeMoveSpeed)
             {
-                PlayerController.CurrentMoveSpeed = moveSpeedUp; 
+                PlayerController.CurrentMoveSpeed = _upgradeMoveSpeed; 
                 _isTimerStart = true;
             }
         }
         
         private void SlowDown()
         {
-            PlayerController.CurrentMoveSpeed -= Time.deltaTime * speedUpMultiplier;
-            if (PlayerController.CurrentMoveSpeed <= _normalMoveSpeed)
+            PlayerController.CurrentMoveSpeed -= Time.deltaTime * timeMultiplier;
+            if (PlayerController.CurrentMoveSpeed <= _defaultMoveSpeed)
             {
                 DeactivateBuff();
             }
         }
 
+        #endregion
+
+        #region Effect Callbacks
+
         private void StartSpeedEffect()
         {
             StartCoroutine(StartSpeedEffectRoutine());
+        }
+
+        private void StopSpeedEffect()
+        {
+            _playerSpriteRenderer.color = defaultColor;
         }
         
         private IEnumerator StartSpeedEffectRoutine()
@@ -135,18 +159,14 @@ namespace LabirinKata.Item
             while (IsBuffActive)
             {
                 yield return new WaitForSeconds(flashDuration);
-                playerSpriteRenderer.color  = flashColor;
+                _playerSpriteRenderer.color  = flashColor;
                 
                 yield return new WaitForSeconds(flashDuration);
-                playerSpriteRenderer.color = defaultColor;
+                _playerSpriteRenderer.color = defaultColor;
             }
         }
 
-        private void StopSpeedEffect()
-        {
-            playerSpriteRenderer.color = defaultColor;
-        }
-
         #endregion
+        
     }
 }

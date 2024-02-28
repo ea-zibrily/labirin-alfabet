@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Item;
 using Unity.VisualScripting;
+using System;
 
 namespace LabirinKata.Entities.Player
 {
@@ -13,7 +14,7 @@ namespace LabirinKata.Entities.Player
         #region Fields & Property
         
         [Header("Pick")]
-        [SerializeField] private float nerfedMoveSpeed;
+        [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private Transform pickAreaTransform;
         [SerializeField] private float pickAreaRadius;
         [SerializeField] private LayerMask itemLayerMask;
@@ -22,6 +23,9 @@ namespace LabirinKata.Entities.Player
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
+        public event Action OnPickAndThrow;
+
+        public GameObject HoldedItemObject => _holdedItemObject;
         public Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
@@ -108,7 +112,9 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.position = pickAreaTransform.transform.position;
             _holdedItemObject.transform.parent = transform;
-            _playerController.CurrentMoveSpeed = nerfedMoveSpeed;
+            
+            _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
+            OnPickAndThrow?.Invoke();
 
             if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
@@ -132,7 +138,7 @@ namespace LabirinKata.Entities.Player
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) yield break;
             
             _playerController.StopMovement();
-            
+
             while (elapsedTime < throwDelay)
             {   
                 item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * throwDuration);
@@ -145,6 +151,7 @@ namespace LabirinKata.Entities.Player
             stunItem.ThrowItem(PickDirection, pushSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
+            OnPickAndThrow?.Invoke();
             _playerController.StartMovement();
         }
 

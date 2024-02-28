@@ -47,13 +47,13 @@ namespace LabirinKata.Item
             IsCollideWithAnother = false;
             _capsuleCollider.isTrigger = false;
         }
-        
+
         // !-- Core Functioanlity
         public void ThrowItem(Vector2 direction, float speed)
         {
              StartCoroutine(ThrowItemRoutine(direction, speed));
         }
-
+        
         private IEnumerator ThrowItemRoutine(Vector2 direction, float speed)
         {
             _isItemThrowed = true;
