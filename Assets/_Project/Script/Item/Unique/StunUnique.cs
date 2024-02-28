@@ -60,17 +60,16 @@ namespace LabirinKata.Item
 
         private IEnumerator HitEnemyRoutine(EnemyBase enemy)
         {
-            Debug.Log("stop enemy");
             enemy.StopMovement();
-            yield return HitOtherRoutine(enemy.gameObject);
+            StartCoroutine(HitOtherRoutine(enemy.gameObject));
+
+            yield return new WaitForSeconds(stunDuration);
+            // yield return HitOtherRoutine(enemy.gameObject);
             enemy.StartMovement();
-            Debug.Log("move enemy");
         }
 
         private IEnumerator HitOtherRoutine(GameObject otherObject)
         {
-            InitializeStun();
-
             SpriteRenderer.enabled = false;
             var stunEffectObject = Instantiate(hitEffect, transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
@@ -94,17 +93,21 @@ namespace LabirinKata.Item
             if (!_isItemThrowed) return;
             if (!CheckColliderTag(other)) return;
 
+            Debug.Log("iscollide");
             IsCollideWithAnother = true;
             SpriteRenderer.sortingOrder--;
 
             if (other.TryGetComponent(out EnemyBase enemy))
             {
+                Debug.Log("enemy");
                 StartCoroutine(HitEnemyRoutine(enemy));
             }
             else
             {
                 StartCoroutine(HitOtherRoutine(gameObject));
             }
+
+            InitializeStun();
         }
         
         #endregion

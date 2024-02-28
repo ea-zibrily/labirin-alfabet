@@ -108,6 +108,10 @@ namespace LabirinKata.Entities.Enemy
         // !-- Helpers/Utilities
         public void StartMovement() => CanMove = true;
         public void StopMovement() => CanMove = false;
+        
+        #endregion
+
+        #region Pattern Callbacks
 
         protected void SwitchPattern(PatternBase newPattern)
         {
@@ -118,7 +122,7 @@ namespace LabirinKata.Entities.Enemy
         {
             CurrentPattern.InitializePattern(isReInitialize: false);
         }
-
+        
         protected void ReInitializePattern() 
         {
             CurrentPattern.InitializePattern(isReInitialize: true);

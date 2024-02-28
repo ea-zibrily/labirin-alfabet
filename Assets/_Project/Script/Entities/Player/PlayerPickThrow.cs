@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LabirinKata.Item;
+using Unity.VisualScripting;
 
 namespace LabirinKata.Entities.Player
 {
@@ -113,21 +114,22 @@ namespace LabirinKata.Entities.Player
             var endPoint = transform.position + PickDirection * throwRange;
 
             // TODO: Drop logic to ref item script here!
-            if (item.TryGetComponent<StunUnique>(out var stunItem))
-            {
-                stunItem.GetComponent<Rigidbody2D>().simulated = true;
-                stunItem.ThrowItem();
-            }
+            if (!item.TryGetComponent<StunUnique>(out var stunItem)) yield break;
 
+            stunItem.GetComponent<Rigidbody2D>().simulated = true;
+            stunItem.ThrowItem();
+            
             while (elapsedTime < throwDelay)
             {   
                 if (stunItem.IsCollideWithAnother) yield break;
                 
+                Debug.Log("lerrrp");
                 item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * 0.04f);
                 elapsedTime++;
                 yield return null;
             }
 
+            Debug.Log("miss");
             stunItem.MissOther();
         }
 

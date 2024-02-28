@@ -124,10 +124,10 @@ namespace LabirinKata.Item
         {
             _unlockedLetterDatas.Add(value);
 
-            var valueName = value.LetterName;
+            var valueName = value.LetterId;
             foreach (var lockLetter in _lockedLetterDatas)
             {
-                var lockLetterName = lockLetter.LetterName;
+                var lockLetterName = lockLetter.LetterId;
                 
                 if (lockLetterName != valueName) continue;
                 _lockedLetterDatas.Remove(lockLetter);

@@ -34,16 +34,16 @@ namespace LabirinKata.Gameplay.Controller
         
         private void OnEnable()
         {
-            CameraEventHandler.OnCameraShiftIn += StartTimer;
-            CameraEventHandler.OnCameraShiftOut += StopTimer;
+            CameraEventHandler.OnCameraShiftIn += StopTimer;
+            CameraEventHandler.OnCameraShiftOut += StartTimer;
         }
         
         private void OnDisable()
         {
-            CameraEventHandler.OnCameraShiftIn -= StartTimer;
-            CameraEventHandler.OnCameraShiftOut -= StopTimer;
+            CameraEventHandler.OnCameraShiftIn -= StopTimer;
+            CameraEventHandler.OnCameraShiftOut -= StartTimer;
         }
-
+        
         private void Start()
         {
            InitializeTimer();
