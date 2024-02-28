@@ -10,8 +10,8 @@ namespace LabirinKata.Database
     public class GameDatabase : MonoDDOL<GameDatabase>
     {
         #region Fields & Properties
-
-        //-- Main Database
+        
+        //-- Game Database
         private Dictionary<int, bool> _isLetterCollected;
         private Dictionary<string, bool> _isLevelClear;
         private Dictionary<string, bool> _isLevelUnlocked;

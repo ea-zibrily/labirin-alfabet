@@ -155,14 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8408c630c29bc4ea12535124c4198e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nerfedMoveSpeed: 2
   pickAreaTransform: {fileID: 7807138492438561508}
   pickAreaRadius: 0.7
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  throwRange: 5
+  throwRange: 1.5
   throwDuration: 0.04
-  throwDelay: 25
+  throwDelay: 20
+  pushSpeed: 6
+  pushDelay: 0.2
   interactButtonUI: {fileID: 0}
 --- !u!1 &1935479398348759522
 GameObject:

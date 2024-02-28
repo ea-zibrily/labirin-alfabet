@@ -9,7 +9,7 @@ namespace LabirinKata.Entities.Player
     {
         #region Fields & Properties
 
-        [Header("Data")] 
+        [Header("Knock")] 
         [SerializeField] private float knockBackTime;
         [SerializeField] private float hitDirectionForce;
         [SerializeField] private float constForce;
@@ -33,7 +33,7 @@ namespace LabirinKata.Entities.Player
 
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         public void CallKnockBack(Vector2 hitDir, Vector2 constForceDir, Vector2 inputDir)
         {

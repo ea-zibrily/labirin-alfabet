@@ -10,14 +10,6 @@ namespace LabirinKata.Entities.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
-        #region Constant Variable
-
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "isMove";
-
-        #endregion
-        
         #region Fields & Properties
         
         [Header("Player")] 
@@ -25,7 +17,7 @@ namespace LabirinKata.Entities.Player
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
         [SerializeField] private Vector2 movementDirection;
         
-        public float DefaultMoveSpeed => playerData.MoveSpeed;
+        public float DefaultMoveSpeed => playerData.PlayerMoveSpeed;
         public float CurrentMoveSpeed
         {
             get => currentMoveSpeed;
@@ -33,6 +25,11 @@ namespace LabirinKata.Entities.Player
         }
         
         public bool CanMove { get; private set; }
+
+        //-- Const Variable
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "isMove";
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
@@ -71,13 +68,13 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializePlayer()
         {
             gameObject.name = playerData.PlayerName;
-            CurrentMoveSpeed = playerData.MoveSpeed;
+            CurrentMoveSpeed = playerData.PlayerMoveSpeed;
             StartMovement();
         }
         

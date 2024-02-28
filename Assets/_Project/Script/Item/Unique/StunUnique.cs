@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using LabirinKata.Entities.Enemy;
+using LabirinKata.Entities.Player;
 using UnityEngine;
 
 namespace LabirinKata.Item
@@ -12,14 +13,14 @@ namespace LabirinKata.Item
         [Header("Stun Unique")]
         [SerializeField] private float stunDuration;
         [SerializeField] private GameObject hitEffect;
+        [SerializeField] private GameObject effectParent;
 
         private bool _isItemThrowed;
-        
         public bool IsCollideWithAnother { get; private set; }
 
         [Header("Reference")]
         private CapsuleCollider2D _capsuleCollider;
-        public SpriteRenderer SpriteRenderer { get; set; }
+        private SpriteRenderer _spriteRenderer;
 
         #endregion
 
@@ -28,17 +29,17 @@ namespace LabirinKata.Item
         private void Awake()
         {
             _capsuleCollider = GetComponent<CapsuleCollider2D>();
-            SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         private void Start()
         {
             InitializeStun();
         }
-
+        
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         private void InitializeStun()
         {
@@ -46,35 +47,43 @@ namespace LabirinKata.Item
             IsCollideWithAnother = false;
             _capsuleCollider.isTrigger = false;
         }
-
-        public void ThrowItem()
+        
+        // !-- Core Functioanlity
+        public void ThrowItem(Vector2 direction, float speed)
         {
-            _capsuleCollider.isTrigger = true;
+             StartCoroutine(ThrowItemRoutine(direction, speed));
+        }
+
+        private IEnumerator ThrowItemRoutine(Vector2 direction, float speed)
+        {
             _isItemThrowed = true;
+            _capsuleCollider.isTrigger = true;
+
+            while (!IsCollideWithAnother)
+            {
+                transform.Translate(speed * Time.deltaTime * direction);
+                yield return null;
+            }
         }
         
-        public void MissOther()
-        {
-            StartCoroutine(HitOtherRoutine(gameObject));
-        }
-
         private IEnumerator HitEnemyRoutine(EnemyBase enemy)
         {
             enemy.StopMovement();
-            StartCoroutine(HitOtherRoutine(enemy.gameObject));
 
-            yield return new WaitForSeconds(stunDuration);
-            // yield return HitOtherRoutine(enemy.gameObject);
+            yield return HitOtherRoutine(enemy.gameObject);
             enemy.StartMovement();
         }
 
         private IEnumerator HitOtherRoutine(GameObject otherObject)
         {
-            SpriteRenderer.enabled = false;
-            var stunEffectObject = Instantiate(hitEffect, transform, worldPositionStays: false);
+            _isItemThrowed = false;
+            _spriteRenderer.enabled = false;
+            
+            var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
 
             yield return new WaitForSeconds(stunDuration);
+            Destroy(stunEffectObject);
             Destroy(gameObject);
         }
 
@@ -93,10 +102,7 @@ namespace LabirinKata.Item
             if (!_isItemThrowed) return;
             if (!CheckColliderTag(other)) return;
 
-            Debug.Log("iscollide");
             IsCollideWithAnother = true;
-            SpriteRenderer.sortingOrder--;
-
             if (other.TryGetComponent(out EnemyBase enemy))
             {
                 Debug.Log("enemy");
@@ -106,8 +112,6 @@ namespace LabirinKata.Item
             {
                 StartCoroutine(HitOtherRoutine(gameObject));
             }
-
-            InitializeStun();
         }
         
         #endregion

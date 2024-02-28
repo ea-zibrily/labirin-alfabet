@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3f52310f8a349fd9931a874beb75eb2, type: 3}
-  m_Name: Player
+  m_Name: Rea
   m_EditorClassIdentifier: 
-  PlayerName: Senku
-  <MoveSpeed>k__BackingField: 4
+  playerName: Rea
+  playerMoveSpeed: 3.5
+  playerSprite: {fileID: 0}
+  playerAnimator: {fileID: 0}

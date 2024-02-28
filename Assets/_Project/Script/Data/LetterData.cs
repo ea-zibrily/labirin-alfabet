@@ -16,7 +16,7 @@ namespace LabirinKata.Data
         public int LetterId => letterId;
         public bool HasTaken => hasTaken;
 
-        [Header("Reference")]
+        [Header("Assets")]
         [SerializeField] private Sprite letterSprite;
         [SerializeField] private AudioClip letterAudio;
         

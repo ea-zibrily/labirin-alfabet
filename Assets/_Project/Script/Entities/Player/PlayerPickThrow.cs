@@ -13,10 +13,12 @@ namespace LabirinKata.Entities.Player
         #region Fields & Property
         
         [Header("Pick")]
+        [SerializeField] private float nerfedMoveSpeed;
         [SerializeField] private Transform pickAreaTransform;
         [SerializeField] private float pickAreaRadius;
         [SerializeField] private LayerMask itemLayerMask;
 
+        private float _normalMoveSpeed;
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
@@ -26,14 +28,26 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private float throwRange;
         [SerializeField] private float throwDuration;
         [SerializeField] private float throwDelay;
+
+        [Header("Push")]
+        [SerializeField] private float pushSpeed;
+        [SerializeField] private float pushDelay;
         
         [Header("UI")]
         [SerializeField] private Button interactButtonUI;
+
+        [Header("Reference")]
+        private PlayerController _playerController;
         
 
         #endregion
 
         #region MonoBehaviour Callbacks
+        
+        private void Awake()
+        {
+            _playerController = GetComponent<PlayerController>();
+        }
 
         private void Start()
         {
@@ -63,12 +77,13 @@ namespace LabirinKata.Entities.Player
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         private void InitializePickThrow()
         {
             _holdedItemObject = null;
+            _normalMoveSpeed = _playerController.DefaultMoveSpeed;
             PickDirection = Vector3.zero;
             
             interactButtonUI.onClick.AddListener(PickThrowItem);
@@ -93,10 +108,10 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.position = pickAreaTransform.transform.position;
             _holdedItemObject.transform.parent = transform;
+            _playerController.CurrentMoveSpeed = nerfedMoveSpeed;
 
             if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
-                stunItem.SpriteRenderer.sortingOrder++;
                 stunItem.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
@@ -115,22 +130,22 @@ namespace LabirinKata.Entities.Player
 
             // TODO: Drop logic to ref item script here!
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) yield break;
-
-            stunItem.GetComponent<Rigidbody2D>().simulated = true;
-            stunItem.ThrowItem();
+            
+            _playerController.StopMovement();
             
             while (elapsedTime < throwDelay)
             {   
-                if (stunItem.IsCollideWithAnother) yield break;
-                
-                Debug.Log("lerrrp");
-                item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * 0.04f);
+                item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * throwDuration);
                 elapsedTime++;
                 yield return null;
             }
 
-            Debug.Log("miss");
-            stunItem.MissOther();
+            yield return new WaitForSeconds(pushDelay);
+            stunItem.GetComponent<Rigidbody2D>().simulated = true;
+            stunItem.ThrowItem(PickDirection, pushSpeed);
+
+            _playerController.CurrentMoveSpeed = _normalMoveSpeed;
+            _playerController.StartMovement();
         }
 
         // !-- Helper/Utilities
