@@ -11,7 +11,7 @@ namespace LabirinKata.Collection
 
         [Header("Settings")] 
         [SerializeField] private string letterName;
-
+        
         private bool canInteract;
         private Button _buttonUI;
         

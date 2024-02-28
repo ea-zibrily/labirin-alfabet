@@ -6,38 +6,36 @@ using LabirinKata.Data;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerController")]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Controller")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
-        #region Constant Variable
-
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "isMove";
-
-        #endregion
-        
         #region Fields & Properties
         
         [Header("Player")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
-        [SerializeField] [ReadOnly] private Vector2 movementDirection;
+        [SerializeField] private Vector2 movementDirection;
         
-        public float DefaultMoveSpeed => playerData.MoveSpeed;
+        public float DefaultMoveSpeed => playerData.PlayerMoveSpeed;
         public float CurrentMoveSpeed
         {
             get => currentMoveSpeed;
             set => currentMoveSpeed = value;
         }
+        
         public bool CanMove { get; private set; }
 
+        //-- Const Variable
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "isMove";
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private Animator _playerAnimator;
-        
+        private PlayerPickThrow _playerPickThrow;
+
         public PlayerInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
@@ -47,14 +45,15 @@ namespace LabirinKata.Entities.Player
         private void Awake()
         {
             _playerRb = GetComponent<Rigidbody2D>();
-            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
             _playerAnimator = GetComponentInChildren<Animator>();
+
+            _playerPickThrow = GetComponent<PlayerPickThrow>();
+            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
         }
 
         private void Start()
         {
             InitializePlayer();
-            StartCoroutine(StartPlayerMove());
         }
 
         private void FixedUpdate()
@@ -69,19 +68,13 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializePlayer()
         {
             gameObject.name = playerData.PlayerName;
-            CurrentMoveSpeed = playerData.MoveSpeed;
-        }
-        
-        private IEnumerator StartPlayerMove()
-        {
-            StopMovement();
-            yield return new WaitForSeconds(1f);
+            CurrentMoveSpeed = playerData.PlayerMoveSpeed;
             StartMovement();
         }
         
@@ -105,6 +98,11 @@ namespace LabirinKata.Entities.Player
             
             movementDirection = new Vector2(moveX, moveY);
             movementDirection.Normalize();
+            if (movementDirection.sqrMagnitude > 0.5f)
+            {
+                _playerPickThrow.PickDirection = movementDirection;
+            }
+            
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
         

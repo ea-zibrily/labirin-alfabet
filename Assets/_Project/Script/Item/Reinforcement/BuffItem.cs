@@ -5,7 +5,7 @@ using LabirinKata.Entities.Player;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Item.Reinforcement
+namespace LabirinKata.Item
 {
     public class BuffItem : MonoBehaviour
     {

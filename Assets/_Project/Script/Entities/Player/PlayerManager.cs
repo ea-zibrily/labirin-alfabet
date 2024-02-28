@@ -4,23 +4,25 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using LabirinKata.Item;
 using LabirinKata.Stage;
-using LabirinKata.Item.Letter;
-using LabirinKata.Item.Reinforcement;
 using LabirinKata.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
+using LabirinKata.Entities.Enemy;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerManager")]
-    [RequireComponent(typeof(BoxCollider2D))]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Manager")]
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
+        #region Enum
 
-        #region Const Variable
+        public enum TagFeedback
+        {
+            Enemy,
+            Item
+        }
         
-        private const float DIE_DELAY = 0.5f;
-
         #endregion
 
         #region Fields & Properties
@@ -31,6 +33,7 @@ namespace LabirinKata.Entities.Player
         [SerializeField] private GameObject[] healthUIObjects;
 
         private bool _isPlayerDead;
+        private const float DIE_DELAY = 0.5f;
         
         public GameObject[] HealthUIFills { get; private set; }
         public int CurrentHealthCount
@@ -194,17 +197,45 @@ namespace LabirinKata.Entities.Player
         private void LostLetter()
         {
             var stageIndex = StageManager.Instance.CurrentStageIndex;
-            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
             var letterCollects = letterObjects[stageIndex].LetterObjects;
+            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
 
             if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
-
+            
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
-            letterCollects[randomLetter].transform.position = _playerObject.transform.position;
-            letterCollects[randomLetter].GetComponent<LetterController>().Lost();
+            // letterCollects[randomLetter].transform.position = _playerObject.transform.position;
+            letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
         }
         
+        #endregion
+
+        #region Utilities
+
+        private void TriggeredFeedback(TagFeedback tag, GameObject triggerObject)
+        {
+            switch (tag)
+            {
+                case TagFeedback.Enemy:
+                    _playerController.StopMovement();
+                    DecreaseHealth();
+                    CameraEventHandler.CameraShakeEvent();
+                    KnockedBack(triggerObject);
+                    StartCoroutine(IframeRoutine());
+
+                    CanceledBuff();
+                    LostLetter();
+                    break;
+                case TagFeedback.Item:
+                    var takeableObject = triggerObject.GetComponent<ITakeable>();
+                    takeableObject.Taken();
+                    
+                    if (!(takeableObject as LetterController)) return;
+                    CollectLetter(triggerObject);
+                    break;
+            }
+        }
+
         #endregion
         
         #region Collider Callbacks
@@ -215,21 +246,13 @@ namespace LabirinKata.Entities.Player
             
             if (other.CompareTag("Enemy"))
             {
-                _playerController.StopMovement();
-                DecreaseHealth();
-                CameraEventHandler.CameraShakeEvent();
-                KnockedBack(other.gameObject);
-                StartCoroutine(IframeRoutine());
-                CanceledBuff();
-                LostLetter();
+               if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
+               
+               TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
             }
             else if (other.CompareTag("Item"))
             {
-                var takeableObject = other.GetComponent<ITakeable>();
-                takeableObject.Taken();
-                
-                if (!(takeableObject as LetterController)) return;
-                CollectLetter(other.gameObject);
+                TriggeredFeedback(TagFeedback.Item, other.gameObject);
             }
         }
         

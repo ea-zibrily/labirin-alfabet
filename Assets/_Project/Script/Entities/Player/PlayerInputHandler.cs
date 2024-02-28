@@ -7,7 +7,7 @@ using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace LabirinKata.Entities.Player
 {
-    [AddComponentMenu("LabirinKata/Entities/Player/PlayerInputHandler")]
+    [AddComponentMenu("Labirin Kata/Entities/Player/Player Input Handler")]
     public class PlayerInputHandler : MonoBehaviour
     {
         #region Fields & Properties
@@ -15,7 +15,7 @@ namespace LabirinKata.Entities.Player
         [Header("Joystick Settings")] 
         [Tooltip("Isi dengan ukuran Rect Transform joystick yang diinginkan")]
         [SerializeField] private Vector2 joystickSize;
-        [FormerlySerializedAs("canFullScreen")]
+        
         [Tooltip("Aktifkan jika ingin mengakses joystick dalam half screen")]
         [SerializeField] private bool isHalfScreen;
         
@@ -91,10 +91,12 @@ namespace LabirinKata.Entities.Player
             if (isHalfScreen)
             {
                 return fingerTouch.screenPosition.x <= Screen.width / 2f 
-                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f;
+                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f
+                       && fingerTouch.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
             }
             
-            return fingerTouch.screenPosition.y <= Screen.height / 1.3f;
+            return fingerTouch.screenPosition.y <= Screen.height / 1.3f 
+                    && fingerTouch.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
         }
         
         #endregion

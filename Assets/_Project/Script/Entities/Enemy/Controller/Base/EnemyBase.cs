@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LabirinKata.Data;
-using LabirinKata.Enum;
 using LabirinKata.Managers;
-using LabirinKata.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
 
@@ -12,22 +10,20 @@ namespace LabirinKata.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        #region Const Variable
-
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "IsMove";
-
-        #endregion
-
         #region Fields & Properties
 
         [Header("Data")] 
         public EnemyData EnemyData;
 
-        private bool _canMove;
         private Vector2 _enemyDirection;
+        public bool CanMove { get; private set; }
 
+        //-- Const Variable
+        private const string HORIZONTAL_KEY = "Horizontal";
+        private const string VERTICAL_KEY = "Vertical";
+        private const string IS_MOVE = "IsMove";
+
+        // -- Pattern Targeting
         protected PatternBase CurrentPattern { get; set; }
         public Transform CurrentTarget { get; set; }
         public int CurrentTargetIndex { get; set; }
@@ -45,18 +41,6 @@ namespace LabirinKata.Entities.Enemy
         {
             _enemyAnimator = GetComponentInChildren<Animator>();
             EnemyHelper = new EnemyHelper();
-        }
-        
-        private void OnEnable()
-        {
-            CameraEventHandler.OnCameraShiftIn += StopMovement;
-            CameraEventHandler.OnCameraShiftOut += StartMovement;
-        }
-
-        private void OnDisable()
-        {
-            CameraEventHandler.OnCameraShiftIn -= StopMovement;
-            CameraEventHandler.OnCameraShiftOut -= StartMovement;
         }
 
         private void Start()
@@ -102,13 +86,13 @@ namespace LabirinKata.Entities.Enemy
             _enemyDirection = targetPosition - enemyPosition;
             _enemyDirection.Normalize();
 
-            if (!_canMove) return;
+            if (!CanMove) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
 
         private void EnemyAnimation()
         {
-            if (_canMove)
+            if (CanMove)
             {
                 _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
                 _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
@@ -122,8 +106,12 @@ namespace LabirinKata.Entities.Enemy
         }
         
         // !-- Helpers/Utilities
-        public void StartMovement() => _canMove = true;
-        public void StopMovement() => _canMove = false;
+        public void StartMovement() => CanMove = true;
+        public void StopMovement() => CanMove = false;
+        
+        #endregion
+
+        #region Pattern Callbacks
 
         protected void SwitchPattern(PatternBase newPattern)
         {
@@ -134,7 +122,7 @@ namespace LabirinKata.Entities.Enemy
         {
             CurrentPattern.InitializePattern(isReInitialize: false);
         }
-
+        
         protected void ReInitializePattern() 
         {
             CurrentPattern.InitializePattern(isReInitialize: true);

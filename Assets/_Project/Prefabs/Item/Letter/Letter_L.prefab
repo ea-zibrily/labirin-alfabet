@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e140a40cdd37a3d4790fe9fc8cb164f1, type: 3}
+    - target: {fileID: 4055581759490484573, guid: e78a605199a20fe4f8e8cce2f7d52b11, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054067135991032742, guid: e78a605199a20fe4f8e8cce2f7d52b11, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6054067135991032742, guid: e78a605199a20fe4f8e8cce2f7d52b11, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.109375
@@ -75,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 8842272725006820699, guid: e78a605199a20fe4f8e8cce2f7d52b11, type: 3}
       propertyPath: m_Name
       value: Letter_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842272725006820699, guid: e78a605199a20fe4f8e8cce2f7d52b11, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

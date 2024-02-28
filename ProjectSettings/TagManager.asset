@@ -8,10 +8,12 @@ TagManager:
   - Enemy
   - GameManager
   - AudioManager
-  - LetterManager
   - Joystick
   - SpawnPoint
   - Collection
+  - Pick
+  - Wall
+  - Pooler
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
+  - Item
   - 
   - 
   - 

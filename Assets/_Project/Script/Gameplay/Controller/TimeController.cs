@@ -32,10 +32,21 @@ namespace LabirinKata.Gameplay.Controller
         
         #region MonoBehaviour Callbacks
         
+        private void OnEnable()
+        {
+            CameraEventHandler.OnCameraShiftIn += StopTimer;
+            CameraEventHandler.OnCameraShiftOut += StartTimer;
+        }
+        
+        private void OnDisable()
+        {
+            CameraEventHandler.OnCameraShiftIn -= StopTimer;
+            CameraEventHandler.OnCameraShiftOut -= StartTimer;
+        }
+        
         private void Start()
         {
            InitializeTimer();
-           StartCoroutine(StartTimerRoutine());
         }
         
         private void Update()
@@ -52,16 +63,11 @@ namespace LabirinKata.Gameplay.Controller
         {
             _fullTime = amountOfTime + _latestTime;
             _currentTime = _fullTime;
-            
+
             TimerDisplay(_currentTime);
+            StartTimer();
         }
-        
-        private IEnumerator StartTimerRoutine()
-        {
-            yield return new WaitForSeconds(1.5f);
-            IsTimerStart = true;
-        }
-        
+
         // !-- Core Functionality
         private void CountdownTimer()
         {
@@ -84,6 +90,9 @@ namespace LabirinKata.Gameplay.Controller
             _latestTime = _currentTime;
         }
         
+        private void StartTimer() => IsTimerStart = true;
+        private void StopTimer() => IsTimerStart = false;
+
         private void TimerDisplay(float time)
         {
             var timeInMinutes = Mathf.FloorToInt(time / 60);
