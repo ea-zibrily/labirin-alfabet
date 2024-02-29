@@ -60,7 +60,7 @@ namespace LabirinKata.Item
             }
 
             transform.position = randomPoint;
-            _letterController.LetterManager.RemoveAvailableSpawnPoint(randomPointIndex);
+            _letterController.LetterManager.RemoveSpawnPoint(randomPointIndex);
             Debug.LogWarning($"remove available point index {randomPointIndex}");
         }
 

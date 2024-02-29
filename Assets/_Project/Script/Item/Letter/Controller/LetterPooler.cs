@@ -93,18 +93,13 @@ namespace LabirinKata.Item
             AvailableLetterDatas = new List<LetterData>();
             AvailableSpawnPoints = new List<Transform>();
         }
-        
-        public void InitializeSpawnDatas(LetterSpawns[] spawns, List<LetterData> datas)
+
+        // TODO: Panggil method ini dulu waktu akan generate letter
+        private void InitializeGenerator(LetterSpawns[] spawns, List<LetterData> datas)
         {
             _letterSpawns = spawns;
             _letterDatas = datas;
-        }
 
-        /// <summary>
-        /// Panggil method ini terlebih dahulu saat akan melakukan generate letter
-        /// </summary>
-        public void InitializeGenerator()
-        {
             if (AvailableLetterDatas.Count > 0 || AvailableSpawnPoints.Count > 0)
             {
                 AvailableLetterDatas.Clear();
@@ -116,7 +111,13 @@ namespace LabirinKata.Item
         }
         
         // !-- Core Functionality
-        public void GenerateLetter()
+        public void CallLetterPool(LetterSpawns[] spawns, List<LetterData> datas)
+        {
+            InitializeGenerator(spawns, datas);
+            GenerateLetter();
+        }
+
+        private void GenerateLetter()
         {
             if (_letterDatas == null)
             {
@@ -142,15 +143,14 @@ namespace LabirinKata.Item
                 latestLetterIndices.Add(randomLetterId);
                 latestPointIndices.Add(randomPointIndex);
 
-                // TODO: Ubah jadi "Get" Pooler
                 var letter = _letterPool.Get();
                 var letterData = _letterManager.LetterContainer.GetLetterDataById(randomLetterId);
 
-                letter.InitializeData(letterData, i + 1);
+                letter.InitializeLetterData(letterData, i + 1);
                 letter.transform.position = spawnPoints[randomPointIndex].position;
                 
                 AvailableLetterDatas.Add(letterData);
-                Debug.Log($"call pooler {letterData}");
+                Debug.LogWarning($"call pooler {letterData}");
             }
             
             SetAvailableSpawnPoint(latestPointIndices);      

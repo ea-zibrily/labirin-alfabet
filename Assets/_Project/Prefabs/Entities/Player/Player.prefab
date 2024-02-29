@@ -164,7 +164,7 @@ MonoBehaviour:
   throwRange: 1.5
   throwDuration: 0.04
   throwDelay: 20
-  pushSpeed: 6
+  pushSpeed: 5.5
   pushDelay: 0.2
   interactButtonUI: {fileID: 0}
 --- !u!1 &1935479398348759522

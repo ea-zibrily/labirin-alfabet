@@ -15,22 +15,21 @@ namespace LabirinKata.Item
         
         [Header("Spawn Data")] 
         [SerializeField] private LetterSpawns[] letterSpawns;
-        [SerializeField] [ReadOnly] private int currentAmountOfLetter;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
         public List<Transform> AvailableSpawnPoint { get; private set; }
         
         //-- Temp Letter Object Data
-        private List<LetterData> _lockedLetterDatas;
-        private List<LetterData> _unlockedLetterDatas;
+        [SerializeField] private List<LetterData> _lockedLetterDatas;
+        [SerializeField] private List<LetterData> _unlockedLetterDatas;
         
         //-- Letter Event
         public event Action<LetterData> OnTakeLetter;
 
         [Header("Reference")] 
+        [SerializeField] private LetterContainer _letterContainer;
         private LetterInterfaceManager _letterUIManager;
         private LetterPooler _letterPooler;
-        [SerializeField] private LetterContainer _letterContainer;
         public LetterContainer LetterContainer => _letterContainer;
         
         #endregion
@@ -57,8 +56,7 @@ namespace LabirinKata.Item
         {
             InitializeLetterData();
             InitializeLetterDatas();
-            InitializeLetterPooler();
-            
+
             SpawnLetter();
         }
         
@@ -73,14 +71,6 @@ namespace LabirinKata.Item
             _unlockedLetterDatas = new List<LetterData>();
 
             AvailableSpawnPoint = new List<Transform>();
-        }
-        
-        private void InitializeLetterPooler()
-        {
-            var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
-            var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
-
-            _letterPooler.InitializeSpawnDatas(LetterSpawns, isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas);
         }
         
         private void InitializeLetterDatas()
@@ -110,12 +100,12 @@ namespace LabirinKata.Item
         // !-- Core Functionality
         public void SpawnLetter()
         {
-            _letterPooler.InitializeGenerator();
-            _letterPooler.GenerateLetter();
+            var letterDatas = GetLetterDatas();
+
+            _letterPooler.CallLetterPool(LetterSpawns, letterDatas);
             _letterUIManager.SetLetterInterface(_letterPooler.AvailableLetterDatas);
             
             AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
-            currentAmountOfLetter = letterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
         }
         
         public void TakeLetterEvent(LetterData letterData) => OnTakeLetter?.Invoke(letterData);
@@ -136,7 +126,7 @@ namespace LabirinKata.Item
         }
         
         // !-- Helper/Utilities
-        public void AddAvailableSpawnPoint(Transform value)
+        public void AddSpawnPoint(Transform value)
         {
             var originPoints = letterSpawns[StageManager.Instance.CurrentStageIndex].SpawnPointTransforms;
             foreach (var point in originPoints)
@@ -147,10 +137,18 @@ namespace LabirinKata.Item
             }
         }
 
-        public void RemoveAvailableSpawnPoint(int value)
+        public void RemoveSpawnPoint(int value)
         {
             AvailableSpawnPoint.RemoveAt(value);
         } 
+
+        private List<LetterData> GetLetterDatas()
+        {
+            var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
+            var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
+
+            return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;
+        }
         
         #endregion
         

@@ -47,24 +47,18 @@ namespace LabirinKata.Item
             LetterInterfaceManager = letter.GetComponent<LetterInterfaceManager>();
         }
         
-        private void Start()
-        {
-            InitializeLetter();
-        }
-        
         #endregion
         
         #region Labirin Kata Callbacks
         
         // !-- Initialization
-        public void InitializeData(LetterData data, int spawnNum)
+        public void InitializeLetterData(LetterData data, int spawnNum)
         {
+            // Data
             _letterData = data;
             spawnId = spawnNum;
-        }
 
-        private void InitializeLetter()
-        {
+            // Component
             _letterName = _letterData.LetterName;
             hasLetterTaken = _letterData.HasTaken;
             
@@ -80,7 +74,7 @@ namespace LabirinKata.Item
                 LetterManager.TakeLetterEvent(_letterData);
                 hasLetterTaken = true;
             }
-            LetterManager.AddAvailableSpawnPoint(transform);
+            LetterManager.AddSpawnPoint(transform);
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
 
             // Release obstacle back to the pool
