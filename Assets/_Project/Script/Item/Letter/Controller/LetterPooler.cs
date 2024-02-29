@@ -150,7 +150,6 @@ namespace LabirinKata.Item
                 letter.transform.position = spawnPoints[randomPointIndex].position;
                 
                 AvailableLetterDatas.Add(letterData);
-                Debug.LogWarning($"call pooler {letterData}");
             }
             
             SetAvailableSpawnPoint(latestPointIndices);      

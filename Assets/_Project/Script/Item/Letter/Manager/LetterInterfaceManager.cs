@@ -75,7 +75,6 @@ namespace LabirinKata.Item
             
             for (var i = 0; i < currentAmountOfLetter; i++)
             {
-                Debug.Log($"call interface {datas[i]}");
                 var letterSprite = datas[i].LetterSprite;
                 var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
                 

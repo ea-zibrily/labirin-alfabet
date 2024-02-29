@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Enum;
+using LabirinKata.Item;
 
 namespace LabirinKata.Collection
 {
@@ -8,7 +8,7 @@ namespace LabirinKata.Collection
     {
         #region Fields & Properties
 
-        [SerializeField] private CollectionSound[] collectionSounds;
+        [SerializeField] private LetterContainer letterContainer;
         private AudioSource _audioSource;
 
         #endregion
@@ -25,24 +25,25 @@ namespace LabirinKata.Collection
         #region Labirin Kata Callbacks
         
         // !-- Core Functionality
-        public void PlayCollectionAudio(string letterName)
+        public void PlayAudio(int id)
         {
-            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
-            
-            if (sound == null)
+            var letterData = letterContainer.GetLetterDataById(id);
+            var letterAudio = letterData.LetterAudio;
+            if (letterAudio == null)
             {
-                Debug.Log("soundny gada kang");
-                return;
+                Debug.LogError("audionya gada kang");
+                return;                
             }
 
-            Debug.Log($"gas sound letter {sound.LetterName}");
-            _audioSource.clip = sound.LetterSound;
+            Debug.Log($"gas sound letter {letterData.LetterName}");
+            _audioSource.clip = letterAudio;
             _audioSource.Play();
         }
 
-        public void StopCollectionAudio()
+        public void StopAudio()
         {
             _audioSource.Stop();
+            _audioSource.clip = null;
         }
 
         // !-- Helper/Utilities

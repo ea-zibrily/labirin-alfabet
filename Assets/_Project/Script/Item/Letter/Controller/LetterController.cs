@@ -57,7 +57,7 @@ namespace LabirinKata.Item
             // Data
             _letterData = data;
             spawnId = spawnNum;
-
+            
             // Component
             _letterName = _letterData.LetterName;
             hasLetterTaken = _letterData.HasTaken;

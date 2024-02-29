@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using KevinCastejon.MoreAttributes;
 using DanielLochner.Assets.SimpleScrollSnap;
+using LabirinKata.Item;
 using LabirinKata.Database;
 
 namespace LabirinKata.Collection
@@ -12,14 +13,20 @@ namespace LabirinKata.Collection
     {
         #region Fields & Properties
 
+        [Header("Collection")] 
+        [SerializeField] private GameObject[] collectionParentUI;
+
+        private readonly List<GameObject> _collectionObjectUI;
+        
         [Header("UI")] 
-        [SerializeField] private GameObject[] letterObjectUI;
         [SerializeField] private GameObject mainMenuPanelUI;
         [SerializeField] private GameObject collectionPanelUI;
         [SerializeField] private Button closeButtonUI;
 
         [Header("Reference")]
+        [SerializeField] private LetterContainer letterContainer;
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
+
         private CollectionAudioManager _collectionAudioManager;
 
         public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
@@ -37,7 +44,7 @@ namespace LabirinKata.Collection
         private void Start()
         {
             InitializeCollection();
-            SetUnlockedCollection();
+            InitializeComponent();
         }
         
         #endregion
@@ -47,26 +54,46 @@ namespace LabirinKata.Collection
         // !-- Initialization
         private void InitializeCollection()
         {
+            foreach (var collection in collectionParentUI)
+            {
+                var collectionObject = collection.transform.GetChild(0).gameObject;
+                _collectionObjectUI.Add(collectionObject);
+            }
+        }
+
+        private void InitializeComponent()
+        {
+            if (_collectionObjectUI.Count < GameDatabase.LETTER_COUNT)
+            {
+                Debug.LogError("letter object kurang brok");
+                return;
+            }
+
+            for (var i = 0; i < _collectionObjectUI.Count; i++)
+            {
+                var collectionId = i + 1;
+                InitializeElement(collectionId, _collectionObjectUI[i]);
+            }
+
             closeButtonUI.onClick.AddListener(CloseCollection);
         }
         
-        // !-- Core Functionality
-        private void SetUnlockedCollection()
+        private void InitializeElement(int id, GameObject collection)
         {
-            for (var i = 0; i < letterObjectUI.Length; i++)
-            {
-                var letterId = i + 1;
-                var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-                
-                letterObjectUI[i].GetComponent<Button>().interactable = isLetterUnlock;
-                letterObjectUI[i].transform.GetChild(0).gameObject.SetActive(isLetterUnlock);
-                Debug.Log($"{letterObjectUI[i]} is {isLetterUnlock}");
-            }
+            var letterData = letterContainer.GetLetterDataById(id);
+            var collectionController = collection.GetComponent<CollectionController>();
+            var button = collection.GetComponent<Button>();
+            var fillImage = collection.transform.GetChild(0).gameObject;
+
+            collectionController.InitializeData(letterData);
+            button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
+            fillImage.SetActive(button.interactable);
         }
-        
+
+        // !-- Core Functionality
         private void CloseCollection()
         {
-            _collectionAudioManager.StopCollectionAudio();
+            _collectionAudioManager.StopAudio();
             mainMenuPanelUI.SetActive(true);
 
             ReSetupScrollSnap();

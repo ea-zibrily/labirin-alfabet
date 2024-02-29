@@ -24,7 +24,7 @@ namespace LabirinKata.Entities.Player
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
-        public event Action<float> OnPickOrThrow;
+        public event Action<float> OnPlayerInteract;
 
         public float NerfedMultiplier => nerfedSpeedMultiplier;
         public Vector3 PickDirection { get; set; }
@@ -115,7 +115,7 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject.transform.parent = transform;
             
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
-            OnPickOrThrow?.Invoke(nerfedSpeedMultiplier);
+            OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
 
             if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
@@ -152,7 +152,7 @@ namespace LabirinKata.Entities.Player
             stunItem.ThrowItem(PickDirection, pushSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
-            OnPickOrThrow?.Invoke(0f);
+            OnPlayerInteract?.Invoke(0f);
             _playerController.StartMovement();
         }
 

@@ -39,12 +39,12 @@ namespace LabirinKata.Item
 
         private void OnEnable()
         {
-            _playerPickThrow.OnPickOrThrow += SetSpeedLimitValues;
+            _playerPickThrow.OnPlayerInteract += SetSpeedLimitValues;
         }
 
         private void OnDisable()
         {
-            _playerPickThrow.OnPickOrThrow -= SetSpeedLimitValues;
+            _playerPickThrow.OnPlayerInteract -= SetSpeedLimitValues;
         }
 
         private void Update()

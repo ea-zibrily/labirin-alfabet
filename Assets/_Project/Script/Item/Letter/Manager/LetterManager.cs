@@ -13,17 +13,17 @@ namespace LabirinKata.Item
     {
         #region Fields & Properties
         
-        [Header("Spawn Data")] 
+        [Header("Data")] 
         [SerializeField] private LetterSpawns[] letterSpawns;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
         public List<Transform> AvailableSpawnPoint { get; private set; }
         
-        //-- Temp Letter Object Data
+        // Temp Letter Object Data
         [SerializeField] private List<LetterData> _lockedLetterDatas;
         [SerializeField] private List<LetterData> _unlockedLetterDatas;
         
-        //-- Letter Event
+        // Letter Event
         public event Action<LetterData> OnTakeLetter;
 
         [Header("Reference")] 
