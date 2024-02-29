@@ -14,6 +14,7 @@ namespace LabirinKata.Entities.Player
         #region Fields & Property
         
         [Header("Pick")]
+        [Range(0f, 1.5f)]
         [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private Transform pickAreaTransform;
         [SerializeField] private float pickAreaRadius;
@@ -23,9 +24,9 @@ namespace LabirinKata.Entities.Player
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
-        public event Action OnPickAndThrow;
+        public event Action<float> OnPickOrThrow;
 
-        public GameObject HoldedItemObject => _holdedItemObject;
+        public float NerfedMultiplier => nerfedSpeedMultiplier;
         public Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
@@ -114,7 +115,7 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject.transform.parent = transform;
             
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
-            OnPickAndThrow?.Invoke();
+            OnPickOrThrow?.Invoke(nerfedSpeedMultiplier);
 
             if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
@@ -151,7 +152,7 @@ namespace LabirinKata.Entities.Player
             stunItem.ThrowItem(PickDirection, pushSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
-            OnPickAndThrow?.Invoke();
+            OnPickOrThrow?.Invoke(0f);
             _playerController.StartMovement();
         }
 

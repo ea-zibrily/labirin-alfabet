@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8408c630c29bc4ea12535124c4198e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nerfedSpeedMultiplier: 1.5
+  nerfedSpeedMultiplier: 1
   pickAreaTransform: {fileID: 7807138492438561508}
   pickAreaRadius: 0.7
   itemLayerMask:

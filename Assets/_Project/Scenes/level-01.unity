@@ -50883,6 +50883,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BombSlime
       objectReference: {fileID: 0}
+    - target: {fileID: 8815263731517621315, guid: 1ed472c82ba01bd4d98733f287ad4153, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7452516
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815263731517621315, guid: 1ed472c82ba01bd4d98733f287ad4153, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4283551
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815263731517621315, guid: 1ed472c82ba01bd4d98733f287ad4153, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.16078113
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815263731517621315, guid: 1ed472c82ba01bd4d98733f287ad4153, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.18944204
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51027,7 +51043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 129.25
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.y

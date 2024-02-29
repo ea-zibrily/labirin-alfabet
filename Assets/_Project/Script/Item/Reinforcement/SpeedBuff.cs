@@ -11,12 +11,14 @@ namespace LabirinKata.Item
         #region Fields & Properties
 
         [Header("Speed Buff")]
+        [Range(0f, 2.5f)]
         [SerializeField] private float speedUpMultiplier;
         [SerializeField] private float timeDuration;
+        [Range(0.5f, 1.5f)]
         [SerializeField] private float timeMultiplier;
         
-        private float _upgradeMoveSpeed;
-        private float _defaultMoveSpeed;
+        [SerializeField] private float _upgradeMoveSpeed;
+        [SerializeField] private float _defaultMoveSpeed;
         private float _currentTime;
         
         private bool _isTimerStart;
@@ -37,12 +39,12 @@ namespace LabirinKata.Item
 
         private void OnEnable()
         {
-            _playerPickThrow.OnPickAndThrow += InitializeSpeed;
+            _playerPickThrow.OnPickOrThrow += SetSpeedLimitValues;
         }
 
         private void OnDisable()
         {
-            _playerPickThrow.OnPickAndThrow -= InitializeSpeed;
+            _playerPickThrow.OnPickOrThrow -= SetSpeedLimitValues;
         }
 
         private void Update()
@@ -84,8 +86,7 @@ namespace LabirinKata.Item
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
-             _currentTime = 0;
-            
+            _currentTime = 0;
             _isTimerStart = false;
             _isSpeedUpComplete = false;
         }
@@ -105,7 +106,6 @@ namespace LabirinKata.Item
         protected override void ActivateBuff()
         {
             InitializeSpeed();
-
             base.ActivateBuff();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             StartSpeedEffect();
@@ -114,7 +114,6 @@ namespace LabirinKata.Item
         public override void DeactivateBuff()
         {
             base.DeactivateBuff();
-
             StopSpeedEffect();
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
             GetComponentInChildren<SpriteRenderer>().enabled = true;
@@ -138,6 +137,13 @@ namespace LabirinKata.Item
             {
                 DeactivateBuff();
             }
+        }
+        
+        // !-- Helper/Utilites
+        private void SetSpeedLimitValues(float nerfedMultiplier = 0f)
+        {
+            _defaultMoveSpeed = PlayerController.DefaultMoveSpeed - nerfedMultiplier;
+            _upgradeMoveSpeed = _defaultMoveSpeed * speedUpMultiplier;
         }
 
         #endregion
