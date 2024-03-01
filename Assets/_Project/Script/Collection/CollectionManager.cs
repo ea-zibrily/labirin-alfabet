@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
-using LabirinKata.Item;
-using LabirinKata.Database;
+using Alphabet.Item;
+using Alphabet.Database;
+using System.Linq;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
     public class CollectionManager : MonoBehaviour
     {
         #region Fields & Properties
 
         [Header("Collection")] 
-        [SerializeField] private GameObject[] collectionParentUI;
+        [SerializeField] private RectTransform collectionContentUI;
+        private GameObject[] _collectionObjectUI;
 
-        private readonly List<GameObject> _collectionObjectUI;
+        // Const Variable
+        private const int FIRST_COLLECTION_GROUP = 3;
         
         [Header("UI")] 
         [SerializeField] private GameObject mainMenuPanelUI;
@@ -26,7 +29,6 @@ namespace LabirinKata.Collection
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
-
         private CollectionAudioManager _collectionAudioManager;
 
         public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
@@ -40,39 +42,44 @@ namespace LabirinKata.Collection
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
-        
+
         private void Start()
         {
+            InitializeObject();
             InitializeCollection();
-            InitializeComponent();
         }
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
-        private void InitializeCollection()
+        private void InitializeObject()
         {
-            foreach (var collection in collectionParentUI)
+            var contentCount = collectionContentUI.childCount;
+            _collectionObjectUI = new GameObject[contentCount];
+
+            for (var i = 0; i < contentCount; i++)
             {
-                var collectionObject = collection.transform.GetChild(0).gameObject;
-                _collectionObjectUI.Add(collectionObject);
+                var contentObject = collectionContentUI.GetChild(i).gameObject;
+                _collectionObjectUI[i] = contentObject;
             }
         }
-
-        private void InitializeComponent()
+        
+        private void InitializeCollection()
         {
-            if (_collectionObjectUI.Count < GameDatabase.LETTER_COUNT)
+            if (_collectionObjectUI.Length < GameDatabase.LETTER_COUNT)
             {
                 Debug.LogError("letter object kurang brok");
                 return;
             }
 
-            for (var i = 0; i < _collectionObjectUI.Count; i++)
+            for (var i = 0; i < _collectionObjectUI.Length; i++)
             {
                 var collectionId = i + 1;
-                InitializeElement(collectionId, _collectionObjectUI[i]);
+                var collectionObject = _collectionObjectUI[i].transform.GetChild(0).gameObject;
+                
+                InitializeElement(collectionId, collectionObject);
             }
 
             closeButtonUI.onClick.AddListener(CloseCollection);
@@ -89,26 +96,24 @@ namespace LabirinKata.Collection
             button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
             fillImage.SetActive(button.interactable);
         }
-
+        
         // !-- Core Functionality
         private void CloseCollection()
         {
             _collectionAudioManager.StopAudio();
             mainMenuPanelUI.SetActive(true);
 
-            ReSetupScrollSnap();
+            simpleScrollSnap.Setup();
+            ActivateContent();
             collectionPanelUI.SetActive(false);
         }
 
-        private void ReSetupScrollSnap()
+        private void ActivateContent()
         {
-            if (simpleScrollSnap.ValidConfig)
+            for (var i = 0; i < FIRST_COLLECTION_GROUP; i++)
             {
-                simpleScrollSnap.Setup();
-            }
-            else
-            {
-                throw new Exception("Invalid configuration.");
+                var contentObject = collectionContentUI.GetChild(i).gameObject;
+                contentObject.SetActive(true);
             }
         }
 

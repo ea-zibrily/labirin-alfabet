@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.Stage;
-using LabirinKata.Data;
+using Alphabet.Gameplay.EventHandler;
+using Alphabet.Stage;
+using Alphabet.Data;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterInterfaceManager : MonoBehaviour
     {

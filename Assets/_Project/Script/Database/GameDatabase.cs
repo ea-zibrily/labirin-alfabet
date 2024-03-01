@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Enum;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Enum;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Database
+namespace Alphabet.Database
 {
     public class GameDatabase : MonoDDOL<GameDatabase>
     {
@@ -30,7 +30,7 @@ namespace LabirinKata.Database
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         private void InitializeData()

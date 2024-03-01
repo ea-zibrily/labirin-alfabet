@@ -464,7 +464,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 SelectPanel();
             }
         }
-        
+                
         private void HandleOcclusionCulling(bool forceUpdate = false)
         {
             if (useOcclusionCulling && (Velocity.magnitude > 0f || forceUpdate))

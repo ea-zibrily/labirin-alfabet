@@ -1,8 +1,8 @@
 ﻿using System;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 using UnityEngine;
 
-namespace LabirinKata.Data
+namespace Alphabet.Data
 {
     [CreateAssetMenu(fileName = "NewEnemyData", menuName = "ScriptableObject/Entities/New Enemy Data", order = 0)]
     public class EnemyData : ScriptableObject

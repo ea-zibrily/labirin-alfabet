@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Data;
-using LabirinKata.Managers;
+using Alphabet.Data;
+using Alphabet.Managers;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {

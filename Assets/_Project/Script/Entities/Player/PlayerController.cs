@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Data;
+using Alphabet.Data;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
     [AddComponentMenu("Labirin Kata/Entities/Player/Player Controller")]
     [RequireComponent(typeof(BoxCollider2D))]

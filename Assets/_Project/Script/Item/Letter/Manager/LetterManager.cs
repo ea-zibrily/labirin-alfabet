@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Stage;
-using LabirinKata.Database;
-using LabirinKata.Data;
-using LabirinKata.Enum;
+using Alphabet.Stage;
+using Alphabet.Database;
+using Alphabet.Data;
+using Alphabet.Enum;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterManager : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using LabirinKata.Entities.Player;
+using Alphabet.Entities.Player;
 using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable

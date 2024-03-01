@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LabirinKata.Stage;
+using Alphabet.Stage;
 using UnityEngine;
 
 using MonoUnity = UnityEngine.Object;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterGenerator
     {

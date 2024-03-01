@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
     [AddComponentMenu("Labirin Kata/Entities/Player/Player Knockback")]
     public class PlayerKnockBack : MonoBehaviour

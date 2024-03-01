@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class HealthBuff : BuffItem, ITakeable

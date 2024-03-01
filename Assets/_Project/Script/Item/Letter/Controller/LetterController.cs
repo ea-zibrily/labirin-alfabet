@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Data;
+using Alphabet.Data;
 
 using Random = UnityEngine.Random;
 using Unity.VisualScripting;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterController : MonoBehaviour, ITakeable
     {

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Enum;
-using LabirinKata.Managers;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class GameUIBase : MonoBehaviour
     {

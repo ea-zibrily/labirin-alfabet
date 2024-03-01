@@ -2,17 +2,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Data;
+using Alphabet.Data;
+using System.Collections;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
     public class CollectionController : MonoBehaviour
     {
         #region Fields & Properties
 
         [Header("Data")] 
-        [SerializeField] [ReadOnly] private int letterId;
-        [SerializeField] [ReadOnly] private string letterName;
+        [SerializeField] [ReadOnly] private int collectionId;
+        [SerializeField] [ReadOnly] private string collectionName;
         
         private LetterData _letterData;
         private bool _canInteract;
@@ -41,16 +42,6 @@ namespace LabirinKata.Collection
             _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
-
-        private void OnEnable() 
-        {
-            _collectionManager.SimpleScrollSnap.OnSnappingBegin += StopAudio;
-        }
-
-        private void OnDisable() 
-        {
-            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= StopAudio;
-        }
         
         private void Start()
         {
@@ -59,16 +50,15 @@ namespace LabirinKata.Collection
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         public void InitializeData(LetterData data)
         {
             // Data
             _letterData = data;
-            Debug.LogWarning(_letterData);
-
-            // Component
+            
+            // Set Component
             SetId(_letterData.LetterId);
             SetCollectionName(_letterData.LetterName);
             SetSprite(_letterData.LetterSprite);
@@ -84,22 +74,37 @@ namespace LabirinKata.Collection
 
             _canInteract = true;
             _defaultScaling = GetComponent<RectTransform>().localScale;
-            _buttonUI.onClick.AddListener(ClickObject);
+            _buttonUI.onClick.AddListener(OnCollectionClicked);
         }
         
         // !-- Core Functionality
-        private void ClickObject()
+        private void OnCollectionClicked()
         {
             if (!_canInteract) return;
 
             _canInteract = false;
+            Debug.Log("click broh");
+            StopAudio();
+            StartCoroutine(ClickFeedbackRoutine());
+        }
+
+        private IEnumerator ClickFeedbackRoutine()
+        {
+            var index = collectionId - 1;
+            var scrollSnap = _collectionManager.SimpleScrollSnap;
+            if (scrollSnap.CenteredPanel != index)
+            {
+                scrollSnap.GoToPanel(index);
+                yield return new WaitForSeconds(0.15f);
+            }
+
             LeanTween.scale(gameObject, targetScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
-                        _collectionAudioManager.PlayAudio(letterId);
+                        _collectionAudioManager.PlayAudio(collectionId);
                     });
             
-            LeanTween.scale(gameObject, _defaultScaling, 0.5f).setDelay(1.5f).
+            LeanTween.scale(gameObject, _defaultScaling, 0.5f).setDelay(tweeningDuration).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
                         _canInteract = true;
@@ -113,15 +118,9 @@ namespace LabirinKata.Collection
         }
 
         // !-- Helper/Utilities
-         private void SetId(int letterId)
-        {
-            this.letterId = letterId;
-        }
+        private void SetId(int letterId) => collectionId = letterId;
 
-        private void SetCollectionName(string letterName)
-        {
-            this.letterName = letterName;
-        }
+        private void SetCollectionName(string letterName) => collectionName = letterName;
 
         private void SetSprite(Sprite letterSprite)
         {

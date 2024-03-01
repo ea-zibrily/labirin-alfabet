@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 using DanielLochner.Assets.SimpleScrollSnap;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class MainMenuManager : MonoBehaviour
     {

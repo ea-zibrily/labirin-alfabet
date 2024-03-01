@@ -5,7 +5,7 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     public class RandomShapePattern : PatternBase
     {

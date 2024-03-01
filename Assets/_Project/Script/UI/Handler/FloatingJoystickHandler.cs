@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]

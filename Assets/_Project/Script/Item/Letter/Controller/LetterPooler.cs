@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using LabirinKata.Data;
+using Alphabet.Data;
 using UnityEngine.Pool;
-using LabirinKata.Stage;
+using Alphabet.Stage;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterPooler : MonoBehaviour
     {

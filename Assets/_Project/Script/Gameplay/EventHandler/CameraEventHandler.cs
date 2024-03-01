@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LabirinKata.Gameplay.EventHandler
+namespace Alphabet.Gameplay.EventHandler
 {
     public class CameraEventHandler
     {

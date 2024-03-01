@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Enum;
-using LabirinKata.Entities.Player;
+using Alphabet.Enum;
+using Alphabet.Entities.Player;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class BuffItem : MonoBehaviour
     {

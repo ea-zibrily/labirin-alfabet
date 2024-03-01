@@ -1,8 +1,8 @@
-using LabirinKata.Managers;
-using LabirinKata.Enum;
+using Alphabet.Managers;
+using Alphabet.Enum;
 using UnityEngine;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class AudioController : MonoBehaviour
     {

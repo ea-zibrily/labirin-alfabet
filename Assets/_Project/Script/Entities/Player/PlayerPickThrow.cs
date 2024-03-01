@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Item;
+using Alphabet.Item;
 using Unity.VisualScripting;
 using System;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
     [AddComponentMenu("Labirin Kata/Entities/Player/Player Pick Throw")]
     public class PlayerPickThrow : MonoBehaviour

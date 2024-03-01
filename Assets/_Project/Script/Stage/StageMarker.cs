@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
-namespace LabirinKata.Stage
+namespace Alphabet.Stage
 {
     public class StageMarker : MonoBehaviour
     {

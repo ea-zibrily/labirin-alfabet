@@ -1,4 +1,4 @@
-﻿namespace LabirinKata.Item
+﻿namespace Alphabet.Item
 {
     public interface ITakeable
     {

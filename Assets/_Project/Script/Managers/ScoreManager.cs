@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using LabirinKata.Gameplay.Controller;
+using Alphabet.Gameplay.Controller;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class ScoreManager : MonoBehaviour
     {

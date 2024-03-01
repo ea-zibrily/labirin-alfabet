@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class GamePauseController : GameUIBase
     {

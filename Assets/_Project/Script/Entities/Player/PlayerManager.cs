@@ -2,14 +2,14 @@
 using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Item;
-using LabirinKata.Stage;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Item;
+using Alphabet.Stage;
+using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
-using LabirinKata.Entities.Enemy;
+using Alphabet.Entities.Enemy;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
     [AddComponentMenu("Labirin Kata/Entities/Player/Player Manager")]
     [RequireComponent(typeof(CapsuleCollider2D))]

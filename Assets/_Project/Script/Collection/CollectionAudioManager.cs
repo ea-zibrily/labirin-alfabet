@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Item;
+using Alphabet.Item;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
     public class CollectionAudioManager : MonoBehaviour
     {
@@ -22,7 +22,7 @@ namespace LabirinKata.Collection
 
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Core Functionality
         public void PlayAudio(int id)

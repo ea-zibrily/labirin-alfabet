@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
-using LabirinKata.Enum;
-using LabirinKata.Managers;
-using LabirinKata.Database;
+using Alphabet.Enum;
+using Alphabet.Managers;
+using Alphabet.Database;
 
-namespace LabirinKata.Stage
+namespace Alphabet.Stage
 {
     public class StageSelectManager : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class TimeController : MonoBehaviour
     {
