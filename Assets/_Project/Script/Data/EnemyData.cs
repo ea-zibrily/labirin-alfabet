@@ -1,5 +1,4 @@
 ﻿using System;
-using Alphabet.Enum;
 using UnityEngine;
 
 namespace Alphabet.Data
@@ -8,8 +7,9 @@ namespace Alphabet.Data
     public class EnemyData : ScriptableObject
     {
         [SerializeField] private string enemyName;
-        public string EnemyName => enemyName;
         [SerializeField] private float enemyMoveSpeed;
+
+        public string EnemyName => enemyName;
         public float EnemyMoveSpeed => enemyMoveSpeed;
     }
 }

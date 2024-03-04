@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Alphabet.Enum;
-using DanielLochner.Assets.SimpleScrollSnap;
 
 namespace Alphabet.UI
 {
@@ -29,8 +27,8 @@ namespace Alphabet.UI
         }
 
         #endregion
-
-        #region Labirin Kata Callbacks
+        
+        #region Methods
 
         // !-- Initialization
         private void InitializeButton()

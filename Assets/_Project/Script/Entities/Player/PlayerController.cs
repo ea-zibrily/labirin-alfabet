@@ -3,10 +3,11 @@ using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
+using Alphabet.Database;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Controller")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Controller")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
@@ -26,13 +27,14 @@ namespace Alphabet.Entities.Player
         
         public bool CanMove { get; private set; }
 
-        //-- Const Variable
+        // Const Variable
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
         private const string IS_MOVE = "isMove";
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
+        private SpriteRenderer _playerSpriteRenderer;
         private Animator _playerAnimator;
         private PlayerPickThrow _playerPickThrow;
 
@@ -45,6 +47,7 @@ namespace Alphabet.Entities.Player
         private void Awake()
         {
             _playerRb = GetComponent<Rigidbody2D>();
+            _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _playerAnimator = GetComponentInChildren<Animator>();
 
             _playerPickThrow = GetComponent<PlayerPickThrow>();
@@ -54,13 +57,14 @@ namespace Alphabet.Entities.Player
         private void Start()
         {
             InitializePlayer();
+            StartMovement();
         }
 
         private void FixedUpdate()
         {
             PlayerMove();
         }
-
+        
         private void Update()
         {
             PlayerAnimation();
@@ -73,9 +77,14 @@ namespace Alphabet.Entities.Player
         // !-- Initialization
         private void InitializePlayer()
         {
+            // Data
+            playerData = PlayerDatabase.Instance.GetPlayerData();
+
+            // Component
             gameObject.name = playerData.PlayerName;
             CurrentMoveSpeed = playerData.PlayerMoveSpeed;
-            StartMovement();
+            _playerSpriteRenderer.sprite = playerData.PlayerSprite;
+            _playerAnimator.runtimeAnimatorController = playerData.PlayerAnimatorController;
         }
         
         // !-- Core Functionality
@@ -83,7 +92,6 @@ namespace Alphabet.Entities.Player
         {
             if (!CanMove) return;
             
-            //*-- W Enhanced Touch Input
             var moveX = PlayerInputHandler.Direction.x;
             var moveY = PlayerInputHandler.Direction.y;
             

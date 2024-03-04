@@ -45,7 +45,7 @@ namespace Alphabet.Stage
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializeLeveStage()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor.Animations;
 
 namespace Alphabet.Data
 {
@@ -14,9 +15,10 @@ namespace Alphabet.Data
 
         [Header("Assets")]
         [SerializeField] private Sprite playerSprite;
-        [SerializeField] private Animator playerAnimator;
+        [SerializeField] private RuntimeAnimatorController  playerAnimatorController;
+
 
         public Sprite PlayerSprite => playerSprite;
-        public Animator PlayerAnimator => playerAnimator;
+        public RuntimeAnimatorController  PlayerAnimatorController => playerAnimatorController;
     }
 }

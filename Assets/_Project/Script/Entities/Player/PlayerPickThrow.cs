@@ -8,7 +8,7 @@ using System;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Pick Throw")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Pick Throw")]
     public class PlayerPickThrow : MonoBehaviour
     {
         #region Fields & Property

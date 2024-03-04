@@ -8,9 +8,9 @@ using Alphabet.Enum;
 using Alphabet.Managers;
 using Alphabet.Database;
 
-namespace Alphabet.Stage
+namespace Alphabet.UI
 {
-    public class StageSelectManager : MonoBehaviour
+    public class SelectStageManager : SelectBase
     {
         #region Struct
         [Serializable]
@@ -25,18 +25,13 @@ namespace Alphabet.Stage
 
         [Header("UI")]
         [SerializeField] private GameObject selectStagePanelUI;
+        [SerializeField] private GameObject selectCharacterPanelUI;
         [SerializeField] private StageContent[] stageContents;
 
-        private int StageCount
-        {
-            get => System.Enum.GetNames(typeof(Level)).Length;
-        }
 
-        [Space]
-        [SerializeField] private Button exploreButtonUI;
-        [SerializeField] private Button closeButtonUI;
-
-        private int _currentPanelIndex;
+        // TODO: Pas udah fix, panel index iki gausa di serializ
+        [SerializeField] private int _currentPanelIndex;
+        private int StageCount =>  System.Enum.GetNames(typeof(Level)).Length;
 
         [Header("Reference")]
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
@@ -47,24 +42,25 @@ namespace Alphabet.Stage
 
         private void OnEnable()
         {
-            simpleScrollSnap.OnSnappingBegin += SetIndexPanel;
+            simpleScrollSnap.OnSnappingBegin += SetPanelIndex;
         }
 
         private void OnDisable()
         {
-            simpleScrollSnap.OnSnappingBegin -= SetIndexPanel;
-        }
-
-        private void Start()
-        {
-            InitializeSelectStage();
+            simpleScrollSnap.OnSnappingBegin -= SetPanelIndex;
         }
 
         #endregion
 
-        #region Labirin Kata Callbacks
-        
+        #region Methods
+
         // !-- Initialization
+        protected override void InitialiazeOnStart()
+        {
+            InitializeSelectStage();
+            base.InitialiazeOnStart();
+        }
+
         private void InitializeSelectStage()
         {
             if (stageContents.Length != StageCount)
@@ -73,18 +69,50 @@ namespace Alphabet.Stage
                 return;
             }
 
-            exploreButtonUI.onClick.AddListener(OnExploreButton);
-            closeButtonUI.onClick.AddListener(OnCloseButton);
-
             _currentPanelIndex = 0;
             selectStagePanelUI.SetActive(false);
         }
 
         // !-- Core Functionality
-        private void SetIndexPanel()
+        public void GoToStage()
+        {
+            var levelSceneIndex = _currentPanelIndex + 1;
+            Debug.Log($"explore level {levelSceneIndex}");
+            SceneTransitionManager.Instance.LoadSelectedLevel(levelSceneIndex);
+        }
+
+        protected override void OnClickExplore()
+        {
+            base.OnClickExplore();
+            if (_currentPanelIndex > 0)
+            {
+                Debug.LogWarning("level 2-3 under development brok!");
+                return;
+            }
+
+            selectCharacterPanelUI.SetActive(true);
+            ClosePanel();
+        }
+
+        protected override void OnClickClose()
+        {
+            base.OnClickClose();
+
+            ClosePanel();
+            SetPanelIndex();
+        }
+
+        private void ClosePanel()
+        {
+            selectStagePanelUI.SetActive(false);
+            simpleScrollSnap.Setup();
+        }
+
+
+        private void SetPanelIndex()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
-            
+
             var stageName = GetStageSceneName(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
             var stageChildCount = stagePanel.transform.childCount;
@@ -102,38 +130,7 @@ namespace Alphabet.Stage
                 }
             }
 
-            exploreButtonUI.interactable = isLevelUnlocked;
-        }
-        
-        private void OnExploreButton()
-        {
-            if (_currentPanelIndex > 0)
-            {
-                Debug.LogWarning("level 2-3 under development brok!");
-                return;
-            }
-
-            var levelSceneIndex = _currentPanelIndex + 1;
-            SceneTransitionManager.Instance.LoadSelectedLevel(levelSceneIndex);
-        }
-
-        private void OnCloseButton()
-        {
-            selectStagePanelUI.SetActive(false);
-            ReSetupScrollSnap();
-            SetIndexPanel();
-        }
-
-        private void ReSetupScrollSnap()
-        {
-            if (simpleScrollSnap.ValidConfig)
-            {
-                simpleScrollSnap.Setup();
-            }
-            else
-            {
-                throw new Exception("Invalid configuration.");
-            }
+            ExploreButtonUI.interactable = isLevelUnlocked;
         }
 
         // !-- Helper/Utilities

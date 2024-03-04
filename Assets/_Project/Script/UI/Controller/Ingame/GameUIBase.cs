@@ -28,7 +28,7 @@ namespace Alphabet.UI
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         protected virtual void InitializeOnAwake() { }
 

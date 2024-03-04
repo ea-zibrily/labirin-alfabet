@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Knockback")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Knockback")]
     public class PlayerKnockBack : MonoBehaviour
     {
         #region Fields & Properties

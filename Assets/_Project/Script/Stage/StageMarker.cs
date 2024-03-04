@@ -18,7 +18,7 @@ namespace Alphabet.Stage
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Core Functionality
         public void SetStageNotification()

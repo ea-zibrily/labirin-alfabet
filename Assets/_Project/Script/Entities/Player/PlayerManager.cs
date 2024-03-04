@@ -4,14 +4,14 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Item;
 using Alphabet.Stage;
+using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
-using Alphabet.Entities.Enemy;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Manager")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Manager")]
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
@@ -87,7 +87,7 @@ namespace Alphabet.Entities.Player
         
         #endregion
         
-        #region Health Callbacks
+        #region Health Methods
         
         // !-- Initialization
         private void InitializeHealth()
@@ -175,7 +175,7 @@ namespace Alphabet.Entities.Player
         
         #endregion
         
-        #region Objective Callbacks
+        #region Objective Methods
         
         // !-- Initialization
         private void InitializeLetterObject()
@@ -203,7 +203,6 @@ namespace Alphabet.Entities.Player
             if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
             
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
-            // letterCollects[randomLetter].transform.position = _playerObject.transform.position;
             letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
         }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3f52310f8a349fd9931a874beb75eb2, type: 3}
-  m_Name: Rea
+  m_Name: Rhea
   m_EditorClassIdentifier: 
-  playerName: Rea
+  playerName: Rhea
   playerMoveSpeed: 3.5
-  playerSprite: {fileID: 0}
-  playerAnimator: {fileID: 0}
+  playerSprite: {fileID: 1304890536, guid: 95a943e402ab5d34b8ecc52de5551d0f, type: 3}
+  playerAnimatorController: {fileID: 9100000, guid: 71acbe9c88c2da44682161b0fe1f3da0, type: 2}

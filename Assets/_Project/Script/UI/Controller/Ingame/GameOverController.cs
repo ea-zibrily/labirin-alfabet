@@ -13,7 +13,7 @@ namespace Alphabet.UI
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         protected override void InitializeOnStart()

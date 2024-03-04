@@ -1,13 +1,12 @@
-﻿using Alphabet.UI;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using Alphabet.UI;
 
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Input Handler")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Input Handler")]
     public class PlayerInputHandler : MonoBehaviour
     {
         #region Fields & Properties
