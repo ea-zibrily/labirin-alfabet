@@ -93,7 +93,6 @@ namespace Alphabet.Item
                     continue;
                 }
                 _lockedLetterDatas.Add(letter);
-                Debug.LogWarning($"add lock {letter}");
             }
         }
         

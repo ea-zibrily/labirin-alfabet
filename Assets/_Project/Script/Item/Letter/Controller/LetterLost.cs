@@ -34,11 +34,9 @@ namespace Alphabet.Item
         /// </summary>
         public void Lost()
         {
-            _letterController.ObjectPool.Get();
             transform.position = _playerObject.transform.position;
             _letterController.LetterInterfaceManager.LostLetterEvent(_letterController.SpawnId);
-            Debug.LogWarning("re-pool letter");
-
+            
             var spawnPoints = _letterController.LetterManager.AvailableSpawnPoint;
             var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);
             var randomPoint = spawnPoints[randomPointIndex].position;

@@ -102,12 +102,13 @@ namespace Alphabet.Item
         {
             ActivateBuff();
         }
-
+        
         protected override void ActivateBuff()
         {
             InitializeSpeed();
             base.ActivateBuff();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
             StartSpeedEffect();
         }
 
@@ -116,7 +117,6 @@ namespace Alphabet.Item
             base.DeactivateBuff();
             StopSpeedEffect();
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
-            GetComponentInChildren<SpriteRenderer>().enabled = true;
             gameObject.SetActive(false);
         }
         

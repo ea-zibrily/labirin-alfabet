@@ -7872,6 +7872,7 @@ MonoBehaviour:
     stagePanelObject: {fileID: 795179886}
   - levelName: 2
     stagePanelObject: {fileID: 1586543314}
+  _currentPanelIndex: 0
   simpleScrollSnap: {fileID: 2098628527}
 --- !u!1 &1882052531
 GameObject:

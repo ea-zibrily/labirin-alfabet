@@ -50,6 +50,8 @@ namespace Alphabet.Entities.Player
         
         [Header("Objective")] 
         [SerializeField] private LetterObject[] letterObjects;
+        private int _currentStageIndex;
+        private int _currentLetterAmount;
         
         [Header("Reference")] 
         private GameObject _playerObject;
@@ -83,6 +85,11 @@ namespace Alphabet.Entities.Player
         {
            InitializeHealth();
            InitializeLetterObject();
+        }
+
+        private void Update()
+        {
+           StageDataUpdater();
         }
         
         #endregion
@@ -190,21 +197,32 @@ namespace Alphabet.Entities.Player
         // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
-            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
-            letterObjects[currentStageIndex].LetterObjects.Add(letter);
+            var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
+            letterCollects.Add(letter);
+
+            if (letterCollects.Count < _currentLetterAmount) return;
+            foreach (var collect in letterCollects)
+            {
+                collect.GetComponent<LetterController>().ReleaseLetter();  
+            }
         }
         
         private void LostLetter()
         {
-            var stageIndex = StageManager.Instance.CurrentStageIndex;
-            var letterCollects = letterObjects[stageIndex].LetterObjects;
-            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
+            var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
 
-            if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
-            
+            if (letterCollects.Count < 1 || letterCollects.Count >= _currentLetterAmount) return;
+
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
+            letterCollects[randomLetter].SetActive(true);
             letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
+        }
+
+        private void StageDataUpdater()
+        {
+            _currentStageIndex = StageManager.Instance.CurrentStageIndex;
+            _currentLetterAmount = StageManager.Instance.LetterManager.LetterSpawns[_currentStageIndex].AmountOfLetter;
         }
         
         #endregion

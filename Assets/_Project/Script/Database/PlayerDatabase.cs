@@ -19,7 +19,7 @@ namespace Alphabet.Database
 
         #region MonoBehaviour Callbacks
 
-        private void Start()
+        private void OnEnable()
         {
             SetPlayerData(0);
         }

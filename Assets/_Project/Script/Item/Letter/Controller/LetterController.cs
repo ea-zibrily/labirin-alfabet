@@ -4,9 +4,6 @@ using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
 
-using Random = UnityEngine.Random;
-using Unity.VisualScripting;
-
 namespace Alphabet.Item
 {
     public class LetterController : MonoBehaviour, ITakeable
@@ -26,7 +23,9 @@ namespace Alphabet.Item
             set => spawnId = value;
         }
 
-        public ObjectPool<LetterController> ObjectPool { get; set; }
+        // Pool
+        private ObjectPool<LetterController> _objectPool;
+        public ObjectPool<LetterController> ObjectPool {set => _objectPool = value; }
 
         [Header("Reference")]
         private SpriteRenderer _spriteRenderer;
@@ -76,10 +75,14 @@ namespace Alphabet.Item
             }
             LetterManager.AddSpawnPoint(transform);
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
+            gameObject.SetActive(false);
+        }
 
-            // Release obstacle back to the pool
-            Debug.LogWarning("take item");            
-            ObjectPool.Release(this);
+        public void ReleaseLetter()
+        {
+            // Release letter ke pool
+            Debug.LogWarning($"release letter {_letterName}");            
+            _objectPool.Release(this);
         }
         
         #endregion
