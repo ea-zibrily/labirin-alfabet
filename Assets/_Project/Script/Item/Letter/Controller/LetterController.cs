@@ -56,6 +56,7 @@ namespace Alphabet.Item
             // Data
             _letterData = data;
             spawnId = spawnNum;
+            Debug.LogWarning($"initialize letter {_letterData.LetterName}");
             
             // Component
             _letterName = _letterData.LetterName;
@@ -81,7 +82,6 @@ namespace Alphabet.Item
         public void ReleaseLetter()
         {
             // Release letter ke pool
-            Debug.LogWarning($"release letter {_letterName}");            
             _objectPool.Release(this);
         }
         

@@ -113,12 +113,12 @@ namespace Alphabet.Item
         {
             _unlockedLetterDatas.Add(value);
 
-            var valueName = value.LetterId;
+            var valueId = value.LetterId;
             foreach (var lockLetter in _lockedLetterDatas)
             {
-                var lockLetterName = lockLetter.LetterId;
+                var lockLetterId = lockLetter.LetterId;
                 
-                if (lockLetterName != valueName) continue;
+                if (lockLetterId != valueId) continue;
                 _lockedLetterDatas.Remove(lockLetter);
                 break;
             }

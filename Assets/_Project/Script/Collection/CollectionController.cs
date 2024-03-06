@@ -27,6 +27,7 @@ namespace Alphabet.Collection
         [Header("Reference")]
         [SerializeField] private Image outerImageUI;
         [SerializeField] private Image fillImageUI;
+        private RectTransform _rectTransform;
         private CollectionManager _collectionManager;
         private CollectionAudioManager _collectionAudioManager;
         
@@ -37,12 +38,23 @@ namespace Alphabet.Collection
         private void Awake()
         {
             _buttonUI = GetComponent<Button>();
+            _rectTransform = GetComponent<RectTransform>();
 
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
             _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
-        
+
+        private void OnEnable()
+        {
+            _collectionManager.OnCollectionClose += OnCloseCollection;
+        }
+
+        private void OnDisable()
+        {
+            _collectionManager.OnCollectionClose -= OnCloseCollection;
+        }
+
         private void Start()
         {
             InitializeCollection();
@@ -73,7 +85,7 @@ namespace Alphabet.Collection
             }
 
             _canInteract = true;
-            _defaultScaling = GetComponent<RectTransform>().localScale;
+            _defaultScaling = _rectTransform.localScale;
             _buttonUI.onClick.AddListener(OnCollectionClicked);
         }
         
@@ -83,7 +95,6 @@ namespace Alphabet.Collection
             if (!_canInteract) return;
 
             _canInteract = false;
-            Debug.Log("click broh");
             StopAudio();
             StartCoroutine(ClickFeedbackRoutine());
         }
@@ -102,7 +113,7 @@ namespace Alphabet.Collection
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
                         _collectionAudioManager.PlayAudio(collectionId);
-                    });
+                    });     
             
             LeanTween.scale(gameObject, _defaultScaling, 0.5f).setDelay(tweeningDuration).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
@@ -111,10 +122,14 @@ namespace Alphabet.Collection
                     });       
         }
 
-        private void StopAudio()
+        private void OnCloseCollection()
         {
-            if (!_collectionAudioManager.IsAudioPlaying()) return;
-            _collectionAudioManager.StopAudio();
+            _canInteract = true;
+            
+            StopAudio();
+            LeanTween.cancel(gameObject);
+            StopCoroutine(ClickFeedbackRoutine());
+            _rectTransform.localScale = _defaultScaling;
         }
 
         // !-- Helper/Utilities
@@ -126,6 +141,12 @@ namespace Alphabet.Collection
         {
             outerImageUI.sprite = letterSprite;
             fillImageUI.sprite = letterSprite;
+        }
+
+        private void StopAudio()
+        {
+            if (!_collectionAudioManager.IsAudioPlaying()) return;
+            _collectionAudioManager.StopAudio();
         }
 
         #endregion

@@ -33,18 +33,12 @@ namespace Alphabet.Item
         public List<Transform> AvailableSpawnPoints { get; private set; }
 
         [Header("Reference")]
-        private LetterManager _letterManager;
+        [SerializeField] private LetterContainer letterContainer;
 
         #endregion
 
         #region MonoBehaviour Callbacks
-
-        private void Awake()
-        {
-            var letterParent = LetterHelper.GetLetterManagerObject();
-            _letterManager = letterParent.GetComponent<LetterManager>();
-        }
-
+        
         private void Start()
         {
             InitializePooler();
@@ -90,6 +84,7 @@ namespace Alphabet.Item
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
                      OnDestroyPooledObject, collectionCheck: true, defaultPoolCapacity, maxPoolSize);
 
+            _letterDatas = new List<LetterData>();
             AvailableLetterDatas = new List<LetterData>();
             AvailableSpawnPoints = new List<Transform>();
         }
@@ -125,6 +120,7 @@ namespace Alphabet.Item
                 return;
             }
             
+            Debug.Log($"get letter data {_letterDatas.Count}");
             var latestLetterIndices = new HashSet<int>();
             var latestPointIndices = new HashSet<int>();
             
@@ -137,14 +133,14 @@ namespace Alphabet.Item
                 do
                 {
                     randomLetterId = Random.Range(1, _letterDatas.Count);
-                    randomPointIndex = Random.Range(0,spawnPoints.Length - 1);
+                    randomPointIndex = Random.Range(0, spawnPoints.Length - 1);
                 } while (latestLetterIndices.Contains(randomLetterId) || latestPointIndices.Contains(randomPointIndex));
                 
                 latestLetterIndices.Add(randomLetterId);
                 latestPointIndices.Add(randomPointIndex);
 
                 var letter = _letterPool.Get();
-                var letterData = _letterManager.LetterContainer.GetLetterDataById(randomLetterId);
+                var letterData = letterContainer.GetLetterDataById(randomLetterId);
 
                 letter.InitializeLetterData(letterData, i + 1);
                 letter.transform.position = spawnPoints[randomPointIndex].position;

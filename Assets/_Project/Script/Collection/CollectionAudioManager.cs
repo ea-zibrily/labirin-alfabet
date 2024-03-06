@@ -10,7 +10,7 @@ namespace Alphabet.Collection
 
         [SerializeField] private LetterContainer letterContainer;
         private AudioSource _audioSource;
-
+        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -34,8 +34,7 @@ namespace Alphabet.Collection
                 Debug.LogError("audionya gada kang");
                 return;                
             }
-
-            Debug.Log($"gas sound letter {letterData.LetterName}");
+            
             _audioSource.clip = letterAudio;
             _audioSource.Play();
         }

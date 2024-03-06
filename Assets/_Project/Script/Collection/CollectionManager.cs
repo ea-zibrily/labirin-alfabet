@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Item;
 using Alphabet.Database;
-using System.Linq;
 
 namespace Alphabet.Collection
 {
@@ -17,6 +16,9 @@ namespace Alphabet.Collection
         [Header("Collection")] 
         [SerializeField] private RectTransform collectionContentUI;
         private GameObject[] _collectionObjectUI;
+
+        // Event
+        public event Action OnCollectionClose;
 
         // Const Variable
         private const int FIRST_COLLECTION_GROUP = 3;
@@ -29,20 +31,11 @@ namespace Alphabet.Collection
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
-        private CollectionAudioManager _collectionAudioManager;
-
         public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
         
         #endregion
         
         #region MonoBehaviour Callbacks
-
-        private void Awake() 
-        {
-            var collectionObject = GameObject.FindGameObjectWithTag("Collection");
-            _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
-        }
-
         private void Start()
         {
             InitializeObject();
@@ -81,7 +74,7 @@ namespace Alphabet.Collection
                 
                 InitializeElement(collectionId, collectionObject);
             }
-
+            
             closeButtonUI.onClick.AddListener(CloseCollection);
         }
         
@@ -93,21 +86,21 @@ namespace Alphabet.Collection
             var fillImage = collection.transform.GetChild(0).gameObject;
 
             collectionController.InitializeData(letterData);
-            button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
-            fillImage.SetActive(button.interactable);
+            // button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
+            // fillImage.SetActive(button.interactable);
         }
         
         // !-- Core Functionality
         private void CloseCollection()
         {
-            _collectionAudioManager.StopAudio();
+            OnCollectionClose?.Invoke();
             mainMenuPanelUI.SetActive(true);
 
             simpleScrollSnap.Setup();
             ActivateContent();
             collectionPanelUI.SetActive(false);
         }
-
+        
         private void ActivateContent()
         {
             for (var i = 0; i < FIRST_COLLECTION_GROUP; i++)
