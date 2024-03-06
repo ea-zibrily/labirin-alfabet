@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Data;
-using LabirinKata.Managers;
+using Alphabet.Data;
+using Alphabet.Managers;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
@@ -18,12 +18,12 @@ namespace LabirinKata.Entities.Enemy
         private Vector2 _enemyDirection;
         public bool CanMove { get; private set; }
 
-        //-- Const Variable
+        // Const Variable
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
         private const string IS_MOVE = "IsMove";
 
-        // -- Pattern Targeting
+        // Pattern Targeting
         protected PatternBase CurrentPattern { get; set; }
         public Transform CurrentTarget { get; set; }
         public int CurrentTargetIndex { get; set; }
@@ -50,8 +50,6 @@ namespace LabirinKata.Entities.Enemy
         
         private void Update()
         {
-            if (!GameManager.Instance.IsGameStart) return;
-
             EnemyMove();
             EnemyPatternDirection();
             EnemyAnimation();
@@ -86,7 +84,7 @@ namespace LabirinKata.Entities.Enemy
             _enemyDirection = targetPosition - enemyPosition;
             _enemyDirection.Normalize();
 
-            if (!CanMove) return;
+            if (!CanMove || !GameManager.Instance.IsGameStart) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
 

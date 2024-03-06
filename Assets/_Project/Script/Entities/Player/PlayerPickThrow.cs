@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Item;
+using Alphabet.Item;
 using Unity.VisualScripting;
 using System;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Pick Throw")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Pick Throw")]
     public class PlayerPickThrow : MonoBehaviour
     {
         #region Fields & Property
         
         [Header("Pick")]
+        [Range(0f, 1.5f)]
         [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private Transform pickAreaTransform;
         [SerializeField] private float pickAreaRadius;
@@ -23,9 +24,9 @@ namespace LabirinKata.Entities.Player
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
-        public event Action OnPickAndThrow;
+        public event Action<float> OnPlayerInteract;
 
-        public GameObject HoldedItemObject => _holdedItemObject;
+        public float NerfedMultiplier => nerfedSpeedMultiplier;
         public Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
@@ -114,7 +115,7 @@ namespace LabirinKata.Entities.Player
             _holdedItemObject.transform.parent = transform;
             
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
-            OnPickAndThrow?.Invoke();
+            OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
 
             if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
             {
@@ -151,7 +152,7 @@ namespace LabirinKata.Entities.Player
             stunItem.ThrowItem(PickDirection, pushSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
-            OnPickAndThrow?.Invoke();
+            OnPlayerInteract?.Invoke(0f);
             _playerController.StartMovement();
         }
 

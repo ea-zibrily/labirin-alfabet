@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.Stage;
-using LabirinKata.Data;
+using Alphabet.Gameplay.EventHandler;
+using Alphabet.Stage;
+using Alphabet.Data;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterInterfaceManager : MonoBehaviour
     {
@@ -75,7 +75,6 @@ namespace LabirinKata.Item
             
             for (var i = 0; i < currentAmountOfLetter; i++)
             {
-                Debug.Log($"call interface {datas[i]}");
                 var letterSprite = datas[i].LetterSprite;
                 var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
                 

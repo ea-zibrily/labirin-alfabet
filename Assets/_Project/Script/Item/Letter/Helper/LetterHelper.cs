@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public static class LetterHelper
     {

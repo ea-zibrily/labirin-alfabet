@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using LabirinKata.Stage;
-using LabirinKata.Entities.Player;
-using LabirinKata.Gameplay.Controller;
-using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Stage;
+using Alphabet.Entities.Player;
+using Alphabet.Gameplay.Controller;
+using Alphabet.Gameplay.EventHandler;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {

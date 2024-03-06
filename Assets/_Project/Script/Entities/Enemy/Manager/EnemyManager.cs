@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     public class EnemyManager : MonoBehaviour
     {

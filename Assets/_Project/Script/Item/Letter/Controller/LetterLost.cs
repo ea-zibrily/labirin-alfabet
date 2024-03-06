@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using LabirinKata.Entities.Player;
+using Alphabet.Entities.Player;
 using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterLost : MonoBehaviour
     {
@@ -34,11 +34,9 @@ namespace LabirinKata.Item
         /// </summary>
         public void Lost()
         {
-            _letterController.ObjectPool.Get();
             transform.position = _playerObject.transform.position;
             _letterController.LetterInterfaceManager.LostLetterEvent(_letterController.SpawnId);
-            Debug.LogWarning("re-pool letter");
-
+            
             var spawnPoints = _letterController.LetterManager.AvailableSpawnPoint;
             var randomPointIndex = Random.Range(0, spawnPoints.Count - 1);
             var randomPoint = spawnPoints[randomPointIndex].position;
@@ -60,7 +58,7 @@ namespace LabirinKata.Item
             }
 
             transform.position = randomPoint;
-            _letterController.LetterManager.RemoveAvailableSpawnPoint(randomPointIndex);
+            _letterController.LetterManager.RemoveSpawnPoint(randomPointIndex);
             Debug.LogWarning($"remove available point index {randomPointIndex}");
         }
 

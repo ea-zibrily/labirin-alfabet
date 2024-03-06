@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Enum;
-using LabirinKata.Database;
-using LabirinKata.Item;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Enum;
+using Alphabet.Database;
+using Alphabet.Item;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Stage
+namespace Alphabet.Stage
 {
     public class StageManager : MonoSingleton<StageManager>
     {
@@ -45,7 +45,7 @@ namespace LabirinKata.Stage
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializeLeveStage()

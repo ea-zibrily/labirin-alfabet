@@ -1,16 +1,16 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Item;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
     public class CollectionAudioManager : MonoBehaviour
     {
         #region Fields & Properties
 
-        [SerializeField] private CollectionSound[] collectionSounds;
+        [SerializeField] private LetterContainer letterContainer;
         private AudioSource _audioSource;
-
+        
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -22,27 +22,27 @@ namespace LabirinKata.Collection
 
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Core Functionality
-        public void PlayCollectionAudio(string letterName)
+        public void PlayAudio(int id)
         {
-            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
-            
-            if (sound == null)
+            var letterData = letterContainer.GetLetterDataById(id);
+            var letterAudio = letterData.LetterAudio;
+            if (letterAudio == null)
             {
-                Debug.Log("soundny gada kang");
-                return;
+                Debug.LogError("audionya gada kang");
+                return;                
             }
-
-            Debug.Log($"gas sound letter {sound.LetterName}");
-            _audioSource.clip = sound.LetterSound;
+            
+            _audioSource.clip = letterAudio;
             _audioSource.Play();
         }
 
-        public void StopCollectionAudio()
+        public void StopAudio()
         {
             _audioSource.Stop();
+            _audioSource.clip = null;
         }
 
         // !-- Helper/Utilities

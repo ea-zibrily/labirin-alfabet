@@ -1,21 +1,33 @@
 ﻿using System;
-using LabirinKata.Enum;
 using UnityEngine;
 using UnityEngine.UI;
+using KevinCastejon.MoreAttributes;
+using Alphabet.Data;
+using System.Collections;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
     public class CollectionController : MonoBehaviour
     {
         #region Fields & Properties
 
-        [Header("Settings")] 
-        [SerializeField] private string letterName;
+        [Header("Data")] 
+        [SerializeField] [ReadOnly] private int collectionId;
+        [SerializeField] [ReadOnly] private string collectionName;
         
-        private bool canInteract;
+        private LetterData _letterData;
+        private bool _canInteract;
         private Button _buttonUI;
+
+        [Header("Tweening")]
+        [SerializeField] private Vector3 targetScaling;
+        [SerializeField] private float tweeningDuration;
+        private Vector3 _defaultScaling;
         
-        [Header("Reference")] 
+        [Header("Reference")]
+        [SerializeField] private Image outerImageUI;
+        [SerializeField] private Image fillImageUI;
+        private RectTransform _rectTransform;
         private CollectionManager _collectionManager;
         private CollectionAudioManager _collectionAudioManager;
         
@@ -26,21 +38,23 @@ namespace LabirinKata.Collection
         private void Awake()
         {
             _buttonUI = GetComponent<Button>();
+            _rectTransform = GetComponent<RectTransform>();
+
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
             _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
             _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
         }
 
-        private void OnEnable() 
+        private void OnEnable()
         {
-            _collectionManager.SimpleScrollSnap.OnSnappingBegin += StopAudio;
+            _collectionManager.OnCollectionClose += OnCloseCollection;
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
-            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= StopAudio;
+            _collectionManager.OnCollectionClose -= OnCloseCollection;
         }
-        
+
         private void Start()
         {
             InitializeCollection();
@@ -48,38 +62,91 @@ namespace LabirinKata.Collection
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
+        public void InitializeData(LetterData data)
+        {
+            // Data
+            _letterData = data;
+            
+            // Set Component
+            SetId(_letterData.LetterId);
+            SetCollectionName(_letterData.LetterName);
+            SetSprite(_letterData.LetterSprite);
+        }
+
         private void InitializeCollection()
         {
-            canInteract = true;
-            _buttonUI.onClick.AddListener(ClickObject);
+            if (_letterData == null)
+            {
+                Debug.LogWarning("letterny null brok");
+                return;
+            }
+
+            _canInteract = true;
+            _defaultScaling = _rectTransform.localScale;
+            _buttonUI.onClick.AddListener(OnCollectionClicked);
         }
         
         // !-- Core Functionality
-        private void ClickObject()
+        private void OnCollectionClicked()
         {
-            if (!canInteract) return;
+            if (!_canInteract) return;
 
-            canInteract = false;
-            LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).
+            _canInteract = false;
+            StopAudio();
+            StartCoroutine(ClickFeedbackRoutine());
+        }
+
+        private IEnumerator ClickFeedbackRoutine()
+        {
+            var index = collectionId - 1;
+            var scrollSnap = _collectionManager.SimpleScrollSnap;
+            if (scrollSnap.CenteredPanel != index)
+            {
+                scrollSnap.GoToPanel(index);
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            LeanTween.scale(gameObject, targetScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
-                        _collectionAudioManager.PlayCollectionAudio(letterName);
-                    });
+                        _collectionAudioManager.PlayAudio(collectionId);
+                    });     
             
-            LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.5f).setDelay(1.5f).
+            LeanTween.scale(gameObject, _defaultScaling, 0.5f).setDelay(tweeningDuration).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
-                        canInteract = true;
+                        _canInteract = true;
                     });       
+        }
+
+        private void OnCloseCollection()
+        {
+            _canInteract = true;
+            
+            StopAudio();
+            LeanTween.cancel(gameObject);
+            StopCoroutine(ClickFeedbackRoutine());
+            _rectTransform.localScale = _defaultScaling;
+        }
+
+        // !-- Helper/Utilities
+        private void SetId(int letterId) => collectionId = letterId;
+
+        private void SetCollectionName(string letterName) => collectionName = letterName;
+
+        private void SetSprite(Sprite letterSprite)
+        {
+            outerImageUI.sprite = letterSprite;
+            fillImageUI.sprite = letterSprite;
         }
 
         private void StopAudio()
         {
             if (!_collectionAudioManager.IsAudioPlaying()) return;
-            _collectionAudioManager.StopCollectionAudio();
+            _collectionAudioManager.StopAudio();
         }
 
         #endregion

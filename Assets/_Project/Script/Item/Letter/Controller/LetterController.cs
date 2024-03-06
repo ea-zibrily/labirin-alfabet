@@ -2,12 +2,9 @@
 using UnityEngine;
 using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Data;
+using Alphabet.Data;
 
-using Random = UnityEngine.Random;
-using Unity.VisualScripting;
-
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterController : MonoBehaviour, ITakeable
     {
@@ -26,7 +23,9 @@ namespace LabirinKata.Item
             set => spawnId = value;
         }
 
-        public ObjectPool<LetterController> ObjectPool { get; set; }
+        // Pool
+        private ObjectPool<LetterController> _objectPool;
+        public ObjectPool<LetterController> ObjectPool {set => _objectPool = value; }
 
         [Header("Reference")]
         private SpriteRenderer _spriteRenderer;
@@ -47,24 +46,19 @@ namespace LabirinKata.Item
             LetterInterfaceManager = letter.GetComponent<LetterInterfaceManager>();
         }
         
-        private void Start()
-        {
-            InitializeLetter();
-        }
-        
         #endregion
         
         #region Labirin Kata Callbacks
         
         // !-- Initialization
-        public void InitializeData(LetterData data, int spawnNum)
+        public void InitializeLetterData(LetterData data, int spawnNum)
         {
+            // Data
             _letterData = data;
             spawnId = spawnNum;
-        }
-
-        private void InitializeLetter()
-        {
+            Debug.LogWarning($"initialize letter {_letterData.LetterName}");
+            
+            // Component
             _letterName = _letterData.LetterName;
             hasLetterTaken = _letterData.HasTaken;
             
@@ -80,12 +74,15 @@ namespace LabirinKata.Item
                 LetterManager.TakeLetterEvent(_letterData);
                 hasLetterTaken = true;
             }
-            LetterManager.AddAvailableSpawnPoint(transform);
+            LetterManager.AddSpawnPoint(transform);
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
+            gameObject.SetActive(false);
+        }
 
-            // Release obstacle back to the pool
-            Debug.LogWarning("take item");            
-            ObjectPool.Release(this);
+        public void ReleaseLetter()
+        {
+            // Release letter ke pool
+            _objectPool.Release(this);
         }
         
         #endregion

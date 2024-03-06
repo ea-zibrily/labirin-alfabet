@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     [AddComponentMenu("LabirinKata/Entities/Enemy/Trap")]
     public class Trap : EnemyBase

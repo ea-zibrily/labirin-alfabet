@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class CameraShakeController : MonoBehaviour
     {

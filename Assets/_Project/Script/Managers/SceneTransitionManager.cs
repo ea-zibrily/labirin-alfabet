@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using LabirinKata.Enum;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Enum;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     {

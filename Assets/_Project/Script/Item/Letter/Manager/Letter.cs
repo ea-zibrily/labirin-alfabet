@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     [Serializable]
     public struct LetterObject

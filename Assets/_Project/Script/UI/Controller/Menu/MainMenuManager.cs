@@ -1,10 +1,9 @@
 ﻿using System;
+using Alphabet.Collection;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Enum;
-using DanielLochner.Assets.SimpleScrollSnap;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class MainMenuManager : MonoBehaviour
     {
@@ -29,8 +28,8 @@ namespace LabirinKata.UI
         }
 
         #endregion
-
-        #region Labirin Kata Callbacks
+        
+        #region Methods
 
         // !-- Initialization
         private void InitializeButton()

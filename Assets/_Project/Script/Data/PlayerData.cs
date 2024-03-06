@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LabirinKata.Data
+namespace Alphabet.Data
 {
     [CreateAssetMenu(fileName = "NewPlayerData", menuName = "ScriptableObject/Entities/New Player Data", order = 0)]
     public class PlayerData : ScriptableObject
@@ -14,9 +14,10 @@ namespace LabirinKata.Data
 
         [Header("Assets")]
         [SerializeField] private Sprite playerSprite;
-        [SerializeField] private Animator playerAnimator;
+        [SerializeField] private RuntimeAnimatorController  playerAnimatorController;
+
 
         public Sprite PlayerSprite => playerSprite;
-        public Animator PlayerAnimator => playerAnimator;
+        public RuntimeAnimatorController  PlayerAnimatorController => playerAnimatorController;
     }
 }

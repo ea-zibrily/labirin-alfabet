@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
     [AddComponentMenu("LabirinKata/Entities/Enemy/Wanderer")]
     public class Wanderer : EnemyBase

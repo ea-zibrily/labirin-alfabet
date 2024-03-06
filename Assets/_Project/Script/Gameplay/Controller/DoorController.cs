@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
-using LabirinKata.Stage;
-using LabirinKata.Entities.Player;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Stage;
+using Alphabet.Entities.Player;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class DoorController : MonoBehaviour
     {

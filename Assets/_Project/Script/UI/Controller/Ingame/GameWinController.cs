@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Enum;
-using LabirinKata.Managers;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class GameWinController : GameUIBase
     {
@@ -14,7 +14,7 @@ namespace LabirinKata.UI
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
         // !-- Initialization
         protected override void InitializeOnStart()

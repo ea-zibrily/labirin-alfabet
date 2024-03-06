@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: Devan
   playerMoveSpeed: 3.5
-  playerSprite: {fileID: 0}
-  playerAnimator: {fileID: 0}
+  playerSprite: {fileID: 693769062, guid: 810c7ea28506a5e44aa45726098e7c6b, type: 3}
+  playerAnimatorController: {fileID: 9100000, guid: df190a81eeb40af4d8de7106651008a2, type: 2}

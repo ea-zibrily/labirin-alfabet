@@ -1,4 +1,4 @@
-﻿namespace LabirinKata.Enum
+﻿namespace Alphabet.Enum
 {
     public enum BuffType
     {

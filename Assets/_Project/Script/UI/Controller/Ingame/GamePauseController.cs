@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace LabirinKata.UI
+namespace Alphabet.UI
 {
     public class GamePauseController : GameUIBase
     {
@@ -16,7 +16,7 @@ namespace LabirinKata.UI
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         protected override void InitializeOnAwake()

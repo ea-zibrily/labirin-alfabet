@@ -2,16 +2,16 @@
 using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
-using LabirinKata.Item;
-using LabirinKata.Stage;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Item;
+using Alphabet.Stage;
+using Alphabet.Entities.Enemy;
+using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
-using LabirinKata.Entities.Enemy;
 
-namespace LabirinKata.Entities.Player
+namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Labirin Kata/Entities/Player/Player Manager")]
+    [AddComponentMenu("Alphabet/Entities/Player/Player Manager")]
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
@@ -50,6 +50,8 @@ namespace LabirinKata.Entities.Player
         
         [Header("Objective")] 
         [SerializeField] private LetterObject[] letterObjects;
+        private int _currentStageIndex;
+        private int _currentLetterAmount;
         
         [Header("Reference")] 
         private GameObject _playerObject;
@@ -84,10 +86,15 @@ namespace LabirinKata.Entities.Player
            InitializeHealth();
            InitializeLetterObject();
         }
+
+        private void Update()
+        {
+           StageDataUpdater();
+        }
         
         #endregion
         
-        #region Health Callbacks
+        #region Health Methods
         
         // !-- Initialization
         private void InitializeHealth()
@@ -175,7 +182,7 @@ namespace LabirinKata.Entities.Player
         
         #endregion
         
-        #region Objective Callbacks
+        #region Objective Methods
         
         // !-- Initialization
         private void InitializeLetterObject()
@@ -190,22 +197,32 @@ namespace LabirinKata.Entities.Player
         // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
-            var currentStageIndex = StageManager.Instance.CurrentStageIndex;
-            letterObjects[currentStageIndex].LetterObjects.Add(letter);
+            var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
+            letterCollects.Add(letter);
+
+            if (letterCollects.Count < _currentLetterAmount) return;
+            foreach (var collect in letterCollects)
+            {
+                collect.GetComponent<LetterController>().ReleaseLetter();  
+            }
         }
         
         private void LostLetter()
         {
-            var stageIndex = StageManager.Instance.CurrentStageIndex;
-            var letterCollects = letterObjects[stageIndex].LetterObjects;
-            var letterAmount = StageManager.Instance.LetterManager.LetterSpawns[stageIndex].AmountOfLetter;
+            var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
 
-            if (letterCollects.Count < 1 || letterCollects.Count >= letterAmount) return;
-            
+            if (letterCollects.Count < 1 || letterCollects.Count >= _currentLetterAmount) return;
+
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
-            // letterCollects[randomLetter].transform.position = _playerObject.transform.position;
+            letterCollects[randomLetter].SetActive(true);
             letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
+        }
+
+        private void StageDataUpdater()
+        {
+            _currentStageIndex = StageManager.Instance.CurrentStageIndex;
+            _currentLetterAmount = StageManager.Instance.LetterManager.LetterSpawns[_currentStageIndex].AmountOfLetter;
         }
         
         #endregion

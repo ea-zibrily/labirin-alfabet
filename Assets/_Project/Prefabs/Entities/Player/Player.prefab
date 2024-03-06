@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf2a30509439249991fe5ae71d685a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: cbc64a562238cf94db4afbc087545420, type: 2}
+  playerData: {fileID: 11400000, guid: c6cbd49135c2e3a45a56f21f4a32845b, type: 2}
   currentMoveSpeed: 0
   movementDirection: {x: 0, y: 0}
 --- !u!114 &3098905481050578534
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8408c630c29bc4ea12535124c4198e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nerfedSpeedMultiplier: 1.5
+  nerfedSpeedMultiplier: 1
   pickAreaTransform: {fileID: 7807138492438561508}
   pickAreaRadius: 0.7
   itemLayerMask:
@@ -164,7 +164,7 @@ MonoBehaviour:
   throwRange: 1.5
   throwDuration: 0.04
   throwDelay: 20
-  pushSpeed: 6
+  pushSpeed: 5.5
   pushDelay: 0.2
   interactButtonUI: {fileID: 0}
 --- !u!1 &1935479398348759522
@@ -308,7 +308,7 @@ Animator:
   m_GameObject: {fileID: 3105554579227310161}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 71acbe9c88c2da44682161b0fe1f3da0, type: 2}
+  m_Controller: {fileID: 9100000, guid: df190a81eeb40af4d8de7106651008a2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

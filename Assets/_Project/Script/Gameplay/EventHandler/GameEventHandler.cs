@@ -1,4 +1,4 @@
-﻿namespace LabirinKata.Gameplay.EventHandler
+﻿namespace Alphabet.Gameplay.EventHandler
 {
     public static class GameEventHandler
     {

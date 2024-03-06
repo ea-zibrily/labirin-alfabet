@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 using Tsukuyomi.Utilities;
 using UnityEngine.Serialization;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class AudioManager : MonoBehaviour
     {

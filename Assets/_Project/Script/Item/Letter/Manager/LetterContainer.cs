@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using LabirinKata.Data;
+using Alphabet.Data;
 using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterContainer : MonoBehaviour
     {

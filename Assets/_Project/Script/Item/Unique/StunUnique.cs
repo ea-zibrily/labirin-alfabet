@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using LabirinKata.Entities.Enemy;
-using LabirinKata.Entities.Player;
+using Alphabet.Entities.Enemy;
+using Alphabet.Entities.Player;
 using UnityEngine;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class StunUnique : MonoBehaviour
     {

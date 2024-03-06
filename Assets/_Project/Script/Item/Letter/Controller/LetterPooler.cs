@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using LabirinKata.Data;
+using Alphabet.Data;
 using UnityEngine.Pool;
-using LabirinKata.Stage;
+using Alphabet.Stage;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Item
+namespace Alphabet.Item
 {
     public class LetterPooler : MonoBehaviour
     {
@@ -33,18 +33,12 @@ namespace LabirinKata.Item
         public List<Transform> AvailableSpawnPoints { get; private set; }
 
         [Header("Reference")]
-        private LetterManager _letterManager;
+        [SerializeField] private LetterContainer letterContainer;
 
         #endregion
 
         #region MonoBehaviour Callbacks
-
-        private void Awake()
-        {
-            var letterParent = LetterHelper.GetLetterManagerObject();
-            _letterManager = letterParent.GetComponent<LetterManager>();
-        }
-
+        
         private void Start()
         {
             InitializePooler();
@@ -90,21 +84,17 @@ namespace LabirinKata.Item
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
                      OnDestroyPooledObject, collectionCheck: true, defaultPoolCapacity, maxPoolSize);
 
+            _letterDatas = new List<LetterData>();
             AvailableLetterDatas = new List<LetterData>();
             AvailableSpawnPoints = new List<Transform>();
         }
-        
-        public void InitializeSpawnDatas(LetterSpawns[] spawns, List<LetterData> datas)
+
+        // TODO: Panggil method ini dulu waktu akan generate letter
+        private void InitializeGenerator(LetterSpawns[] spawns, List<LetterData> datas)
         {
             _letterSpawns = spawns;
             _letterDatas = datas;
-        }
 
-        /// <summary>
-        /// Panggil method ini terlebih dahulu saat akan melakukan generate letter
-        /// </summary>
-        public void InitializeGenerator()
-        {
             if (AvailableLetterDatas.Count > 0 || AvailableSpawnPoints.Count > 0)
             {
                 AvailableLetterDatas.Clear();
@@ -116,7 +106,13 @@ namespace LabirinKata.Item
         }
         
         // !-- Core Functionality
-        public void GenerateLetter()
+        public void CallLetterPool(LetterSpawns[] spawns, List<LetterData> datas)
+        {
+            InitializeGenerator(spawns, datas);
+            GenerateLetter();
+        }
+
+        private void GenerateLetter()
         {
             if (_letterDatas == null)
             {
@@ -124,6 +120,7 @@ namespace LabirinKata.Item
                 return;
             }
             
+            Debug.Log($"get letter data {_letterDatas.Count}");
             var latestLetterIndices = new HashSet<int>();
             var latestPointIndices = new HashSet<int>();
             
@@ -136,21 +133,19 @@ namespace LabirinKata.Item
                 do
                 {
                     randomLetterId = Random.Range(1, _letterDatas.Count);
-                    randomPointIndex = Random.Range(0,spawnPoints.Length - 1);
+                    randomPointIndex = Random.Range(0, spawnPoints.Length - 1);
                 } while (latestLetterIndices.Contains(randomLetterId) || latestPointIndices.Contains(randomPointIndex));
                 
                 latestLetterIndices.Add(randomLetterId);
                 latestPointIndices.Add(randomPointIndex);
 
-                // TODO: Ubah jadi "Get" Pooler
                 var letter = _letterPool.Get();
-                var letterData = _letterManager.LetterContainer.GetLetterDataById(randomLetterId);
+                var letterData = letterContainer.GetLetterDataById(randomLetterId);
 
-                letter.InitializeData(letterData, i + 1);
+                letter.InitializeLetterData(letterData, i + 1);
                 letter.transform.position = spawnPoints[randomPointIndex].position;
                 
                 AvailableLetterDatas.Add(letterData);
-                Debug.Log($"call pooler {letterData}");
             }
             
             SetAvailableSpawnPoint(latestPointIndices);      
