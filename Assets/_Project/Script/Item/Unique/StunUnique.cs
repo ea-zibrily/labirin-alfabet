@@ -68,12 +68,14 @@ namespace Alphabet.Item
         
         private IEnumerator HitEnemyRoutine(EnemyBase enemy)
         {
+            var enemyManager = enemy.GetComponent<EnemyManager>();
+            enemyManager.EnemyStunnedEvent(stunDuration);
             enemy.StopMovement();
 
             yield return HitOtherRoutine(enemy.gameObject);
             enemy.StartMovement();
         }
-
+        
         private IEnumerator HitOtherRoutine(GameObject otherObject)
         {
             _isItemThrowed = false;
