@@ -21,6 +21,16 @@ namespace Alphabet.UI
         // Const Variable
         private const int MAX_PLAYER_COUNT = 2;
 
+        [Header("Button Tweening")]
+        [SerializeField] private float startTweenDuration;
+        [SerializeField] private float endTweenDuration;
+        [Range(0f, 1.5f)] [SerializeField] private float scalingMultiplier;
+
+        private Vector3 ButtonDefaultScale 
+        {
+            get => playerButtonUI[0].GetComponent<RectTransform>().localScale;
+        }
+
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
 
@@ -35,7 +45,7 @@ namespace Alphabet.UI
             base.InitialiazeOnStart();
 
             InitializeButton();
-            highlightObjectUI.SetActive(false);
+            SetDefaultCharacter();
         }
 
         private void InitializeButton()
@@ -51,7 +61,7 @@ namespace Alphabet.UI
             {
                 Button btn = playerButtonUI[i];
                 _selectButtonNums[btn] = i;
-                btn.onClick.AddListener(() => OnSelectPlayer(btn));
+                btn.onClick.AddListener(() => OnSelectCharacter(btn));
             }
         }
 
@@ -67,12 +77,12 @@ namespace Alphabet.UI
         {
             base.OnClickClose();
             selectCharacterPanelUI.SetActive(false);
-            highlightObjectUI.SetActive(false);
-            _characterIndex = 0;
+            SetDefaultCharacter();
         }
 
-        private void OnSelectPlayer(Button btn)
+        private void OnSelectCharacter(Button btn)
         {
+            TweenScaledButton(btn.gameObject);
             _characterIndex = _selectButtonNums[btn];
 
             if (!highlightObjectUI.activeSelf)
@@ -82,6 +92,21 @@ namespace Alphabet.UI
             highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
         }
 
+        private void SetDefaultCharacter()
+        {
+            _characterIndex = 0;
+            highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
+        }
+
+        // !-- Helper/Utilities
+        private void TweenScaledButton(GameObject target)
+        {
+            var incrementVector = new Vector3(scalingMultiplier, scalingMultiplier, scalingMultiplier);
+            var targetScale = ButtonDefaultScale + incrementVector;
+            
+            LeanTween.scale(target, targetScale, startTweenDuration).setEase(LeanTweenType.easeOutBack);
+            LeanTween.scale(target, ButtonDefaultScale, endTweenDuration).setDelay(startTweenDuration).setEase(LeanTweenType.easeOutBack);
+        }
 
         #endregion
     }
