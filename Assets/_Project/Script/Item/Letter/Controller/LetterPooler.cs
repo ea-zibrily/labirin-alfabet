@@ -81,10 +81,10 @@ namespace Alphabet.Item
         // !-- Initialization
         private void InitializePooler()
         {
+            _letterDatas = new List<LetterData>();
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
                      OnDestroyPooledObject, collectionCheck: true, defaultPoolCapacity, maxPoolSize);
 
-            _letterDatas = new List<LetterData>();
             AvailableLetterDatas = new List<LetterData>();
             AvailableSpawnPoints = new List<Transform>();
         }

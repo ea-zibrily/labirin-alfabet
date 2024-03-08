@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Alphabet.Entities.Player;
 using UnityEngine;
 
 namespace Alphabet.Item
@@ -44,11 +42,9 @@ namespace Alphabet.Item
             StartCoroutine(LerpToRandomPointRoutine(randomPoint, randomPointIndex));
         }
 
-        // TODO: Coba pake moveDelay = 1, lerpDur= 0.5f
         private IEnumerator LerpToRandomPointRoutine(Vector3 randomPoint, int randomPointIndex)
         {
             var elapsedTime = 0f;
-
             while (elapsedTime < moveDelay)
             {
                 yield return null;

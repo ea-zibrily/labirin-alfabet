@@ -17,7 +17,7 @@ namespace Alphabet.UI
 
         private Dictionary<Button, int> _selectButtonNums;
         private int _characterIndex;
-
+        
         // Const Variable
         private const int MAX_PLAYER_COUNT = 2;
 
@@ -30,7 +30,7 @@ namespace Alphabet.UI
         {
             get => playerButtonUI[0].GetComponent<RectTransform>().localScale;
         }
-
+        
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
 
@@ -103,7 +103,7 @@ namespace Alphabet.UI
         {
             var incrementVector = new Vector3(scalingMultiplier, scalingMultiplier, scalingMultiplier);
             var targetScale = ButtonDefaultScale + incrementVector;
-            
+
             LeanTween.scale(target, targetScale, startTweenDuration).setEase(LeanTweenType.easeOutBack);
             LeanTween.scale(target, ButtonDefaultScale, endTweenDuration).setDelay(startTweenDuration).setEase(LeanTweenType.easeOutBack);
         }
