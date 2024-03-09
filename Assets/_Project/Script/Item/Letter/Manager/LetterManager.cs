@@ -100,7 +100,7 @@ namespace Alphabet.Item
         public void SpawnLetter()
         {
             var letterDatas = GetLetterDatas();
-
+            
             _letterPooler.CallLetterPool(LetterSpawns, letterDatas);
             _letterUIManager.SetLetterInterface(_letterPooler.AvailableLetterDatas);
             

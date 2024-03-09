@@ -16,13 +16,11 @@ namespace Alphabet.Entities.Player
     public class PlayerManager : MonoBehaviour
     {
         #region Enum
-
         public enum TagFeedback
         {
             Enemy,
             Item
         }
-        
         #endregion
 
         #region Fields & Properties
@@ -45,7 +43,6 @@ namespace Alphabet.Entities.Player
         [Header("Invulnerability Frame")] 
         [SerializeField] private int flashNumber;
         [SerializeField] private float flashDuration;
-        [SerializeField] private Color defaultColor;
         [SerializeField] private Color flashColor;
         
         [Header("Objective")] 
@@ -57,6 +54,7 @@ namespace Alphabet.Entities.Player
         private GameObject _playerObject;
         private PlayerController _playerController;
         private PlayerKnockBack _playerKnockBack;
+        private PlayerFlash _playerFlash;
 
         #endregion
         
@@ -67,6 +65,9 @@ namespace Alphabet.Entities.Player
             _playerObject = transform.parent.gameObject;
             _playerController = _playerObject.GetComponent<PlayerController>();
             _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
+
+            var playerSprite = _playerController.GetComponentInChildren<SpriteRenderer>();
+            _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSprite);
         }
 
         private void OnEnable()
@@ -145,26 +146,7 @@ namespace Alphabet.Entities.Player
             
             _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
         }
-        
-        private IEnumerator IframeRoutine()
-        {
-            var tempFlashNum = 0;
-            var playerSpriteRenderer = _playerObject.GetComponentInChildren<SpriteRenderer>();
-            Physics2D.IgnoreLayerCollision(6, 7, true);
-            
-            while (tempFlashNum < flashNumber)
-            {
-                playerSpriteRenderer.color  = flashColor;
-                yield return new WaitForSeconds(flashDuration);
-                
-                playerSpriteRenderer.color = defaultColor;
-                yield return new WaitForSeconds(flashDuration);
-                tempFlashNum++;
-            }
-            
-            Physics2D.IgnoreLayerCollision(6, 7, false);
-        }
-        
+
         private void CanceledBuff()
         {
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
@@ -191,7 +173,6 @@ namespace Alphabet.Entities.Player
             
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
-            Debug.LogWarning(letterObjects.Length);
         }
         
         // !-- Core Functionality
@@ -229,17 +210,23 @@ namespace Alphabet.Entities.Player
 
         #region Utilities
 
+        private int GetMaskValue(LayerMask mask)
+        {
+           return 1 << mask;
+        }
+
         private void TriggeredFeedback(TagFeedback tag, GameObject triggerObject)
         {
             switch (tag)
             {
                 case TagFeedback.Enemy:
-                    _playerController.StopMovement();
                     DecreaseHealth();
+                    _playerController.StopMovement();
+
                     CameraEventHandler.CameraShakeEvent();
                     KnockedBack(triggerObject);
-                    StartCoroutine(IframeRoutine());
-
+                    StartCoroutine(_playerFlash.FlashWithTimeRoutine());
+                    
                     CanceledBuff();
                     LostLetter();
                     break;
