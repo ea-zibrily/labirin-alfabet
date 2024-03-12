@@ -56,7 +56,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 80b920a5a53303343a90c5fe0bbb2fd5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -161,11 +161,8 @@ MonoBehaviour:
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  throwRange: 1.5
-  throwDuration: 0.04
-  throwDelay: 20
-  pushSpeed: 8
-  pushDelay: 0.35
+  throwDelayDuration: 0.15
+  throwSpeed: 7
   interactButtonUI: {fileID: 0}
 --- !u!1 &1935479398348759522
 GameObject:
@@ -415,8 +412,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.3968922}
-  m_Size: {x: 0.5, y: 0.80009925}
+  m_Offset: {x: -0.00886178, y: 0.43613738}
+  m_Size: {x: 0.5784906, y: 0.73173666}
   m_Direction: 0
 --- !u!114 &8266626133896832505
 MonoBehaviour:
@@ -438,7 +435,6 @@ MonoBehaviour:
   - {fileID: 0}
   flashNumber: 4
   flashDuration: 0.07
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   flashColor: {r: 1, g: 0, b: 0, a: 0.6}
   letterObjects:
   - LetterObjects: []

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using Alphabet.Data;
 using Alphabet.DesignPattern.Singleton;
-using UnityEngine;
 
 namespace Alphabet.Database
 {

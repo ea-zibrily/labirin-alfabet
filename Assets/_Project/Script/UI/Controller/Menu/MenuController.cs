@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Alphabet.UI
 {
-    public class MainMenuManager : MonoBehaviour
+    public class MenuController : MonoBehaviour
     {
         #region Fields & Properties
 

@@ -210,11 +210,6 @@ namespace Alphabet.Entities.Player
 
         #region Utilities
 
-        private int GetMaskValue(LayerMask mask)
-        {
-           return 1 << mask;
-        }
-
         private void TriggeredFeedback(TagFeedback tag, GameObject triggerObject)
         {
             switch (tag)
@@ -222,7 +217,7 @@ namespace Alphabet.Entities.Player
                 case TagFeedback.Enemy:
                     DecreaseHealth();
                     _playerController.StopMovement();
-
+                    
                     CameraEventHandler.CameraShakeEvent();
                     KnockedBack(triggerObject);
                     StartCoroutine(_playerFlash.FlashWithTimeRoutine());

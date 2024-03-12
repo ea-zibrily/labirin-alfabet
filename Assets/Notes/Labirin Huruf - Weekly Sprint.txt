@@ -26,3 +26,16 @@ jika objective selesai: Huruf tidak keluar
 note: bisa pake dictionary/list buat add remove
 - Letter controller bisa nambah SpawnId sama LetterId
 SpawnId untuk indexing ui, LetterId untuk load collectionmenu
+
+12/03/2024
+- Mekanik PlayerThrow langsung dilembar aja, gaperlu ditaruh didepan
+- Optimisasi beberapa tilemap, karena ada layer tile tumpang dan flickering
+- Bug player nyangkut di tembok 
+(case: udah kepental, trs jalan ke tembok eh nyangkut)
+- Objek throw double
+case: waktu udah dilempar, bekas objeknya bisa diambil lagi, harusnya gabisa
+mungkin bisa cek collidernya
+- Bug tiap kali kehit enemy sepertinya pasti ada bug
+mungkin nyangkut or something
+- Menu dan ingame asset utiwi dianimate mas arikur
+- Throw objek bisa dibuat muter dengan rotasi, manual rotate lewat script tidak dengan animasi

@@ -1,10 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Item;
-using Unity.VisualScripting;
-using System;
 
 namespace Alphabet.Entities.Player
 {
@@ -30,13 +29,8 @@ namespace Alphabet.Entities.Player
         public Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
-        [SerializeField] private float throwRange;
-        [SerializeField] private float throwDuration;
-        [SerializeField] private float throwDelay;
-
-        [Header("Push")]
-        [SerializeField] private float pushSpeed;
-        [SerializeField] private float pushDelay;
+        [SerializeField] private float throwDelayDuration;
+        [SerializeField] private float throwSpeed;
         
         [Header("UI")]
         [SerializeField] private Button interactButtonUI;
@@ -117,10 +111,8 @@ namespace Alphabet.Entities.Player
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
             OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
 
-            if (_pickItemObject.TryGetComponent(out StunUnique stunItem))
-            {
-                stunItem.GetComponent<Rigidbody2D>().simulated = false;
-            }
+            if (!_pickItemObject.TryGetComponent(out StunUnique stunItem)) return;
+            stunItem.GetComponent<Rigidbody2D>().simulated = false;
         }
 
         private void ThrowItem()
@@ -131,25 +123,13 @@ namespace Alphabet.Entities.Player
 
         private IEnumerator ThrowItemRoutine(GameObject item)
         {
-            var elapsedTime = 0f;
-            var startPoint = item.transform.position;
-            var endPoint = transform.position + PickDirection * throwRange;
-
-            // TODO: Drop logic to ref item script here!
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) yield break;
-            
+
             _playerController.StopMovement();
+            yield return new WaitForSeconds(throwDelayDuration);
 
-            while (elapsedTime < throwDelay)
-            {   
-                item.transform.position = Vector3.Lerp(startPoint, endPoint, elapsedTime * throwDuration);
-                elapsedTime++;
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(pushDelay);
             stunItem.GetComponent<Rigidbody2D>().simulated = true;
-            stunItem.ThrowItem(PickDirection, pushSpeed);
+            stunItem.ThrowItem(PickDirection, throwSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
             OnPlayerInteract?.Invoke(0f);

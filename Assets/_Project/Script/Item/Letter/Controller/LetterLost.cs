@@ -55,7 +55,6 @@ namespace Alphabet.Item
 
             transform.position = randomPoint;
             _letterController.LetterManager.RemoveSpawnPoint(randomPointIndex);
-            Debug.LogWarning($"remove available point index {randomPointIndex}");
         }
 
         #endregion

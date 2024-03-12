@@ -192,5 +192,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minRange: -3
   maxRange: 3
-  moveDelay: 0.6
+  moveDelay: 0.9
   lerpDuration: 12

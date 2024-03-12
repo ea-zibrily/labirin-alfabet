@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Alphabet.Entities.Enemy;
-using Alphabet.Entities.Player;
 using UnityEngine;
+using Alphabet.Entities.Enemy;
 
 namespace Alphabet.Item
 {
@@ -12,6 +11,7 @@ namespace Alphabet.Item
         
         [Header("Stun Unique")]
         [SerializeField] private float stunDuration;
+        [SerializeField] private float rotateEffectSpeed;
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private GameObject effectParent;
 
@@ -62,6 +62,7 @@ namespace Alphabet.Item
             while (!IsCollideWithAnother)
             {
                 transform.Translate(speed * Time.deltaTime * direction);
+                _spriteRenderer.transform.Rotate(Vector3.forward * -rotateEffectSpeed);
                 yield return null;
             }
         }
