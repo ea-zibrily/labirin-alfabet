@@ -26,6 +26,7 @@ namespace Alphabet.Entities.Enemy
 
         [Header("Reference")]
         private EnemyBase _enemyBase;
+        private CapsuleCollider2D _capsulCollider;
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace Alphabet.Entities.Enemy
         private void Awake()
         {
             _enemyBase = GetComponent<EnemyBase>();
+            _capsulCollider = GetComponent<CapsuleCollider2D>();
         }
 
         private void OnEnable()

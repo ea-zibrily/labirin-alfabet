@@ -64,6 +64,8 @@ namespace Alphabet.Entities.Player
                 var pickAreaCollder = Physics2D.OverlapCircle(transform.position + PickDirection, pickAreaRadius, itemLayerMask);
                 if (pickAreaCollder && pickAreaCollder.CompareTag("Pick"))
                 {
+                    if (pickAreaCollder.GetComponent<StunUnique>().IsItemThrowed) return;
+                    
                     _pickItemObject = pickAreaCollder.gameObject;
                     interactButtonUI.gameObject.SetActive(true);
                 }

@@ -126,7 +126,7 @@ namespace Alphabet.Item
                 
                 latestLetterIndices.Add(randomLetterId);
                 latestPointIndices.Add(randomPointIndex);
-
+                
                 var letter = _letterPool.Get();
                 var letterData = letterContainer.GetLetterDataById(randomLetterId);
 

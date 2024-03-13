@@ -50,8 +50,8 @@ namespace Alphabet.Entities.Player
         private int _currentStageIndex;
         private int _currentLetterAmount;
         
-        [Header("Reference")] 
-        private GameObject _playerObject;
+        [Header("Reference")]
+        private CapsuleCollider2D _capsuleCollider;
         private PlayerController _playerController;
         private PlayerKnockBack _playerKnockBack;
         private PlayerFlash _playerFlash;
@@ -62,9 +62,11 @@ namespace Alphabet.Entities.Player
         
         private void Awake()
         {
-            _playerObject = transform.parent.gameObject;
-            _playerController = _playerObject.GetComponent<PlayerController>();
-            _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
+            _capsuleCollider = GetComponent<CapsuleCollider2D>();
+
+            var playerObject = transform.parent.gameObject;
+            _playerController = playerObject.GetComponent<PlayerController>();
+            _playerKnockBack = playerObject.GetComponent<PlayerKnockBack>();
 
             var playerSprite = _playerController.GetComponentInChildren<SpriteRenderer>();
             _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSprite);
@@ -72,6 +74,7 @@ namespace Alphabet.Entities.Player
 
         private void OnEnable()
         {
+            // Camera
             CameraEventHandler.OnCameraShiftIn += _playerController.StopMovement;
             CameraEventHandler.OnCameraShiftOut += _playerController.StartMovement;
         }
@@ -141,7 +144,7 @@ namespace Alphabet.Entities.Player
         private void KnockedBack(GameObject triggeredObject)
         {
             var playerDirection = _playerController.PlayerInputHandler.Direction;
-            var enemyDirection = _playerObject.transform.position - triggeredObject.transform.position;
+            var enemyDirection = _playerController.transform.position - triggeredObject.transform.position;
             enemyDirection.Normalize();
             
             _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
@@ -247,10 +250,12 @@ namespace Alphabet.Entities.Player
             {
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
                
+               Debug.Log("acumalaka enemy");
                TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
             }
             else if (other.CompareTag("Item"))
             {
+                Debug.Log("acumalaka item");
                 TriggeredFeedback(TagFeedback.Item, other.gameObject);
             }
         }

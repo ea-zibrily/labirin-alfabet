@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockBackTime: 0.2
-  hitDirectionForce: 10.7
+  hitDirectionForce: 9.35
   constForce: 3
   inputForce: 7.5
 --- !u!114 &2642433346054654677
