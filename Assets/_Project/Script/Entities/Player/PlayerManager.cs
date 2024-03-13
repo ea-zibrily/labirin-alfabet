@@ -241,7 +241,7 @@ namespace Alphabet.Entities.Player
         #endregion
         
         #region Collider Callbacks
-        
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_isPlayerDead || !_playerController.CanMove) return;
@@ -250,12 +250,10 @@ namespace Alphabet.Entities.Player
             {
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
                
-               Debug.Log("acumalaka enemy");
                TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
             }
             else if (other.CompareTag("Item"))
             {
-                Debug.Log("acumalaka item");
                 TriggeredFeedback(TagFeedback.Item, other.gameObject);
             }
         }
