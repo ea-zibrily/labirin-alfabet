@@ -16,13 +16,11 @@ namespace Alphabet.Entities.Player
     public class PlayerManager : MonoBehaviour
     {
         #region Enum
-
         public enum TagFeedback
         {
             Enemy,
             Item
         }
-        
         #endregion
 
         #region Fields & Properties
@@ -45,7 +43,6 @@ namespace Alphabet.Entities.Player
         [Header("Invulnerability Frame")] 
         [SerializeField] private int flashNumber;
         [SerializeField] private float flashDuration;
-        [SerializeField] private Color defaultColor;
         [SerializeField] private Color flashColor;
         
         [Header("Objective")] 
@@ -53,10 +50,11 @@ namespace Alphabet.Entities.Player
         private int _currentStageIndex;
         private int _currentLetterAmount;
         
-        [Header("Reference")] 
-        private GameObject _playerObject;
+        [Header("Reference")]
+        private CapsuleCollider2D _capsuleCollider;
         private PlayerController _playerController;
         private PlayerKnockBack _playerKnockBack;
+        private PlayerFlash _playerFlash;
 
         #endregion
         
@@ -64,13 +62,19 @@ namespace Alphabet.Entities.Player
         
         private void Awake()
         {
-            _playerObject = transform.parent.gameObject;
-            _playerController = _playerObject.GetComponent<PlayerController>();
-            _playerKnockBack = _playerObject.GetComponent<PlayerKnockBack>();
+            _capsuleCollider = GetComponent<CapsuleCollider2D>();
+
+            var playerObject = transform.parent.gameObject;
+            _playerController = playerObject.GetComponent<PlayerController>();
+            _playerKnockBack = playerObject.GetComponent<PlayerKnockBack>();
+
+            var playerSprite = _playerController.GetComponentInChildren<SpriteRenderer>();
+            _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSprite);
         }
 
         private void OnEnable()
         {
+            // Camera
             CameraEventHandler.OnCameraShiftIn += _playerController.StopMovement;
             CameraEventHandler.OnCameraShiftOut += _playerController.StartMovement;
         }
@@ -140,31 +144,12 @@ namespace Alphabet.Entities.Player
         private void KnockedBack(GameObject triggeredObject)
         {
             var playerDirection = _playerController.PlayerInputHandler.Direction;
-            var enemyDirection = _playerObject.transform.position - triggeredObject.transform.position;
+            var enemyDirection = _playerController.transform.position - triggeredObject.transform.position;
             enemyDirection.Normalize();
             
             _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
         }
-        
-        private IEnumerator IframeRoutine()
-        {
-            var tempFlashNum = 0;
-            var playerSpriteRenderer = _playerObject.GetComponentInChildren<SpriteRenderer>();
-            Physics2D.IgnoreLayerCollision(6, 7, true);
-            
-            while (tempFlashNum < flashNumber)
-            {
-                playerSpriteRenderer.color  = flashColor;
-                yield return new WaitForSeconds(flashDuration);
-                
-                playerSpriteRenderer.color = defaultColor;
-                yield return new WaitForSeconds(flashDuration);
-                tempFlashNum++;
-            }
-            
-            Physics2D.IgnoreLayerCollision(6, 7, false);
-        }
-        
+
         private void CanceledBuff()
         {
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
@@ -191,7 +176,6 @@ namespace Alphabet.Entities.Player
             
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
-            Debug.LogWarning(letterObjects.Length);
         }
         
         // !-- Core Functionality
@@ -234,12 +218,13 @@ namespace Alphabet.Entities.Player
             switch (tag)
             {
                 case TagFeedback.Enemy:
-                    _playerController.StopMovement();
                     DecreaseHealth();
+                    _playerController.StopMovement();
+                    
                     CameraEventHandler.CameraShakeEvent();
                     KnockedBack(triggerObject);
-                    StartCoroutine(IframeRoutine());
-
+                    StartCoroutine(_playerFlash.FlashWithTimeRoutine());
+                    
                     CanceledBuff();
                     LostLetter();
                     break;
@@ -256,7 +241,7 @@ namespace Alphabet.Entities.Player
         #endregion
         
         #region Collider Callbacks
-        
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_isPlayerDead || !_playerController.CanMove) return;

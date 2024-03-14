@@ -46,6 +46,7 @@ namespace Alphabet.Entities.Player
             var tempConstForce = constForceDir * constForce;
             
             var elapsedTime = 0f;
+            _playerController.StopMovement();
             while (elapsedTime < knockBackTime)
             {
                 elapsedTime += Time.fixedDeltaTime;
@@ -58,7 +59,6 @@ namespace Alphabet.Entities.Player
                 _playerRb.velocity = combinedForce;
                 yield return new WaitForFixedUpdate();
             }
-            _playerController.StopMovement();
             _playerController.StartMovement();
         }
         

@@ -24,14 +24,14 @@ namespace Alphabet.Item
         private bool _isTimerStart;
         private bool _isSpeedUpComplete;
         
-        [Header("Buff Effect")]
+        [Header("Speed Effect")]
         [SerializeField] private float flashDuration;
-        [SerializeField] private Color defaultColor;
         [SerializeField] private Color flashColor;
         
         [Header("Reference")]
         private SpriteRenderer _playerSpriteRenderer;
         private PlayerPickThrow _playerPickThrow;
+        private PlayerFlash _playerFlash;
 
         #endregion
         
@@ -81,6 +81,7 @@ namespace Alphabet.Item
             base.InitializeOnAwake();
             _playerPickThrow = PlayerController.GetComponent<PlayerPickThrow>();
             _playerSpriteRenderer = PlayerController.GetComponentInChildren<SpriteRenderer>();
+            _playerFlash = new PlayerFlash(flashColor, flashDuration, _playerSpriteRenderer);
         }
 
         protected override void InitializeOnStart()
@@ -107,6 +108,7 @@ namespace Alphabet.Item
         {
             InitializeSpeed();
             base.ActivateBuff();
+            
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
             StartSpeedEffect();
@@ -152,24 +154,13 @@ namespace Alphabet.Item
 
         private void StartSpeedEffect()
         {
-            StartCoroutine(StartSpeedEffectRoutine());
+            StartCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
         }
 
         private void StopSpeedEffect()
         {
-            _playerSpriteRenderer.color = defaultColor;
-        }
-        
-        private IEnumerator StartSpeedEffectRoutine()
-        {
-            while (IsBuffActive)
-            {
-                yield return new WaitForSeconds(flashDuration);
-                _playerSpriteRenderer.color  = flashColor;
-                
-                yield return new WaitForSeconds(flashDuration);
-                _playerSpriteRenderer.color = defaultColor;
-            }
+            StopCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
+            _playerSpriteRenderer.color = Color.white;
         }
 
         #endregion

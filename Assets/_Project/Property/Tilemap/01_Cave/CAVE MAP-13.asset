@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: CAVE MAP-13
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 7e5dee8f21af5844d8d25ad65cd3ffa4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08e22ae7ddb9cff4e964f7ee4ae0ba4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

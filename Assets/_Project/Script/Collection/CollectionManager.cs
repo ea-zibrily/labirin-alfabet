@@ -86,8 +86,8 @@ namespace Alphabet.Collection
             var fillImage = collection.transform.GetChild(0).gameObject;
 
             collectionController.InitializeData(letterData);
-            // button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
-            // fillImage.SetActive(button.interactable);
+            button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
+            fillImage.SetActive(button.interactable);
         }
         
         // !-- Core Functionality

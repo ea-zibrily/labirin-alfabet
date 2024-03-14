@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 189111083180471092}
   - component: {fileID: 3475172425226459221}
-  - component: {fileID: 7990699013977879185}
   m_Layer: 0
   m_Name: Rocky_01
   m_TagString: Untagged
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1770701309
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 0e2fbf8eb4126024ea3da6646301dd4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5f098399ecc2b14e80a72fe09e4d588, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,78 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &7990699013977879185
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369774139662823229}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.6086957, y: 2.6086957}
-    newSize: {x: 2.6086957, y: 2.6086957}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.21841864, y: -0.26719528}
-      - {x: 0.45324633, y: -0.19356477}
-      - {x: 0.6187466, y: -0.27397072}
-      - {x: 0.643646, y: -0.40715778}
-      - {x: 0.7990935, y: -0.22967952}
-      - {x: 0.90717506, y: -0.22254312}
-      - {x: 0.9123461, y: 0.16071227}
-      - {x: 0.9790461, y: -0.22298956}
-      - {x: 1.1020252, y: -0.17686918}
-      - {x: 1.1569873, y: -0.11165184}
-      - {x: 1.1086956, y: 0.17391305}
-      - {x: 0.7802804, y: 0.29736307}
-      - {x: 0.6304348, y: 0.3478261}
-      - {x: 0.43044007, y: 0.327186}
-      - {x: 0.3139747, y: 0.5484488}
-      - {x: -0.04347826, y: 0.50006604}
-      - {x: -0.21902913, y: 0.5229593}
-      - {x: -0.2680181, y: 0.35854802}
-      - {x: -0.49550062, y: 0.36522275}
-      - {x: -0.6304348, y: 0.30434784}
-      - {x: -0.81428945, y: 0.30466172}
-      - {x: -0.96879065, y: -0.09425524}
-      - {x: -0.8187953, y: -0.15191332}
-      - {x: -0.8847904, y: -0.37220752}
-      - {x: -0.7461977, y: -0.5453215}
-      - {x: -0.45615852, y: -0.24944395}
-      - {x: -0.36626875, y: -0.38174868}
-      - {x: -0.20685953, y: -0.5155099}
-      - {x: -0.097530305, y: -0.5633204}
-      - {x: 0.27221978, y: -0.72512007}
-  m_UseDelaunayMesh: 0

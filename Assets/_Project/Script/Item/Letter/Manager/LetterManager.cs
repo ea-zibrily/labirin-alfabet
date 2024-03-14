@@ -56,7 +56,8 @@ namespace Alphabet.Item
         {
             InitializeLetterData();
             InitializeLetterDatas();
-
+            InitializePools();
+            
             SpawnLetter();
         }
         
@@ -95,14 +96,20 @@ namespace Alphabet.Item
                 _lockedLetterDatas.Add(letter);
             }
         }
+
+        private void InitializePools()
+        {
+            var datas = GetLetterDatas();
+            _letterPooler.InitializePoolData(datas);
+        }
         
         // !-- Core Functionality
         public void SpawnLetter()
         {
             var letterDatas = GetLetterDatas();
-
-            _letterPooler.CallLetterPool(LetterSpawns, letterDatas);
-            _letterUIManager.SetLetterInterface(_letterPooler.AvailableLetterDatas);
+            
+            _letterPooler.CallLetterPool(LetterSpawns);
+            _letterUIManager.SetLetterInterface(_letterPooler.SpawnedLetterDatas);
             
             AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
         }

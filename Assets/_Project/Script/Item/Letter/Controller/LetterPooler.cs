@@ -21,15 +21,12 @@ namespace Alphabet.Item
         [SerializeField] private int defaultPoolCapacity;
         [SerializeField] private int maxPoolSize;
 
-        private ObjectPool<LetterController> _letterPool;
-
         [Header("Data")]
-        private List<LetterData> _letterDatas;
-        private LetterSpawns[] _letterSpawns;
         private int _stageIndex;
-        private int _letterGenerateCount;
+        private List<LetterData> _letterDatas;
+        private ObjectPool<LetterController> _letterPool;
         
-        public List<LetterData> AvailableLetterDatas { get; private set; }
+        public List<LetterData> SpawnedLetterDatas { get; private set; }
         public List<Transform> AvailableSpawnPoints { get; private set; }
 
         [Header("Reference")]
@@ -83,79 +80,77 @@ namespace Alphabet.Item
         {
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
                      OnDestroyPooledObject, collectionCheck: true, defaultPoolCapacity, maxPoolSize);
-
-            _letterDatas = new List<LetterData>();
-            AvailableLetterDatas = new List<LetterData>();
+            
+            SpawnedLetterDatas = new List<LetterData>();
             AvailableSpawnPoints = new List<Transform>();
         }
 
-        // TODO: Panggil method ini dulu waktu akan generate letter
-        private void InitializeGenerator(LetterSpawns[] spawns, List<LetterData> datas)
+        public void InitializePoolData(List<LetterData> datas)
         {
-            _letterSpawns = spawns;
-            _letterDatas = datas;
-
-            if (AvailableLetterDatas.Count > 0 || AvailableSpawnPoints.Count > 0)
-            {
-                AvailableLetterDatas.Clear();
-                AvailableSpawnPoints.Clear();
-            }
-
-            _stageIndex = StageManager.Instance.CurrentStageIndex;
-            _letterGenerateCount = _letterSpawns[_stageIndex].AmountOfLetter;
+            _letterDatas = new List<LetterData>();
+            _letterDatas.AddRange(datas);
         }
         
         // !-- Core Functionality
-        public void CallLetterPool(LetterSpawns[] spawns, List<LetterData> datas)
+        public void CallLetterPool(LetterSpawns[] spawns)
         {
-            InitializeGenerator(spawns, datas);
-            GenerateLetter();
+            UpdatePoolData();
+            GenerateLetter(spawns);
         }
 
-        private void GenerateLetter()
+        // TODO: Panggil method ini dulu waktu akan generate letter
+        private void UpdatePoolData()
+        {
+            SpawnedLetterDatas.Clear();
+            AvailableSpawnPoints.Clear();
+            
+            _stageIndex = StageManager.Instance.CurrentStageIndex;
+        }
+
+        private void GenerateLetter(LetterSpawns[] spawns)
         {
             if (_letterDatas == null)
             {
-                Debug.LogError("objects null!");
+                Debug.LogError("letter data null!");
                 return;
             }
-            
-            Debug.Log($"get letter data {_letterDatas.Count}");
+
             var latestLetterIndices = new HashSet<int>();
             var latestPointIndices = new HashSet<int>();
+            var letterSpawns = spawns[_stageIndex];
             
-            for (var i = 0; i < _letterGenerateCount; i++)
+            for (var i = 0; i < letterSpawns.AmountOfLetter; i++)
             {
                 int randomLetterId;
                 int randomPointIndex;
-                var spawnPoints = _letterSpawns[_stageIndex].SpawnPointTransforms;
                 
                 do
                 {
                     randomLetterId = Random.Range(1, _letterDatas.Count);
-                    randomPointIndex = Random.Range(0, spawnPoints.Length - 1);
+                    randomPointIndex = Random.Range(0, letterSpawns.SpawnPointTransforms.Length - 1);
                 } while (latestLetterIndices.Contains(randomLetterId) || latestPointIndices.Contains(randomPointIndex));
                 
                 latestLetterIndices.Add(randomLetterId);
                 latestPointIndices.Add(randomPointIndex);
-
-                var letter = _letterPool.Get();
-                var letterData = letterContainer.GetLetterDataById(randomLetterId);
-
-                letter.InitializeLetterData(letterData, i + 1);
-                letter.transform.position = spawnPoints[randomPointIndex].position;
                 
-                AvailableLetterDatas.Add(letterData);
+                var letter = _letterPool.Get();
+                var letterData = letterContainer.GetLetterDataById(_letterDatas[randomLetterId].LetterId);
+                
+                letter.InitializeLetterData(letterData, i + 1);
+                letter.transform.position = letterSpawns.SpawnPointTransforms[randomPointIndex].position;
+                
+                SpawnedLetterDatas.Add(letterData);
+                _letterDatas.RemoveAt(randomLetterId);
             }
             
-            SetAvailableSpawnPoint(latestPointIndices);      
+            SetAvailableSpawnPoint(latestPointIndices, spawns);      
         }
         
         // !-- Helper/Utilities
-        private void SetAvailableSpawnPoint(HashSet<int> value)
+        private void SetAvailableSpawnPoint(HashSet<int> value, LetterSpawns[] spawns)
         {
             var removedPointIndex = value.ToList();
-            var spawnPoints = _letterSpawns[_stageIndex].SpawnPointTransforms;
+            var spawnPoints = spawns[_stageIndex].SpawnPointTransforms;
             
             for (int i = 0; i < spawnPoints.Length; i++)
             {

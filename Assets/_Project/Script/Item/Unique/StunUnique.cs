@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using Alphabet.Entities.Enemy;
 using Alphabet.Entities.Player;
-using UnityEngine;
 
 namespace Alphabet.Item
 {
@@ -12,11 +13,12 @@ namespace Alphabet.Item
         
         [Header("Stun Unique")]
         [SerializeField] private float stunDuration;
+        [SerializeField] private float rotateEffectSpeed;
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private GameObject effectParent;
 
-        private bool _isItemThrowed;
-        public bool IsCollideWithAnother { get; private set; }
+        private bool _isCollideWithAnother;
+        public bool IsItemThrowed { get; private set;}
 
         [Header("Reference")]
         private CapsuleCollider2D _capsuleCollider;
@@ -43,8 +45,8 @@ namespace Alphabet.Item
 
         private void InitializeStun()
         {
-            _isItemThrowed = false;
-            IsCollideWithAnother = false;
+            IsItemThrowed = false;
+            _isCollideWithAnother = false;
             _capsuleCollider.isTrigger = false;
         }
 
@@ -56,28 +58,33 @@ namespace Alphabet.Item
         
         private IEnumerator ThrowItemRoutine(Vector2 direction, float speed)
         {
-            _isItemThrowed = true;
+            IsItemThrowed = true;
             _capsuleCollider.isTrigger = true;
 
-            while (!IsCollideWithAnother)
+            while (!_isCollideWithAnother)
             {
                 transform.Translate(speed * Time.deltaTime * direction);
+                _spriteRenderer.transform.Rotate(Vector3.forward * -rotateEffectSpeed);
                 yield return null;
             }
         }
         
         private IEnumerator HitEnemyRoutine(EnemyBase enemy)
         {
+            var enemyManager = enemy.GetComponent<EnemyManager>();
+            enemyManager.EnemyStunnedEvent(stunDuration);
+            // OnStunned?.Invoke(true);
             enemy.StopMovement();
 
             yield return HitOtherRoutine(enemy.gameObject);
             enemy.StartMovement();
+            // OnStunned?.Invoke(false);
         }
-
+        
         private IEnumerator HitOtherRoutine(GameObject otherObject)
         {
-            _isItemThrowed = false;
             _spriteRenderer.enabled = false;
+            _capsuleCollider.enabled = false;
             
             var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
@@ -99,13 +106,13 @@ namespace Alphabet.Item
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!_isItemThrowed) return;
+            if (!IsItemThrowed) return;
             if (!CheckColliderTag(other)) return;
-
-            IsCollideWithAnother = true;
+            
+            Debug.Log(other.name);
+            _isCollideWithAnother = true;
             if (other.TryGetComponent(out EnemyBase enemy))
             {
-                Debug.Log("enemy");
                 StartCoroutine(HitEnemyRoutine(enemy));
             }
             else
