@@ -30,6 +30,7 @@ namespace Alphabet.Managers
         
         [Header("Reference")] 
         private PlayerController _playerController;
+        private PlayerSpawner _playerSpawner;
         private TimeController _timeController;
         private StageMarker _stageMarker;
         

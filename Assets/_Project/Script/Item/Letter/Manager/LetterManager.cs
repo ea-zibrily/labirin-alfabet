@@ -20,8 +20,8 @@ namespace Alphabet.Item
         public List<Transform> AvailableSpawnPoint { get; private set; }
         
         // Temp Letter Object Data
-        [SerializeField] private List<LetterData> _lockedLetterDatas;
-        [SerializeField] private List<LetterData> _unlockedLetterDatas;
+        private List<LetterData> _lockedLetterDatas;
+        private List<LetterData> _unlockedLetterDatas;
         
         // Letter Event
         public event Action<LetterData> OnTakeLetter;

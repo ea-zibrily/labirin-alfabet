@@ -55,7 +55,7 @@ namespace Alphabet.Stage
                 Debug.LogError("stage object null brok");
                 return;
             }
-
+            
             for (var i = 0; i < stageObjects.Length; i++)
             {
                 if (i is 0)
