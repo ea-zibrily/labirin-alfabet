@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Alphabet.Stage;
 using UnityEngine;
+using Alphabet.Stage;
 
 namespace Alphabet.Entities.Player
 {
@@ -14,8 +14,16 @@ namespace Alphabet.Entities.Player
 
         #endregion
         
-        #region Methods
+        #region MonoBehaviour Callbacks
 
+        private void Start()
+        {
+            SpawnPlayer();
+        }
+
+        #endregion
+
+        #region Methods
         public void SpawnPlayer()
         {
             var stageManager = StageManager.Instance;

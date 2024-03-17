@@ -2,8 +2,8 @@
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
-using Alphabet.Database;
 using Alphabet.Item;
+using Alphabet.Database;
 using Alphabet.DesignPattern.Singleton;
 
 namespace Alphabet.Stage
@@ -55,7 +55,7 @@ namespace Alphabet.Stage
                 Debug.LogError("stage object null brok");
                 return;
             }
-            
+
             for (var i = 0; i < stageObjects.Length; i++)
             {
                 if (i is 0)

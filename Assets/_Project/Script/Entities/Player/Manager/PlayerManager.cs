@@ -51,7 +51,6 @@ namespace Alphabet.Entities.Player
         private int _currentLetterAmount;
         
         [Header("Reference")]
-        private CapsuleCollider2D _capsuleCollider;
         private PlayerController _playerController;
         private PlayerKnockBack _playerKnockBack;
         private PlayerFlash _playerFlash;
@@ -62,8 +61,6 @@ namespace Alphabet.Entities.Player
         
         private void Awake()
         {
-            _capsuleCollider = GetComponent<CapsuleCollider2D>();
-
             var playerObject = transform.parent.gameObject;
             _playerController = playerObject.GetComponent<PlayerController>();
             _playerKnockBack = playerObject.GetComponent<PlayerKnockBack>();

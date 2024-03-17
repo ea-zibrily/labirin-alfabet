@@ -73,6 +73,7 @@ namespace Alphabet.Managers
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
+            _playerSpawner = _playerController.GetComponentInChildren<PlayerSpawner>();
         }
         
         #endregion
@@ -118,7 +119,7 @@ namespace Alphabet.Managers
             StageManager.Instance.InitializeNewStage();
             _stageMarker.SetStageNotification();
             _timeController.InitializeTimer(); 
-            _playerController.transform.position = Vector2.zero;
+            _playerSpawner.SpawnPlayer();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();
