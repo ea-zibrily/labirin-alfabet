@@ -30,7 +30,6 @@ namespace Alphabet.Managers
         
         [Header("Reference")] 
         private PlayerController _playerController;
-        private PlayerSpawner _playerSpawner;
         private TimeController _timeController;
         private StageMarker _stageMarker;
         
@@ -73,7 +72,6 @@ namespace Alphabet.Managers
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
-            _playerSpawner = _playerController.GetComponentInChildren<PlayerSpawner>();
         }
         
         #endregion
@@ -118,8 +116,8 @@ namespace Alphabet.Managers
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.InitializeNewStage();
             _stageMarker.SetStageNotification();
-            _timeController.InitializeTimer(); 
-            _playerSpawner.SpawnPlayer();
+            _timeController.InitializeTimer();
+            PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();

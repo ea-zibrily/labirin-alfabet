@@ -87,11 +87,6 @@ namespace Alphabet.Entities.Player
            InitializeHealth();
            InitializeLetterObject();
         }
-
-        private void Update()
-        {
-           StageDataUpdater();
-        }
         
         #endregion
         
@@ -173,11 +168,14 @@ namespace Alphabet.Entities.Player
             
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
+            Debug.Log(letterObjects.Length);
         }
         
         // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
+            SetStageData();
+            
             var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
             letterCollects.Add(letter);
 
@@ -200,7 +198,8 @@ namespace Alphabet.Entities.Player
             letterCollects.RemoveAt(randomLetter);
         }
 
-        private void StageDataUpdater()
+        // !-- Helper/Utilities
+        private void SetStageData()
         {
             _currentStageIndex = StageManager.Instance.CurrentStageIndex;
             _currentLetterAmount = StageManager.Instance.LetterManager.LetterSpawns[_currentStageIndex].AmountOfLetter;
