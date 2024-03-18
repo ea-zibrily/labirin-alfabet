@@ -70,7 +70,7 @@ namespace Alphabet.Managers
             }
         }
         
-         public void LoadSelectedLevel(int levelIndex)
+        public void LoadSelectedLevel(int levelIndex)
         {
             // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
             Time.timeScale = 1;

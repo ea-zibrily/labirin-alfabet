@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Item;
@@ -46,7 +47,7 @@ namespace Alphabet.Entities.Player
         [SerializeField] private Color flashColor;
         
         [Header("Objective")] 
-        [SerializeField] private LetterObject[] letterObjects;
+        private LetterObject[] letterObjects;
         private int _currentStageIndex;
         private int _currentLetterAmount;
         
@@ -168,14 +169,17 @@ namespace Alphabet.Entities.Player
             
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
-            Debug.Log(letterObjects.Length);
+            for (int i = 0; i < letterObjects.Length; i++)
+            {
+                letterObjects[i].LetterObjects = new List<GameObject>();
+            }
         }
         
         // !-- Core Functionality
         private void CollectLetter(GameObject letter)
         {
             SetStageData();
-            
+
             var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
             letterCollects.Add(letter);
 
@@ -197,7 +201,7 @@ namespace Alphabet.Entities.Player
             letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
         }
-
+        
         // !-- Helper/Utilities
         private void SetStageData()
         {
