@@ -436,4 +436,6 @@ MonoBehaviour:
   flashNumber: 4
   flashDuration: 0.07
   flashColor: {r: 1, g: 0, b: 0, a: 0.6}
-  letterObjects: []
+  letterObjects:
+  - LetterObjects: []
+  - LetterObjects: []

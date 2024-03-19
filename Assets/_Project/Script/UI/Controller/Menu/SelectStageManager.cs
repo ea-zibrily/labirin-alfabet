@@ -27,8 +27,7 @@ namespace Alphabet.UI
         [SerializeField] private GameObject selectStagePanelUI;
         [SerializeField] private GameObject selectCharacterPanelUI;
         [SerializeField] private StageContent[] stageContents;
-
-
+        
         // TODO: Pas udah fix, panel index iki gausa di serializ
         [SerializeField] private int _currentPanelIndex;
         private int StageCount =>  System.Enum.GetNames(typeof(Level)).Length;

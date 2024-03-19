@@ -60,11 +60,12 @@ namespace Alphabet.Item
         {
             IsItemThrowed = true;
             _capsuleCollider.isTrigger = true;
-
+            var rotateDirectionSpeed  = direction.x > 0 ? -rotateEffectSpeed : rotateEffectSpeed;
+            
             while (!_isCollideWithAnother)
             {
                 transform.Translate(speed * Time.deltaTime * direction);
-                _spriteRenderer.transform.Rotate(Vector3.forward * -rotateEffectSpeed);
+                _spriteRenderer.transform.Rotate(Vector3.forward * rotateDirectionSpeed);
                 yield return null;
             }
         }
@@ -73,12 +74,12 @@ namespace Alphabet.Item
         {
             var enemyManager = enemy.GetComponent<EnemyManager>();
             enemyManager.EnemyStunnedEvent(stunDuration);
-            // OnStunned?.Invoke(true);
+            enemyManager.DeactivateTrigger();
             enemy.StopMovement();
 
             yield return HitOtherRoutine(enemy.gameObject);
+            enemyManager.ActivateTrigger();
             enemy.StartMovement();
-            // OnStunned?.Invoke(false);
         }
         
         private IEnumerator HitOtherRoutine(GameObject otherObject)
@@ -109,7 +110,6 @@ namespace Alphabet.Item
             if (!IsItemThrowed) return;
             if (!CheckColliderTag(other)) return;
             
-            Debug.Log(other.name);
             _isCollideWithAnother = true;
             if (other.TryGetComponent(out EnemyBase enemy))
             {

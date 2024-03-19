@@ -142,7 +142,7 @@ namespace Alphabet.Entities.Player
             
             _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
         }
-
+        
         private void CanceledBuff()
         {
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
@@ -165,10 +165,10 @@ namespace Alphabet.Entities.Player
         // !-- Initialization
         private void InitializeLetterObject()
         {
-            if (letterObjects != null) return;
-            
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
+            Debug.LogWarning(letterObjects.Length);
+
             for (int i = 0; i < letterObjects.Length; i++)
             {
                 letterObjects[i].LetterObjects = new List<GameObject>();
@@ -251,6 +251,7 @@ namespace Alphabet.Entities.Player
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
                
                TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
+               Debug.Log("Enemy Triggered");
             }
             else if (other.CompareTag("Item"))
             {

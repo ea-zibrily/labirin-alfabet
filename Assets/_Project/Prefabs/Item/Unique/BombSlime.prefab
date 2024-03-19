@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunDuration: 5
-  rotateEffectSpeed: 3.5
+  rotateEffectSpeed: 11.3
   hitEffect: {fileID: 5005374128335311535, guid: ab2c8e9e9acffa1459df7c83cfa191a1, type: 3}
   effectParent: {fileID: 0}
 --- !u!1 &7082473306086155236

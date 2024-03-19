@@ -18,6 +18,15 @@ namespace Alphabet.Stage
         
         #endregion
 
+        #region MonoBehavior Callbacks
+        
+        private void Start()
+        {
+            SetStageNotification();
+        }
+        
+        #endregion
+
         #region Methods
         
         // !-- Core Functionality

@@ -26,7 +26,7 @@ namespace Alphabet.Entities.Enemy
 
         [Header("Reference")]
         private EnemyBase _enemyBase;
-        private CapsuleCollider2D _capsulCollider;
+        private CapsuleCollider2D _capsuleCollider;
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace Alphabet.Entities.Enemy
         private void Awake()
         {
             _enemyBase = GetComponent<EnemyBase>();
-            _capsulCollider = GetComponent<CapsuleCollider2D>();
+            _capsuleCollider = GetComponent<CapsuleCollider2D>();
         }
 
         private void OnEnable()
@@ -59,6 +59,7 @@ namespace Alphabet.Entities.Enemy
 
         private void Start()
         {
+            ActivateTrigger();
             InitializeStunBar();
         }
 
@@ -87,7 +88,6 @@ namespace Alphabet.Entities.Enemy
         private IEnumerator DecreaseBarRoutine(float duration)
         {
             var elapsedTime = 0f;
-
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
@@ -98,6 +98,14 @@ namespace Alphabet.Entities.Enemy
             stunFillBarUI.fillAmount = MIN_FILL_BAR;
             stunPanelUI.SetActive(false);
         }
+
+        #endregion
+
+        #region Collision Methods
+
+        // !-- Helper/Utilities
+        public void ActivateTrigger() => _capsuleCollider.isTrigger = true;
+        public void DeactivateTrigger() => _capsuleCollider.isTrigger = false;
 
         #endregion
     }

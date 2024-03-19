@@ -50,7 +50,6 @@ namespace Alphabet.Entities.Player
 
             var playerObject = GameObject.FindGameObjectWithTag("Player");
             playerObject.transform.position = playerSpawnPoints[stageManager.CurrentStageIndex].position;
-            Debug.Log($"Player Spawned at {playerSpawnPoints[stageManager.CurrentStageIndex].position}");
         }
 
         #endregion
