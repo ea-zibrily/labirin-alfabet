@@ -39,7 +39,7 @@ namespace Alphabet.Entities.Player
         public bool CanMove { get; private set; }
 
         // Const Variable
-        public const string IS_HOLD = "isHold";
+        public const string IS_HOLD = "isHolded";
         private const string IS_MOVE = "isMove";
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";

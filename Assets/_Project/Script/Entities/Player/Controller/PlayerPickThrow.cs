@@ -17,7 +17,7 @@ namespace Alphabet.Entities.Player
         [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private float pickAreaRadius;
         [SerializeField] private LayerMask itemLayerMask;
-        private Transform pickAreaTransform;
+        [SerializeField] private Vector3 pickAreaMultiplier;
 
         private float _normalMoveSpeed;
         private GameObject _pickItemObject;
@@ -57,8 +57,8 @@ namespace Alphabet.Entities.Player
         {
             if (_holdedItemObject)
             {
-                var pickAreaTransform = transform.position + PickDirection;
-                _holdedItemObject.transform.position = pickAreaTransform;
+                var throwPosition =  transform.position + pickAreaMultiplier + PickDirection;
+                _holdedItemObject.transform.position = throwPosition;
                 interactButtonUI.gameObject.SetActive(true);
             }
             else
@@ -127,11 +127,12 @@ namespace Alphabet.Entities.Player
 
         public void CallThrowItem()
         {
+            Debug.Log("thorw!");
             var item = _holdedItemObject;
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) return;
 
             _playerController.StopMovement();
-            
+
             stunItem.EnableSprite();
             stunItem.GetComponent<Rigidbody2D>().simulated = true;
             stunItem.ThrowItem(PickDirection, throwSpeed);

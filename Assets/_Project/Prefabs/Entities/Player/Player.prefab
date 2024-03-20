@@ -159,6 +159,7 @@ MonoBehaviour:
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  pickAreaMultiplier: {x: 0.1, y: 1, z: 0}
   throwDelayDuration: 0.15
   throwSpeed: 7
   interactButtonUI: {fileID: 0}
