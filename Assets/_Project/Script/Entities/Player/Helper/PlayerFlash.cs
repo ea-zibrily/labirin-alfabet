@@ -1,4 +1,6 @@
 using System.Collections;
+using Spine;
+using Spine.Unity;
 using UnityEngine;
 
 namespace Alphabet.Entities.Player
@@ -10,25 +12,25 @@ namespace Alphabet.Entities.Player
         private readonly int _flashNumber;
         private readonly float _flashDuration;
         private readonly Color _flashColor;
-        private readonly SpriteRenderer _playerSpriteRenderer;
+        private readonly Skeleton _playerSkeleton;
 
         #region Constructor
 
-        public PlayerFlash(int playerLayer, int enemyLayer, Color flashColor, float duration, int flashNumber, SpriteRenderer sprite)
+        public PlayerFlash(int playerLayer, int enemyLayer, Color flashColor, float duration, int flashNumber, Skeleton skeleton)
         {
             _playerLayerNum = playerLayer;
             _enemyLayerNum = enemyLayer;
             _flashColor = flashColor;
             _flashDuration = duration;
             _flashNumber = flashNumber;
-            _playerSpriteRenderer = sprite;
+            _playerSkeleton = skeleton;
         }
 
-        public PlayerFlash(Color flashColor, float duration, SpriteRenderer sprite)
+        public PlayerFlash(Color flashColor, float duration, Skeleton skeleton)
         {
             _flashColor = flashColor;
             _flashDuration = duration;
-            _playerSpriteRenderer = sprite;
+            _playerSkeleton = skeleton;
         }
 
         #endregion
@@ -40,10 +42,10 @@ namespace Alphabet.Entities.Player
 
             while (_flashNumElapsed < _flashNumber)
             {
-                _playerSpriteRenderer.color = _flashColor;
+                _playerSkeleton.SetColor(_flashColor);
                 yield return new WaitForSeconds(_flashDuration);
 
-                _playerSpriteRenderer.color = Color.white;
+                _playerSkeleton.SetColor(Color.white);
                 yield return new WaitForSeconds(_flashDuration);
                 _flashNumElapsed++;
             }
@@ -55,10 +57,10 @@ namespace Alphabet.Entities.Player
         {
             while (condition)
             {
-                _playerSpriteRenderer.color = _flashColor;
+                 _playerSkeleton.SetColor(_flashColor);
                 yield return new WaitForSeconds(_flashDuration);
-                
-                _playerSpriteRenderer.color = Color.white;
+
+                _playerSkeleton.SetColor(Color.white);
                 yield return new WaitForSeconds(_flashDuration);
             }
         }

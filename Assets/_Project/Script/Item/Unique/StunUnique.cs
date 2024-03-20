@@ -96,6 +96,9 @@ namespace Alphabet.Item
         }
 
         // !-- Helper/Utilities
+        public void EnableSprite() => _spriteRenderer.enabled = true;
+        public void DisableSprite() => _spriteRenderer.enabled = false;
+
         private bool CheckColliderTag(Collider2D other)
         {
             return other.CompareTag("Wall") || other.CompareTag("Enemy");

@@ -9,6 +9,8 @@ using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
+using Spine;
+using Spine.Unity;
 
 namespace Alphabet.Entities.Player
 {
@@ -66,8 +68,8 @@ namespace Alphabet.Entities.Player
             _playerController = playerObject.GetComponent<PlayerController>();
             _playerKnockBack = playerObject.GetComponent<PlayerKnockBack>();
 
-            var playerSprite = _playerController.GetComponentInChildren<SpriteRenderer>();
-            _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSprite);
+            var playerSkeleton = _playerController.GetComponentInChildren<SkeletonMecanim>().skeleton;
+            _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSkeleton);
         }
 
         private void OnEnable()
@@ -251,7 +253,6 @@ namespace Alphabet.Entities.Player
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
                
                TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
-               Debug.Log("Enemy Triggered");
             }
             else if (other.CompareTag("Item"))
             {

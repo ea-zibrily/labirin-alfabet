@@ -12,7 +12,7 @@ namespace Alphabet.Managers
         [Header("Settings")]
         [Range(0, 120)] [SerializeField] private int targetFrameRate = 30;
         [SerializeField] private bool isFixedFrameRate = true;
-
+        
         #endregion
 
         #region Methods

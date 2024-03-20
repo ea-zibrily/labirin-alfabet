@@ -4,6 +4,8 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
 using Alphabet.Database;
+using Spine.Unity;
+using Spine;
 
 namespace Alphabet.Entities.Player
 {
@@ -11,33 +13,45 @@ namespace Alphabet.Entities.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
+        #region Struct
+        [Serializable]
+        private struct AnimationData
+        {
+            public string type;
+            [SpineAnimation] public string[] name;
+        }
+        #endregion
+
         #region Fields & Properties
         
-        [Header("Player")] 
+        [Header("Movement")] 
         [SerializeField] private PlayerData playerData;
         [SerializeField] [ReadOnly] private float currentMoveSpeed;
         [SerializeField] private Vector2 movementDirection;
         
+        public Vector2 MovementDirection => movementDirection;
         public float DefaultMoveSpeed => playerData.PlayerMoveSpeed;
         public float CurrentMoveSpeed
         {
             get => currentMoveSpeed;
             set => currentMoveSpeed = value;
         }
-        
         public bool CanMove { get; private set; }
 
         // Const Variable
+        public const string IS_HOLD = "isHold";
+        private const string IS_MOVE = "isMove";
         private const string HORIZONTAL_KEY = "Horizontal";
         private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "isMove";
+
+        [Header("Animation")]
+        private SkeletonMecanim _skeletonMecanim;
+        private Skeleton _playerSkeleton;
+        public Animator PlayerAnimator {get; private set;}
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
-        private SpriteRenderer _playerSpriteRenderer;
-        private Animator _playerAnimator;
         private PlayerPickThrow _playerPickThrow;
-
         public PlayerInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
@@ -46,10 +60,15 @@ namespace Alphabet.Entities.Player
 
         private void Awake()
         {
+            // Component
             _playerRb = GetComponent<Rigidbody2D>();
-            _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _playerAnimator = GetComponentInChildren<Animator>();
+            PlayerAnimator = GetComponentInChildren<Animator>();
 
+            // Animation
+            _skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
+            _playerSkeleton = _skeletonMecanim.skeleton;
+
+            // Handler
             _playerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
         }
@@ -68,6 +87,7 @@ namespace Alphabet.Entities.Player
         private void Update()
         {
             PlayerAnimation();
+            PlayerFlip();
         }
         
         #endregion
@@ -83,8 +103,7 @@ namespace Alphabet.Entities.Player
             // Component
             gameObject.name = playerData.PlayerName;
             CurrentMoveSpeed = playerData.PlayerMoveSpeed;
-            _playerSpriteRenderer.sprite = playerData.PlayerSprite;
-            _playerAnimator.runtimeAnimatorController = playerData.PlayerAnimatorController;
+            // _playerAnimator.runtimeAnimatorController = playerData.PlayerAnimatorController;
         }
         
         // !-- Core Functionality
@@ -113,19 +132,31 @@ namespace Alphabet.Entities.Player
             
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
-        
+
         private void PlayerAnimation()
         {
             if (movementDirection != Vector2.zero)
             {
-                _playerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
-                _playerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
-                _playerAnimator.SetBool(IS_MOVE, true);
+                PlayerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
+                PlayerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
+                PlayerAnimator.SetBool(IS_MOVE, true);
             }
             else
             {
-                _playerAnimator.SetBool(IS_MOVE, false);
+                PlayerAnimator.SetBool(IS_MOVE, false);
             }
+        }
+
+        private void PlayerFlip()
+        {
+            if (!CanFlip()) return;
+            _playerSkeleton.ScaleX *= -1;
+        }
+
+        private bool CanFlip()
+        {
+            var direction = movementDirection;
+            return direction.x < 0 && _playerSkeleton.ScaleX > 0 || direction.x > 0 && _playerSkeleton.ScaleX < 0;
         }
         
         // !-- Helpers/Utilities
@@ -148,8 +179,8 @@ namespace Alphabet.Entities.Player
             var direction = value.transform.position - transform.position;
             direction.Normalize();
 
-            _playerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
-            _playerAnimator.SetFloat(VERTICAL_KEY, direction.y);
+            PlayerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
+            PlayerAnimator.SetFloat(VERTICAL_KEY, direction.y);
         }
         
         #endregion
