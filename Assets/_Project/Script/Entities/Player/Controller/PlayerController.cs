@@ -52,7 +52,7 @@ namespace Alphabet.Entities.Player
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private PlayerPickThrow _playerPickThrow;
-        public PlayerInputHandler PlayerInputHandler { get; private set; }
+        public ButtonInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace Alphabet.Entities.Player
 
             // Handler
             _playerPickThrow = GetComponent<PlayerPickThrow>();
-            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
+            PlayerInputHandler = GetComponentInChildren<ButtonInputHandler>();
         }
 
         private void Start()
@@ -163,7 +163,7 @@ namespace Alphabet.Entities.Player
         public void StartMovement()
         {
             CanMove = true;
-            PlayerInputHandler.EnableTouchInput();
+            PlayerInputHandler.EnableInput();
         }
         
         public void StopMovement()
@@ -171,7 +171,7 @@ namespace Alphabet.Entities.Player
             CanMove = false;
             _playerRb.velocity = Vector2.zero;
             movementDirection = Vector2.zero;
-            PlayerInputHandler.DisableTouchInput();
+            PlayerInputHandler.DisableInput();
         }
         
         public void SetPlayerDirection(Transform value)
