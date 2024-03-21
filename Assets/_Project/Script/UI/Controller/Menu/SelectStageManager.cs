@@ -28,7 +28,7 @@ namespace Alphabet.UI
         [SerializeField] private GameObject selectCharacterPanelUI;
         [SerializeField] private StageContent[] stageContents;
         
-        // TODO: Pas udah fix, panel index iki gausa di serializ
+        // TODO: Pas wes fix, panel index iki gausa diserializ
         [SerializeField] private int _currentPanelIndex;
         private int StageCount =>  System.Enum.GetNames(typeof(Level)).Length;
 
@@ -83,12 +83,13 @@ namespace Alphabet.UI
         protected override void OnClickExplore()
         {
             base.OnClickExplore();
-            if (_currentPanelIndex > 0)
+            if (_currentPanelIndex > 1)
             {
-                Debug.LogWarning("level 2-3 under development brok!");
+                Debug.LogWarning("stage forest under development brok!");
                 return;
             }
 
+            Debug.Log($"utiwi expplor {_currentPanelIndex + 1}");
             selectCharacterPanelUI.SetActive(true);
             ClosePanel();
         }

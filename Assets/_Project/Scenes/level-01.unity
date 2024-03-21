@@ -31680,7 +31680,7 @@ GameObject:
   - component: {fileID: 1882700085}
   - component: {fileID: 1882700084}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37146,7 +37146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 155.5
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -38544,6 +38544,6 @@ SceneRoots:
   - {fileID: 1216811832}
   - {fileID: 495634469}
   - {fileID: 1057753814}
-  - {fileID: 1882700087}
   - {fileID: 1754008032}
+  - {fileID: 1882700087}
   - {fileID: 1783902406}
