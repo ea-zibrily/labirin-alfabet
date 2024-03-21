@@ -83,12 +83,12 @@ namespace Alphabet.UI
         protected override void OnClickExplore()
         {
             base.OnClickExplore();
-            if (_currentPanelIndex > 0)
+            if (_currentPanelIndex > 1)
             {
-                Debug.LogWarning("level 2-3 under development brok!");
+                Debug.LogWarning("ruins stage under development brok!");
                 return;
             }
-
+            
             selectCharacterPanelUI.SetActive(true);
             ClosePanel();
         }
