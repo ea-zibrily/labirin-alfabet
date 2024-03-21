@@ -24951,7 +24951,7 @@ GameObject:
   - component: {fileID: 1754008030}
   - component: {fileID: 1754008029}
   m_Layer: 5
-  m_Name: TouchCanvas
+  m_Name: ControllerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31386,7 +31386,7 @@ GameObject:
   - component: {fileID: 1882700085}
   - component: {fileID: 1882700084}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36718,7 +36718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3372743790264198058, guid: a84a62f6090576645b8f3988793ebcd6, type: 3}
       propertyPath: m_AnchoredPosition.y

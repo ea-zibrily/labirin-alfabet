@@ -98,7 +98,7 @@ namespace Alphabet.Entities.Player
         private void InitializePlayer()
         {
             // Data
-            playerData = PlayerDatabase.Instance.GetPlayerData();
+            playerData = PlayerDatabase.Instance.GetPlayerDatabySelected();
 
             // Component
             gameObject.name = playerData.PlayerName;

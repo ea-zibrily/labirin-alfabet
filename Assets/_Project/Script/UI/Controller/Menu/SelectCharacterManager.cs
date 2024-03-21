@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Database;
+using TMPro;
 
 namespace Alphabet.UI
 {
@@ -12,8 +13,9 @@ namespace Alphabet.UI
 
         [Header("UI")]
         [SerializeField] private GameObject selectCharacterPanelUI;
-        [SerializeField] private Button[] playerButtonUI;
         [SerializeField] private GameObject highlightObjectUI;
+        [SerializeField] private TextMeshProUGUI characterHeadlineText;
+        [SerializeField] private Button[] playerButtonUI;
 
         private Dictionary<Button, int> _selectButtonNums;
         private int _characterIndex;
@@ -79,7 +81,7 @@ namespace Alphabet.UI
             selectCharacterPanelUI.SetActive(false);
             SetDefaultCharacter();
         }
-
+        
         private void OnSelectCharacter(Button btn)
         {
             TweenScaledButton(btn.gameObject);
@@ -89,7 +91,9 @@ namespace Alphabet.UI
             {
                 highlightObjectUI.SetActive(true);
             }
+            
             highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
+            characterHeadlineText.text = PlayerDatabase.Instance.GetPlayerDatabyIndex(_characterIndex).name;
         }
 
         private void SetDefaultCharacter()

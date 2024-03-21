@@ -11,12 +11,15 @@ namespace Alphabet.Entities.Player
     {
         #region Fields & Properties
         
-        [Header("Joystick Settings")] 
+        [Header("Settings")] 
         [Tooltip("Isi dengan ukuran Rect Transform joystick yang diinginkan")]
         [SerializeField] private Vector2 joystickSize;
         
         [Tooltip("Aktifkan jika ingin mengakses joystick dalam half screen")]
         [SerializeField] private bool isHalfScreen;
+
+        [Tooltip("Aktifkan jika ingin memberi batasan tepi layar joystick")]
+        [SerializeField] private bool isClampPosition;
         
         public Vector2 Direction { get; private set; }
         
@@ -90,8 +93,7 @@ namespace Alphabet.Entities.Player
             if (isHalfScreen)
             {
                 return fingerTouch.screenPosition.x <= Screen.width / 2f 
-                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f
-                       && fingerTouch.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
+                       && fingerTouch.screenPosition.y <= Screen.height / 1.3f;
             }
             
             return fingerTouch.screenPosition.y <= Screen.height / 1.3f 
@@ -109,7 +111,9 @@ namespace Alphabet.Entities.Player
             Direction = Vector2.zero;
             _joystickObjectUI.SetActive(true);
             _floatingJoystickHandler.JoyRectTransform.sizeDelta = joystickSize;
-            _floatingJoystickHandler.JoyRectTransform.anchoredPosition = ClampStartPosition(fingerOn.screenPosition);
+
+            var screenStartPosition = isClampPosition ? ClampStartPosition(fingerOn.screenPosition) : fingerOn.screenPosition;
+            _floatingJoystickHandler.JoyRectTransform.anchoredPosition = screenStartPosition;
         }
         
         // !-- Core Functionality

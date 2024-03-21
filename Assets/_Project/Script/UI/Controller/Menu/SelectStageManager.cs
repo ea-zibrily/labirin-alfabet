@@ -7,6 +7,7 @@ using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Enum;
 using Alphabet.Managers;
 using Alphabet.Database;
+using TMPro;
 
 namespace Alphabet.UI
 {
@@ -26,6 +27,7 @@ namespace Alphabet.UI
         [Header("UI")]
         [SerializeField] private GameObject selectStagePanelUI;
         [SerializeField] private GameObject selectCharacterPanelUI;
+        [SerializeField] private TextMeshProUGUI stageHeadlineText;
         [SerializeField] private StageContent[] stageContents;
         
         // TODO: Pas udah fix, panel index iki gausa di serializ
@@ -41,12 +43,12 @@ namespace Alphabet.UI
 
         private void OnEnable()
         {
-            simpleScrollSnap.OnSnappingBegin += SetPanelIndex;
+            simpleScrollSnap.OnSnappingBegin += SetSelectedPanel;
         }
 
         private void OnDisable()
         {
-            simpleScrollSnap.OnSnappingBegin -= SetPanelIndex;
+            simpleScrollSnap.OnSnappingBegin -= SetSelectedPanel;
         }
 
         #endregion
@@ -98,7 +100,7 @@ namespace Alphabet.UI
             base.OnClickClose();
 
             ClosePanel();
-            SetPanelIndex();
+            SetSelectedPanel();
         }
 
         private void ClosePanel()
@@ -108,7 +110,7 @@ namespace Alphabet.UI
         }
 
 
-        private void SetPanelIndex()
+        private void SetSelectedPanel()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
 
@@ -130,6 +132,7 @@ namespace Alphabet.UI
             }
 
             ExploreButtonUI.interactable = isLevelUnlocked;
+            stageHeadlineText.text = stageName.ToString().ToUpper();
         }
 
         // !-- Helper/Utilities
