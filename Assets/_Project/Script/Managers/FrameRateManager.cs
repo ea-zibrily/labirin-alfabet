@@ -5,7 +5,7 @@ using Alphabet.DesignPattern.Singleton;
 
 namespace Alphabet.Managers
 {
-    public class FrameRateManager : MonoDDOL<FrameRateManager>
+    public class FrameRateManager : MonoSingleton<FrameRateManager>
     {
         #region Fields & Properties
         
@@ -15,13 +15,14 @@ namespace Alphabet.Managers
         
         #endregion
 
-        #region Methods
+        #region MonoBehaviour Callbacks
 
-        // !-- Initialization
-        public override void InitComponent() 
+        protected override void Awake() 
         {
             if (!isFixedFrameRate) return;
+            
             Application.targetFrameRate = targetFrameRate;
+            Debug.Log(Application.targetFrameRate);
         }
 
         #endregion
