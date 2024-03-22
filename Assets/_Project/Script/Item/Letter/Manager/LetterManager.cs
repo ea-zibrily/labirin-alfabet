@@ -152,7 +152,7 @@ namespace Alphabet.Item
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
-
+            
             return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;
         }
         

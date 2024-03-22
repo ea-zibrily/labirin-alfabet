@@ -81,11 +81,11 @@ namespace Alphabet.Managers
         // !-- Core Functionality
         private void GameWin()
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
             IsGameStart = false;
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
             
-            StageManager.Instance.SaveClearedLevel();
+            StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }

@@ -6,8 +6,8 @@ using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Player Input Handler")]
-    public class PlayerInputHandler : MonoBehaviour
+    [AddComponentMenu("Alphabet/Entities/Player/Input/Analog Input Handler")]
+    public class AnalogInputHandler : MonoBehaviour
     {
         #region Fields & Properties
         

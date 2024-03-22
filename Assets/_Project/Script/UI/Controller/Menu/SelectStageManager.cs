@@ -8,6 +8,7 @@ using Alphabet.Enum;
 using Alphabet.Managers;
 using Alphabet.Database;
 using TMPro;
+using Alphabet.Stage;
 
 namespace Alphabet.UI
 {
@@ -58,8 +59,9 @@ namespace Alphabet.UI
         // !-- Initialization
         protected override void InitialiazeOnStart()
         {
-            InitializeSelectStage();
             base.InitialiazeOnStart();
+            InitializeSelectStage();
+            SetSelectedPanel();
         }
 
         private void InitializeSelectStage()
@@ -114,14 +116,16 @@ namespace Alphabet.UI
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
 
-            var stageName = GetStageSceneName(_currentPanelIndex);
+            var stageName = StageHelper.GetStageStringDataValue(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
             var stageChildCount = stagePanel.transform.childCount;
 
-            var isLevelUnlocked = GameDatabase.Instance.LoadLevelUnlocked(stageName);
+            var isLevelUnlocked = IsLevelUnlocked(_currentPanelIndex);
 
             for (var i = 0; i < stageChildCount - 1; i++)
             {
+                if (_currentPanelIndex is 0) break;
+                
                 var stageChild = stagePanel.transform.GetChild(i);
                 stageChild.GetComponent<Image>().color = isLevelUnlocked ? Color.white : Color.grey;
 
@@ -136,15 +140,13 @@ namespace Alphabet.UI
         }
 
         // !-- Helper/Utilities
-        private string GetStageSceneName(int index)
+        private bool IsLevelUnlocked(int index)
         {
-            return index switch
-            {
-                0 => Level.Cave.ToString(),
-                1 => Level.Forest.ToString(),
-                2 => Level.Ruins.ToString(),
-                _ => throw new ArgumentOutOfRangeException(nameof(index), index, null)
-            };
+            var stageIndex = index > 0 ? index - 1 : index;
+            var stageName = StageHelper.GetStageStringDataValue(stageIndex);
+            Debug.Log($"{stageName} is {GameDatabase.Instance.LoadLevelConditions(stageName)}");
+
+            return GameDatabase.Instance.LoadLevelConditions(stageName);
         }
 
         #endregion

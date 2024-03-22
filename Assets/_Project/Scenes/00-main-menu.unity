@@ -3813,7 +3813,7 @@ MonoBehaviour:
   closeButtonUI: {fileID: 1738894940}
   selectCharacterPanelUI: {fileID: 530771192}
   highlightObjectUI: {fileID: 232033373}
-  characterHeadlineText: {fileID: 0}
+  characterHeadlineText: {fileID: 1966566357}
   playerButtonUI:
   - {fileID: 641296220}
   - {fileID: 1046778336}
@@ -3924,7 +3924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CAVE
+  m_text: GUA AKSARA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 889e36f56cd083b4ea30c788a0523c88, type: 2}
   m_sharedMaterial: {fileID: -1415700778158185668, guid: 889e36f56cd083b4ea30c788a0523c88, type: 2}
@@ -3951,15 +3951,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

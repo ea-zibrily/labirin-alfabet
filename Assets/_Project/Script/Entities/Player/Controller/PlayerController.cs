@@ -52,7 +52,7 @@ namespace Alphabet.Entities.Player
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
         private PlayerPickThrow _playerPickThrow;
-        public PlayerInputHandler PlayerInputHandler { get; private set; }
+        public AnalogInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace Alphabet.Entities.Player
 
             // Handler
             _playerPickThrow = GetComponent<PlayerPickThrow>();
-            PlayerInputHandler = GetComponentInChildren<PlayerInputHandler>();
+            PlayerInputHandler = GetComponentInChildren<AnalogInputHandler>();
         }
 
         private void Start()

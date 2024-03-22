@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61aca36d92eb45269c8c904c486d8b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickSize: {x: 300, y: 300}
+  joystickSize: {x: 250, y: 250}
   isHalfScreen: 1
   isClampPosition: 0
 --- !u!1 &5052715272524500205

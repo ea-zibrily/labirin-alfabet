@@ -14,7 +14,6 @@ namespace Alphabet.Database
         //-- Game Database
         private Dictionary<int, bool> _isLetterCollected;
         private Dictionary<string, bool> _isLevelClear;
-        private Dictionary<string, bool> _isLevelUnlocked;
         
         //-- Constant Variable
         public const int LETTER_COUNT = 26;
@@ -35,11 +34,10 @@ namespace Alphabet.Database
         // !-- Initialization
         private void InitializeData()
         {
-            if (_isLetterCollected != null && _isLevelClear != null && _isLevelUnlocked != null) return;
+            if (_isLetterCollected != null && _isLevelClear != null) return;
             
             _isLetterCollected = InitializeLetterCollected();
             _isLevelClear = InitializeLevelClear();
-            _isLevelUnlocked = InitializeLevelUnlocked();
         }
         
         private Dictionary<int, bool> InitializeLetterCollected()
@@ -61,28 +59,15 @@ namespace Alphabet.Database
             foreach (Level level in System.Enum.GetValues(typeof(Level)))
             {
                 var key = level.ToString();
+                Debug.Log(key);
                 levelConditions.Add(key, false);
             }
             return levelConditions;
         }
-        
-        private Dictionary<string, bool> InitializeLevelUnlocked()
-        {
-            var isLevelUnlocked = new Dictionary<string, bool>();
-    
-            foreach (Level level in System.Enum.GetValues(typeof(Level)))
-            {
-                var key = level.ToString();
-                var value = key is "Cave";
-                
-                isLevelUnlocked.Add(key, value);
-            }
-            return isLevelUnlocked;
-        }
 
         // !-- Core Functionality
 
-        // * Letter Collected
+        // Letter Collected
         public void SaveLetterCollected(int letterId, bool value)
         {
             if (_isLetterCollected.ContainsKey(letterId))
@@ -96,7 +81,7 @@ namespace Alphabet.Database
             return _isLetterCollected[letterId];
         }
         
-        // * Level Clear
+        // Stage Clear
         public void SaveLevelClear(string levelName, bool value)
         {
             if (_isLevelClear.ContainsKey(levelName))
@@ -108,20 +93,6 @@ namespace Alphabet.Database
         public bool LoadLevelConditions(string levelName)
         {
             return _isLevelClear[levelName];
-        }
-        
-        // * Level Unlock
-        public void SaveLevelUnlocked(string levelName, bool value)
-        {
-            if (_isLevelUnlocked.ContainsKey(levelName))
-            {
-                _isLevelUnlocked[levelName] = value;
-            }
-        }
-
-        public bool LoadLevelUnlocked(string levelName)
-        {
-            return _isLevelUnlocked[levelName];
         }
 
         #endregion

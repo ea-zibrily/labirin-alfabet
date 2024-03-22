@@ -32,7 +32,8 @@ namespace Alphabet.Stage
         // !-- Core Functionality
         public void SetStageNotification()
         {
-            _currentLevel = StageManager.Instance.CurrentLevelList.ToString();
+            var levelIndex = StageHelper.GetStageIntValue(StageManager.Instance.CurrentLevelList);
+            _currentLevel = StageHelper.GetStageStringValue(levelIndex);
             _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
 
             stageTextUI.text = _currentLevel.ToUpper() + " - " + _currentStage;

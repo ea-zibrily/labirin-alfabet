@@ -24,9 +24,8 @@ namespace Alphabet.Stage
         public int CurrentStageIndex => currentStageIndex;
         public int StageCount => stageObjects.Length;
         
-        [Header("Reference")]
-        private LetterManager _letterManager;
-        public LetterManager LetterManager => _letterManager;
+        // Reference
+        public LetterManager LetterManager { get; private set; }
         
         #endregion
         
@@ -35,7 +34,7 @@ namespace Alphabet.Stage
         protected override void Awake()
         {
             var letter = LetterHelper.GetLetterManagerObject();
-            _letterManager = letter.GetComponent<LetterManager>();
+            LetterManager = letter.GetComponent<LetterManager>();
         }
         
         private void Start()
@@ -74,16 +73,13 @@ namespace Alphabet.Stage
         public void InitializeNewStage()
         {
             LoadNextStage();
-            _letterManager.SpawnLetter();
+            LetterManager.SpawnLetter();
         }
 
-        public void SaveClearedLevel()
+        public void SaveClearStage()
         {
             var currentLevel = CurrentLevelList.ToString();
-            var nextLevel = NextLevelList.ToString();
-
             GameDatabase.Instance.SaveLevelClear(currentLevel, true);
-            GameDatabase.Instance.SaveLevelUnlocked(nextLevel, true);
         }
 
         private void LoadNextStage()
