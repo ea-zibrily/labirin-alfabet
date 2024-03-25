@@ -24,10 +24,12 @@ namespace Alphabet.Collection
         [SerializeField] private float tweeningDuration;
         private Vector3 _defaultScaling;
         
-        [Header("Reference")]
+        [Header("UI")]
         [SerializeField] private Image outerImageUI;
         [SerializeField] private Image fillImageUI;
         private RectTransform _rectTransform;
+
+        [Header("Reference")]
         private CollectionManager _collectionManager;
         private CollectionAudioManager _collectionAudioManager;
         
@@ -96,26 +98,23 @@ namespace Alphabet.Collection
 
             _canInteract = false;
             StopAudio();
+            _collectionManager.SetSelectedCollection(collectionId);
             StartCoroutine(ClickFeedbackRoutine());
         }
 
         private IEnumerator ClickFeedbackRoutine()
         {
-            var index = collectionId - 1;
-            var scrollSnap = _collectionManager.SimpleScrollSnap;
-            if (scrollSnap.CenteredPanel != index)
-            {
-                scrollSnap.GoToPanel(index);
-                yield return new WaitForSeconds(0.2f);
-            }
-
             LeanTween.scale(gameObject, targetScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
-                        _collectionAudioManager.PlayAudio(collectionId);
+                        if (collectionId == _collectionManager.SelectedCollectionId)
+                        {
+                            _collectionAudioManager.PlayAudio(collectionId);
+                        }
                     });     
             
-            LeanTween.scale(gameObject, _defaultScaling, 0.5f).setDelay(tweeningDuration).
+            yield return new WaitForSeconds(tweeningDuration);
+            LeanTween.scale(gameObject, _defaultScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
                         _canInteract = true;
@@ -126,7 +125,6 @@ namespace Alphabet.Collection
         {
             _canInteract = true;
             
-            StopAudio();
             LeanTween.cancel(gameObject);
             StopCoroutine(ClickFeedbackRoutine());
             _rectTransform.localScale = _defaultScaling;

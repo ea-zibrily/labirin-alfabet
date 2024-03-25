@@ -20,10 +20,8 @@ namespace Alphabet.Managers
         protected override void Awake()
         {
             base.Awake();
-
             if (!isFixedFrameRate) return;
             Application.targetFrameRate = targetFrameRate;
-            Debug.Log(Application.targetFrameRate);
         }
 
         #endregion

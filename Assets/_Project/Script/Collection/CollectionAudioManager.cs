@@ -8,8 +8,11 @@ namespace Alphabet.Collection
     {
         #region Fields & Properties
 
+        // Reference
         [SerializeField] private LetterContainer letterContainer;
         private AudioSource _audioSource;
+
+        private CollectionManager _collectionManager;
         
         #endregion
 
@@ -18,6 +21,30 @@ namespace Alphabet.Collection
         private void Awake()
         {
             _audioSource = GetComponentInChildren<AudioSource>();
+            var collection = transform.parent.gameObject;
+            _collectionManager = collection.GetComponentInChildren<CollectionManager>();
+        }
+
+        private void OnEnable()
+        {
+            // Open and Close Collection
+            _collectionManager.OnCollectionOpen += EnableAudio;
+            _collectionManager.OnCollectionClose += DisableAudio;
+
+            // Snap
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin += DisableAudio;
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin += EnableAudio;
+        }
+
+        private void OnDisable()
+        {
+             // Open and Close Collection
+            _collectionManager.OnCollectionOpen -= EnableAudio;
+            _collectionManager.OnCollectionClose -= DisableAudio;
+
+            // Snap
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= DisableAudio;
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= EnableAudio;
         }
 
         #endregion
@@ -46,6 +73,21 @@ namespace Alphabet.Collection
         }
 
         // !-- Helper/Utilities
+        private void EnableAudio()
+        {
+            _audioSource.clip = null;
+            _audioSource.enabled = true;
+        }
+
+        private void DisableAudio()
+        {
+            if (IsAudioPlaying())
+            {
+                StopAudio();
+            }
+            _audioSource.enabled = false;
+        }
+
         public bool IsAudioPlaying()
         {
             return _audioSource.isPlaying;

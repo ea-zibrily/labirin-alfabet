@@ -59,7 +59,6 @@ namespace Alphabet.Database
             foreach (Level level in System.Enum.GetValues(typeof(Level)))
             {
                 var key = level.ToString();
-                Debug.Log(key);
                 levelConditions.Add(key, false);
             }
             return levelConditions;

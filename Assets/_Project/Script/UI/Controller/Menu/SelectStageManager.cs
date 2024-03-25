@@ -144,7 +144,6 @@ namespace Alphabet.UI
         {
             var stageIndex = index > 0 ? index - 1 : index;
             var stageName = StageHelper.GetStageStringDataValue(stageIndex);
-            Debug.Log($"{stageName} is {GameDatabase.Instance.LoadLevelConditions(stageName)}");
 
             return GameDatabase.Instance.LoadLevelConditions(stageName);
         }
