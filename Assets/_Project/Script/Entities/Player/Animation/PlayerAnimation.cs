@@ -15,7 +15,7 @@ namespace Alphabet.Entities.Player
         [SerializeField] private bool _isRight;
 
         // Animation
-        [SpineAnimation] private string _currentState;
+        [SerializeField][SpineAnimation] private string _currentState;
 
         private SkeletonAnimation _skeletonAnimation;
         private Spine.AnimationState _playerAnimationState;
@@ -67,6 +67,8 @@ namespace Alphabet.Entities.Player
 
         private void Update()
         {
+            var isThrowingItem = _playerController.PlayerPickThrow.IsThrowItem;
+            if (isThrowingItem) return;
             AnimationHandler();
         }
 
@@ -88,7 +90,7 @@ namespace Alphabet.Entities.Player
         }
         
         // !-- Core Functionality
-        private void AnimationHandler()
+        public void AnimationHandler()
         {
             var direction = _playerController.MovementDirection;
             if ((direction.x > 0 && !_isRight) || (direction.x < 0 && _isRight)) PlayerFlip();
@@ -104,7 +106,6 @@ namespace Alphabet.Entities.Player
         {
             // Cache properties
             var isHoldingItem = _playerController.PlayerPickThrow.IsHoldedItem;
-            var isThrowingItem = _playerController.PlayerPickThrow.IsThrowItem;
 
             // Movement direction
             var movementDirection = _playerController.MovementDirection;
@@ -128,23 +129,6 @@ namespace Alphabet.Entities.Player
                 if (movingHorizontally) return Side_WalkHold;
                 if (movingVertically) return movementDirection.y > 0 ? Back_WalkHold : Front_WalkHold;
             }
-            else if (isThrowingItem)
-            {
-                // Handle shoot state
-                if (movementDirection == Vector2.zero)
-                {
-                    return _currentState switch
-                    {
-                        "QF_walk+holding" or "QF_idle_holding" => Side_Shoot,
-                        "F_walk+holding" or "F_idle+holding" => Front_Shoot,
-                        "B_walk+holding" or "B_idle+holding" => Back_Shoot,
-                        _ => _currentState,
-                    };
-                }
-
-                if (movingHorizontally) return Side_Shoot;
-                if (movingVertically) return movementDirection.y > 0 ? Back_Shoot : Front_Shoot;
-            }
             else
             {
                 // Handle normal state
@@ -165,6 +149,39 @@ namespace Alphabet.Entities.Player
 
             return _currentState;
         }
+
+        private string GetThrowState()
+        {
+             // Movement direction
+            var movementDirection = _playerController.MovementDirection;
+            var movingHorizontally = movementDirection.x != 0;
+            var movingVertically = movementDirection.y != 0;
+
+            // Handle shoot state
+            if (movementDirection == Vector2.zero)
+                {
+                    return _currentState switch
+                    {
+                        "QF_walk+holding" or "QF_idle_holding" => Side_Shoot,
+                        "F_walk+holding" or "F_idle+holding" => Front_Shoot,
+                        "B_walk+holding" or "B_idle+holding" => Back_Shoot,
+                        _ => _currentState,
+                    };
+                }
+
+            if (movingHorizontally) return Side_Shoot;
+            if (movingVertically) return movementDirection.y > 0 ? Back_Shoot : Front_Shoot;
+
+            return _currentState;
+        }
+
+        public void CallThrowState()
+        {
+            var throwState = GetThrowState();
+            _currentState = throwState;
+            _playerAnimationState.SetAnimation(0, throwState, false);
+        }
+
         private void ChangeAnimation(string state)
         {
             var isLooping = ShouldAnimationLoop(state);

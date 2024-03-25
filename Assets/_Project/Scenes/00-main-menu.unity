@@ -4794,11 +4794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b113f869c10234ba1798ec50057a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectButtonUI:
-  - {fileID: 763820649}
-  - {fileID: 1023645617}
-  closeButtonUI: {fileID: 1738894940}
-  selectCharacterPanelUI: {fileID: 530771192}
   characterComponents:
   - Name: Devan
     Highlight: {fileID: 1762660340}
@@ -4808,9 +4803,8 @@ MonoBehaviour:
     Highlight: {fileID: 1599393987}
     CharacterButton: {fileID: 1046778336}
     SelectButton: {fileID: 1023645617}
-  characterButtonUI:
-  - {fileID: 641296220}
-  - {fileID: 1046778336}
+  selectCharacterPanelUI: {fileID: 530771192}
+  closeButtonUI: {fileID: 1738894940}
   startTweenDuration: 0.18
   endTweenDuration: 0.5
   scalingMultiplier: 0.1

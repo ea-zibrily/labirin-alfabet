@@ -40,6 +40,7 @@ namespace Alphabet.Entities.Player
 
         [Header("Reference")]
         private PlayerController _playerController;
+        private PlayerAnimation _playerAnimation;
         
 
         #endregion
@@ -49,6 +50,7 @@ namespace Alphabet.Entities.Player
         private void Awake()
         {
             _playerController = GetComponent<PlayerController>();
+            _playerAnimation = GetComponentInChildren<PlayerAnimation>();
         }
 
         private void Start()
@@ -126,7 +128,7 @@ namespace Alphabet.Entities.Player
         private void ThrowItem()
         {
             IsThrowItem = true;
-            // _playerController.PlayerAnimator.SetBool(PlayerController.IS_HOLD, false);
+            _playerAnimation.CallThrowState();
         }
 
         public void CallThrowItem()
@@ -135,6 +137,7 @@ namespace Alphabet.Entities.Player
             var item = _holdedItemObject;
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) return;
 
+            IsThrowItem = false;
             _playerController.StopMovement();
 
             stunItem.EnableSprite();

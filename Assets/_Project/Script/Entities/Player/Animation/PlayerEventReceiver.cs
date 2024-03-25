@@ -20,15 +20,17 @@ namespace Alphabet.Entities.Player
         
         private void Start()
         {
-            _skeletonAnimation.state.Event += ShootEvent;
+            _skeletonAnimation.AnimationState.Event += ShootEvent;
         }
-
-        #region Mecanim Event Method
+        
+        #region Spine Event Method
 
         private void ShootEvent(TrackEntry trackEntry, Spine.Event e)
         {
+            Debug.Log($"event fired! {e.Data.Name}");
             if (e.Data.Name == "shot")
             {
+                Debug.Log("shot");
                 _playerPickThrow.IsThrowItem = false;
                 _playerPickThrow.CallThrowItem();
             }
