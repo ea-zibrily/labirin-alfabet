@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Enum;
+using Alphabet.Stage;
 using Alphabet.Managers;
 using Alphabet.Database;
-using TMPro;
-using Alphabet.Stage;
 
 namespace Alphabet.UI
 {
@@ -115,35 +113,34 @@ namespace Alphabet.UI
         private void SetSelectedPanel()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
-
-            var stageName = StageHelper.GetStageStringDataValue(_currentPanelIndex);
+            
+            var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
             var stageChildCount = stagePanel.transform.childCount;
-
             var isLevelUnlocked = IsLevelUnlocked(_currentPanelIndex);
 
+            SetHeadlineText(stageName.ToUpper());
+            ExploreButtonUI.interactable = _currentPanelIndex is 0 || isLevelUnlocked;
+
+            if (_currentPanelIndex <= 0) return;
             for (var i = 0; i < stageChildCount - 1; i++)
             {
-                if (_currentPanelIndex is 0) break;
-                
                 var stageChild = stagePanel.transform.GetChild(i);
                 stageChild.GetComponent<Image>().color = isLevelUnlocked ? Color.white : Color.grey;
 
-                if (i is 1)
+                if (i is 1 && !isLevelUnlocked)
                 {
-                    stageChild.gameObject.SetActive(!isLevelUnlocked);
+                    stageChild.gameObject.SetActive(false);
                 }
             }
-
-            ExploreButtonUI.interactable = isLevelUnlocked;
-            stageHeadlineText.text = stageName.ToString().ToUpper();
         }
-
+        
         // !-- Helper/Utilities
+        private void SetHeadlineText(string text) => stageHeadlineText.text = text;
         private bool IsLevelUnlocked(int index)
         {
             var stageIndex = index > 0 ? index - 1 : index;
-            var stageName = StageHelper.GetStageStringDataValue(stageIndex);
+            var stageName = StageHelper.GetStageDataKey(stageIndex);
 
             return GameDatabase.Instance.LoadLevelConditions(stageName);
         }

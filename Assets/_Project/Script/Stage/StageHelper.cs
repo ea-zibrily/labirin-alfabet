@@ -7,7 +7,7 @@ namespace Alphabet.Stage
 {
     public static class StageHelper
     {
-        public static string GetStageStringDataValue(int stageIndex)
+        public static string GetStageDataKey(int stageIndex)
         {
             var stageLenght = System.Enum.GetNames(typeof(Level)).Length;
             if (stageIndex > stageLenght - 1)

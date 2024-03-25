@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Database;
-using TMPro;
+using System;
 
 namespace Alphabet.UI
 {
-    public class SelectCharacterManager : SelectBase
+    public class SelectCharacterManager : MonoBehaviour
     {
+        #region Struct
+        [Serializable]
+        private struct CharacterComponent
+        {
+            public string Name;
+            public GameObject Highlight;
+            public Button CharacterButton;
+            public Button SelectButton;
+        }
+        #endregion
+
         #region Fields & Property
 
         [Header("UI")]
+        [SerializeField] CharacterComponent[] characterComponents;
         [SerializeField] private GameObject selectCharacterPanelUI;
-        [SerializeField] private GameObject highlightObjectUI;
-        [SerializeField] private TextMeshProUGUI characterHeadlineText;
-        [SerializeField] private Button[] playerButtonUI;
+        [SerializeField] private Button closeButtonUI;
 
         private Dictionary<Button, int> _selectButtonNums;
         private int _characterIndex;
@@ -28,88 +38,109 @@ namespace Alphabet.UI
         [SerializeField] private float endTweenDuration;
         [Range(0f, 1.5f)] [SerializeField] private float scalingMultiplier;
 
-        private Vector3 ButtonDefaultScale 
-        {
-            get => playerButtonUI[0].GetComponent<RectTransform>().localScale;
-        }
+        private Vector3 defaultScale;
         
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
 
-
         #endregion
+
+        private void Start()
+        {
+            InitializeMainButton();
+            InitializeCharacter();
+            SetDefaultCharacter();
+        }
 
         #region Methods
 
         // !-- Initialization
-        protected override void InitialiazeOnStart()
+        private void InitializeMainButton()
         {
-            base.InitialiazeOnStart();
-
-            InitializeButton();
-            SetDefaultCharacter();
+            closeButtonUI.onClick.AddListener(OnClickClose);
+            foreach (var character in characterComponents)
+            {
+                character.SelectButton.onClick.AddListener(OnClickExplore);
+            }
         }
 
-        private void InitializeButton()
+        private void InitializeCharacter()
         {
-            if (playerButtonUI.Length < MAX_PLAYER_COUNT)
+            if (characterComponents.Length < MAX_PLAYER_COUNT)
             {
                 Debug.LogError("player button kurang lekku");
                 return;
             }
+
+            var buttonObject = characterComponents[0].CharacterButton.GetComponent<RectTransform>();
+            defaultScale = buttonObject.localScale;
             
             _selectButtonNums = new Dictionary<Button, int>();
-            for (var i = 0; i < playerButtonUI.Length; i++)
+            for (var i = 0; i < characterComponents.Length; i++)
             {
-                Button btn = playerButtonUI[i];
+                var btn = characterComponents[i].CharacterButton;
                 _selectButtonNums[btn] = i;
                 btn.onClick.AddListener(() => OnSelectCharacter(btn));
             }
         }
 
         // !-- Core Functionality
-        protected override void OnClickExplore()
+        private void OnClickExplore()
         {
-            base.OnClickExplore();
             PlayerDatabase.Instance.SetPlayerData(_characterIndex);
             selectStageManager.GoToStage();
         }
 
-        protected override void OnClickClose()
+        private void OnClickClose()
         {
-            base.OnClickClose();
             selectCharacterPanelUI.SetActive(false);
             SetDefaultCharacter();
         }
         
         private void OnSelectCharacter(Button btn)
         {
-            TweenScaledButton(btn.gameObject);
             _characterIndex = _selectButtonNums[btn];
-
-            if (!highlightObjectUI.activeSelf)
-            {
-                highlightObjectUI.SetActive(true);
-            }
-            
-            highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
-            characterHeadlineText.text = PlayerDatabase.Instance.GetPlayerDatabyIndex(_characterIndex).name;
+            SelectCharacter(_characterIndex);
         }
 
         private void SetDefaultCharacter()
         {
             _characterIndex = 0;
-            highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
+            SelectCharacter(_characterIndex);
+        }
+
+        private void SelectCharacter(int index)
+        {
+            if (index > characterComponents.Length)
+            {
+                Debug.LogError("index kebanaykan bvrok");
+                return;
+            }
+
+            // Selected
+            var selectComponent = characterComponents[index];
+
+            selectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(true);
+            TweenScaledButton(selectComponent.CharacterButton.gameObject, isSelect: true);
+            selectComponent.SelectButton.gameObject.SetActive(true);
+
+            // Deselected
+            var desselectedIndex = index >= 1 ? index - 1 : index + 1;
+            var desselectComponent = characterComponents[desselectedIndex];
+
+            desselectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(false);
+            TweenScaledButton(desselectComponent.CharacterButton.gameObject, isSelect: false);
+            desselectComponent.SelectButton.gameObject.SetActive(false);
         }
 
         // !-- Helper/Utilities
-        private void TweenScaledButton(GameObject target)
+        private void TweenScaledButton(GameObject target, bool isSelect)
         {
             var incrementVector = new Vector3(scalingMultiplier, scalingMultiplier, scalingMultiplier);
-            var targetScale = ButtonDefaultScale + incrementVector;
+            var upperScale = defaultScale + incrementVector;
+            var targetScale = isSelect ? upperScale : defaultScale;
 
             LeanTween.scale(target, targetScale, startTweenDuration).setEase(LeanTweenType.easeOutBack);
-            LeanTween.scale(target, ButtonDefaultScale, endTweenDuration).setDelay(startTweenDuration).setEase(LeanTweenType.easeOutBack);
         }
 
         #endregion
