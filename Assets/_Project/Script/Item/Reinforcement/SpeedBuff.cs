@@ -82,7 +82,7 @@ namespace Alphabet.Item
         {
             base.InitializeOnAwake();
             _playerPickThrow = PlayerController.GetComponent<PlayerPickThrow>();
-            _playerSkeleton = PlayerController.GetComponentInChildren<SkeletonMecanim>().skeleton;
+            _playerSkeleton = PlayerController.GetComponentInChildren<SkeletonAnimation>().skeleton;
             _playerFlash = new PlayerFlash(flashColor, flashDuration, _playerSkeleton);
         }
 

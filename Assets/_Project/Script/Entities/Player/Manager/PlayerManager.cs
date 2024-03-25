@@ -68,7 +68,7 @@ namespace Alphabet.Entities.Player
             _playerController = playerObject.GetComponent<PlayerController>();
             _playerKnockBack = playerObject.GetComponent<PlayerKnockBack>();
 
-            var playerSkeleton = _playerController.GetComponentInChildren<SkeletonMecanim>().skeleton;
+            var playerSkeleton = _playerController.GetComponentInChildren<SkeletonAnimation>().skeleton;
             _playerFlash = new PlayerFlash(6, 7, flashColor, flashDuration, flashNumber, playerSkeleton);
         }
 

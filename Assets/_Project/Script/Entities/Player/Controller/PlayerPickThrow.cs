@@ -23,6 +23,9 @@ namespace Alphabet.Entities.Player
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
 
+        public bool IsThrowItem { get; set; }
+        public bool IsHoldedItem => _holdedItemObject != null;
+
         public event Action<float> OnPlayerInteract;
 
         public float NerfedMultiplier => nerfedSpeedMultiplier;
@@ -88,6 +91,7 @@ namespace Alphabet.Entities.Player
             _holdedItemObject = null;
             _normalMoveSpeed = _playerController.DefaultMoveSpeed;
             PickDirection = Vector3.zero;
+            IsThrowItem = false;
             
             interactButtonUI.onClick.AddListener(PickThrowItem);
             interactButtonUI.gameObject.SetActive(false);
@@ -111,7 +115,6 @@ namespace Alphabet.Entities.Player
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.parent = transform;
 
-            _playerController.PlayerAnimator.SetBool(PlayerController.IS_HOLD, true);
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
             OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
 
@@ -122,7 +125,8 @@ namespace Alphabet.Entities.Player
 
         private void ThrowItem()
         {
-            _playerController.PlayerAnimator.SetBool(PlayerController.IS_HOLD, false);
+            IsThrowItem = true;
+            // _playerController.PlayerAnimator.SetBool(PlayerController.IS_HOLD, false);
         }
 
         public void CallThrowItem()

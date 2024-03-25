@@ -38,20 +38,15 @@ namespace Alphabet.Entities.Player
         }
         public bool CanMove { get; private set; }
 
-        // Const Variable
-        public const string IS_HOLD = "isHolded";
-        private const string IS_MOVE = "isMove";
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-
-        [Header("Animation")]
-        private SkeletonMecanim _skeletonMecanim;
-        private Skeleton _playerSkeleton;
-        public Animator PlayerAnimator {get; private set;}
+        // [Header("Animation")]
+        // private SkeletonMecanim _skeletonMecanim;
+        // private Skeleton _playerSkeleton;
+        // public Animator PlayerAnimator {get; private set;}
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
-        private PlayerPickThrow _playerPickThrow;
+        private PlayerAnimation _playerAnimation;
+        public PlayerPickThrow PlayerPickThrow { get; private set; }
         public AnalogInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
@@ -62,14 +57,15 @@ namespace Alphabet.Entities.Player
         {
             // Component
             _playerRb = GetComponent<Rigidbody2D>();
-            PlayerAnimator = GetComponentInChildren<Animator>();
+            _playerAnimation = GetComponentInChildren<PlayerAnimation>();
+            // PlayerAnimator = GetComponentInChildren<Animator>();
 
             // Animation
-            _skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
-            _playerSkeleton = _skeletonMecanim.skeleton;
+            // _skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
+            // _playerSkeleton = _skeletonMecanim.skeleton;
 
             // Handler
-            _playerPickThrow = GetComponent<PlayerPickThrow>();
+            PlayerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<AnalogInputHandler>();
         }
 
@@ -84,11 +80,11 @@ namespace Alphabet.Entities.Player
             PlayerMove();
         }
         
-        private void Update()
-        {
-            PlayerAnimation();
-            PlayerFlip();
-        }
+        // private void Update()
+        // {
+        //     PlayerAnimation();
+        //     PlayerFlip();
+        // }
         
         #endregion
         
@@ -127,37 +123,37 @@ namespace Alphabet.Entities.Player
             movementDirection.Normalize();
             if (movementDirection.sqrMagnitude > 0.5f)
             {
-                _playerPickThrow.PickDirection = movementDirection;
+                PlayerPickThrow.PickDirection = movementDirection;
             }
             
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
 
-        private void PlayerAnimation()
-        {
-            if (movementDirection != Vector2.zero)
-            {
-                PlayerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
-                PlayerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
-                PlayerAnimator.SetBool(IS_MOVE, true);
-            }
-            else
-            {
-                PlayerAnimator.SetBool(IS_MOVE, false);
-            }
-        }
+        // private void PlayerAnimation()
+        // {
+        //     if (movementDirection != Vector2.zero)
+        //     {
+        //         PlayerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
+        //         PlayerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
+        //         PlayerAnimator.SetBool(IS_MOVE, true);
+        //     }
+        //     else
+        //     {
+        //         PlayerAnimator.SetBool(IS_MOVE, false);
+        //     }
+        // }
 
-        private void PlayerFlip()
-        {
-            if (!CanFlip()) return;
-            _playerSkeleton.ScaleX *= -1;
-        }
+        // private void PlayerFlip()
+        // {
+        //     if (!CanFlip()) return;
+        //     _playerSkeleton.ScaleX *= -1;
+        // }
 
-        private bool CanFlip()
-        {
-            var direction = movementDirection;
-            return direction.x < 0 && _playerSkeleton.ScaleX > 0 || direction.x > 0 && _playerSkeleton.ScaleX < 0;
-        }
+        // private bool CanFlip()
+        // {
+        //     var direction = movementDirection;
+        //     return direction.x < 0 && _playerSkeleton.ScaleX > 0 || direction.x > 0 && _playerSkeleton.ScaleX < 0;
+        // }
         
         // !-- Helpers/Utilities
         public void StartMovement()
@@ -179,8 +175,8 @@ namespace Alphabet.Entities.Player
             var direction = value.transform.position - transform.position;
             direction.Normalize();
 
-            PlayerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
-            PlayerAnimator.SetFloat(VERTICAL_KEY, direction.y);
+            // PlayerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
+            // PlayerAnimator.SetFloat(VERTICAL_KEY, direction.y);
         }
         
         #endregion

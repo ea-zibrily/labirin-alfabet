@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-using System;
-using UnityEngine.UIElements;
+using Spine;
 
 namespace Alphabet.Entities.Player
 {
@@ -11,9 +11,11 @@ namespace Alphabet.Entities.Player
     {
         #region Fields
 
-        [SpineAnimation] private string _currentState;
+        // Component
+        [SerializeField] private bool _isRight;
 
-        private bool _isRight;
+        // Animation
+        [SpineAnimation] private string _currentState;
 
         private SkeletonAnimation _skeletonAnimation;
         private Spine.AnimationState _playerAnimationState;
@@ -25,10 +27,9 @@ namespace Alphabet.Entities.Player
         #endregion
 
         #region Cached Properties
-
         // Side
         private readonly string Side_Idle = "QF_idle";
-        private readonly string Side_IdleHold = "QF_idle+holding";
+        private readonly string Side_IdleHold = "QF_idle_holding";
         private readonly string Side_Walk = "QF_walk";
         private readonly string Side_WalkHold = "QF_walk+holding";
         private readonly string Side_Shoot = "QF_shot";
@@ -46,7 +47,6 @@ namespace Alphabet.Entities.Player
         private readonly string Back_Walk = "B_walk";
         private readonly string Back_WalkHold = "B_walk+holding";
         private readonly string Back_Shoot = "B_shot";
-
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -54,16 +54,16 @@ namespace Alphabet.Entities.Player
        private void Awake()
        {
             _playerController = transform.parent.GetComponent<PlayerController>();
-
             _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+       }
+
+        private void Start()
+        {
             _playerAnimationState = _skeletonAnimation.state;
             _playerSkeleton = _skeletonAnimation.Skeleton;
-       }
 
-       private void Start()
-       {
             InitializePlayerAnimation();
-       }
+        }
 
         private void Update()
         {
@@ -79,6 +79,11 @@ namespace Alphabet.Entities.Player
         {
             _isRight = true;
             _currentState = Side_Idle;
+            if (_playerAnimationState == null)
+            {
+                Debug.LogWarning("Player Animation State is null");
+                return;
+            }
             _playerAnimationState.SetAnimation(0, _currentState, true);
         }
         
@@ -97,28 +102,72 @@ namespace Alphabet.Entities.Player
 
         private string GetState()
         {
-            if (_playerController.MovementDirection == Vector2.zero)
+            // Cache properties
+            var isHoldingItem = _playerController.PlayerPickThrow.IsHoldedItem;
+            var isThrowingItem = _playerController.PlayerPickThrow.IsThrowItem;
+
+            // Movement direction
+            var movementDirection = _playerController.MovementDirection;
+            var movingHorizontally = movementDirection.x != 0;
+            var movingVertically = movementDirection.y != 0;
+
+            if (isHoldingItem)
             {
-                return _currentState switch
+                // Handle idle and walking states
+                if (movementDirection == Vector2.zero)
                 {
-                    "QF_walk" => Side_Idle,
-                    "F_walk" => Front_Idle,
-                    "B_walk" => Back_Idle,
-                    _ => _currentState,
-                };
+                    return _currentState switch
+                    {
+                        "QF_walk+holding" or "QF_walk" or "QF_idle" => Side_IdleHold,
+                        "F_walk+holding" or "F_walk" or "F_idle" => Front_IdleHold,
+                        "B_walk+holding" or "B_walk" or "B_idle" => Back_IdleHold,
+                        _ => _currentState,
+                    };
+                }
+
+                if (movingHorizontally) return Side_WalkHold;
+                if (movingVertically) return movementDirection.y > 0 ? Back_WalkHold : Front_WalkHold;
+            }
+            else if (isThrowingItem)
+            {
+                // Handle shoot state
+                if (movementDirection == Vector2.zero)
+                {
+                    return _currentState switch
+                    {
+                        "QF_walk+holding" or "QF_idle_holding" => Side_Shoot,
+                        "F_walk+holding" or "F_idle+holding" => Front_Shoot,
+                        "B_walk+holding" or "B_idle+holding" => Back_Shoot,
+                        _ => _currentState,
+                    };
+                }
+
+                if (movingHorizontally) return Side_Shoot;
+                if (movingVertically) return movementDirection.y > 0 ? Back_Shoot : Front_Shoot;
+            }
+            else
+            {
+                // Handle normal state
+                if (movementDirection == Vector2.zero)
+                {
+                    return _currentState switch
+                    {
+                        "QF_walk" => Side_Idle,
+                        "F_walk" => Front_Idle,
+                        "B_walk" => Back_Idle,
+                        _ => _currentState,
+                    };
+                }
+
+                if (movingHorizontally) return Side_Walk;
+                if (movingVertically) return movementDirection.y > 0 ? Back_Walk : Front_Walk;
             }
 
-            if (_playerController.MovementDirection.x != 0) return Side_Walk;
-            if (_playerController.MovementDirection.y > 0) return Front_Walk;
-            if (_playerController.MovementDirection.y < 0) return Back_Walk;
-            
             return _currentState;
         }
-
         private void ChangeAnimation(string state)
         {
             var isLooping = ShouldAnimationLoop(state);
-            Debug.Log(isLooping);
             _playerAnimationState.SetAnimation(0, state, isLooping);
         }
 
@@ -126,7 +175,6 @@ namespace Alphabet.Entities.Player
         {
             _isRight = !_isRight;
             _playerSkeleton.ScaleX *= -1;
-            Debug.Log("go flip");
         }
 
         // !-- Helper/Utilities
