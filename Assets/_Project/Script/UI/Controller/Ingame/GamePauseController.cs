@@ -10,7 +10,7 @@ namespace Alphabet.UI
         [Header("Pause")] 
         [SerializeField] private Button resumeButtonUI;
         [SerializeField] private GameObject pausePanelUI;
-        [SerializeField] private GameObject touchCanvas;
+        [SerializeField] private GameObject controllerCanvas;
         
         private Button pauseButtonUI;
         
@@ -38,7 +38,7 @@ namespace Alphabet.UI
         private void OnPauseButton()
         {
             pausePanelUI.SetActive(true);
-            touchCanvas.SetActive(false);
+            controllerCanvas.SetActive(false);
             
             Time.timeScale = 0;
         }
@@ -46,7 +46,7 @@ namespace Alphabet.UI
         private void OnResumeButton()
         {
             pausePanelUI.SetActive(false);
-            touchCanvas.SetActive(true);
+            controllerCanvas.SetActive(true);
             
             Time.timeScale = 1;
         }

@@ -15,11 +15,11 @@ namespace Alphabet.Entities.Player
         [SerializeField] private bool _isRight;
 
         // Animation
-        [SerializeField][SpineAnimation] private string _currentState;
+        [SpineAnimation] private string _currentState;
 
         private SkeletonAnimation _skeletonAnimation;
         private Spine.AnimationState _playerAnimationState;
-        private Spine.Skeleton _playerSkeleton;
+        private Skeleton _playerSkeleton;
 
         // Reference
         private PlayerController _playerController;

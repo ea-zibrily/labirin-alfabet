@@ -36,7 +36,8 @@ namespace Alphabet.Stage
             _currentLevel = StageHelper.GetStageStringValue(levelIndex);
             _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
 
-            stageTextUI.text = _currentLevel.ToUpper() + " - " + _currentStage;
+            // stageTextUI.text = _currentLevel.ToUpper() + " - " + _currentStage;
+            stageTextUI.text = _currentStage;
         }
         
         // !-- Helpers/Utilities
@@ -44,9 +45,9 @@ namespace Alphabet.Stage
         {
             return stage switch
             {
-                StageNum.Stage_1 => "1",
-                StageNum.Stage_2 => "2",
-                StageNum.Stage_3 => "3",
+                StageNum.Stage_1 => "Stage 1",
+                StageNum.Stage_2 => "Stage 2",
+                StageNum.Stage_3 => "Stage 3",
                 _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
             };
         }
