@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Alphabet.Data;
+using Alphabet.Gameplay.EventHandler;
 using Alphabet.Item;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,10 @@ namespace Alphabet.Gameplay.Controller
             _letterDatas.AddRange(spawnedDatas);
             
             // Other
+            foreach (var letter in letterObjectivesUI)
+            {
+                letter.SetActive(false);
+            }
             tutorialPanelUI.SetActive(true);
         }
 
@@ -60,7 +65,7 @@ namespace Alphabet.Gameplay.Controller
             var j = 0;
             foreach (var letter in letterObjectivesUI)
             {
-                if (j >= _letterDatas.Count - 1) break;
+                if (j > _letterDatas.Count - 1) break;
 
                 var letterImage = letter.GetComponent<Image>();
                 letterImage.sprite = _letterDatas[j].LetterSprite;
@@ -77,6 +82,7 @@ namespace Alphabet.Gameplay.Controller
                 if (!letter.activeSelf) continue;
                 letter.SetActive(false);
             }
+            GameEventHandler.GameStartEvent();
         }
 
         #endregion

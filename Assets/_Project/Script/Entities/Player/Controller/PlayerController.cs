@@ -6,6 +6,7 @@ using Alphabet.Data;
 using Alphabet.Database;
 using Spine.Unity;
 using Spine;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Entities.Player
 {
@@ -37,15 +38,9 @@ namespace Alphabet.Entities.Player
             set => currentMoveSpeed = value;
         }
         public bool CanMove { get; private set; }
-
-        // [Header("Animation")]
-        // private SkeletonMecanim _skeletonMecanim;
-        // private Skeleton _playerSkeleton;
-        // public Animator PlayerAnimator {get; private set;}
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
-        private PlayerAnimation _playerAnimation;
         public PlayerPickThrow PlayerPickThrow { get; private set; }
         public AnalogInputHandler PlayerInputHandler { get; private set; }
 
@@ -57,34 +52,33 @@ namespace Alphabet.Entities.Player
         {
             // Component
             _playerRb = GetComponent<Rigidbody2D>();
-            _playerAnimation = GetComponentInChildren<PlayerAnimation>();
-            // PlayerAnimator = GetComponentInChildren<Animator>();
-
-            // Animation
-            // _skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
-            // _playerSkeleton = _skeletonMecanim.skeleton;
 
             // Handler
             PlayerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<AnalogInputHandler>();
         }
 
+        
+        private void OnEnable()
+        {
+            GameEventHandler.OnGameStart += StartMovement;
+        }
+
+        private void OnDisable()
+        {
+            GameEventHandler.OnGameStart -= StartMovement;
+        }
+
         private void Start()
         {
             InitializePlayer();
-            StartMovement();
+            // StopMovement();
         }
 
         private void FixedUpdate()
         {
             PlayerMove();
         }
-        
-        // private void Update()
-        // {
-        //     PlayerAnimation();
-        //     PlayerFlip();
-        // }
         
         #endregion
         
@@ -128,32 +122,6 @@ namespace Alphabet.Entities.Player
             
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
-
-        // private void PlayerAnimation()
-        // {
-        //     if (movementDirection != Vector2.zero)
-        //     {
-        //         PlayerAnimator.SetFloat(HORIZONTAL_KEY, movementDirection.x);
-        //         PlayerAnimator.SetFloat(VERTICAL_KEY, movementDirection.y);
-        //         PlayerAnimator.SetBool(IS_MOVE, true);
-        //     }
-        //     else
-        //     {
-        //         PlayerAnimator.SetBool(IS_MOVE, false);
-        //     }
-        // }
-
-        // private void PlayerFlip()
-        // {
-        //     if (!CanFlip()) return;
-        //     _playerSkeleton.ScaleX *= -1;
-        // }
-
-        // private bool CanFlip()
-        // {
-        //     var direction = movementDirection;
-        //     return direction.x < 0 && _playerSkeleton.ScaleX > 0 || direction.x > 0 && _playerSkeleton.ScaleX < 0;
-        // }
         
         // !-- Helpers/Utilities
         public void StartMovement()

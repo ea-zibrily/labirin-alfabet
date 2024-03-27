@@ -46,6 +46,7 @@ namespace Alphabet.Managers
 
         private void OnEnable()
         {
+            GameEventHandler.OnGameStart += GameStart;
             GameEventHandler.OnGameWin += GameWin;
             GameEventHandler.OnGameOver += GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
@@ -53,14 +54,10 @@ namespace Alphabet.Managers
         
         private void OnDisable()
         {
+            GameEventHandler.OnGameStart -= GameStart;
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage -= ContinueStage;
-        }
-
-        private void Start()
-        {
-            IsGameStart = true;
         }
 
         #endregion
@@ -81,6 +78,11 @@ namespace Alphabet.Managers
         #region Game State Callbacks
         
         // !-- Core Functionality
+        private void GameStart()
+        {
+            IsGameStart = true;
+        }
+
         private void GameWin()
         {
             IsGameStart = false;
@@ -94,9 +96,9 @@ namespace Alphabet.Managers
         
         private void GameOver()
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
             IsGameStart = false;
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
             
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;

@@ -44,14 +44,21 @@ namespace Alphabet.Entities.Enemy
             CameraEventHandler.OnCameraShiftIn += _enemyBase.StopMovement;
             CameraEventHandler.OnCameraShiftOut += _enemyBase.StartMovement;
 
+            // Game
+            GameEventHandler.OnGameStart += _enemyBase.StartMovement;
+
             // Feedback
             OnEnemyStunned += UpdateStunBar;
         }
         
         private void OnDisable()
         {
+            // Camera
             CameraEventHandler.OnCameraShiftIn -= _enemyBase.StopMovement;
             CameraEventHandler.OnCameraShiftOut -= _enemyBase.StartMovement;
+
+            // Game
+            GameEventHandler.OnGameStart -= _enemyBase.StartMovement;
 
             // Feedback
             OnEnemyStunned -= UpdateStunBar;
@@ -61,6 +68,7 @@ namespace Alphabet.Entities.Enemy
         {
             ActivateTrigger();
             InitializeStunBar();
+            _enemyBase.StopMovement();
         }
 
         #endregion
