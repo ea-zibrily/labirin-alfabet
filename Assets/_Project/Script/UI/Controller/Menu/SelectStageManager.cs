@@ -30,8 +30,12 @@ namespace Alphabet.UI
         [SerializeField] private StageContent[] stageContents;
         
         // TODO: Pas udah fix, panel index iki gausa di serializ
-        [SerializeField] private int _currentPanelIndex;
+        private int _currentPanelIndex;
         private int StageCount =>  System.Enum.GetNames(typeof(Level)).Length;
+
+        [Header("Image Data")]
+        [SerializeField] private Color lockedStageColor;
+        [SerializeField] private Material imageMaterial;
 
         [Header("Reference")]
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
@@ -109,29 +113,55 @@ namespace Alphabet.UI
             simpleScrollSnap.Setup();
         }
 
-
         private void SetSelectedPanel()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
             
             var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
-            var stageChildCount = stagePanel.transform.childCount;
             var isLevelUnlocked = IsLevelUnlocked(_currentPanelIndex);
+            var isActivateButton = isLevelUnlocked || _currentPanelIndex is 0;
 
             SetHeadlineText(stageName.ToUpper());
-            ExploreButtonUI.interactable = _currentPanelIndex is 0 || isLevelUnlocked;
+            SetExploreButtonState(isActivateButton, ExploreButtonUI);
 
             if (_currentPanelIndex <= 0) return;
-            for (var i = 0; i < stageChildCount - 1; i++)
-            {
-                var stageChild = stagePanel.transform.GetChild(i);
-                stageChild.GetComponent<Image>().color = isLevelUnlocked ? Color.white : Color.grey;
+            SetStageThumbnailState(isLevelUnlocked, stagePanel);   
+        }
 
-                if (i is 1 && !isLevelUnlocked)
-                {
-                    stageChild.gameObject.SetActive(false);
-                }
+        private void SetExploreButtonState(bool isUnlocked, Button button)
+        {
+            var canvasGroup = button.GetComponent<CanvasGroup>();
+            var buttonImage = button.GetComponent<Image>();
+
+            if (isUnlocked)
+            {
+                ExploreButtonUI.interactable = true;
+                canvasGroup.enabled = false;
+
+                if (buttonImage.material != null) return;
+                buttonImage.material = null;
+            }
+            else
+            {
+                ExploreButtonUI.interactable = false;
+                canvasGroup.enabled = true;
+
+                if (buttonImage.material == null) return;
+                buttonImage.material = imageMaterial;
+            }
+        }
+
+        private void SetStageThumbnailState(bool isUnlocked, GameObject stagePanel)
+        {
+            var stageChild = stagePanel.transform.GetChild(0);
+            var stageThumbnail = stageChild.GetComponent<Image>();
+            stageThumbnail.color = isUnlocked ? Color.white : lockedStageColor;
+            stageThumbnail.material = isUnlocked ? null : imageMaterial;
+
+            if (stageChild.childCount > 1)
+            {
+                stageChild.GetChild(1).gameObject.SetActive(!isUnlocked);
             }
         }
         

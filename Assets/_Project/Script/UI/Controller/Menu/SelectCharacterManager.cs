@@ -26,6 +26,7 @@ namespace Alphabet.UI
         [SerializeField] CharacterComponent[] characterComponents;
         [SerializeField] private GameObject selectCharacterPanelUI;
         [SerializeField] private Button closeButtonUI;
+        [SerializeField] private Color unselectedColor;
 
         private Dictionary<Button, int> _selectButtonNums;
         private int _characterIndex;
@@ -109,6 +110,34 @@ namespace Alphabet.UI
             SelectCharacter(_characterIndex);
         }
 
+        // private void SelectCharacter(int index)
+        // {
+        //     if (index > characterComponents.Length)
+        //     {
+        //         Debug.LogError("index kebanaykan bvrok");
+        //         return;
+        //     }
+
+        //     // Selected
+        //     var selectComponent = characterComponents[index];
+        //     var selectIcon = selectComponent.CharacterButton.GetComponentInChildren<Image>();
+
+        //     selectIcon.color = Color.white;
+        //     selectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(true);
+        //     TweenScaledButton(selectComponent.CharacterButton.gameObject, isSelect: true);
+        //     selectComponent.SelectButton.gameObject.SetActive(true);
+
+        //     // Unselected
+        //     var unselectIndex = index >= 1 ? index - 1 : index + 1;
+        //     var unselectComponent = characterComponents[unselectIndex];
+        //     var unselectIcon = unselectComponent.CharacterButton.GetComponentInChildren<Image>();
+
+        //     unselectIcon.color = unselectedColor;
+        //     unselectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(false);
+        //     TweenScaledButton(unselectComponent.CharacterButton.gameObject, isSelect: false);
+        //     unselectComponent.SelectButton.gameObject.SetActive(false);
+        // }
+
         private void SelectCharacter(int index)
         {
             if (index > characterComponents.Length)
@@ -117,20 +146,42 @@ namespace Alphabet.UI
                 return;
             }
 
-            // Selected
-            var selectComponent = characterComponents[index];
+            // Set Selected and Unselected
+            SetSelection(index, true);
+            SetSelection(GetUnselectedIndex(index), false);
+        }
 
-            selectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(true);
-            TweenScaledButton(selectComponent.CharacterButton.gameObject, isSelect: true);
-            selectComponent.SelectButton.gameObject.SetActive(true);
+        private void SetSelection(int index, bool isSelected)
+        {
+            var component = characterComponents[index];
+            if (isSelected)
+            {
+                SetSelectCharacter(component);
+            }
+            else
+            {
+                SetUnselectCharacter(component);
+            }
+        }
 
-            // Deselected
-            var desselectedIndex = index >= 1 ? index - 1 : index + 1;
-            var desselectComponent = characterComponents[desselectedIndex];
+        private void SetSelectCharacter(CharacterComponent component)
+        {
+            var selectIcon = component.CharacterButton.GetComponentInChildren<Image>();
 
-            desselectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(false);
-            TweenScaledButton(desselectComponent.CharacterButton.gameObject, isSelect: false);
-            desselectComponent.SelectButton.gameObject.SetActive(false);
+            component.Highlight.transform.GetChild(0).gameObject.SetActive(true);
+            TweenScaledButton(component.CharacterButton.gameObject, true);
+            component.SelectButton.gameObject.SetActive(true);
+            selectIcon.color = Color.white;
+        }
+
+        private void SetUnselectCharacter(CharacterComponent component)
+        {
+            var unselectIcon = component.CharacterButton.GetComponentInChildren<Image>();
+
+            component.Highlight.transform.GetChild(0).gameObject.SetActive(false);
+            TweenScaledButton(component.CharacterButton.gameObject, false);
+            component.SelectButton.gameObject.SetActive(false);
+            unselectIcon.color = unselectedColor;
         }
 
         // !-- Helper/Utilities
@@ -141,6 +192,11 @@ namespace Alphabet.UI
             var targetScale = isSelect ? upperScale : defaultScale;
 
             LeanTween.scale(target, targetScale, startTweenDuration).setEase(LeanTweenType.easeOutBack);
+        }
+        
+        private int GetUnselectedIndex(int index)
+        {
+            return index >= 1 ? index - 1 : index + 1;
         }
 
         #endregion

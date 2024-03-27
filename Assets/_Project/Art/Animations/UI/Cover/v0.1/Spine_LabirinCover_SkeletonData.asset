@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: Spine_MC_SkeletonData
+  m_Name: Spine_LabirinCover_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 24b2177f685355948bc69d32341289d7, type: 2}
+  - {fileID: 11400000, guid: eb5558ec9cbb0164593ace138520676a, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: f75c7db2070a3f84b98d809aacc3bcc2, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 1a67720acd6eff04d933c4176f4bdc6a, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
@@ -27,5 +27,5 @@ MonoBehaviour:
   fromAnimation: []
   toAnimation: []
   duration: []
-  defaultMix: 0
+  defaultMix: 0.2
   controller: {fileID: 0}

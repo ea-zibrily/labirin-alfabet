@@ -31,6 +31,7 @@ namespace Alphabet.Managers
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
+        private TutorialController _tutorialController;
         private StageMarker _stageMarker;
         
         #endregion
@@ -70,6 +71,7 @@ namespace Alphabet.Managers
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
@@ -115,6 +117,7 @@ namespace Alphabet.Managers
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.InitializeNewStage();
+            _tutorialController.CallTutorial();
             _stageMarker.SetStageNotification();
             _timeController.InitializeTimer();
             PlayerSpawner.SpawnPlayerEvent();

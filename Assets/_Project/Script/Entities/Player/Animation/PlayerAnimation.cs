@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine.Unity;
 using Spine;
+using Spine.Unity;
 
 namespace Alphabet.Entities.Player
 {
