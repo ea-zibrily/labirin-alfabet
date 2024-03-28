@@ -156,11 +156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nerfedSpeedMultiplier: 1
-  pickAreaTransform: {fileID: 7807138492438561508}
   pickAreaRadius: 0.7
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  pickAreaMultiplier: {x: 0, y: 0, z: 0}
   throwDelayDuration: 0.15
   throwSpeed: 7
   interactButtonUI: {fileID: 0}
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickSize: {x: 300, y: 300}
   isHalfScreen: 0
+  isClampPosition: 0
 --- !u!1 &3105554579227310161
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +264,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -436,6 +437,3 @@ MonoBehaviour:
   flashNumber: 4
   flashDuration: 0.07
   flashColor: {r: 1, g: 0, b: 0, a: 0.6}
-  letterObjects:
-  - LetterObjects: []
-  - LetterObjects: []
