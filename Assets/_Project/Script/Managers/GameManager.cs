@@ -81,6 +81,7 @@ namespace Alphabet.Managers
         private void GameStart()
         {
             IsGameStart = true;
+            Debug.LogWarning("starrr");
         }
 
         private void GameWin()
@@ -120,17 +121,19 @@ namespace Alphabet.Managers
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.InitializeNewStage();
             _tutorialController.CallTutorial();
-            _stageMarker.SetStageNotification();
+            _stageMarker.TopMarker();
             _timeController.InitializeTimer();
+            _playerController.SetDirectionbyVector(Vector2.down);
             PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();
             
-            yield return new WaitForSeconds(FADE_IN_DELAY);
-            _playerController.StartMovement();
-            _timeController.IsTimerStart = true;
-            IsGameStart = true;
+            // yield return new WaitForSeconds(FADE_IN_DELAY);
+            // GameEventHandler.GameStartEvent();
+            // _playerController.StartMovement();
+            // _timeController.IsTimerStart = true;
+            // IsGameStart = true;
         }
         
         #endregion

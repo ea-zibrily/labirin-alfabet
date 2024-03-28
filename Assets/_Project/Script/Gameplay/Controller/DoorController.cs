@@ -84,7 +84,7 @@ namespace Alphabet.Gameplay.Controller
         {
             yield return new WaitForSeconds(cameraMoveInDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
-            _playerController.SetPlayerDirection(gameObject.transform);
+            _playerController.SetDirectionbyTransform(gameObject.transform);
             CameraEventHandler.CameraShiftInEvent();
             
             yield return new WaitForSeconds(doorOpenDelay);

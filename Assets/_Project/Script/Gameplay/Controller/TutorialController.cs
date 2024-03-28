@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Alphabet.Data;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Item;
+using Alphabet.Stage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +22,16 @@ namespace Alphabet.Gameplay.Controller
 
         [Header("References")]
         [SerializeField] private LetterPooler letterPooler;
+        private StageMarker _stageMarker;
 
         #endregion
 
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
+        }
 
         private void Start()
         {
@@ -82,7 +89,7 @@ namespace Alphabet.Gameplay.Controller
                 if (!letter.activeSelf) continue;
                 letter.SetActive(false);
             }
-            GameEventHandler.GameStartEvent();
+           _stageMarker.ShowNotification();
         }
 
         #endregion

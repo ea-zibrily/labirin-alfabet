@@ -72,7 +72,7 @@ namespace Alphabet.Entities.Player
         private void Start()
         {
             InitializePlayer();
-            // StopMovement();
+            StopMovement();
         }
 
         private void FixedUpdate()
@@ -93,7 +93,6 @@ namespace Alphabet.Entities.Player
             // Component
             gameObject.name = playerData.PlayerName;
             CurrentMoveSpeed = playerData.PlayerMoveSpeed;
-            // _playerAnimator.runtimeAnimatorController = playerData.PlayerAnimatorController;
         }
         
         // !-- Core Functionality
@@ -138,13 +137,17 @@ namespace Alphabet.Entities.Player
             PlayerInputHandler.DisableTouchInput();
         }
         
-        public void SetPlayerDirection(Transform value)
+        public void SetDirectionbyVector(Vector2 value)
+        {
+            movementDirection = value;
+        }
+
+        public void SetDirectionbyTransform(Transform value)
         {
             var direction = value.transform.position - transform.position;
             direction.Normalize();
 
-            // PlayerAnimator.SetFloat(HORIZONTAL_KEY, direction.x);
-            // PlayerAnimator.SetFloat(VERTICAL_KEY, direction.y);
+            movementDirection = direction;
         }
         
         #endregion
