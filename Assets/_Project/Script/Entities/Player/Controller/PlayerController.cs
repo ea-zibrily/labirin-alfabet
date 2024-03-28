@@ -72,7 +72,6 @@ namespace Alphabet.Entities.Player
         private void Start()
         {
             InitializePlayer();
-            StopMovement();
         }
 
         private void FixedUpdate()

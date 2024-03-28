@@ -11199,7 +11199,6 @@ MonoBehaviour:
   stageNameTextUI: {fileID: 2134506358}
   stageNumberTextUI: {fileID: 860170159}
   notificationCanvasGroup: {fileID: 447544767}
-  controllerCanvas: {fileID: 1754008028}
   markTextUI: {fileID: 1431014079}
 --- !u!1 &725380250
 GameObject:

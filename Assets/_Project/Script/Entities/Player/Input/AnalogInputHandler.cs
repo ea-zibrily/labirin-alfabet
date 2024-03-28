@@ -27,6 +27,7 @@ namespace Alphabet.Entities.Player
         private GameObject _joystickObjectUI;
         private FloatingJoystickHandler _floatingJoystickHandler;
         private Finger _movementFinger;
+        private PlayerController _playerController;
         
         #endregion
 
@@ -36,6 +37,7 @@ namespace Alphabet.Entities.Player
         {
             _joystickObjectUI = GameObject.FindGameObjectWithTag("Joystick");
             _floatingJoystickHandler = _joystickObjectUI.GetComponent<FloatingJoystickHandler>();
+            _playerController = transform.parent.gameObject.GetComponent<PlayerController>();
         }
         
         private void OnEnable()
@@ -107,6 +109,8 @@ namespace Alphabet.Entities.Player
         // !-- Initialization
         private void InitializeTouchOnScreen(Finger fingerOn)
         {
+            if (!_playerController.CanMove) return;
+            
             _movementFinger = fingerOn;
             Direction = Vector2.zero;
             _joystickObjectUI.SetActive(true);
