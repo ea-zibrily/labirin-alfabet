@@ -185,7 +185,10 @@ namespace Alphabet.Entities.Player
         private void ChangeAnimation(string state)
         {
             var isLooping = ShouldAnimationLoop(state);
-            _playerAnimationState.SetAnimation(0, state, isLooping);
+            var buffedTimeScale = _playerController.PlayerPickThrow.IsHoldedItem ? 1.2f : 1.5f;
+            var timeScale = _playerController.IsBuffed ? buffedTimeScale : 1f;
+            
+            _playerAnimationState.SetAnimation(0, state, isLooping).TimeScale = timeScale;
         }
 
         private void PlayerFlip()

@@ -38,6 +38,7 @@ namespace Alphabet.Entities.Player
             set => currentMoveSpeed = value;
         }
         public bool CanMove { get; private set; }
+        public bool IsBuffed { get; set; }
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;

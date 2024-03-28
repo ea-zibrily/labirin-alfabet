@@ -69,10 +69,10 @@ namespace Alphabet.Stage
             _currentLevel = StageHelper.GetStageStringValue(levelIndex);
             _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
 
-            stageNameTextUI.text = _currentLevel;
+            stageNameTextUI.text = _currentLevel.ToUpper();
             stageNumberTextUI.text = _currentStage;
         }
-
+        
         private IEnumerator ShowNotificationRoutine()
         {
             SetNotification();
