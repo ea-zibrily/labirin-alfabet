@@ -140,14 +140,16 @@ namespace Alphabet.Entities.Player
         public void SetDirectionbyVector(Vector2 value)
         {
             movementDirection = value;
+            movementDirection = Vector2.zero;
         }
-
+        
         public void SetDirectionbyTransform(Transform value)
         {
             var direction = value.transform.position - transform.position;
             direction.Normalize();
 
             movementDirection = direction;
+            movementDirection = Vector2.zero;
         }
         
         #endregion
