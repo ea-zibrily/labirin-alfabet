@@ -116,40 +116,38 @@ namespace Alphabet.UI
 
         private void SetSelectedPanel()
         {
-            if (GameDatabase.Instance.IsAvailableUnlock) return;
-
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
             
             var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
             var isLevelUnlocked = IsLevelUnlocked(_currentPanelIndex);
             var isActivateButton = isLevelUnlocked || _currentPanelIndex is 0;
+            var isAnimate = GameDatabase.Instance.LoadLevelClearIndex() <= _currentPanelIndex 
+                        && GameDatabase.Instance.IsAnimateUnlock;
 
             SetHeadlineText(stageName.ToUpper());
-            SetExploreButtonState(isActivateButton, ExploreButtonUI);
-
-            if (_currentPanelIndex <= 0) return;
+            SetExploreButtonState(isActivateButton, isAnimate, ExploreButtonUI);
+            
+            if (_currentPanelIndex <= 0 || GameDatabase.Instance.IsAnimateUnlock) return;
             SetStageThumbnailState(isLevelUnlocked, stagePanel);   
         }
 
-        private void SetExploreButtonState(bool isUnlocked, Button button)
+        private void SetExploreButtonState(bool isUnlocked, bool isAnimate, Button button)
         {
             var buttonImage = button.GetComponent<Image>();
             var canvasGroup = button.GetComponent<CanvasGroup>();
 
-            if (isUnlocked)
+            if (isAnimate)
             {
-                ExploreButtonUI.interactable = true;
+                ExploreButtonUI.interactable = false;
                 canvasGroup.enabled = false;
-
-                buttonImage.material = null;
+                buttonImage.material = imageMaterial;
             }
             else
             {
-                ExploreButtonUI.interactable = false;
-                canvasGroup.enabled = true;
-
-                buttonImage.material = imageMaterial;
+                ExploreButtonUI.interactable = isUnlocked;
+                canvasGroup.enabled = !isUnlocked;
+                buttonImage.material = isUnlocked ? null : imageMaterial;
             }
         }
 

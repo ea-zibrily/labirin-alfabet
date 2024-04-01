@@ -37,7 +37,7 @@ namespace Alphabet.UI
         {
             InitializeContent();
             
-            if (!GameDatabase.Instance.IsAvailableUnlock) return;
+            if (!GameDatabase.Instance.IsAnimateUnlock) return;
 
             InitializeComponent();
             AnimateUnlockStage();
@@ -62,8 +62,9 @@ namespace Alphabet.UI
         private void InitializeComponent()
         {
             _panelIndex = GameDatabase.Instance.LoadLevelClearIndex();
-            _stageImageUI = _stageContents[1].transform.GetChild(0).GetComponent<Image>();
-            _padlockImageUI = _stageContents[1].transform.GetChild(1).GetComponent<Image>();
+            Debug.Log(_panelIndex);
+            _stageImageUI = _stageContents[_panelIndex].transform.GetChild(0).GetComponent<Image>();
+            _padlockImageUI = _stageContents[_panelIndex].transform.GetChild(1).GetComponent<Image>();
         }
 
         // !-- Core Functionality
@@ -74,9 +75,9 @@ namespace Alphabet.UI
 
         private IEnumerator UnlockStageRoutine()
         {
+            blockerPanelUI.SetActive(true);
             yield return new WaitForSeconds(unlockDelayDuration);
 
-            blockerPanelUI.SetActive(true);
             menuController.OnPlayButton();
             yield return new WaitForSeconds(eachDelayDuration);
 
