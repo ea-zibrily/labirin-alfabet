@@ -81,7 +81,6 @@ namespace Alphabet.Managers
         private void GameStart()
         {
             IsGameStart = true;
-            Debug.LogWarning("starrr");
         }
 
         private void GameWin()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Item;
+using System.Numerics;
 
 namespace Alphabet.Entities.Player
 {
@@ -17,7 +18,8 @@ namespace Alphabet.Entities.Player
         [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private float pickAreaRadius;
         [SerializeField] private LayerMask itemLayerMask;
-        [SerializeField] private Vector3 pickAreaMultiplier;
+        [SerializeField] private UnityEngine.Vector3 pickAreaMultiplier;
+        [SerializeField] private GameObject pickColliderObject;
 
         private float _normalMoveSpeed;
         private GameObject _pickItemObject;
@@ -29,7 +31,7 @@ namespace Alphabet.Entities.Player
         public event Action<float> OnPlayerInteract;
 
         public float NerfedMultiplier => nerfedSpeedMultiplier;
-        public Vector3 PickDirection { get; set; }
+        public UnityEngine.Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
         [SerializeField] private float throwDelayDuration;
@@ -62,8 +64,12 @@ namespace Alphabet.Entities.Player
         {
             if (_holdedItemObject)
             {
-                var throwPosition =  transform.position + pickAreaMultiplier + PickDirection;
+                var multiplier = GetMultiplierValue();
+                var throwPosition = transform.position + PickDirection - multiplier;
+
                 _holdedItemObject.transform.position = throwPosition;
+                pickColliderObject.transform.position = throwPosition;
+                pickColliderObject.SetActive(true);
                 interactButtonUI.gameObject.SetActive(true);
             }
             else
@@ -78,6 +84,7 @@ namespace Alphabet.Entities.Player
                 }
                 else
                 {
+                    pickColliderObject.SetActive(false);
                     interactButtonUI.gameObject.SetActive(false);
                 }
             }
@@ -92,7 +99,7 @@ namespace Alphabet.Entities.Player
         {
             _holdedItemObject = null;
             _normalMoveSpeed = _playerController.DefaultMoveSpeed;
-            PickDirection = Vector3.zero;
+            PickDirection = UnityEngine.Vector3.zero;
             IsThrowItem = false;
             
             interactButtonUI.onClick.AddListener(PickThrowItem);
@@ -133,7 +140,6 @@ namespace Alphabet.Entities.Player
 
         public void CallThrowItem()
         {
-            Debug.Log("thorw!");
             var item = _holdedItemObject;
             if (!item.TryGetComponent<StunUnique>(out var stunItem)) return;
 
@@ -150,26 +156,26 @@ namespace Alphabet.Entities.Player
             _holdedItemObject = null;
         }
 
-        // private IEnumerator ThrowItemRoutine(GameObject item)
-        // {
-        //     if (!item.TryGetComponent<StunUnique>(out var stunItem)) yield break;
-
-        //     _playerController.StopMovement();
-        //     yield return new WaitForSeconds(throwDelayDuration);
-
-        //     stunItem.GetComponent<Rigidbody2D>().simulated = true;
-        //     stunItem.ThrowItem(PickDirection, throwSpeed);
-
-        //     _playerController.CurrentMoveSpeed = _normalMoveSpeed;
-        //     OnPlayerInteract?.Invoke(0f);
-        //     _playerController.StartMovement();
-        // }
-
         // !-- Helper/Utilities
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(transform.position + PickDirection, pickAreaRadius);
             Gizmos.color = Color.red;
+        }
+        
+        private UnityEngine.Vector3 GetMultiplierValue()
+        {
+            var multiplierValue = UnityEngine.Vector3.zero;
+            if (PickDirection.x != 0)
+            {
+                var xMultiplier = Mathf.Sign(PickDirection.x) * pickAreaMultiplier.x;
+                multiplierValue = new UnityEngine.Vector3(xMultiplier, pickAreaMultiplier.y, pickAreaMultiplier.z);
+            }
+        
+            if (PickDirection.y > 0) multiplierValue = UnityEngine.Vector3.zero;
+            if (PickDirection.y < 0) multiplierValue = new UnityEngine.Vector3(0f, pickAreaMultiplier.y, pickAreaMultiplier.z);
+
+            return multiplierValue.normalized;
         }
         
         #endregion
