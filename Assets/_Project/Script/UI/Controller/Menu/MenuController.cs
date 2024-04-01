@@ -50,7 +50,7 @@ namespace Alphabet.UI
         }
 
         // !-- Core Functionality
-        private void OnPlayButton()
+        public void OnPlayButton()
         {
             selectStagePanelUI.SetActive(true);
         }

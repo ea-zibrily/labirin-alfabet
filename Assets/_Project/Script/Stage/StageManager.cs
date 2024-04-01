@@ -79,7 +79,19 @@ namespace Alphabet.Stage
         public void SaveClearStage()
         {
             var currentLevel = CurrentLevelList.ToString();
+            SaveClearIndex(currentLevel);
             GameDatabase.Instance.SaveLevelClear(currentLevel, true);
+        }
+
+        private void SaveClearIndex(string levelName)
+        {
+            // Checker
+            var levelCondition = GameDatabase.Instance.LoadLevelConditions(levelName);
+            if (levelCondition) return;
+            
+            var levelIndex = (int)System.Enum.Parse(typeof(Level), levelName);
+            levelIndex = levelIndex < System.Enum.GetNames(typeof(Level)).Length - 1 ? levelIndex + 1 : 0;
+            GameDatabase.Instance.SaveLevelClearIndex(levelIndex);
         }
 
         private void LoadNextStage()

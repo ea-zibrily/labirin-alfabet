@@ -39,6 +39,7 @@ namespace Alphabet.UI
 
         [Header("Reference")]
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
+        public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
 
         #endregion
 
@@ -115,6 +116,8 @@ namespace Alphabet.UI
 
         private void SetSelectedPanel()
         {
+            if (GameDatabase.Instance.IsAvailableUnlock) return;
+
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
             
             var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
@@ -131,15 +134,14 @@ namespace Alphabet.UI
 
         private void SetExploreButtonState(bool isUnlocked, Button button)
         {
-            var canvasGroup = button.GetComponent<CanvasGroup>();
             var buttonImage = button.GetComponent<Image>();
+            var canvasGroup = button.GetComponent<CanvasGroup>();
 
             if (isUnlocked)
             {
                 ExploreButtonUI.interactable = true;
                 canvasGroup.enabled = false;
 
-                if (buttonImage.material != null) return;
                 buttonImage.material = null;
             }
             else
@@ -147,7 +149,6 @@ namespace Alphabet.UI
                 ExploreButtonUI.interactable = false;
                 canvasGroup.enabled = true;
 
-                if (buttonImage.material == null) return;
                 buttonImage.material = imageMaterial;
             }
         }

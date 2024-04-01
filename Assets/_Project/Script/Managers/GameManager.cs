@@ -128,12 +128,6 @@ namespace Alphabet.Managers
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();
-            
-            // yield return new WaitForSeconds(FADE_IN_DELAY);
-            // GameEventHandler.GameStartEvent();
-            // _playerController.StartMovement();
-            // _timeController.IsTimerStart = true;
-            // IsGameStart = true;
         }
         
         #endregion

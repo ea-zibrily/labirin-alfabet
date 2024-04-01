@@ -14,6 +14,9 @@ namespace Alphabet.Database
         //-- Game Database
         private Dictionary<int, bool> _isLetterCollected;
         private Dictionary<string, bool> _isLevelClear;
+        private int _levelClearIndex;
+        
+        public bool IsAvailableUnlock => _levelClearIndex > 0;
         
         //-- Constant Variable
         public const int LETTER_COUNT = 26;
@@ -38,6 +41,7 @@ namespace Alphabet.Database
             
             _isLetterCollected = InitializeLetterCollected();
             _isLevelClear = InitializeLevelClear();
+            _levelClearIndex = 0;
         }
         
         private Dictionary<int, bool> InitializeLetterCollected()
@@ -80,7 +84,7 @@ namespace Alphabet.Database
             return _isLetterCollected[letterId];
         }
         
-        // Stage Clear
+        // Level Clear
         public void SaveLevelClear(string levelName, bool value)
         {
             if (_isLevelClear.ContainsKey(levelName))
@@ -92,6 +96,14 @@ namespace Alphabet.Database
         public bool LoadLevelConditions(string levelName)
         {
             return _isLevelClear[levelName];
+        }
+
+        // Level Clear Index
+        public void SaveLevelClearIndex(int value) => _levelClearIndex = value;
+        public void ResetLevelClearIndex() => _levelClearIndex = 0;
+        public int LoadLevelClearIndex() 
+        {
+            return _levelClearIndex;
         }
 
         #endregion
