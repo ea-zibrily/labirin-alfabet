@@ -30814,14 +30814,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2264517935041802179, guid: d5711c73a2808a4478819ba1c8d3784a, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2642433346054654677, guid: d5711c73a2808a4478819ba1c8d3784a, type: 3}
       propertyPath: interactButtonUI
       value: 
       objectReference: {fileID: 2786638480891422616}
+    - target: {fileID: 4589689534158241786, guid: d5711c73a2808a4478819ba1c8d3784a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7502369574094927297, guid: d5711c73a2808a4478819ba1c8d3784a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -36308,6 +36308,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1792611823752009397, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a36584e8871715e4a99518e5108c40bb, type: 2}
     - target: {fileID: 3187544944437348878, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -36350,7 +36354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 134.1177
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y

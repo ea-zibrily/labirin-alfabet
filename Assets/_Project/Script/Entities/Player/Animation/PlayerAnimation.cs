@@ -10,9 +10,14 @@ namespace Alphabet.Entities.Player
     public class PlayerAnimation : MonoBehaviour
     {
         #region Fields
-
-        // Component
+        
+        [Header("Component")]
+        [SerializeField, Range(0.5f, 2f)] private float speedUpTimescale;
+        [SerializeField, Range(0.5f, 1.5f)] private float holdSpeedUpTimescale;
         [SerializeField] private bool _isRight;
+
+        // Const Variable
+        private const float DEFAULT_TIMESCALE = 1f;
 
         // Animation
         [SpineAnimation] private string _currentState;
@@ -185,8 +190,8 @@ namespace Alphabet.Entities.Player
         private void ChangeAnimation(string state)
         {
             var isLooping = ShouldAnimationLoop(state);
-            var buffedTimeScale = _playerController.PlayerPickThrow.IsHoldedItem ? 1.2f : 1.5f;
-            var timeScale = _playerController.IsBuffed ? buffedTimeScale : 1f;
+            var buffedTimeScale = _playerController.PlayerPickThrow.IsHoldedItem ? holdSpeedUpTimescale : speedUpTimescale;
+            var timeScale = _playerController.IsBuffed ? buffedTimeScale : DEFAULT_TIMESCALE;
             
             _playerAnimationState.SetAnimation(0, state, isLooping).TimeScale = timeScale;
         }
