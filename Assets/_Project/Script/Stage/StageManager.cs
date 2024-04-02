@@ -14,7 +14,6 @@ namespace Alphabet.Stage
         
         [Header("Settings")] 
         public Level CurrentLevelList;
-        public Level NextLevelList;
         [ReadOnly] public StageNum CurrentStageList;
 
         [Header("Stage")]
