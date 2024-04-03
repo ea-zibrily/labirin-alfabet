@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Database;
-using System;
+using Spine.Unity;
 
 namespace Alphabet.UI
 {
@@ -43,6 +44,7 @@ namespace Alphabet.UI
         
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
+        [SerializeField] private SkeletonGraphic[] skeletonGraphic;
 
         #endregion
 

@@ -3360,7 +3360,7 @@ MonoBehaviour:
     Bottom: 0
   useInfiniteScrolling: 1
   infiniteScrollingSpacing: 0.25
-  useOcclusionCulling: 1
+  useOcclusionCulling: 0
   startingPanel: 0
   useSwipeGestures: 1
   minimumSwipeSpeed: 0
@@ -3403,11 +3403,11 @@ MonoBehaviour:
   m_Content: {fileID: 1516940132}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 1
+  m_MovementType: 0
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.01
-  m_ScrollSensitivity: 0
+  m_ScrollSensitivity: 1.5
   m_Viewport: {fileID: 492613645}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -5101,6 +5101,7 @@ MonoBehaviour:
   endTweenDuration: 0.5
   scalingMultiplier: 0.1
   selectStageManager: {fileID: 1874585706}
+  skeletonGraphic: []
 --- !u!1 &835712217
 GameObject:
   m_ObjectHideFlags: 0

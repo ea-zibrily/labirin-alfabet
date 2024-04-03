@@ -126,7 +126,6 @@ namespace Alphabet.Collection
             _canInteract = true;
             
             LeanTween.cancel(gameObject);
-            StopCoroutine(ClickFeedbackRoutine());
             _rectTransform.localScale = _defaultScaling;
         }
 

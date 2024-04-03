@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Item;
 using Alphabet.Database;
-using Alphabet.UI;
 
 namespace Alphabet.Collection
 {
