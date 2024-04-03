@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Alphabet.Gameplay.EventHandler;
-using KevinCastejon.MoreAttributes;
-using UnityEngine.UI;
-using JetBrains.Annotations;
 using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Entities.Enemy
 {
@@ -16,13 +13,12 @@ namespace Alphabet.Entities.Enemy
         [Header("Stun")]
         [SerializeField] private GameObject stunPanelUI;
         [SerializeField] private Image stunFillBarUI;
+
+        private bool _isStunned;
         
         // Const Variable
         private const float MAX_FILL_BAR = 1f;
         private const float MIN_FILL_BAR = 0f;
-        
-        // Event
-        public event Action<float> OnEnemyStunned;
 
         [Header("Reference")]
         private EnemyBase _enemyBase;
@@ -41,36 +37,46 @@ namespace Alphabet.Entities.Enemy
         private void OnEnable()
         {
             // Camera
-            CameraEventHandler.OnCameraShiftIn += _enemyBase.StopMovement;
-            CameraEventHandler.OnCameraShiftOut += _enemyBase.StartMovement;
+            CameraEventHandler.OnCameraShiftIn += CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut += CameraShiftOutEvent;
 
             // Game
             GameEventHandler.OnGameStart += _enemyBase.StartMovement;
-
-            // Feedback
-            OnEnemyStunned += UpdateStunBar;
         }
         
         private void OnDisable()
         {
             // Camera
-            CameraEventHandler.OnCameraShiftIn -= _enemyBase.StopMovement;
-            CameraEventHandler.OnCameraShiftOut -= _enemyBase.StartMovement;
+            CameraEventHandler.OnCameraShiftIn -= CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut -= CameraShiftOutEvent;
 
             // Game
             GameEventHandler.OnGameStart -= _enemyBase.StartMovement;
-
-            // Feedback
-            OnEnemyStunned -= UpdateStunBar;
         }
-
+        
         private void Start()
         {
             ActivateTrigger();
             InitializeStunBar();
+        }
+
+        #endregion
+
+        #region Camera Methods
+
+        // !-- Core Functionality
+        private void CameraShiftInEvent()
+        {
+            if (_isStunned) return;
             _enemyBase.StopMovement();
         }
 
+        private void CameraShiftOutEvent()
+        {
+            if (_isStunned) return;
+            _enemyBase.StartMovement();
+        }
+        
         #endregion
 
         #region Stun Feedback Methods
@@ -78,33 +84,28 @@ namespace Alphabet.Entities.Enemy
         // !-- Initialization
         private void InitializeStunBar()
         {
-            stunFillBarUI.fillAmount = MAX_FILL_BAR;
+            _isStunned = false;
             stunPanelUI.SetActive(false);
+            stunFillBarUI.fillAmount = MAX_FILL_BAR;
         }
 
         // !-- Core Functioanlity
-        public void EnemyStunnedEvent(float duration) => OnEnemyStunned?.Invoke(duration);
-
-        private void UpdateStunBar(float duration)
+        public void PerformStunBar()
         {
             stunFillBarUI.fillAmount = MAX_FILL_BAR;
             stunPanelUI.SetActive(true);
-
-            StartCoroutine(DecreaseBarRoutine(duration));
+            _isStunned = true;
         }
 
-        private IEnumerator DecreaseBarRoutine(float duration)
+        public void DecreaseStunBar(float duration, float elapsedTime)
         {
-            var elapsedTime = 0f;
-            while (elapsedTime < duration)
+            stunFillBarUI.fillAmount = Mathf.Lerp(MAX_FILL_BAR, MIN_FILL_BAR, elapsedTime / duration);
+            if (stunFillBarUI.fillAmount <= MIN_FILL_BAR)
             {
-                elapsedTime += Time.deltaTime;
-                stunFillBarUI.fillAmount = Mathf.Lerp(MAX_FILL_BAR, MIN_FILL_BAR, elapsedTime / duration);
-                yield return null;
+                _isStunned = false;
+                stunPanelUI.SetActive(false);
+                stunFillBarUI.fillAmount = MAX_FILL_BAR;
             }
-
-            stunFillBarUI.fillAmount = MIN_FILL_BAR;
-            stunPanelUI.SetActive(false);
         }
 
         #endregion

@@ -76876,22 +76876,13 @@ MonoBehaviour:
   letterSpawns:
   - StageName: 0
     AmountOfLetter: 3
-    SpawnPointTransforms:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    SpawnPointTransforms: []
   - StageName: 1
     AmountOfLetter: 3
-    SpawnPointTransforms:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    SpawnPointTransforms: []
+  - StageName: 2
+    AmountOfLetter: 4
+    SpawnPointTransforms: []
   _letterContainer: {fileID: 475099918}
 --- !u!1 &1867378743
 GameObject:
@@ -78441,7 +78432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 134.1177
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y

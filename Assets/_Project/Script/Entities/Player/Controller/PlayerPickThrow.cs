@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Item;
-using System.Numerics;
 
 namespace Alphabet.Entities.Player
 {
@@ -18,7 +17,7 @@ namespace Alphabet.Entities.Player
         [SerializeField] private float nerfedSpeedMultiplier;
         [SerializeField] private float pickAreaRadius;
         [SerializeField] private LayerMask itemLayerMask;
-        [SerializeField] private UnityEngine.Vector3 pickAreaMultiplier;
+        [SerializeField] private Vector3 pickAreaMultiplier;
         [SerializeField] private GameObject pickColliderObject;
 
         private float _normalMoveSpeed;
@@ -66,7 +65,7 @@ namespace Alphabet.Entities.Player
             {
                 var multiplier = GetMultiplierValue();
                 var throwPosition = transform.position + PickDirection - multiplier;
-
+                
                 _holdedItemObject.transform.position = throwPosition;
                 pickColliderObject.transform.position = throwPosition;
                 pickColliderObject.SetActive(true);
@@ -99,7 +98,7 @@ namespace Alphabet.Entities.Player
         {
             _holdedItemObject = null;
             _normalMoveSpeed = _playerController.DefaultMoveSpeed;
-            PickDirection = UnityEngine.Vector3.zero;
+            PickDirection = Vector3.zero;
             IsThrowItem = false;
             
             interactButtonUI.onClick.AddListener(PickThrowItem);
@@ -163,19 +162,19 @@ namespace Alphabet.Entities.Player
             Gizmos.color = Color.red;
         }
         
-        private UnityEngine.Vector3 GetMultiplierValue()
+        private Vector3 GetMultiplierValue()
         {
-            var multiplierValue = UnityEngine.Vector3.zero;
+            var multiplierValue = Vector3.zero;
             if (PickDirection.x != 0)
             {
                 var xMultiplier = Mathf.Sign(PickDirection.x) * pickAreaMultiplier.x;
-                multiplierValue = new UnityEngine.Vector3(xMultiplier, pickAreaMultiplier.y, pickAreaMultiplier.z);
+                multiplierValue = new Vector3(xMultiplier, pickAreaMultiplier.y, pickAreaMultiplier.z);
             }
         
-            if (PickDirection.y > 0) multiplierValue = UnityEngine.Vector3.zero;
-            if (PickDirection.y < 0) multiplierValue = new UnityEngine.Vector3(0f, pickAreaMultiplier.y, pickAreaMultiplier.z);
+            if (PickDirection.y > 0) multiplierValue = new Vector3(0f, 0.2f, pickAreaMultiplier.z);
+            if (PickDirection.y < 0) multiplierValue = new Vector3(0f, PickDirection.y, pickAreaMultiplier.z);
 
-            return multiplierValue.normalized;
+            return multiplierValue;
         }
         
         #endregion

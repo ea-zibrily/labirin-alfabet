@@ -16709,7 +16709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478459506}
   m_Layer: 0
-  m_Name: Forest_01
+  m_Name: Ruins_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36784,7 +36784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 774935179}
   m_Layer: 0
-  m_Name: Forest_02
+  m_Name: Ruins_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39290,7 +39290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1228936790}
   m_Layer: 0
-  m_Name: Forest_03
+  m_Name: Ruins_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76884,7 +76884,16 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   - StageName: 1
-    AmountOfLetter: 3
+    AmountOfLetter: 4
+    SpawnPointTransforms:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - StageName: 2
+    AmountOfLetter: 5
     SpawnPointTransforms:
     - {fileID: 0}
     - {fileID: 0}
@@ -78441,7 +78450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 134.1177
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y
