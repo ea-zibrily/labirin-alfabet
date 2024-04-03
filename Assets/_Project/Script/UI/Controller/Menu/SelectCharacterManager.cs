@@ -44,7 +44,6 @@ namespace Alphabet.UI
         
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
-        [SerializeField] private SkeletonGraphic[] skeletonGraphic;
 
         #endregion
 
@@ -111,35 +110,7 @@ namespace Alphabet.UI
             _characterIndex = 0;
             SelectCharacter(_characterIndex);
         }
-
-        // private void SelectCharacter(int index)
-        // {
-        //     if (index > characterComponents.Length)
-        //     {
-        //         Debug.LogError("index kebanaykan bvrok");
-        //         return;
-        //     }
-
-        //     // Selected
-        //     var selectComponent = characterComponents[index];
-        //     var selectIcon = selectComponent.CharacterButton.GetComponentInChildren<Image>();
-
-        //     selectIcon.color = Color.white;
-        //     selectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(true);
-        //     TweenScaledButton(selectComponent.CharacterButton.gameObject, isSelect: true);
-        //     selectComponent.SelectButton.gameObject.SetActive(true);
-
-        //     // Unselected
-        //     var unselectIndex = index >= 1 ? index - 1 : index + 1;
-        //     var unselectComponent = characterComponents[unselectIndex];
-        //     var unselectIcon = unselectComponent.CharacterButton.GetComponentInChildren<Image>();
-
-        //     unselectIcon.color = unselectedColor;
-        //     unselectComponent.Highlight.transform.GetChild(0).gameObject.SetActive(false);
-        //     TweenScaledButton(unselectComponent.CharacterButton.gameObject, isSelect: false);
-        //     unselectComponent.SelectButton.gameObject.SetActive(false);
-        // }
-
+        
         private void SelectCharacter(int index)
         {
             if (index > characterComponents.Length)
@@ -168,22 +139,28 @@ namespace Alphabet.UI
 
         private void SetSelectCharacter(CharacterComponent component)
         {
-            var selectIcon = component.CharacterButton.GetComponentInChildren<Image>();
+            var selectIcon = component.CharacterButton.transform.GetChild(0);
 
             component.Highlight.transform.GetChild(0).gameObject.SetActive(true);
             TweenScaledButton(component.CharacterButton.gameObject, true);
             component.SelectButton.gameObject.SetActive(true);
-            selectIcon.color = Color.white;
+
+            if (!selectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
+            graphic.color = Color.white;
+            graphic.AnimationState.SetAnimation(0, "QF_walk", true).TimeScale = 0.8f;
         }
 
         private void SetUnselectCharacter(CharacterComponent component)
         {
-            var unselectIcon = component.CharacterButton.GetComponentInChildren<Image>();
+            var unselectIcon = component.CharacterButton.transform.GetChild(0);
 
             component.Highlight.transform.GetChild(0).gameObject.SetActive(false);
             TweenScaledButton(component.CharacterButton.gameObject, false);
             component.SelectButton.gameObject.SetActive(false);
-            unselectIcon.color = unselectedColor;
+
+            if (!unselectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
+            graphic.color = unselectedColor;
+            graphic.AnimationState.SetAnimation(0, "QF_idle", true);
         }
 
         // !-- Helper/Utilities
