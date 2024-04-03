@@ -24,7 +24,7 @@ namespace Alphabet.UI
         {
             InitializeJoystick();
         }
-
+        
         #endregion
 
         #region Labirin Kata Callbacks

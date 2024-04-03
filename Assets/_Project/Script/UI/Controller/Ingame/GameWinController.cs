@@ -26,7 +26,7 @@ namespace Alphabet.UI
         // !-- Core Functionality
         private void OnNextButton()
         {
-            // SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
+            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
         
         #endregion

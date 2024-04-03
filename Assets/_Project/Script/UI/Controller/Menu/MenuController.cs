@@ -18,9 +18,18 @@ namespace Alphabet.UI
         [SerializeField] private Button playButtonUI;
         [SerializeField] private Button collectionButtonUI;
 
+        [Header("Reference")]
+        private CollectionManager _collectionManager;
+
         #endregion
 
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            var collectionObject = GameObject.FindGameObjectWithTag("Collection");
+            _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
+        }
 
         private void Start()
         {
@@ -41,7 +50,7 @@ namespace Alphabet.UI
         }
 
         // !-- Core Functionality
-        private void OnPlayButton()
+        public void OnPlayButton()
         {
             selectStagePanelUI.SetActive(true);
         }
@@ -50,6 +59,7 @@ namespace Alphabet.UI
         {
             collectionPanelUI.SetActive(true);
             mainMenuPanelUI.SetActive(false);
+            _collectionManager.OnCollectionOpenEvent();
         }
 
         #endregion

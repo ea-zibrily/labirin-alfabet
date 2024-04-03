@@ -2,9 +2,9 @@
 {
     public enum Level
     {
-        Cave,
-        Forest,
-        Ruins
+        Gua_Aksara,
+        Hutan_Abjad,
+        Kuil_Litera
     }
     
     public enum StageNum

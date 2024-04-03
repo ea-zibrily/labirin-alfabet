@@ -6,6 +6,7 @@ using Alphabet.Stage;
 using Alphabet.Database;
 using Alphabet.Data;
 using Alphabet.Enum;
+using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Item
 {
@@ -20,8 +21,8 @@ namespace Alphabet.Item
         public List<Transform> AvailableSpawnPoint { get; private set; }
         
         // Temp Letter Object Data
-        [SerializeField] private List<LetterData> _lockedLetterDatas;
-        [SerializeField] private List<LetterData> _unlockedLetterDatas;
+        private List<LetterData> _lockedLetterDatas;
+        private List<LetterData> _unlockedLetterDatas;
         
         // Letter Event
         public event Action<LetterData> OnTakeLetter;
@@ -30,6 +31,8 @@ namespace Alphabet.Item
         [SerializeField] private LetterContainer _letterContainer;
         private LetterInterfaceManager _letterUIManager;
         private LetterPooler _letterPooler;
+        private TutorialController _tutorialController;
+        
         public LetterContainer LetterContainer => _letterContainer;
         
         #endregion
@@ -38,8 +41,9 @@ namespace Alphabet.Item
         
         private void Awake()
         {
-            _letterPooler = GameObject.FindGameObjectWithTag("Pooler").GetComponent<LetterPooler>();
             _letterUIManager = GetComponent<LetterInterfaceManager>();
+            _letterPooler = GameObject.FindGameObjectWithTag("Pooler").GetComponent<LetterPooler>();
+            _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
         }
 
         private void OnEnable()
@@ -59,6 +63,7 @@ namespace Alphabet.Item
             InitializePools();
             
             SpawnLetter();
+            _tutorialController.CallTutorial();
         }
         
         #endregion
@@ -106,8 +111,6 @@ namespace Alphabet.Item
         // !-- Core Functionality
         public void SpawnLetter()
         {
-            var letterDatas = GetLetterDatas();
-            
             _letterPooler.CallLetterPool(LetterSpawns);
             _letterUIManager.SetLetterInterface(_letterPooler.SpawnedLetterDatas);
             
@@ -152,7 +155,7 @@ namespace Alphabet.Item
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
-
+            
             return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;
         }
         

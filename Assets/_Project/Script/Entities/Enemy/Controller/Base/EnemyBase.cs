@@ -63,7 +63,7 @@ namespace Alphabet.Entities.Enemy
         protected virtual void InitializeEnemy() 
         {
             transform.parent.name = EnemyData.EnemyName;
-            StartMovement();
+            StopMovement();
         }
 
         protected void SetFirstPosition(Transform[] wayPoints)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Alphabet.Entities.Enemy;
 using Alphabet.Entities.Player;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Item
 {
@@ -16,8 +17,11 @@ namespace Alphabet.Item
         [SerializeField] private float rotateEffectSpeed;
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private GameObject effectParent;
-
+        
+        private float _elapsedTime;
+        private bool _isCameraShift;
         private bool _isCollideWithAnother;
+
         public bool IsItemThrowed { get; private set;}
 
         [Header("Reference")]
@@ -34,6 +38,20 @@ namespace Alphabet.Item
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
+        private void OnEnable()
+        {
+            // Camera
+            CameraEventHandler.OnCameraShiftIn += CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut += CameraShiftOutEvent;
+        }
+
+        private void OnDisable()
+        {
+             // Camera
+            CameraEventHandler.OnCameraShiftIn -= CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut -= CameraShiftOutEvent;
+        }
+
         private void Start()
         {
             InitializeStun();
@@ -45,9 +63,11 @@ namespace Alphabet.Item
 
         private void InitializeStun()
         {
-            IsItemThrowed = false;
+            _elapsedTime = 0f;
             _isCollideWithAnother = false;
             _capsuleCollider.isTrigger = false;
+
+            IsItemThrowed = false;
         }
 
         // !-- Core Functioanlity
@@ -60,28 +80,47 @@ namespace Alphabet.Item
         {
             IsItemThrowed = true;
             _capsuleCollider.isTrigger = true;
-
+            var rotateDirectionSpeed  = direction.x > 0 ? -rotateEffectSpeed : rotateEffectSpeed;
+            
             while (!_isCollideWithAnother)
             {
                 transform.Translate(speed * Time.deltaTime * direction);
-                _spriteRenderer.transform.Rotate(Vector3.forward * -rotateEffectSpeed);
+                _spriteRenderer.transform.Rotate(Vector3.forward * rotateDirectionSpeed);
                 yield return null;
             }
         }
-        
-        private IEnumerator HitEnemyRoutine(EnemyBase enemy)
-        {
-            var enemyManager = enemy.GetComponent<EnemyManager>();
-            enemyManager.EnemyStunnedEvent(stunDuration);
-            // OnStunned?.Invoke(true);
-            enemy.StopMovement();
 
-            yield return HitOtherRoutine(enemy.gameObject);
+        private IEnumerator PerformStunEffect(EnemyBase enemy)
+        {
+            var otherObject = enemy.gameObject;
+            var enemyManager = enemy.GetComponent<EnemyManager>();
+
+            _spriteRenderer.enabled = false;
+            _capsuleCollider.enabled = false;
+            
+            var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
+            stunEffectObject.transform.position = otherObject.transform.position;
+
+            enemy.StopMovement();
+            enemyManager.PerformStunBar();
+            enemyManager.DeactivateTrigger();
+            while (_elapsedTime < stunDuration)
+            {
+                if (!_isCameraShift)
+                {
+                    _elapsedTime += Time.deltaTime;
+                    enemyManager.DecreaseStunBar(stunDuration, _elapsedTime);
+                }
+                yield return null;
+            }
+
+            enemyManager.ActivateTrigger();
             enemy.StartMovement();
-            // OnStunned?.Invoke(false);
+            Destroy(stunEffectObject);
+            Destroy(gameObject);
         }
-        
-        private IEnumerator HitOtherRoutine(GameObject otherObject)
+
+        private IEnumerator PerformHitEffect(GameObject otherObject)
         {
             _spriteRenderer.enabled = false;
             _capsuleCollider.enabled = false;
@@ -89,16 +128,35 @@ namespace Alphabet.Item
             var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
 
-            yield return new WaitForSeconds(stunDuration);
+            while (_elapsedTime < stunDuration)
+            {
+                if (!_isCameraShift)
+                {
+                    _elapsedTime += Time.deltaTime;
+                }
+                yield return null;
+            }
+
             Destroy(stunEffectObject);
             Destroy(gameObject);
         }
 
         // !-- Helper/Utilities
+        public void EnableSprite() => _spriteRenderer.enabled = true;
+        public void DisableSprite() => _spriteRenderer.enabled = false;
+
         private bool CheckColliderTag(Collider2D other)
         {
             return other.CompareTag("Wall") || other.CompareTag("Enemy");
         }
+
+        #endregion
+
+        #region Camera Methods
+
+        // !-- Core Functionality
+        private void CameraShiftInEvent() => _isCameraShift = true;
+        private void CameraShiftOutEvent() => _isCameraShift = false;
 
         #endregion
 
@@ -109,15 +167,14 @@ namespace Alphabet.Item
             if (!IsItemThrowed) return;
             if (!CheckColliderTag(other)) return;
             
-            Debug.Log(other.name);
             _isCollideWithAnother = true;
             if (other.TryGetComponent(out EnemyBase enemy))
             {
-                StartCoroutine(HitEnemyRoutine(enemy));
+                StartCoroutine(PerformStunEffect(enemy));
             }
             else
             {
-                StartCoroutine(HitOtherRoutine(gameObject));
+                StartCoroutine(PerformHitEffect(gameObject));
             }
         }
         

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Alphabet.Entities.Player;
+using Spine;
+using Spine.Unity;
 using UnityEngine;
 
 namespace Alphabet.Item
@@ -29,7 +31,7 @@ namespace Alphabet.Item
         [SerializeField] private Color flashColor;
         
         [Header("Reference")]
-        private SpriteRenderer _playerSpriteRenderer;
+        private Skeleton _playerSkeleton;
         private PlayerPickThrow _playerPickThrow;
         private PlayerFlash _playerFlash;
 
@@ -80,8 +82,8 @@ namespace Alphabet.Item
         {
             base.InitializeOnAwake();
             _playerPickThrow = PlayerController.GetComponent<PlayerPickThrow>();
-            _playerSpriteRenderer = PlayerController.GetComponentInChildren<SpriteRenderer>();
-            _playerFlash = new PlayerFlash(flashColor, flashDuration, _playerSpriteRenderer);
+            _playerSkeleton = PlayerController.GetComponentInChildren<SkeletonAnimation>().Skeleton;
+            _playerFlash = new PlayerFlash(flashColor, flashDuration, _playerSkeleton);
         }
 
         protected override void InitializeOnStart()
@@ -111,6 +113,7 @@ namespace Alphabet.Item
             
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
+            PlayerController.IsBuffed = true;
             StartSpeedEffect();
         }
 
@@ -119,6 +122,7 @@ namespace Alphabet.Item
             base.DeactivateBuff();
             StopSpeedEffect();
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
+            PlayerController.IsBuffed = false;
             gameObject.SetActive(false);
         }
         
@@ -160,7 +164,7 @@ namespace Alphabet.Item
         private void StopSpeedEffect()
         {
             StopCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
-            _playerSpriteRenderer.color = Color.white;
+            _playerSkeleton.SetColor(Color.white);
         }
 
         #endregion

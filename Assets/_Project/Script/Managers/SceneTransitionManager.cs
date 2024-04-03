@@ -11,6 +11,7 @@ namespace Alphabet.Managers
         #region Fields & Properties
     
         [Header("Interface")]
+        [Range(0f, 2f )][SerializeField] private float fadeDuration;
         [SerializeField] private RectTransform sceneFader;
         
         #endregion
@@ -32,7 +33,7 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 1, 0);
-            LeanTween.alpha (sceneFader, 0, 1f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 0, fadeDuration).setOnComplete (() => {
                 sceneFader.gameObject.SetActive (false);
             });
         }
@@ -42,7 +43,7 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration);
         }
         
         // !-- Core Functionality
@@ -70,14 +71,14 @@ namespace Alphabet.Managers
             }
         }
         
-         public void LoadSelectedLevel(int levelIndex)
+        public void LoadSelectedLevel(int levelIndex)
         {
             // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
             Time.timeScale = 1;
             sceneFader.gameObject.SetActive(true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(levelIndex);
             });
         }
@@ -87,7 +88,7 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(0);
             });
         }
@@ -97,7 +98,7 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(1);
             });
         }
@@ -107,8 +108,8 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke (nameof(LoadCurrentGame), 0.5f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
+                Invoke (nameof(LoadCurrentGame), fadeDuration);
             });
         }
         
@@ -117,8 +118,8 @@ namespace Alphabet.Managers
             sceneFader.gameObject.SetActive (true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke (nameof(LoadNextGame), 0.5f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
+                Invoke (nameof(LoadNextGame), fadeDuration);
             });
         }
         

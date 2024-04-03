@@ -147,7 +147,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -279,6 +279,7 @@ MonoBehaviour:
   speedUpMultiplier: 2
   timeDuration: 5
   timeMultiplier: 1.35
+  _upgradeMoveSpeed: 0
+  _defaultMoveSpeed: 0
   flashDuration: 0.07
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   flashColor: {r: 0, g: 1, b: 1, a: 0.69803923}

@@ -2,8 +2,8 @@
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
-using Alphabet.Database;
 using Alphabet.Item;
+using Alphabet.Database;
 using Alphabet.DesignPattern.Singleton;
 
 namespace Alphabet.Stage
@@ -14,7 +14,6 @@ namespace Alphabet.Stage
         
         [Header("Settings")] 
         public Level CurrentLevelList;
-        public Level NextLevelList;
         [ReadOnly] public StageNum CurrentStageList;
 
         [Header("Stage")]
@@ -24,9 +23,8 @@ namespace Alphabet.Stage
         public int CurrentStageIndex => currentStageIndex;
         public int StageCount => stageObjects.Length;
         
-        [Header("Reference")]
-        private LetterManager _letterManager;
-        public LetterManager LetterManager => _letterManager;
+        // Reference
+        public LetterManager LetterManager { get; private set; }
         
         #endregion
         
@@ -35,7 +33,7 @@ namespace Alphabet.Stage
         protected override void Awake()
         {
             var letter = LetterHelper.GetLetterManagerObject();
-            _letterManager = letter.GetComponent<LetterManager>();
+            LetterManager = letter.GetComponent<LetterManager>();
         }
         
         private void Start()
@@ -74,16 +72,25 @@ namespace Alphabet.Stage
         public void InitializeNewStage()
         {
             LoadNextStage();
-            _letterManager.SpawnLetter();
+            LetterManager.SpawnLetter();
         }
 
-        public void SaveClearedLevel()
+        public void SaveClearStage()
         {
             var currentLevel = CurrentLevelList.ToString();
-            var nextLevel = NextLevelList.ToString();
-
+            SaveClearIndex(currentLevel);
             GameDatabase.Instance.SaveLevelClear(currentLevel, true);
-            GameDatabase.Instance.SaveLevelUnlocked(nextLevel, true);
+        }
+
+        private void SaveClearIndex(string levelName)
+        {
+            // Checker
+            var levelCondition = GameDatabase.Instance.LoadLevelConditions(levelName);
+            if (levelCondition) return;
+            
+            var levelIndex = (int)System.Enum.Parse(typeof(Level), levelName);
+            levelIndex = levelIndex < System.Enum.GetNames(typeof(Level)).Length - 1 ? levelIndex + 1 : 0;
+            GameDatabase.Instance.SaveLevelClearIndex(levelIndex);
         }
 
         private void LoadNextStage()

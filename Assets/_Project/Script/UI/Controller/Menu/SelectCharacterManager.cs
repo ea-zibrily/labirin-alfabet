@@ -1,19 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Database;
+using Spine.Unity;
 
 namespace Alphabet.UI
 {
-    public class SelectCharacterManager : SelectBase
+    public class SelectCharacterManager : MonoBehaviour
     {
+        #region Struct
+        [Serializable]
+        private struct CharacterComponent
+        {
+            public string Name;
+            public GameObject Highlight;
+            public Button CharacterButton;
+            public Button SelectButton;
+        }
+        #endregion
+
         #region Fields & Property
 
         [Header("UI")]
+        [SerializeField] CharacterComponent[] characterComponents;
         [SerializeField] private GameObject selectCharacterPanelUI;
-        [SerializeField] private Button[] playerButtonUI;
-        [SerializeField] private GameObject highlightObjectUI;
+        [SerializeField] private Button closeButtonUI;
+        [SerializeField] private Color unselectedColor;
 
         private Dictionary<Button, int> _selectButtonNums;
         private int _characterIndex;
@@ -26,86 +40,142 @@ namespace Alphabet.UI
         [SerializeField] private float endTweenDuration;
         [Range(0f, 1.5f)] [SerializeField] private float scalingMultiplier;
 
-        private Vector3 ButtonDefaultScale 
-        {
-            get => playerButtonUI[0].GetComponent<RectTransform>().localScale;
-        }
+        private Vector3 defaultScale;
         
         [Header("Reference")]
         [SerializeField] private SelectStageManager selectStageManager;
 
-
         #endregion
+
+        private void Start()
+        {
+            InitializeMainButton();
+            InitializeCharacter();
+            SetDefaultCharacter();
+        }
 
         #region Methods
 
         // !-- Initialization
-        protected override void InitialiazeOnStart()
+        private void InitializeMainButton()
         {
-            base.InitialiazeOnStart();
-
-            InitializeButton();
-            SetDefaultCharacter();
+            closeButtonUI.onClick.AddListener(OnClickClose);
+            foreach (var character in characterComponents)
+            {
+                character.SelectButton.onClick.AddListener(OnClickExplore);
+            }
         }
 
-        private void InitializeButton()
+        private void InitializeCharacter()
         {
-            if (playerButtonUI.Length < MAX_PLAYER_COUNT)
+            if (characterComponents.Length < MAX_PLAYER_COUNT)
             {
                 Debug.LogError("player button kurang lekku");
                 return;
             }
+
+            var buttonObject = characterComponents[0].CharacterButton.GetComponent<RectTransform>();
+            defaultScale = buttonObject.localScale;
             
             _selectButtonNums = new Dictionary<Button, int>();
-            for (var i = 0; i < playerButtonUI.Length; i++)
+            for (var i = 0; i < characterComponents.Length; i++)
             {
-                Button btn = playerButtonUI[i];
+                var btn = characterComponents[i].CharacterButton;
                 _selectButtonNums[btn] = i;
                 btn.onClick.AddListener(() => OnSelectCharacter(btn));
             }
         }
 
         // !-- Core Functionality
-        protected override void OnClickExplore()
+        private void OnClickExplore()
         {
-            base.OnClickExplore();
             PlayerDatabase.Instance.SetPlayerData(_characterIndex);
             selectStageManager.GoToStage();
         }
 
-        protected override void OnClickClose()
+        private void OnClickClose()
         {
-            base.OnClickClose();
             selectCharacterPanelUI.SetActive(false);
             SetDefaultCharacter();
         }
-
+        
         private void OnSelectCharacter(Button btn)
         {
-            TweenScaledButton(btn.gameObject);
             _characterIndex = _selectButtonNums[btn];
-
-            if (!highlightObjectUI.activeSelf)
-            {
-                highlightObjectUI.SetActive(true);
-            }
-            highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
+            SelectCharacter(_characterIndex);
         }
 
         private void SetDefaultCharacter()
         {
             _characterIndex = 0;
-            highlightObjectUI.GetComponent<RectTransform>().position = playerButtonUI[_characterIndex].transform.position;
+            SelectCharacter(_characterIndex);
+        }
+        
+        private void SelectCharacter(int index)
+        {
+            if (index > characterComponents.Length)
+            {
+                Debug.LogError("index kebanaykan bvrok");
+                return;
+            }
+
+            // Set Selected and Unselected
+            SetSelection(index, true);
+            SetSelection(GetUnselectedIndex(index), false);
+        }
+
+        private void SetSelection(int index, bool isSelected)
+        {
+            var component = characterComponents[index];
+            if (isSelected)
+            {
+                SetSelectCharacter(component);
+            }
+            else
+            {
+                SetUnselectCharacter(component);
+            }
+        }
+
+        private void SetSelectCharacter(CharacterComponent component)
+        {
+            var selectIcon = component.CharacterButton.transform.GetChild(0);
+
+            component.Highlight.transform.GetChild(0).gameObject.SetActive(true);
+            TweenScaledButton(component.CharacterButton.gameObject, true);
+            component.SelectButton.gameObject.SetActive(true);
+
+            if (!selectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
+            graphic.color = Color.white;
+            graphic.AnimationState.SetAnimation(0, "QF_walk", true).TimeScale = 0.8f;
+        }
+
+        private void SetUnselectCharacter(CharacterComponent component)
+        {
+            var unselectIcon = component.CharacterButton.transform.GetChild(0);
+
+            component.Highlight.transform.GetChild(0).gameObject.SetActive(false);
+            TweenScaledButton(component.CharacterButton.gameObject, false);
+            component.SelectButton.gameObject.SetActive(false);
+
+            if (!unselectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
+            graphic.color = unselectedColor;
+            graphic.AnimationState.SetAnimation(0, "QF_idle", true);
         }
 
         // !-- Helper/Utilities
-        private void TweenScaledButton(GameObject target)
+        private void TweenScaledButton(GameObject target, bool isSelect)
         {
             var incrementVector = new Vector3(scalingMultiplier, scalingMultiplier, scalingMultiplier);
-            var targetScale = ButtonDefaultScale + incrementVector;
+            var upperScale = defaultScale + incrementVector;
+            var targetScale = isSelect ? upperScale : defaultScale;
 
             LeanTween.scale(target, targetScale, startTweenDuration).setEase(LeanTweenType.easeOutBack);
-            LeanTween.scale(target, ButtonDefaultScale, endTweenDuration).setDelay(startTweenDuration).setEase(LeanTweenType.easeOutBack);
+        }
+        
+        private int GetUnselectedIndex(int index)
+        {
+            return index >= 1 ? index - 1 : index + 1;
         }
 
         #endregion

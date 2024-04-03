@@ -3,6 +3,10 @@
     public static class GameEventHandler
     {
         #region Game State Event
+
+        //-- Dipanggil saat player memasuki finish point sebelum waktu habis
+        public delegate void IsGameStart();
+        public static event IsGameStart OnGameStart;
         
         //-- Dipanggil saat player memasuki finish point sebelum waktu habis
         public delegate void GameWin();
@@ -24,6 +28,7 @@
         
         #region Event Callbacks
         
+        public static void GameStartEvent() => OnGameStart?.Invoke();
         public static void GameOverEvent() => OnGameOver?.Invoke();
         public static void GameWinEvent() => OnGameWin?.Invoke();
         public static void ObjectiveClearEvent() => OnObjectiveClear?.Invoke();

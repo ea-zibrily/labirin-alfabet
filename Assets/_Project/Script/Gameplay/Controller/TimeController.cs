@@ -34,14 +34,22 @@ namespace Alphabet.Gameplay.Controller
         
         private void OnEnable()
         {
+            // Camera
             CameraEventHandler.OnCameraShiftIn += StopTimer;
             CameraEventHandler.OnCameraShiftOut += StartTimer;
+
+            // Game
+            GameEventHandler.OnGameStart += StartTimer;
         }
         
         private void OnDisable()
         {
+            // Camera
             CameraEventHandler.OnCameraShiftIn -= StopTimer;
             CameraEventHandler.OnCameraShiftOut -= StartTimer;
+
+            // Game
+            GameEventHandler.OnGameStart -= StartTimer;
         }
         
         private void Start()
@@ -65,7 +73,6 @@ namespace Alphabet.Gameplay.Controller
             _currentTime = _fullTime;
 
             TimerDisplay(_currentTime);
-            StartTimer();
         }
 
         // !-- Core Functionality
@@ -85,10 +92,7 @@ namespace Alphabet.Gameplay.Controller
         }
         
         // !-- Helper/Utitilies
-        public void SetLatestTimer()
-        {
-            _latestTime = _currentTime;
-        }
+        public void SetLatestTimer() => _latestTime = _currentTime;
         
         private void StartTimer() => IsTimerStart = true;
         private void StopTimer() => IsTimerStart = false;

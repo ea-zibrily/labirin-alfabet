@@ -32,8 +32,19 @@ namespace Alphabet.Database
         {
             _selectedPlayerData = playerData[dataIndex];
         }
+        
+        public PlayerData GetPlayerDatabyIndex(int index)
+        {
+            if (index > playerData.Length - 1)
+            {
+                Debug.Log("index kebanyakan kang!");
+                return null;
+            }
 
-        public PlayerData GetPlayerData()
+            return playerData[index];
+        }
+
+        public PlayerData GetPlayerDatabySelected()
         {
             if (_selectedPlayerData == null)
             {

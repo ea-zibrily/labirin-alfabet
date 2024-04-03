@@ -31,6 +31,7 @@ namespace Alphabet.Managers
         [Header("Reference")] 
         private PlayerController _playerController;
         private TimeController _timeController;
+        private TutorialController _tutorialController;
         private StageMarker _stageMarker;
         
         #endregion
@@ -45,6 +46,7 @@ namespace Alphabet.Managers
 
         private void OnEnable()
         {
+            GameEventHandler.OnGameStart += GameStart;
             GameEventHandler.OnGameWin += GameWin;
             GameEventHandler.OnGameOver += GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
@@ -52,14 +54,10 @@ namespace Alphabet.Managers
         
         private void OnDisable()
         {
+            GameEventHandler.OnGameStart -= GameStart;
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage -= ContinueStage;
-        }
-
-        private void Start()
-        {
-            IsGameStart = true;
         }
 
         #endregion
@@ -70,6 +68,7 @@ namespace Alphabet.Managers
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
@@ -79,22 +78,27 @@ namespace Alphabet.Managers
         #region Game State Callbacks
         
         // !-- Core Functionality
+        private void GameStart()
+        {
+            IsGameStart = true;
+        }
+
         private void GameWin()
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
             IsGameStart = false;
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
             
-            StageManager.Instance.SaveClearedLevel();
+            StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }
         
         private void GameOver()
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
             IsGameStart = false;
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
             
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;
@@ -115,17 +119,14 @@ namespace Alphabet.Managers
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             StageManager.Instance.InitializeNewStage();
-            _stageMarker.SetStageNotification();
-            _timeController.InitializeTimer(); 
-            _playerController.transform.position = Vector2.zero;
+            _tutorialController.CallTutorial();
+            _stageMarker.TopMarker();
+            _timeController.InitializeTimer();
+            _playerController.SetDirectionbyVector(Vector2.down);
+            PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
             SceneTransitionManager.Instance.FadeIn();
-            
-            yield return new WaitForSeconds(FADE_IN_DELAY);
-            _playerController.StartMovement();
-            _timeController.IsTimerStart = true;
-            IsGameStart = true;
         }
         
         #endregion

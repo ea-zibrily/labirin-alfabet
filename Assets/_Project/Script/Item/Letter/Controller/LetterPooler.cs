@@ -8,6 +8,8 @@ using UnityEngine.Pool;
 using Alphabet.Stage;
 
 using Random = UnityEngine.Random;
+using Unity.VisualScripting;
+using UnityEngine.Profiling;
 
 namespace Alphabet.Item
 {
@@ -85,7 +87,7 @@ namespace Alphabet.Item
             AvailableSpawnPoints = new List<Transform>();
         }
 
-        public void InitializePoolData(List<LetterData> datas)
+        public void InitializePoolData(IReadOnlyList<LetterData> datas)
         {
             _letterDatas = new List<LetterData>();
             _letterDatas.AddRange(datas);
@@ -109,6 +111,7 @@ namespace Alphabet.Item
 
         private void GenerateLetter(LetterSpawns[] spawns)
         {
+            Profiler.BeginSample("Generate Letter");
             if (_letterDatas == null)
             {
                 Debug.LogError("letter data null!");
@@ -143,7 +146,8 @@ namespace Alphabet.Item
                 _letterDatas.RemoveAt(randomLetterId);
             }
             
-            SetAvailableSpawnPoint(latestPointIndices, spawns);      
+            SetAvailableSpawnPoint(latestPointIndices, spawns);
+            Profiler.EndSample();
         }
         
         // !-- Helper/Utilities

@@ -14,14 +14,15 @@ namespace Alphabet.Collection
         #region Fields & Properties
 
         [Header("Collection")] 
-        [SerializeField] private RectTransform collectionContentUI;
+        [SerializeField] private RectTransform[] collectionContentUI;
         private GameObject[] _collectionObjectUI;
 
+        private int _selectedCollectionId;
+        public int SelectedCollectionId => _selectedCollectionId;
+        
         // Event
+        public event Action OnCollectionOpen;
         public event Action OnCollectionClose;
-
-        // Const Variable
-        private const int FIRST_COLLECTION_GROUP = 3;
         
         [Header("UI")] 
         [SerializeField] private GameObject mainMenuPanelUI;
@@ -31,11 +32,13 @@ namespace Alphabet.Collection
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
+
         public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
         
         #endregion
         
         #region MonoBehaviour Callbacks
+
         private void Start()
         {
             InitializeObject();
@@ -44,33 +47,43 @@ namespace Alphabet.Collection
         
         #endregion
 
+        #region Events
+
+        public void OnCollectionOpenEvent() => OnCollectionOpen?.Invoke();
+        public void OnCollectionCloseEvent() => OnCollectionClose?.Invoke();
+
+        #endregion
+
         #region Methods
 
         // !-- Initialization
         private void InitializeObject()
         {
-            var contentCount = collectionContentUI.childCount;
-            _collectionObjectUI = new GameObject[contentCount];
+            _collectionObjectUI = new GameObject[GameDatabase.LETTER_COUNT];
 
-            for (var i = 0; i < contentCount; i++)
+            var i = 0;
+            foreach (RectTransform childContent in collectionContentUI)
             {
-                var contentObject = collectionContentUI.GetChild(i).gameObject;
-                _collectionObjectUI[i] = contentObject;
+                foreach (RectTransform grandChildContent in childContent)
+                {
+                    foreach (RectTransform greatGrandChildContent in grandChildContent)
+                    {
+                        var contentObject = greatGrandChildContent.gameObject;
+
+                        if (contentObject.GetComponent<Button>() == null) return;
+                        _collectionObjectUI[i] = contentObject;
+                        i++;
+                    }
+                }
             }
         }
         
         private void InitializeCollection()
         {
-            if (_collectionObjectUI.Length < GameDatabase.LETTER_COUNT)
-            {
-                Debug.LogError("letter object kurang brok");
-                return;
-            }
-
             for (var i = 0; i < _collectionObjectUI.Length; i++)
             {
                 var collectionId = i + 1;
-                var collectionObject = _collectionObjectUI[i].transform.GetChild(0).gameObject;
+                var collectionObject = _collectionObjectUI[i];
                 
                 InitializeElement(collectionId, collectionObject);
             }
@@ -91,22 +104,26 @@ namespace Alphabet.Collection
         }
         
         // !-- Core Functionality
+        public void SetSelectedCollection(int collectionId)  =>  _selectedCollectionId = collectionId;
+
         private void CloseCollection()
         {
-            OnCollectionClose?.Invoke();
+            OnCollectionCloseEvent();
             mainMenuPanelUI.SetActive(true);
 
-            simpleScrollSnap.Setup();
-            ActivateContent();
+            SetupSnap();
             collectionPanelUI.SetActive(false);
         }
-        
-        private void ActivateContent()
+
+        private void SetupSnap()
         {
-            for (var i = 0; i < FIRST_COLLECTION_GROUP; i++)
+            if (simpleScrollSnap.ValidConfig)
             {
-                var contentObject = collectionContentUI.GetChild(i).gameObject;
-                contentObject.SetActive(true);
+                simpleScrollSnap.Setup();
+            }
+            else
+            {
+                throw new Exception("Invalid configuration.");
             }
         }
 
