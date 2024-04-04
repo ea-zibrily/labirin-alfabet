@@ -13,21 +13,23 @@ namespace Alphabet.Item
     {
         #region Fields & Properties
 
-        [Header("Letter UI")] 
+        [Header("UI")] 
         [SerializeField] private GameObject letterPanel;
         [SerializeField] private GameObject[] letterImageUI;
-
-        [Space]
         [SerializeField] [ReadOnly] private int amountOfLetter;
+
+        [Header("Size & Spacing")]
+        [SerializeField] private float defaultLetterSize;
+        [SerializeField] private float fullLetterSize;
         [SerializeField] private float fullLetterSpace;
         
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
 
         // Const Variable
-        private const float DEFAULT_SPACE = 0F;
+        private const float DEFAULT_SPACE = 0f;
                 
-        //-- Event
+        // Event
         public event Action<int> OnLetterTaken;
         public event Action<int> OnLetterLost;
 
@@ -86,9 +88,11 @@ namespace Alphabet.Item
             {
                 var letterSprite = datas[i].LetterSprite;
                 var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
+                var letterSize = amountOfLetter > letterImageUI.Length - 1 ? fullLetterSize : defaultLetterSize;
                 
                 letterImageUI[i].SetActive(true);
                 letterImageUI[i].GetComponent<Image>().sprite = letterSprite;
+                SetLetterSize(letterImageUI[i], letterSize);
                 
                 _letterFillImage[i] = letterFill;
                 _letterFillImage[i].GetComponent<Image>().sprite = letterSprite;
@@ -119,6 +123,13 @@ namespace Alphabet.Item
         }
 
         // !-- Helper/Utilities
+        private void SetLetterSize(GameObject letter, float size)
+        {
+            var letterElement = letter.GetComponent<LayoutElement>();
+            letterElement.preferredWidth = size;
+            letterElement.preferredHeight = size;
+        }
+
         private void SetLayoutSpace(int amount)
         {
             if (amount > letterImageUI.Length)

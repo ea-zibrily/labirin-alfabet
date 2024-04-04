@@ -169,8 +169,7 @@ namespace Alphabet.Entities.Player
         {
             var objectSize = StageManager.Instance.StageCount;
             letterObjects = new LetterObject[objectSize];
-            Debug.LogWarning(letterObjects.Length);
-
+            
             for (int i = 0; i < letterObjects.Length; i++)
             {
                 letterObjects[i].LetterObjects = new List<GameObject>();

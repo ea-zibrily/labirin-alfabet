@@ -30728,6 +30728,8 @@ MonoBehaviour:
   - {fileID: 851031724}
   amountOfLetter: 0
   fullLetterSpace: -25
+  defaultLetterSize: 135
+  fullLetterSize: 130
 --- !u!114 &1865757098
 MonoBehaviour:
   m_ObjectHideFlags: 0

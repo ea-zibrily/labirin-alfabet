@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
 
 using Random = UnityEngine.Random;
 
 namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("LabirinKata/Entities/Enemy/Wanderer")]
+    [AddComponentMenu("Alphabet/Entities/Enemy/Wanderer")]
     public class Wanderer : EnemyBase
     {
         #region Struct

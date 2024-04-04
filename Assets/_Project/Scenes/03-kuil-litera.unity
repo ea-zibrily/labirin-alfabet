@@ -18529,7 +18529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a379d3fe724747c8af67b09a1fc17b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentLevelList: 1
+  CurrentLevelList: 2
   CurrentStageList: 0
   stageObjects:
   - {fileID: 478459505}
@@ -37346,6 +37346,7 @@ Transform:
   - {fileID: 277407305}
   - {fileID: 1704145098}
   - {fileID: 951284720}
+  - {fileID: 1631712287}
   m_Father: {fileID: 1750947729}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &850164795
@@ -37393,7 +37394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPoints:
-  - {fileID: 0}
+  - {fileID: 1008064046}
   - {fileID: 0}
 --- !u!1001 &859919524
 PrefabInstance:
@@ -58095,6 +58096,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7801157748450631698, guid: 92bece0ee0a0aa343acd982456fa003c, type: 3}
   m_PrefabInstance: {fileID: 1630531051}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1631712286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1631712287}
+  m_Layer: 0
+  m_Name: Point_07
+  m_TagString: SpawnPoint
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1631712287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631712286}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19, y: -10.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 839769192}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1645656588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76854,13 +76886,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4131e25eb0401799e86df9f0a56457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  letterPanel: {fileID: 4568391133224255135}
   letterImageUI:
   - {fileID: 476921006}
   - {fileID: 2052214558}
   - {fileID: 917549802}
   - {fileID: 1495728088}
   - {fileID: 1495728088}
-  currentAmountOfLetter: 0
+  amountOfLetter: 0
+  defaultLetterSize: 135
+  fullLetterSize: 130
+  fullLetterSpace: -25
 --- !u!114 &1865757098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76877,30 +76913,33 @@ MonoBehaviour:
   - StageName: 0
     AmountOfLetter: 3
     SpawnPointTransforms:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1700846630}
+    - {fileID: 428454566}
+    - {fileID: 981897746}
+    - {fileID: 277407305}
+    - {fileID: 1704145098}
+    - {fileID: 951284720}
+    - {fileID: 1631712287}
   - StageName: 1
     AmountOfLetter: 4
     SpawnPointTransforms:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1674164550}
+    - {fileID: 738138127}
+    - {fileID: 341515330}
+    - {fileID: 1746301617}
+    - {fileID: 564996719}
+    - {fileID: 355812810}
+    - {fileID: 1516554930}
   - StageName: 2
     AmountOfLetter: 5
     SpawnPointTransforms:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1296350893}
+    - {fileID: 2059881751}
+    - {fileID: 1402009512}
+    - {fileID: 627333649}
+    - {fileID: 469080107}
+    - {fileID: 1548658190}
+    - {fileID: 199211937}
   _letterContainer: {fileID: 475099918}
 --- !u!1 &1867378743
 GameObject:
@@ -78450,7 +78489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 134.1177
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -78620,6 +78659,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083441208810943751, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6481341357456402475, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -78773,6 +78836,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 478586777308edf438f0447261f2021c, type: 3}
+--- !u!1 &4568391133224255135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8727373729792387398, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5469667373037716917
 PrefabInstance:
   m_ObjectHideFlags: 0
