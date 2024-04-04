@@ -13,7 +13,7 @@ namespace Alphabet.UI
         [SerializeField] private Button exploreButtonUI;
         [SerializeField] private Button closeButtonUI;
 
-        protected Button ExploreButtonUI => exploreButtonUI;
+        public Button ExploreButtonUI => exploreButtonUI;
         protected Button CloseButtonUI => closeButtonUI;
 
         #endregion

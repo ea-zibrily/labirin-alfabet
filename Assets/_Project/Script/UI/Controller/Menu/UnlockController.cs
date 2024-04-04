@@ -25,6 +25,12 @@ namespace Alphabet.UI
         [SerializeField] private float eachDelayDuration;
         [SerializeField] private float changeColorDuration;
 
+        [Header("Tweening")]
+        [SerializeField] private LeanTweenType leanTweenType;
+        [SerializeField] private float tweeningDuration;
+        [SerializeField] private Vector3 scaleTarget;
+        private Vector3 _scaleOrigin;
+
         [Header("Reference")]
         [SerializeField] private MenuController menuController;
         [SerializeField] private SelectStageManager selectStageManager;
@@ -35,10 +41,9 @@ namespace Alphabet.UI
 
         private void Start()
         {
-            InitializeContent();
-            
             if (!GameDatabase.Instance.IsAnimateUnlock) return;
-
+            
+            InitializeContent();
             InitializeComponent();
             AnimateUnlockStage();
         }
@@ -61,10 +66,11 @@ namespace Alphabet.UI
 
         private void InitializeComponent()
         {
-            _panelIndex = GameDatabase.Instance.LoadLevelClearIndex();
-            Debug.Log(_panelIndex);
+            // _panelIndex = GameDatabase.Instance.LoadLevelClearIndex();
+            _panelIndex = 1;
             _stageImageUI = _stageContents[_panelIndex].transform.GetChild(0).GetComponent<Image>();
             _padlockImageUI = _stageContents[_panelIndex].transform.GetChild(1).GetComponent<Image>();
+            _scaleOrigin = menuController.PlayButtonUI.transform.localScale;
         }
 
         // !-- Core Functionality
@@ -78,8 +84,10 @@ namespace Alphabet.UI
             blockerPanelUI.SetActive(true);
             yield return new WaitForSeconds(unlockDelayDuration);
 
-            menuController.OnPlayButton();
-            yield return new WaitForSeconds(eachDelayDuration);
+            var stagePanelDelay = eachDelayDuration * 2;
+            var playButtonObj = menuController.PlayButtonUI.gameObject;
+            OpenStagePanel(playButtonObj);
+            yield return new WaitForSeconds(stagePanelDelay);
 
             selectStageManager.SimpleScrollSnap.GoToPanel(_panelIndex);
             yield return new WaitForSeconds(eachDelayDuration);
@@ -118,6 +126,16 @@ namespace Alphabet.UI
             }
 
             image.color = Color.white;
+        }
+
+        private void OpenStagePanel(GameObject buttonObject)
+        {
+            LeanTween.scale(buttonObject, scaleTarget, tweeningDuration).setEase(leanTweenType);
+            LeanTween.scale(buttonObject, _scaleOrigin, tweeningDuration)
+                .setDelay(tweeningDuration).setEase(leanTweenType).setOnComplete(()=> 
+                {
+                    menuController.OnPlayButton();
+                });
         }
 
 

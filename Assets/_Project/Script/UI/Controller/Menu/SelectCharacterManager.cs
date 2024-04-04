@@ -145,6 +145,12 @@ namespace Alphabet.UI
             TweenScaledButton(component.CharacterButton.gameObject, true);
             component.SelectButton.gameObject.SetActive(true);
 
+            if (selectIcon.TryGetComponent(out Image image))
+            {
+                image.color = Color.white;
+                return;
+            }
+
             if (!selectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
             graphic.color = Color.white;
             graphic.AnimationState.SetAnimation(0, "QF_walk", true).TimeScale = 0.8f;
@@ -157,6 +163,12 @@ namespace Alphabet.UI
             component.Highlight.transform.GetChild(0).gameObject.SetActive(false);
             TweenScaledButton(component.CharacterButton.gameObject, false);
             component.SelectButton.gameObject.SetActive(false);
+
+            if (unselectIcon.TryGetComponent(out Image image))
+            {
+                image.color = unselectedColor;
+                return;
+            }
 
             if (!unselectIcon.TryGetComponent(out SkeletonGraphic graphic)) return;
             graphic.color = unselectedColor;

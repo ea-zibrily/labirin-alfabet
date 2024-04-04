@@ -60,7 +60,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!70 &8815263731517621315
 CapsuleCollider2D:
@@ -71,7 +71,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 5312331060188722456}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 80b920a5a53303343a90c5fe0bbb2fd5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

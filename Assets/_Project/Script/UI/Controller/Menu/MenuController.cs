@@ -13,10 +13,12 @@ namespace Alphabet.UI
         [SerializeField] private GameObject mainMenuPanelUI;
         [SerializeField] private GameObject collectionPanelUI;
         [SerializeField] private GameObject selectStagePanelUI;
-
+        
         [Space]
         [SerializeField] private Button playButtonUI;
         [SerializeField] private Button collectionButtonUI;
+
+        public Button PlayButtonUI => playButtonUI;
 
         [Header("Reference")]
         private CollectionManager _collectionManager;
