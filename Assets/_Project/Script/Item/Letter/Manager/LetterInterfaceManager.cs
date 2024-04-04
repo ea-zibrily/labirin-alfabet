@@ -14,11 +14,18 @@ namespace Alphabet.Item
         #region Fields & Properties
 
         [Header("Letter UI")] 
+        [SerializeField] private GameObject letterPanel;
         [SerializeField] private GameObject[] letterImageUI;
-        [SerializeField] [ReadOnly] private int currentAmountOfLetter;
+
+        [Space]
+        [SerializeField] [ReadOnly] private int amountOfLetter;
+        [SerializeField] private float fullLetterSpace;
         
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
+
+        // Const Variable
+        private const float DEFAULT_SPACE = 0F;
                 
         //-- Event
         public event Action<int> OnLetterTaken;
@@ -70,10 +77,12 @@ namespace Alphabet.Item
         public void SetLetterInterface(IReadOnlyList<LetterData> datas)
         {
             _letterFillImage ??= new GameObject[letterImageUI.Length];
-            currentAmountOfLetter = _letterManager.LetterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
+            amountOfLetter = _letterManager.LetterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
             _currentTakenLetter = 0;
             
-            for (var i = 0; i < currentAmountOfLetter; i++)
+            SetLayoutSpace(amountOfLetter);
+
+            for (var i = 0; i < amountOfLetter; i++)
             {
                 var letterSprite = datas[i].LetterSprite;
                 var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
@@ -96,7 +105,7 @@ namespace Alphabet.Item
             _letterFillImage[itemIndex].SetActive(true);
             _currentTakenLetter++;
             
-            if (_currentTakenLetter >= currentAmountOfLetter)
+            if (_currentTakenLetter >= amountOfLetter)
             {
                 GameEventHandler.ObjectiveClearEvent();
             }
@@ -107,6 +116,18 @@ namespace Alphabet.Item
             var itemIndex = itemId - 1;
             _letterFillImage[itemIndex].SetActive(false);
             _currentTakenLetter--;
+        }
+
+        // !-- Helper/Utilities
+        private void SetLayoutSpace(int amount)
+        {
+            if (amount > letterImageUI.Length)
+            {
+                Debug.LogWarning("terlalu banyak wak");
+                return;
+            }
+            var value = amount > letterImageUI.Length - 1 ? fullLetterSpace : DEFAULT_SPACE;
+            letterPanel.GetComponent<HorizontalLayoutGroup>().spacing = value;
         }
         
         #endregion
