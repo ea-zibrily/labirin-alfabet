@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterName: B
   letterId: 2
-  isLetterTaken: 0
-  letterSprite: {fileID: 21300000, guid: 138b79252a7ba2c4a853ec3056ef71e5, type: 3}
+  hasTaken: 0
+  letterSprite: {fileID: 21300000, guid: 025aa6c8f16c1b04583d0797d421730a, type: 3}
   letterAudio: {fileID: 8300000, guid: 0c83e389a55424b4d9f73e4d1424539a, type: 3}

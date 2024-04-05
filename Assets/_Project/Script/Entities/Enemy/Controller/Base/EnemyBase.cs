@@ -14,14 +14,10 @@ namespace Alphabet.Entities.Enemy
 
         [Header("Data")] 
         public EnemyData EnemyData;
+        [SerializeField] private Vector2 _movementDirection;
 
-        private Vector2 _enemyDirection;
+        public Vector2 MovementDirection => _movementDirection;
         public bool CanMove { get; private set; }
-
-        // Const Variable
-        private const string HORIZONTAL_KEY = "Horizontal";
-        private const string VERTICAL_KEY = "Vertical";
-        private const string IS_MOVE = "IsMove";
 
         // Pattern Targeting
         protected PatternBase CurrentPattern { get; set; }
@@ -29,8 +25,7 @@ namespace Alphabet.Entities.Enemy
         public int CurrentTargetIndex { get; set; }
         public int FirstPositionIndex { get; set; }
         
-        [Header("Reference")] 
-        private Animator _enemyAnimator;
+        // Reference
         protected EnemyHelper EnemyHelper { get; private set; }
         
         #endregion
@@ -39,7 +34,6 @@ namespace Alphabet.Entities.Enemy
         
         private void Awake()
         {
-            _enemyAnimator = GetComponentInChildren<Animator>();
             EnemyHelper = new EnemyHelper();
         }
 
@@ -52,7 +46,6 @@ namespace Alphabet.Entities.Enemy
         {
             EnemyMove();
             EnemyPatternDirection();
-            EnemyAnimation();
         }
         
         #endregion
@@ -81,26 +74,30 @@ namespace Alphabet.Entities.Enemy
             var targetPosition = CurrentTarget.position;
             var currentSpeed = EnemyData.EnemyMoveSpeed * Time.deltaTime;
             
-            _enemyDirection = targetPosition - enemyPosition;
-            _enemyDirection.Normalize();
+            EnemyDirection(targetPosition);
 
             if (!CanMove || !GameManager.Instance.IsGameStart) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }
 
-        private void EnemyAnimation()
+        private void EnemyDirection(Vector3 targetPosition)
         {
-            if (CanMove)
+            var enemyPosition = transform.position;
+            var direction = targetPosition - enemyPosition;
+            var moveX = direction.x;
+            var moveY = direction.y;
+            
+            if (Mathf.Abs(moveX) > Mathf.Abs(moveY))
             {
-                _enemyAnimator.SetFloat(HORIZONTAL_KEY, _enemyDirection.x);
-                _enemyAnimator.SetFloat(VERTICAL_KEY, _enemyDirection.y);
-                _enemyAnimator.SetBool(IS_MOVE, true);
+                moveY = 0f;
             }
             else
             {
-                _enemyAnimator.SetBool(IS_MOVE, false);
+                moveX = 0f;
             }
             
+            _movementDirection = new Vector2(moveX, moveY);
+            _movementDirection.Normalize();
         }
         
         // !-- Helpers/Utilities

@@ -23,6 +23,7 @@ namespace Alphabet.Entities.Enemy
 
         #region Fields & Properties
 
+        [Header("Wanderer")]
         [SerializeField] private EnemyPattern[] enemyPattern;
         [SerializeField] private float changeDirectionDelayTime;
 

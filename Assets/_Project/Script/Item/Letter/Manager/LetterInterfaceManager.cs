@@ -22,8 +22,7 @@ namespace Alphabet.Item
         private int _currentTakenLetter;
 
         [Header("Size & Spacing")]
-        [SerializeField] private float defaultLetterSize;
-        [SerializeField] private float fullLetterSize;
+        [SerializeField] private float letterSize;
         [SerializeField] private float fullLetterSpace;
         
         // Const Variable
@@ -88,7 +87,6 @@ namespace Alphabet.Item
             {
                 var letterSprite = datas[i].LetterSprite;
                 var letterFill = letterImageUI[i].transform.GetChild(0).gameObject;
-                var letterSize = amountOfLetter > letterImageUI.Length - 1 ? fullLetterSize : defaultLetterSize;
                 
                 letterImageUI[i].SetActive(true);
                 letterImageUI[i].GetComponent<Image>().sprite = letterSprite;

@@ -10,7 +10,7 @@ namespace Alphabet.Entities.Enemy
     {
         #region Fields & Property
         
-        [Header("Finder")]
+        [Header("Trap")]
         [SerializeField] private EnemyPatternType patternType;
         [SerializeField] private Transform[] movePointTransforms;
 

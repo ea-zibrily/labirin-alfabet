@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Gameplay.EventHandler;
+using KevinCastejon.MoreAttributes;
 
 namespace Alphabet.Entities.Enemy
 {
@@ -13,8 +14,10 @@ namespace Alphabet.Entities.Enemy
         [Header("Stun")]
         [SerializeField] private GameObject stunPanelUI;
         [SerializeField] private Image stunFillBarUI;
+        [SerializeField] [ReadOnly] private bool _isStunned;
 
-        private bool _isStunned;
+        public bool IsStunned => _isStunned;
+
         
         // Const Variable
         private const float MAX_FILL_BAR = 1f;
@@ -67,13 +70,13 @@ namespace Alphabet.Entities.Enemy
         // !-- Core Functionality
         private void CameraShiftInEvent()
         {
-            if (_isStunned) return;
+            if (IsStunned) return;
             _enemyBase.StopMovement();
         }
 
         private void CameraShiftOutEvent()
         {
-            if (_isStunned) return;
+            if (IsStunned) return;
             _enemyBase.StartMovement();
         }
         
