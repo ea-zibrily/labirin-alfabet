@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2298401221773851765}
   - component: {fileID: 6312297310709468523}
-  - component: {fileID: 8815263731517621315}
+  - component: {fileID: 7808194885362731589}
   - component: {fileID: 1097092810240698880}
   m_Layer: 8
-  m_Name: BombSlime
+  m_Name: Rock
   m_TagString: Pick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,8 +62,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!70 &8815263731517621315
-CapsuleCollider2D:
+--- !u!58 &7808194885362731589
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,9 +94,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14348786, y: -0.17830543}
-  m_Size: {x: 0.7779213, y: 0.43726942}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.45
 --- !u!114 &1097092810240698880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunDuration: 10
-  rotateEffectSpeed: 10
+  rotateEffectSpeed: 7
   hitEffect: {fileID: 5005374128335311535, guid: ab2c8e9e9acffa1459df7c83cfa191a1, type: 3}
   effectParent: {fileID: 0}
 --- !u!1 &7082473306086155236
@@ -186,7 +186,7 @@ SpriteRenderer:
   m_SortingLayerID: 1770701309
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 69e56b8f5bdde77459b6538404723796, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8471fa4504360ed4a89deea01537fb5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

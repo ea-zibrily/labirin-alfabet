@@ -25,7 +25,7 @@ namespace Alphabet.Item
         public bool IsItemThrowed { get; private set;}
 
         [Header("Reference")]
-        private CapsuleCollider2D _capsuleCollider;
+        private CircleCollider2D _stunCollider;
         private SpriteRenderer _spriteRenderer;
 
         #endregion
@@ -34,7 +34,7 @@ namespace Alphabet.Item
 
         private void Awake()
         {
-            _capsuleCollider = GetComponent<CapsuleCollider2D>();
+            _stunCollider = GetComponent<CircleCollider2D>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
@@ -65,7 +65,7 @@ namespace Alphabet.Item
         {
             _elapsedTime = 0f;
             _isCollideWithAnother = false;
-            _capsuleCollider.isTrigger = false;
+            _stunCollider.isTrigger = false;
 
             IsItemThrowed = false;
         }
@@ -79,7 +79,7 @@ namespace Alphabet.Item
         private IEnumerator ThrowItemRoutine(Vector2 direction, float speed)
         {
             IsItemThrowed = true;
-            _capsuleCollider.isTrigger = true;
+            _stunCollider.isTrigger = true;
             var rotateDirectionSpeed  = direction.x > 0 ? -rotateEffectSpeed : rotateEffectSpeed;
             
             while (!_isCollideWithAnother)
@@ -96,7 +96,7 @@ namespace Alphabet.Item
             var enemyManager = enemy.GetComponent<EnemyManager>();
 
             _spriteRenderer.enabled = false;
-            _capsuleCollider.enabled = false;
+            _stunCollider.enabled = false;
             
             var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;
@@ -119,11 +119,11 @@ namespace Alphabet.Item
             Destroy(stunEffectObject);
             Destroy(gameObject);
         }
-
+        
         private IEnumerator PerformHitEffect(GameObject otherObject)
         {
             _spriteRenderer.enabled = false;
-            _capsuleCollider.enabled = false;
+            _stunCollider.enabled = false;
             
             var stunEffectObject = Instantiate(hitEffect, effectParent.transform, worldPositionStays: false);
             stunEffectObject.transform.position = otherObject.transform.position;

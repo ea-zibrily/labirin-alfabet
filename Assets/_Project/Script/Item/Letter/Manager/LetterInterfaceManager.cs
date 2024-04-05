@@ -18,17 +18,17 @@ namespace Alphabet.Item
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int amountOfLetter;
 
+        private GameObject[] _letterFillImage;
+        private int _currentTakenLetter;
+
         [Header("Size & Spacing")]
         [SerializeField] private float defaultLetterSize;
         [SerializeField] private float fullLetterSize;
         [SerializeField] private float fullLetterSpace;
         
-        private GameObject[] _letterFillImage;
-        private int _currentTakenLetter;
-
         // Const Variable
         private const float DEFAULT_SPACE = 0f;
-                
+
         // Event
         public event Action<int> OnLetterTaken;
         public event Action<int> OnLetterLost;

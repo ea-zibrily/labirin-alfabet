@@ -3597,7 +3597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: a36584e8871715e4a99518e5108c40bb, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 3ec5b81c63369a0478033221703bc904, type: 2}
   initialSkinName: default
   initialFlipX: 0
   initialFlipY: 0
@@ -4355,8 +4355,8 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 125
-  m_PreferredHeight: 125
+  m_PreferredWidth: 130
+  m_PreferredHeight: 130
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -6921,19 +6921,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 326300185923184229, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredWidth
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 326300185923184229, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 851202921889617401, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredWidth
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 851202921889617401, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 892102155214603011, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6985,19 +6985,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2060553620703891878, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredWidth
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 2060553620703891878, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredWidth
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
-      value: 125
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 3210758233333957230, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Name
@@ -7053,11 +7053,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7421632239051623687, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Spacing
-      value: -20
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 7421632239051623687, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Padding.m_Left
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8675566471090725884, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Pivot.x
