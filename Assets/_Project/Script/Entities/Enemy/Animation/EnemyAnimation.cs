@@ -56,7 +56,6 @@ namespace Alphabet.Entities.Enemy
             _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
         }
 
-        // Start is called before the first frame update
         private void Start()
         {
             _enemyAnimationState = _skeletonAnimation.state;
@@ -112,20 +111,19 @@ namespace Alphabet.Entities.Enemy
             // Handle normal state
             if (isStunned) return STUNNED;
 
+            if (!_enemyController.CanMove)
+            {
+                return _currentState switch
+                {
+                    "QF_walk" => Side_Idle,
+                    "F_walk" => Front_Idle,
+                    "B_walk" => Back_Idle,
+                    _ => _currentState,
+                };
+            }
+
             if (movingHorizontally) return Side_Walk;
             if (movingVertically) return movementDirection.y > 0 ? Back_Walk : Front_Walk;
-
-            // TODO: Uncomment logic dibawah klo jadi pake Idle State
-            // if (movementDirection == Vector2.zero)
-            // {
-            //     return _currentState switch
-            //     {
-            //         "QF_walk" => Side_Idle,
-            //         "F_walk" => Front_Idle,
-            //         "B_walk" => Back_Idle,
-            //         _ => _currentState,
-            //     };
-            // }
             
             return _currentState;
         }

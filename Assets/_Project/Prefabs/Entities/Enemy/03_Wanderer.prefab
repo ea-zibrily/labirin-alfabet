@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: be61d633014c08f498052720d335901a, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: c9c6d1f8510f5ed49b5c2e9f2d71fd82, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: QF_walk
+  _animationName: QF_idle
   loop: 1
   timeScale: 1
 --- !u!1 &4396403803450210005
@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 0}
+  _movementDirection: {x: 0, y: 0}
   enemyPattern:
   - PatternType: 0
     MovePointTransforms:

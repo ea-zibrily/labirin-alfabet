@@ -127,6 +127,7 @@ namespace Alphabet.UI
 
             SetHeadlineText(stageName.ToUpper());
             SetExploreButtonState(isActivateButton, isAnimate, ExploreButtonUI);
+            Debug.LogWarning(isLevelUnlocked);
             
             if (_currentPanelIndex <= 0 || GameDatabase.Instance.IsAnimateUnlock) return;
             SetStageThumbnailState(isLevelUnlocked, stagePanel);   
@@ -153,15 +154,12 @@ namespace Alphabet.UI
 
         private void SetStageThumbnailState(bool isUnlocked, GameObject stagePanel)
         {
-            var stageChild = stagePanel.transform.GetChild(0);
-            var stageThumbnail = stageChild.GetComponent<Image>();
+            var stageThumbnail = stagePanel.transform.GetChild(0).GetComponent<Image>();
+            var stagePadlock = stagePanel.transform.GetChild(1).gameObject;
+
             stageThumbnail.color = isUnlocked ? Color.white : lockedStageColor;
             stageThumbnail.material = isUnlocked ? null : imageMaterial;
-
-            if (stageChild.childCount > 1)
-            {
-                stageChild.GetChild(1).gameObject.SetActive(!isUnlocked);
-            }
+            stagePadlock.SetActive(!isUnlocked);
         }
         
         // !-- Helper/Utilities
