@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using Alphabet.Enum;
 using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Gameplay.Controller
@@ -85,7 +86,7 @@ namespace Alphabet.Gameplay.Controller
             {
                 _currentTime = 0;
                 isTimerStart = false;
-                GameEventHandler.GameOverEvent();
+                GameEventHandler.GameOverEvent(LoseType.TimeUp);
             }
             
             TimerDisplay(_currentTime);

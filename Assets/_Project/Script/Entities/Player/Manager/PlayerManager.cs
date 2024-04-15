@@ -11,6 +11,7 @@ using Alphabet.Gameplay.EventHandler;
 using Random = UnityEngine.Random;
 using Spine;
 using Spine.Unity;
+using Alphabet.Enum;
 
 namespace Alphabet.Entities.Player
 {
@@ -133,7 +134,7 @@ namespace Alphabet.Entities.Player
         {
             yield return new WaitForSeconds(DIE_DELAY);
             _isPlayerDead = true;
-            GameEventHandler.GameOverEvent();
+            GameEventHandler.GameOverEvent(LoseType.Death);
         }
         
         private void KnockedBack(GameObject triggeredObject)

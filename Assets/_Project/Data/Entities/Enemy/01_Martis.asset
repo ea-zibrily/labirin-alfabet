@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: 01_Martis
   m_EditorClassIdentifier: 
   enemyName: Martis
-  enemyMoveSpeed: 4
+  enemyMoveSpeed: 3

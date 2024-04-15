@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Alphabet.UI;
+using Alphabet.Enum;
 using Alphabet.Stage;
 using Alphabet.Entities.Player;
 using Alphabet.Gameplay.Controller;
@@ -94,12 +96,13 @@ namespace Alphabet.Managers
             gameWinPanelUI.SetActive(true);
         }
         
-        private void GameOver()
+        private void GameOver(LoseType loseType)
         {
             IsGameStart = false;
             _timeController.IsTimerStart = false;
             _playerController.StopMovement();
-            
+
+            gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;
         }

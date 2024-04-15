@@ -56,7 +56,7 @@ namespace Alphabet.Stage
         // !-- Core Functionality
         
         public void ShowNotification() => StartCoroutine(ShowNotificationRoutine());
-
+        
         public void TopMarker()
         {
             _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);

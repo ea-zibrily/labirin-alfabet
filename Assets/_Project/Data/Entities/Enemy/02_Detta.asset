@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: 02_Detta
   m_EditorClassIdentifier: 
   enemyName: Detta
-  enemyMoveSpeed: 5
+  enemyMoveSpeed: 4
