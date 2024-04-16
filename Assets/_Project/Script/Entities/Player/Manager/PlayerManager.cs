@@ -258,8 +258,22 @@ namespace Alphabet.Entities.Player
             {
                 TriggeredFeedback(TagFeedback.Item, other.gameObject);
             }
+            else if (other.CompareTag("Pick"))
+            {
+                Debug.Log(other.name);
+                GetComponent<CapsuleCollider2D>().isTrigger = false;
+            }
         }
-        
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+            if (_isPlayerDead || !_playerController.CanMove) return;
+            
+            var collider = GetComponent<CapsuleCollider2D>();
+            if (collider.isTrigger) return;
+            collider.isTrigger = true;
+        }
+
         #endregion
     }
 }

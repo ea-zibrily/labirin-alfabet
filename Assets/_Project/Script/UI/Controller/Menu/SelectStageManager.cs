@@ -120,17 +120,17 @@ namespace Alphabet.UI
             
             var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
-            var isLevelUnlocked = IsLevelUnlocked(_currentPanelIndex);
-            var isActivateButton = isLevelUnlocked || _currentPanelIndex is 0;
+            var isLevelCleared = IsLevelUnlocked(_currentPanelIndex);
+            var isActivateButton = isLevelCleared || _currentPanelIndex is 0;
             var isAnimate = GameDatabase.Instance.LoadLevelClearIndex() <= _currentPanelIndex 
                         && GameDatabase.Instance.IsAnimateUnlock;
 
             SetHeadlineText(stageName.ToUpper());
             SetExploreButtonState(isActivateButton, isAnimate, ExploreButtonUI);
-            Debug.LogWarning(isLevelUnlocked);
+            Debug.LogWarning($"{_currentPanelIndex} is {isLevelCleared}");
             
             if (_currentPanelIndex <= 0 || GameDatabase.Instance.IsAnimateUnlock) return;
-            SetStageThumbnailState(isLevelUnlocked, stagePanel);   
+            SetStageThumbnailState(isLevelCleared, stagePanel);   
         }
 
         private void SetExploreButtonState(bool isUnlocked, bool isAnimate, Button button)
