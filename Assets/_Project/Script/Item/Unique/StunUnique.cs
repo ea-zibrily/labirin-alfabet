@@ -47,7 +47,7 @@ namespace Alphabet.Item
 
         private void OnDisable()
         {
-             // Camera
+            // Camera
             CameraEventHandler.OnCameraShiftIn -= CameraShiftInEvent;
             CameraEventHandler.OnCameraShiftOut -= CameraShiftOutEvent;
         }
@@ -154,7 +154,6 @@ namespace Alphabet.Item
 
         #region Camera Methods
 
-        // !-- Core Functionality
         private void CameraShiftInEvent() => _isCameraShift = true;
         private void CameraShiftOutEvent() => _isCameraShift = false;
 

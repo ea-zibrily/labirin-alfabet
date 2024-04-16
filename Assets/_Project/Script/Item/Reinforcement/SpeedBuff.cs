@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
-using Alphabet.Entities.Player;
+using UnityEngine;
 using Spine;
 using Spine.Unity;
-using UnityEngine;
+using Alphabet.Entities.Player;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Item
 {
@@ -19,13 +20,10 @@ namespace Alphabet.Item
         [Range(0.5f, 1.5f)]
         [SerializeField] private float timeMultiplier;
         
-        [SerializeField] private float _upgradeMoveSpeed;
-        [SerializeField] private float _defaultMoveSpeed;
+        private float _upgradeMoveSpeed;
+        private float _defaultMoveSpeed;
         private float _currentTime;
-        
-        private bool _isTimerStart;
-        private bool _isSpeedUpComplete;
-        
+
         [Header("Speed Effect")]
         [SerializeField] private float flashDuration;
         [SerializeField] private Color flashColor;
@@ -41,59 +39,38 @@ namespace Alphabet.Item
 
         private void OnEnable()
         {
+            // Speed
             _playerPickThrow.OnPlayerInteract += SetSpeedLimitValues;
+
+            // Camera
+            CameraEventHandler.OnCameraShiftIn += CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut += CameraShiftOutEvent;
         }
 
         private void OnDisable()
         {
+            // Speed
             _playerPickThrow.OnPlayerInteract -= SetSpeedLimitValues;
-        }
 
-        private void Update()
-        {
-            if (!IsBuffActive) return;
-            
-            if (!_isSpeedUpComplete)
-            {
-                SpeedUp();
-
-                if (!_isTimerStart) return;
-                
-                _currentTime += Time.deltaTime;
-                if (_currentTime >= timeDuration)
-                {
-                    _currentTime = 0;
-                    _isTimerStart = false;
-                    _isSpeedUpComplete = true;
-                }
-            }
-            else
-            {
-                SlowDown();
-            }
+            // Camera
+            CameraEventHandler.OnCameraShiftIn -= CameraShiftInEvent;
+            CameraEventHandler.OnCameraShiftOut -= CameraShiftOutEvent;
         }
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         protected override void InitializeOnAwake()
         {
             base.InitializeOnAwake();
+
             _playerPickThrow = PlayerController.GetComponent<PlayerPickThrow>();
             _playerSkeleton = PlayerController.GetComponentInChildren<SkeletonAnimation>().Skeleton;
             _playerFlash = new PlayerFlash(flashColor, flashDuration, _playerSkeleton);
         }
 
-        protected override void InitializeOnStart()
-        {
-            base.InitializeOnStart();
-            _currentTime = 0;
-            _isTimerStart = false;
-            _isSpeedUpComplete = false;
-        }
-        
         private void InitializeSpeed()
         {
             _defaultMoveSpeed = PlayerController.CurrentMoveSpeed;
@@ -108,41 +85,71 @@ namespace Alphabet.Item
         
         protected override void ActivateBuff()
         {
-            InitializeSpeed();
             base.ActivateBuff();
             
+            InitializeSpeed();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
             PlayerController.IsBuffed = true;
+
+            StartCoroutine(SpeedActive());
             StartSpeedEffect();
         }
 
         public override void DeactivateBuff()
         {
             base.DeactivateBuff();
+
             StopSpeedEffect();
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
             PlayerController.IsBuffed = false;
+
             gameObject.SetActive(false);
         }
-        
-        private void SpeedUp()
+
+        private IEnumerator SpeedActive()
         {
-            PlayerController.CurrentMoveSpeed += Time.deltaTime * timeMultiplier;
-            if (PlayerController.CurrentMoveSpeed >= _upgradeMoveSpeed)
+            yield return SpeedUpRoutine();
+
+            while (_currentTime < timeDuration)
             {
-                PlayerController.CurrentMoveSpeed = _upgradeMoveSpeed; 
-                _isTimerStart = true;
+                if (IsBuffActive)
+                {
+                    _currentTime += Time.deltaTime; 
+                }
+                yield return null;
             }
+            Debug.Log(_currentTime);
+            _currentTime = 0;
+            yield return SlowDownRoutine();
         }
-        
-        private void SlowDown()
+
+        private IEnumerator SpeedUpRoutine()
         {
-            PlayerController.CurrentMoveSpeed -= Time.deltaTime * timeMultiplier;
-            if (PlayerController.CurrentMoveSpeed <= _defaultMoveSpeed)
+            while (PlayerController.CurrentMoveSpeed < _upgradeMoveSpeed)
             {
-                DeactivateBuff();
+                if (IsBuffActive)
+                {
+                    PlayerController.CurrentMoveSpeed += Time.deltaTime * timeMultiplier;
+                }
+                yield return null;
             }
+
+            PlayerController.CurrentMoveSpeed = _upgradeMoveSpeed; 
+        }
+
+        private IEnumerator SlowDownRoutine()
+        {
+            while (PlayerController.CurrentMoveSpeed > _defaultMoveSpeed)
+            {
+                if (IsBuffActive)
+                {
+                    PlayerController.CurrentMoveSpeed -= Time.deltaTime * timeMultiplier;
+                }
+                yield return null;
+            }
+
+            DeactivateBuff();
         }
         
         // !-- Helper/Utilites
@@ -154,8 +161,13 @@ namespace Alphabet.Item
 
         #endregion
 
-        #region Effect Callbacks
+        #region Extend Methods
 
+        // Event
+        private void CameraShiftInEvent() => IsBuffActive = false;
+        private void CameraShiftOutEvent() => IsBuffActive = true;
+
+        // Effect
         private void StartSpeedEffect()
         {
             StartCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
@@ -168,6 +180,6 @@ namespace Alphabet.Item
         }
 
         #endregion
-        
+
     }
 }
