@@ -195,7 +195,7 @@ namespace Alphabet.Entities.Player
             
             _playerAnimationState.SetAnimation(0, state, isLooping).TimeScale = timeScale;
         }
-
+        
         private void PlayerFlip()
         {
             _isRight = !_isRight;
@@ -203,6 +203,14 @@ namespace Alphabet.Entities.Player
         }
 
         // !-- Helper/Utilities
+        public void SetDefaultState()
+        {
+            var direction = _playerController.MovementDirection;
+
+            if ((direction.x > 0 && !_isRight) || (direction.x < 0 && _isRight)) PlayerFlip();
+            ChangeAnimation(Side_Idle);
+        }
+
         private bool ShouldAnimationLoop(string state)
         {
             return state != Side_Shoot || state != Front_Shoot || state != Back_Shoot;

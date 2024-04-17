@@ -195,7 +195,6 @@ namespace Alphabet.Entities.Player
         private void LostLetter()
         {
             var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
-
             if (letterCollects.Count < 1 || letterCollects.Count >= _currentLetterAmount) return;
 
             var randomLetter = Random.Range(0, letterCollects.Count - 1);
@@ -251,7 +250,6 @@ namespace Alphabet.Entities.Player
             if (other.CompareTag("Enemy"))
             {
                if (!other.TryGetComponent(out EnemyBase enemy) || !enemy.CanMove) return;
-               
                TriggeredFeedback(TagFeedback.Enemy, other.gameObject);
             }
             else if (other.CompareTag("Item"))
@@ -260,7 +258,6 @@ namespace Alphabet.Entities.Player
             }
             else if (other.CompareTag("Pick"))
             {
-                Debug.Log(other.name);
                 GetComponent<CapsuleCollider2D>().isTrigger = false;
             }
         }

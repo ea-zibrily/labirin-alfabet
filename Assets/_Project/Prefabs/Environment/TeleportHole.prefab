@@ -81,12 +81,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79797f9c0eda429781685d24499ec54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorOpenDelay: 1.5
-  reachDoorDelay: 1
+  holeOpenDelay: 1.5
+  reachHoleDelay: 1
   cameraMoveInDelay: 0.3
   cameraMoveOutDelay: 1
-  doorVirtualCamera: {fileID: 0}
-  doorCameraAnimator: {fileID: 0}
+  holeVirtualCamera: {fileID: 0}
+  holeCameraAnimator: {fileID: 0}
 --- !u!1 &7652219848509980627
 GameObject:
   m_ObjectHideFlags: 0

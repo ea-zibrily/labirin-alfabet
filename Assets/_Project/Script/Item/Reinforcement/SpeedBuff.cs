@@ -23,7 +23,8 @@ namespace Alphabet.Item
         private float _upgradeMoveSpeed;
         private float _defaultMoveSpeed;
         private float _currentTime;
-
+        private bool _isCameraShift;
+        
         [Header("Speed Effect")]
         [SerializeField] private float flashDuration;
         [SerializeField] private Color flashColor;
@@ -103,6 +104,7 @@ namespace Alphabet.Item
             StopSpeedEffect();
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
             PlayerController.IsBuffed = false;
+            Debug.Log(_defaultMoveSpeed);
 
             gameObject.SetActive(false);
         }
@@ -113,7 +115,7 @@ namespace Alphabet.Item
 
             while (_currentTime < timeDuration)
             {
-                if (IsBuffActive)
+                if (!_isCameraShift)
                 {
                     _currentTime += Time.deltaTime; 
                 }
@@ -128,7 +130,7 @@ namespace Alphabet.Item
         {
             while (PlayerController.CurrentMoveSpeed < _upgradeMoveSpeed)
             {
-                if (IsBuffActive)
+                if (!_isCameraShift)
                 {
                     PlayerController.CurrentMoveSpeed += Time.deltaTime * timeMultiplier;
                 }
@@ -142,7 +144,7 @@ namespace Alphabet.Item
         {
             while (PlayerController.CurrentMoveSpeed > _defaultMoveSpeed)
             {
-                if (IsBuffActive)
+                if (!_isCameraShift)
                 {
                     PlayerController.CurrentMoveSpeed -= Time.deltaTime * timeMultiplier;
                 }
@@ -164,8 +166,8 @@ namespace Alphabet.Item
         #region Extend Methods
 
         // Event
-        private void CameraShiftInEvent() => IsBuffActive = false;
-        private void CameraShiftOutEvent() => IsBuffActive = true;
+        private void CameraShiftInEvent() => _isCameraShift = true;
+        private void CameraShiftOutEvent() => _isCameraShift = false;
 
         // Effect
         private void StartSpeedEffect()

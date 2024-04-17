@@ -42,6 +42,7 @@ namespace Alphabet.Entities.Player
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;
+        private PlayerAnimation _playerAnimation;
         public PlayerPickThrow PlayerPickThrow { get; private set; }
         public AnalogInputHandler PlayerInputHandler { get; private set; }
 
@@ -55,6 +56,8 @@ namespace Alphabet.Entities.Player
             _playerRb = GetComponent<Rigidbody2D>();
 
             // Handler
+            _playerAnimation = GetComponentInChildren<PlayerAnimation>();
+            
             PlayerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<AnalogInputHandler>();
         }
@@ -137,13 +140,13 @@ namespace Alphabet.Entities.Player
             PlayerInputHandler.DisableTouchInput();
         }
         
-        public void SetDirectionbyVector(Vector2 value)
+        public void DefaultDirection()
         {
-            movementDirection = value;
             movementDirection = Vector2.zero;
+            _playerAnimation.SetDefaultState();
         }
         
-        public void SetDirectionbyTransform(Transform value)
+        public void SetDirection(Transform value)
         {
             var direction = value.transform.position - transform.position;
             direction.Normalize();

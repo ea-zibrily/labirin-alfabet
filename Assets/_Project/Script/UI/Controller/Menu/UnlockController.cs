@@ -66,8 +66,7 @@ namespace Alphabet.UI
 
         private void InitializeComponent()
         {
-            // _panelIndex = GameDatabase.Instance.LoadLevelClearIndex();
-            _panelIndex = 1;
+            _panelIndex = GameDatabase.Instance.LoadLevelClearIndex();
             _stageImageUI = _stageContents[_panelIndex].transform.GetChild(0).GetComponent<Image>();
             _padlockImageUI = _stageContents[_panelIndex].transform.GetChild(1).GetComponent<Image>();
             _scaleOrigin = menuController.PlayButtonUI.transform.localScale;

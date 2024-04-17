@@ -125,7 +125,7 @@ namespace Alphabet.Managers
             _tutorialController.CallTutorial();
             _stageMarker.TopMarker();
             _timeController.InitializeTimer();
-            _playerController.SetDirectionbyVector(Vector2.down);
+            _playerController.DefaultDirection();
             PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);

@@ -8,26 +8,23 @@ using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Gameplay.Controller
 {
-    public class DoorController : MonoBehaviour
+    public class HoleController : MonoBehaviour
     {
-        #region Constant Variable
-        
-        private const string OPEN_DOOR_TRIGGER = "Open";
-        private const string MOVE_CAMERA_TRIGGRER = "IsMove";
-
-        #endregion
-        
         #region Fields & Properties
 
-        [Header("Door")] 
-        [SerializeField] private float doorOpenDelay;
-        [SerializeField] private float reachDoorDelay;
+        [Header("Hole")] 
+        [SerializeField] private float holeOpenDelay;
+        [SerializeField] private float reachHoleDelay;
         
         [Header("Camera")]
         [SerializeField] private float cameraMoveInDelay;
         [SerializeField] private float cameraMoveOutDelay;
-        [SerializeField] private CinemachineVirtualCamera doorVirtualCamera;
-        [SerializeField] private Animator doorCameraAnimator;
+        [SerializeField] private CinemachineVirtualCamera holeVirtualCamera;
+        [SerializeField] private Animator holeCameraAnimator;
+
+        // Const Variable
+        private const string OPEN_DOOR_TRIGGER = "Open";
+        private const string MOVE_CAMERA_TRIGGRER = "IsMove";
 
         [Header("Reference")] 
         private CapsuleCollider2D _capsuleCollider2D;
@@ -71,7 +68,7 @@ namespace Alphabet.Gameplay.Controller
         // !-- Initialization
         private void InitializeDoor()
         {
-            doorVirtualCamera.Follow = gameObject.transform;
+            holeVirtualCamera.Follow = gameObject.transform;
             _capsuleCollider2D.enabled = false;
             _capsuleCollider2D.isTrigger = false;
         }
@@ -83,23 +80,23 @@ namespace Alphabet.Gameplay.Controller
         private IEnumerator OpenDoorRoutine()
         {
             yield return new WaitForSeconds(cameraMoveInDelay);
-            doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
-            _playerController.SetDirectionbyTransform(gameObject.transform);
+            holeCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
+            _playerController.SetDirection(gameObject.transform);
             CameraEventHandler.CameraShiftInEvent();
             
-            yield return new WaitForSeconds(doorOpenDelay);
+            yield return new WaitForSeconds(holeOpenDelay);
             _doorAnimator.SetTrigger(OPEN_DOOR_TRIGGER);
         }
         
         private IEnumerator ActivateDoorTriggerRoutine()
         {
             yield return new WaitForSeconds(cameraMoveOutDelay);
-            doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
+            holeCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
             CameraEventHandler.CameraShiftOutEvent();
 
             _capsuleCollider2D.enabled = true;
             _capsuleCollider2D.isTrigger = true;
-            doorVirtualCamera.Follow = null;
+            holeVirtualCamera.Follow = null;
         }
         
         private IEnumerator EnterDoorRoutine()
@@ -122,6 +119,9 @@ namespace Alphabet.Gameplay.Controller
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player")) return;
+            if (!other.TryGetComponent(out PlayerController player)) return;
+            
+            Debug.Log($"{player.name} masuk portal!");
             StartCoroutine(EnterDoorRoutine());
         }
         
