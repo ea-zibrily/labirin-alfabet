@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495df3245da9408a84dbddacfc561fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfTime: 150
+  amountOfTime: 135
   timerTextUI: {fileID: 0}
   isTimerStart: 0

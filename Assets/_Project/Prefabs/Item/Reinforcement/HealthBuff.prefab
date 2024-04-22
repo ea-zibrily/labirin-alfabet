@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 1770701309
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1db343e301f65d049be5c3a5edd6066c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3ce90a87d08be443be70b625020f972, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7058397011885142655}
-  - component: {fileID: 2688134480156661955}
+  - component: {fileID: 151594142753098725}
   - component: {fileID: 4613777707644722451}
   m_Layer: 8
   m_Name: HealthBuff
@@ -150,8 +150,8 @@ Transform:
   - {fileID: 3197885661958506698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &2688134480156661955
-BoxCollider2D:
+--- !u!58 &151594142753098725
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -182,19 +182,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.012400389, y: -0.11952633}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.3295877
 --- !u!114 &4613777707644722451
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,13 +18,11 @@ namespace Alphabet.Item
         [SerializeField] private GameObject[] letterImageUI;
         [SerializeField] [ReadOnly] private int amountOfLetter;
 
-        // Spacing
-        [SerializeField] private float fullLetterSpace;
-
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
-        
-        // Const Variable
+
+        [Header("Spacing")]
+        [SerializeField] private float fullLetterSpace;
         private const float DEFAULT_SPACE = -20f;
 
         // Event
@@ -121,11 +119,8 @@ namespace Alphabet.Item
         // !-- Helper/Utilities
         private void SetLayoutSpace(int amount)
         {
-            if (amount > letterImageUI.Length)
-            {
-                Debug.LogWarning("terlalu banyak wak");
-                return;
-            }
+            if (amount > letterImageUI.Length) return;
+            
             var value = amount > letterImageUI.Length - 1 ? fullLetterSpace : DEFAULT_SPACE;
             letterPanel.GetComponent<HorizontalLayoutGroup>().spacing = value;
         }

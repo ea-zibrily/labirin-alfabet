@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: 5f7f61a1c8e997e45aed2ba1f3760b98
   - enabled: 1
     path: Assets/_Project/Scenes/03-kuil-litera.unity
-    guid: ad61e7951043f8943950a4923462ecfd
+    guid: def7ca4816b253a40823052f0a1ed22b
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 7c1628bc0d2f33c46b8b994d7858bc87, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 92fb276d4b80e9049b26bb1e2bde9419, type: 2}

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
 using Alphabet.Stage;
 using Alphabet.Database;
 using Alphabet.Data;
-using Alphabet.Enum;
 using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Item

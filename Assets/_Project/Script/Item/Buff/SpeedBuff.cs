@@ -8,7 +8,7 @@ using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Item
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(CircleCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable
     {
         #region Fields & Properties

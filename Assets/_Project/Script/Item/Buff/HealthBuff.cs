@@ -2,7 +2,7 @@
 
 namespace Alphabet.Item
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(CircleCollider2D))]
     public class HealthBuff : BuffItem, ITakeable
     {
         #region Fields & Properties
