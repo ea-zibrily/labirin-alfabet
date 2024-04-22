@@ -90,7 +90,7 @@ namespace Alphabet.Item
             
             InitializeSpeed();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
             PlayerController.IsBuffed = true;
 
             StartCoroutine(SpeedActive());

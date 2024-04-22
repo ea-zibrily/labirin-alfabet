@@ -12031,11 +12031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7801157748450631698, guid: 92bece0ee0a0aa343acd982456fa003c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.7
+      value: -9.82
       objectReference: {fileID: 0}
     - target: {fileID: 7801157748450631698, guid: 92bece0ee0a0aa343acd982456fa003c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.81
+      value: 11.9
       objectReference: {fileID: 0}
     - target: {fileID: 7801157748450631698, guid: 92bece0ee0a0aa343acd982456fa003c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -30770,7 +30770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterSpawns:
   - StageName: 0
-    AmountOfLetter: 3
+    AmountOfLetter: 2
     SpawnPointTransforms:
     - {fileID: 1713621866}
     - {fileID: 932011531}
@@ -30779,7 +30779,7 @@ MonoBehaviour:
     - {fileID: 891063407}
     - {fileID: 164407681}
   - StageName: 1
-    AmountOfLetter: 3
+    AmountOfLetter: 2
     SpawnPointTransforms:
     - {fileID: 2062479324}
     - {fileID: 1918334960}
