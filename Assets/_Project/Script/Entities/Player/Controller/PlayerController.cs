@@ -142,8 +142,9 @@ namespace Alphabet.Entities.Player
         
         public void DefaultDirection()
         {
-            movementDirection = Vector2.zero;
+            movementDirection = Vector2.right;
             _playerAnimation.SetDefaultState();
+            movementDirection = Vector2.zero;
         }
         
         public void SetDirection(Transform value)

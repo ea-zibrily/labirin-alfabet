@@ -118,11 +118,18 @@ namespace Alphabet.Gameplay.Controller
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player")) return;
-            if (!other.TryGetComponent(out PlayerController player)) return;
+            if (other.TryGetComponent(out PlayerController player))
+            {
+                Debug.Log($"{player.name} masuk portal!");
+                StartCoroutine(EnterDoorRoutine());
+            }
             
-            Debug.Log($"{player.name} masuk portal!");
-            StartCoroutine(EnterDoorRoutine());
+
+            // if (other.CompareTag("Player")) return;
+            // if (!other.TryGetComponent(out PlayerController player)) return;
+            
+            // Debug.Log($"{player.name} masuk portal!");
+            // StartCoroutine(EnterDoorRoutine());
         }
         
         #endregion

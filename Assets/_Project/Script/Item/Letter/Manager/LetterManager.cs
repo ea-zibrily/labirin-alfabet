@@ -153,6 +153,10 @@ namespace Alphabet.Item
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
+
+            // TODO: Drop code dibawah jika suda dicek
+            var dataString = isLevelCleared ? "_unlockedLetterDatas" : "_lockedLetterDatas";
+            Debug.Log(dataString);
             
             return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;
         }

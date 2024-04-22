@@ -127,8 +127,7 @@ namespace Alphabet.UI
 
             SetHeadlineText(stageName.ToUpper());
             SetExploreButtonState(isActivateButton, isAnimate, ExploreButtonUI);
-            Debug.LogWarning($"{_currentPanelIndex} is {isLevelCleared}");
-            
+                        
             if (_currentPanelIndex <= 0 || GameDatabase.Instance.IsAnimateUnlock) return;
             SetStageThumbnailState(isLevelCleared, stagePanel);   
         }
