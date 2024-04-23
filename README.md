@@ -1,2 +1,2 @@
 # Labirin-Alfabet
-Labirin Alfabet | Casual Minigame Prototype
+Labirin Alfabet | Casual Adventure Game
