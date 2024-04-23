@@ -1,2 +1,2 @@
-# Labirin-Kata
-Labirin Kata | Casual Minigame Prototype
+# Labirin-Alfabet
+Labirin Alfabet | Casual Minigame Prototype
