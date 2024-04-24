@@ -66377,7 +66377,7 @@ MonoBehaviour:
     - {fileID: 620960315}
     - {fileID: 1500675334}
   - StageName: 2
-    AmountOfLetter: 5
+    AmountOfLetter: 4
     SpawnPointTransforms:
     - {fileID: 862345344}
     - {fileID: 646873506}
