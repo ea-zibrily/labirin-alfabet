@@ -25,6 +25,7 @@ namespace Alphabet.Stage
         [Header("Marker")] 
         [SerializeField] private TextMeshProUGUI markTextUI;
         
+        private int _currentLevelIndex;
         private string _currentLevel;
         private string _currentStage;
         
@@ -59,18 +60,18 @@ namespace Alphabet.Stage
         
         public void TopMarker()
         {
+            _currentLevelIndex = StageHelper.GetStageIntValue(StageManager.Instance.CurrentLevelList);
             _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
-            markTextUI.text = _currentStage;
+
+            markTextUI.text = "Stage " + (_currentLevelIndex + 1) + " - " +_currentStage;
         }
 
         private void SetNotification()
         {
-            var levelIndex = StageHelper.GetStageIntValue(StageManager.Instance.CurrentLevelList);
-            _currentLevel = StageHelper.GetStageStringValue(levelIndex);
-            _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
+            _currentLevel = StageHelper.GetStageStringValue(_currentLevelIndex);
 
             stageNameTextUI.text = _currentLevel.ToUpper();
-            stageNumberTextUI.text = _currentStage;
+            stageNumberTextUI.text = "Stage " + _currentStage;
         }
         
         private IEnumerator ShowNotificationRoutine()
@@ -97,9 +98,9 @@ namespace Alphabet.Stage
         {
             return stage switch
             {
-                StageNum.Stage_1 => "Stage 1",
-                StageNum.Stage_2 => "Stage 2",
-                StageNum.Stage_3 => "Stage 3",
+                StageNum.Stage_1 => "1",
+                StageNum.Stage_2 => "2",
+                StageNum.Stage_3 => "3",
                 _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
             };
         }

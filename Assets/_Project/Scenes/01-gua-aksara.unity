@@ -449,7 +449,7 @@ GameObject:
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &164407681
 Transform:
   m_ObjectHideFlags: 0
@@ -689,6 +689,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5206635647928999471, guid: efceba29b596d1948875c12e870c4e48, type: 3}
   m_PrefabInstance: {fileID: 205388614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &211109904 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2654286957510952964, guid: c09d9da3754ec6a45a382cdeec2b8b39, type: 3}
+  m_PrefabInstance: {fileID: 618979864}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &248043871
 PrefabInstance:
@@ -10793,7 +10798,7 @@ PrefabInstance:
     - target: {fileID: 955129121464811122, guid: c09d9da3754ec6a45a382cdeec2b8b39, type: 3}
       propertyPath: movePointTransforms.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 211109904}
     - target: {fileID: 1597578207895267417, guid: c09d9da3754ec6a45a382cdeec2b8b39, type: 3}
       propertyPath: m_Name
       value: Enemy_03
@@ -12083,7 +12088,7 @@ GameObject:
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &891063407
 Transform:
   m_ObjectHideFlags: 0
@@ -13442,6 +13447,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 934902153}
     m_Modifications:
+    - target: {fileID: 2721918967238603911, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 955129121464811122, guid: 1b5d7e96899832a40adea57036dc4875, type: 3}
       propertyPath: EnemyData
       value: 
@@ -13489,10 +13498,6 @@ PrefabInstance:
     - target: {fileID: 1781626044211646933, guid: 1b5d7e96899832a40adea57036dc4875, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2721918967238603911, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3737823334815561135, guid: 1b5d7e96899832a40adea57036dc4875, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30755,16 +30760,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterSpawns:
   - StageName: 0
-    AmountOfLetter: 2
+    AmountOfLetter: 3
     SpawnPointTransforms:
     - {fileID: 1713621866}
     - {fileID: 932011531}
     - {fileID: 1541504096}
     - {fileID: 1267961866}
-    - {fileID: 891063407}
-    - {fileID: 164407681}
   - StageName: 1
-    AmountOfLetter: 2
+    AmountOfLetter: 3
     SpawnPointTransforms:
     - {fileID: 2062479324}
     - {fileID: 1918334960}
@@ -36448,7 +36451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 134.1177
       objectReference: {fileID: 0}
     - target: {fileID: 3306581903600085923, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y
