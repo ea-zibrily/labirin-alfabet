@@ -74,7 +74,7 @@ namespace Alphabet.Item
                 LetterManager.TakeLetterEvent(_letterData);
                 hasLetterTaken = true;
             }
-            LetterManager.AddSpawnPoint(transform);
+            // LetterManager.AddSpawnPoint(transform);
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
             gameObject.SetActive(false);
         }

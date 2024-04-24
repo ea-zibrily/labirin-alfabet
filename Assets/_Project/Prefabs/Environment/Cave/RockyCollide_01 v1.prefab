@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3475172425226459221}
   - component: {fileID: 7990699013977879185}
   m_Layer: 0
-  m_Name: RockyCollide_01
+  m_Name: RockyCollide_01 v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

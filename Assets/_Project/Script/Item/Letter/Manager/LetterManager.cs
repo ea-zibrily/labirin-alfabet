@@ -16,7 +16,7 @@ namespace Alphabet.Item
         [SerializeField] private LetterSpawns[] letterSpawns;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        public List<Transform> AvailableSpawnPoint { get; private set; }
+        // public List<Transform> AvailableSpawnPoint { get; private set; }
         
         // Temp Letter Object Data
         private List<LetterData> _lockedLetterDatas;
@@ -31,6 +31,7 @@ namespace Alphabet.Item
         private LetterPooler _letterPooler;
         private TutorialController _tutorialController;
         
+        public LetterPooler LetterPooler => _letterPooler;
         public LetterContainer LetterContainer => _letterContainer;
         
         #endregion
@@ -74,7 +75,7 @@ namespace Alphabet.Item
             _lockedLetterDatas = new List<LetterData>();
             _unlockedLetterDatas = new List<LetterData>();
 
-            AvailableSpawnPoint = new List<Transform>();
+            // AvailableSpawnPoint = new List<Transform>();
         }
         
         private void InitializeLetterDatas()
@@ -112,7 +113,7 @@ namespace Alphabet.Item
             _letterPooler.CallLetterPool(LetterSpawns);
             _letterUIManager.SetLetterInterface(_letterPooler.SpawnedLetterDatas);
             
-            AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
+            // AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
         }
         
         public void TakeLetterEvent(LetterData letterData) => OnTakeLetter?.Invoke(letterData);
@@ -133,30 +134,39 @@ namespace Alphabet.Item
         }
         
         // !-- Helper/Utilities
-        public void AddSpawnPoint(Transform value)
+        public Transform GetAvailablePoint()
         {
-            var originPoints = letterSpawns[StageManager.Instance.CurrentStageIndex].SpawnPointTransforms;
-            foreach (var point in originPoints)
-            {
-                if (value.position != point.position) continue;
-                AvailableSpawnPoint.Add(point);
-                return;
-            }
-        }
+            var stageIndex =  StageManager.Instance.CurrentStageIndex;
+            var spawnedLetters = LetterPooler.SpawnedLetters;
+            var spawnPoints = LetterSpawns[stageIndex].SpawnPointTransforms;
 
-        public void RemoveSpawnPoint(int value)
-        {
-            AvailableSpawnPoint.RemoveAt(value);
-        } 
+            // Init available
+            var availablePoint = new List<Transform>();
+            foreach (var point in spawnPoints)
+            {
+                availablePoint.Add(point);
+            }
+
+            // Check available
+            for (var i = 0; i < spawnedLetters.Count; i++)
+            {
+                for (var j = 0; j < spawnPoints.Length; j++)
+                {
+                    if (spawnedLetters[i].position != spawnPoints[j].position) continue;
+                    availablePoint.Remove(spawnPoints[j]);
+                }
+            }
+            
+            // Randomize available
+            var randomPointIndex = UnityEngine.Random.Range(0, availablePoint.Count - 1);
+            Transform targetPoint = availablePoint[randomPointIndex];
+            return targetPoint;
+        }
 
         private List<LetterData> GetLetterDatas()
         {
             var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
-
-            // TODO: Drop code dibawah jika suda dicek
-            var dataString = isLevelCleared ? "_unlockedLetterDatas" : "_lockedLetterDatas";
-            Debug.Log(dataString);
             
             return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;
         }

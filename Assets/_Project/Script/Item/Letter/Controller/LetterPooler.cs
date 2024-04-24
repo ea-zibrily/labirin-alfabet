@@ -28,8 +28,10 @@ namespace Alphabet.Item
         private List<LetterData> _letterDatas;
         private ObjectPool<LetterController> _letterPool;
         
+        public List<Transform> SpawnedLetters { get; private set; }
         public List<LetterData> SpawnedLetterDatas { get; private set; }
-        public List<Transform> AvailableSpawnPoints { get; private set; }
+
+        // public List<Transform> AvailableSpawnPoints { get; private set; }
 
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
@@ -83,8 +85,9 @@ namespace Alphabet.Item
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
                      OnDestroyPooledObject, collectionCheck: true, defaultPoolCapacity, maxPoolSize);
             
+            SpawnedLetters = new List<Transform>();
             SpawnedLetterDatas = new List<LetterData>();
-            AvailableSpawnPoints = new List<Transform>();
+            // AvailableSpawnPoints = new List<Transform>();
         }
 
         public void InitializePoolData(IReadOnlyList<LetterData> datas)
@@ -103,8 +106,9 @@ namespace Alphabet.Item
         // TODO: Panggil method ini dulu waktu akan generate letter
         private void UpdatePoolData()
         {
+            SpawnedLetters.Clear();
             SpawnedLetterDatas.Clear();
-            AvailableSpawnPoints.Clear();
+            // AvailableSpawnPoints.Clear();
             
             _stageIndex = StageManager.Instance.CurrentStageIndex;
         }
@@ -142,11 +146,12 @@ namespace Alphabet.Item
                 letter.InitializeLetterData(letterData, i + 1);
                 letter.transform.position = letterSpawns.SpawnPointTransforms[randomPointIndex].position;
                 
+                SpawnedLetters.Add(letter.transform);
                 SpawnedLetterDatas.Add(letterData);
                 _letterDatas.RemoveAt(randomLetterId);
             }
             
-            SetAvailableSpawnPoint(latestPointIndices, spawns);
+            // SetAvailableSpawnPoint(latestPointIndices, spawns);
             Profiler.EndSample();
         }
         
@@ -159,7 +164,7 @@ namespace Alphabet.Item
             for (int i = 0; i < spawnPoints.Length; i++)
             {
                 if (removedPointIndex.Contains(i)) continue;
-                AvailableSpawnPoints.Add(spawnPoints[i]);
+                // AvailableSpawnPoints.Add(spawnPoints[i]);
             }
         }
 
