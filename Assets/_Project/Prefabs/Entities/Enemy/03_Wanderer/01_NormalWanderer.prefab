@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7486617079902904544}
   m_Layer: 7
-  m_Name: 03_Wanderer
+  m_Name: 01_NormalWanderer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +107,7 @@ Transform:
   m_Children:
   - {fileID: 5703640849104855826}
   - {fileID: 3536384134829411162}
+  - {fileID: 1541945425336424602}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2590732032925393282
@@ -299,7 +300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 683f563a93a2c9d4784f8d599269666e, type: 2}
+  - {fileID: 2100000, guid: 48a1022ba793d254491f96438237d6e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -392,7 +393,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1346402589874337577}
-  - {fileID: 1541945425336424602}
   m_Father: {fileID: 7486617079902904544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8076634192456052349
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f7c1e62fde21742aa1f83f8578b0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyData: {fileID: 0}
+  EnemyData: {fileID: 11400000, guid: d8a1bd75159e5d645801004d18215933, type: 2}
   _movementDirection: {x: 0, y: 0}
   enemyPattern:
   - PatternType: 0
@@ -575,7 +575,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1429763163583510313}
-  m_Father: {fileID: 5703640849104855826}
+  m_Father: {fileID: 7486617079902904544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

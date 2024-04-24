@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cab04344e6144fe96289faaeb8ad197, type: 3}
-  m_Name: 02_Detta
+  m_Name: 02_Martis
   m_EditorClassIdentifier: 
-  enemyName: Detta
-  enemyMoveSpeed: 4
+  enemyName: Martis
+  enemyMoveSpeed: 1.5
+  enemyAnimateSpeed: 0.8

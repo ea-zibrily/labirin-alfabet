@@ -12,6 +12,7 @@ namespace Alphabet.Entities.Enemy
 
         // Component
         private bool _isRight;
+        private float _animateSpeed;
 
         // Animation
         [SpineAnimation] private string _currentState;
@@ -41,9 +42,7 @@ namespace Alphabet.Entities.Enemy
 
         // Stunned
         private readonly string STUNNED = "stunned";
-
         #endregion
-
 
         #region MonoBehavior Callbacks
 
@@ -77,16 +76,17 @@ namespace Alphabet.Entities.Enemy
         private void InitializeAnimation()
         {
             _isRight = true;
-            // _currentState = Side_Idle;
-            _currentState = Side_Walk;
+            _currentState = Side_Idle;
+            _animateSpeed = _enemyController.EnemyData.EnemyAnimateSpeed;
+
             if (_enemyAnimationState == null)
             {
                 Debug.LogWarning("Player Animation State is null");
                 return;
             }
-            _enemyAnimationState.SetAnimation(0, _currentState, true);
+            ChangeAnimation(_currentState);
         }
-
+        
         // !-- Core Functionality
         public void AnimationHandler()
         {
@@ -131,7 +131,7 @@ namespace Alphabet.Entities.Enemy
         private void ChangeAnimation(string state)
         {
            var stateName = state;
-            _enemyAnimationState.SetAnimation(0, stateName, true);
+            _enemyAnimationState.SetAnimation(0, stateName, true).TimeScale = _animateSpeed;
         }
 
         private void PlayerFlip()

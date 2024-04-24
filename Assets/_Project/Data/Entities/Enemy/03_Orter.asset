@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: 03_Orter
   m_EditorClassIdentifier: 
   enemyName: Orter
-  enemyMoveSpeed: 5
+  enemyMoveSpeed: 5.5
+  enemyAnimateSpeed: 1.2

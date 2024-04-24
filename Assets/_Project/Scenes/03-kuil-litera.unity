@@ -55899,7 +55899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterPrefabs: {fileID: 3099501673111898267, guid: 22a6ebdcee2752548b3e6e4466621305, type: 3}
   letterParent: {fileID: 1018987118}
-  defaultPoolCapacity: 3
+  defaultPoolCapacity: 4
   maxPoolSize: 4
   letterContainer: {fileID: 475099918}
 --- !u!1001 &1577271579
