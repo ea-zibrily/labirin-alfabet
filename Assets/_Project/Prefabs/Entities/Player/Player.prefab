@@ -537,8 +537,10 @@ MonoBehaviour:
   calculateTangents: 0
   maskInteraction: 0
   maskMaterials:
-    materialsMaskDisabled: []
-    materialsInsideMask: []
+    materialsMaskDisabled:
+    - {fileID: 2100000, guid: 91c27027ec266cb49a18c18fce0405eb, type: 2}
+    materialsInsideMask:
+    - {fileID: 2100000, guid: b0eb469f418670841978bee0a7551f4f, type: 2}
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: QF_idle

@@ -25,9 +25,9 @@ namespace Alphabet.Stage
         [Header("Marker")] 
         [SerializeField] private TextMeshProUGUI markTextUI;
         
-        private int _currentLevelIndex;
-        private string _currentLevel;
         private string _currentStage;
+        private string _currentStageNumber;
+        private string _currentSubStage;
         
         #endregion
 
@@ -60,18 +60,18 @@ namespace Alphabet.Stage
         
         public void TopMarker()
         {
-            _currentLevelIndex = StageHelper.GetStageIntValue(StageManager.Instance.CurrentLevelList);
-            _currentStage = GetCurrentStage(StageManager.Instance.CurrentStageList);
+            _currentStageNumber = GetCurrentStage(StageManager.Instance.CurrentLevelList);
+            _currentSubStage = GetCurrentSubStage(StageManager.Instance.CurrentStageList);
 
-            markTextUI.text = "Stage " + (_currentLevelIndex + 1) + " - " +_currentStage;
+            markTextUI.text = _currentStageNumber + " - " +_currentSubStage;
         }
-
+        
         private void SetNotification()
         {
-            _currentLevel = StageHelper.GetStageStringValue(_currentLevelIndex);
+            _currentStage = StageHelper.GetStageNameByEnum(StageManager.Instance.CurrentLevelList);
 
-            stageNameTextUI.text = _currentLevel.ToUpper();
-            stageNumberTextUI.text = "Stage " + _currentStage;
+            stageNameTextUI.text = _currentStage.ToUpper();
+            stageNumberTextUI.text = _currentStageNumber + " - " + _currentSubStage;
         }
         
         private IEnumerator ShowNotificationRoutine()
@@ -94,7 +94,18 @@ namespace Alphabet.Stage
         }
         
         // !-- Helpers/Utilities
-        private string GetCurrentStage(StageNum stage)
+        private string GetCurrentStage(Level level)
+        {
+            return level switch
+            {
+                Level.Gua_Aksara => "Stage 1",
+                Level.Hutan_Abjad => "Stage 2",
+                Level.Kuil_Litera => "Stage 3",
+                _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
+            };
+        }
+
+        private string GetCurrentSubStage(StageNum stage)
         {
             return stage switch
             {

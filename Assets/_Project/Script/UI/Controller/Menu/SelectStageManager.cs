@@ -118,7 +118,7 @@ namespace Alphabet.UI
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
             
-            var stageName = StageHelper.GetStageStringValue(_currentPanelIndex);
+            var stageName = StageHelper.GetStageNameByInt(_currentPanelIndex);
             var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
             var isLevelCleared = IsLevelUnlocked(_currentPanelIndex);
             var isActivateButton = isLevelCleared || _currentPanelIndex is 0;

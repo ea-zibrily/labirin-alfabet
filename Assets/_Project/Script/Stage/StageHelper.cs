@@ -19,8 +19,19 @@ namespace Alphabet.Stage
             var stageName = (Level)stageIndex;
             return stageName.ToString();
         }
+        
+        public static string GetStageNameByEnum(Level level)
+        {
+            return level switch
+            {
+                Level.Gua_Aksara => "Gua Aksara",
+                Level.Hutan_Abjad => "Hutan Abjad",
+                Level.Kuil_Litera => "Kuil Litera",
+                _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
+            };
+        }
 
-        public static string GetStageStringValue(int stageIndex)
+        public static string GetStageNameByInt(int stageIndex)
         {
             var stageLenght = System.Enum.GetNames(typeof(Level)).Length;
             if (stageIndex > stageLenght - 1)
@@ -38,7 +49,7 @@ namespace Alphabet.Stage
             };
         }
 
-        public static int GetStageIntValue(Level stageName)
+        public static int GetStageInt(Level stageName)
         {
             return stageName switch
             {
@@ -47,7 +58,6 @@ namespace Alphabet.Stage
                 Level.Kuil_Litera => 2,
                 _ => throw new ArgumentOutOfRangeException(nameof(stageName), stageName, null)
             };
-            
         }
     }
 }
