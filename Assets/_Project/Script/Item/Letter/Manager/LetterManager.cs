@@ -16,7 +16,6 @@ namespace Alphabet.Item
         [SerializeField] private LetterSpawns[] letterSpawns;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
-        // public List<Transform> AvailableSpawnPoint { get; private set; }
         
         // Temp Letter Object Data
         private List<LetterData> _lockedLetterDatas;
@@ -111,9 +110,7 @@ namespace Alphabet.Item
         public void SpawnLetter()
         {
             _letterPooler.CallLetterPool(LetterSpawns);
-            _letterUIManager.SetLetterInterface(_letterPooler.SpawnedLetterDatas);
-            
-            // AvailableSpawnPoint = _letterPooler.AvailableSpawnPoints;
+            _letterUIManager.SetLetterInterface(_letterPooler.SpawnedLetterDatas);            
         }
         
         public void TakeLetterEvent(LetterData letterData) => OnTakeLetter?.Invoke(letterData);

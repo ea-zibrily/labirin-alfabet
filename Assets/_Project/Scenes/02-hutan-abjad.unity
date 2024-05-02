@@ -30298,7 +30298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3790f7991448cfa94707c3fa0cf3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <KnobRectTransform>k__BackingField: {fileID: 667994227}
+  knobRectTransform: {fileID: 667994227}
 --- !u!114 &894301524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70907,6 +70907,10 @@ PrefabInstance:
       propertyPath: healthUIObjects.Array.data[2]
       value: 
       objectReference: {fileID: 497973606}
+    - target: {fileID: 8521677527206974753, guid: d5711c73a2808a4478819ba1c8d3784a, type: 3}
+      propertyPath: _joystickHandler
+      value: 
+      objectReference: {fileID: 894301523}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

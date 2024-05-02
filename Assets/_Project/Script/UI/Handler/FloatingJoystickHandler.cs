@@ -6,10 +6,17 @@ namespace Alphabet.UI
     [DisallowMultipleComponent]
     public class FloatingJoystickHandler : MonoBehaviour
     {
-        #region Variable
+        #region Fields and Properties
         
-        [field: SerializeField] public RectTransform KnobRectTransform { get; set; }
-        public RectTransform JoyRectTransform { get; private set; }
+        [Header("UI")]
+        [SerializeField] private RectTransform knobRectTransform;
+
+        public RectTransform KnobRect
+        {
+            get => knobRectTransform;
+            set => knobRectTransform = value;
+        }
+        public RectTransform JoystickRect { get; private set; }
         
         #endregion
 
@@ -17,31 +24,22 @@ namespace Alphabet.UI
         
         private void Awake()
         {
-            JoyRectTransform = GetComponent<RectTransform>();
+            JoystickRect = GetComponent<RectTransform>();
         }
         
         private void Start()
         {
-            InitializeJoystick();
-        }
-        
-        #endregion
-
-        #region Labirin Kata Callbacks
-
-        private void InitializeJoystick()
-        {
             var centerPoint = new Vector2(0.5f, 0.5f);
             
-            JoyRectTransform.pivot = centerPoint;
-            KnobRectTransform.anchorMin = centerPoint;
-            KnobRectTransform.anchorMax = centerPoint;
-            KnobRectTransform.pivot = centerPoint;
-            KnobRectTransform.anchoredPosition = Vector2.zero;
+            JoystickRect.pivot = centerPoint;
+            KnobRect.anchorMin = centerPoint;
+            KnobRect.anchorMax = centerPoint;
+            KnobRect.pivot = centerPoint;
+            KnobRect.anchoredPosition = Vector2.zero;
 
             gameObject.SetActive(false);
         }
-
+        
         #endregion
     }
 }

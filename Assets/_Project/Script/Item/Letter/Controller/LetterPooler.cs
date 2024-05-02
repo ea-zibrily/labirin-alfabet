@@ -30,9 +30,7 @@ namespace Alphabet.Item
         
         public List<Transform> SpawnedLetters { get; private set; }
         public List<LetterData> SpawnedLetterDatas { get; private set; }
-
-        // public List<Transform> AvailableSpawnPoints { get; private set; }
-
+        
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
 
@@ -47,7 +45,7 @@ namespace Alphabet.Item
 
         #endregion
 
-        #region Object Pooling Callbacks
+        #region Pooling Methods
         
         // Invoked when creating an item to populate the object pool
         private LetterController CreateLetter()
@@ -77,7 +75,7 @@ namespace Alphabet.Item
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         private void InitializePooler()
@@ -87,7 +85,6 @@ namespace Alphabet.Item
             
             SpawnedLetters = new List<Transform>();
             SpawnedLetterDatas = new List<LetterData>();
-            // AvailableSpawnPoints = new List<Transform>();
         }
 
         public void InitializePoolData(IReadOnlyList<LetterData> datas)
@@ -108,8 +105,7 @@ namespace Alphabet.Item
         {
             SpawnedLetters.Clear();
             SpawnedLetterDatas.Clear();
-            // AvailableSpawnPoints.Clear();
-            
+
             _stageIndex = StageManager.Instance.CurrentStageIndex;
         }
 
@@ -151,21 +147,7 @@ namespace Alphabet.Item
                 _letterDatas.RemoveAt(randomLetterId);
             }
             
-            // SetAvailableSpawnPoint(latestPointIndices, spawns);
             Profiler.EndSample();
-        }
-        
-        // !-- Helper/Utilities
-        private void SetAvailableSpawnPoint(HashSet<int> value, LetterSpawns[] spawns)
-        {
-            var removedPointIndex = value.ToList();
-            var spawnPoints = spawns[_stageIndex].SpawnPointTransforms;
-            
-            for (int i = 0; i < spawnPoints.Length; i++)
-            {
-                if (removedPointIndex.Contains(i)) continue;
-                // AvailableSpawnPoints.Add(spawnPoints[i]);
-            }
         }
 
         #endregion

@@ -15,5 +15,5 @@ MonoBehaviour:
   letterName: D
   letterId: 4
   hasTaken: 0
-  letterSprite: {fileID: 21300000, guid: 215d5ad16c6a28d4b8728b115dfc4f3f, type: 3}
+  letterSprite: {fileID: 21300000, guid: 91dee457c84c10b4d865a4da278cd471, type: 3}
   letterAudio: {fileID: 8300000, guid: 559b418393d103e40aae5d320285d763, type: 3}

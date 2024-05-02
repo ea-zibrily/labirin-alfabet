@@ -44,7 +44,7 @@ namespace Alphabet.Entities.Player
         private Rigidbody2D _playerRb;
         private PlayerAnimation _playerAnimation;
         public PlayerPickThrow PlayerPickThrow { get; private set; }
-        public AnalogInputHandler PlayerInputHandler { get; private set; }
+        public JoystickInputHandler PlayerInputHandler { get; private set; }
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace Alphabet.Entities.Player
             _playerAnimation = GetComponentInChildren<PlayerAnimation>();
             
             PlayerPickThrow = GetComponent<PlayerPickThrow>();
-            PlayerInputHandler = GetComponentInChildren<AnalogInputHandler>();
+            PlayerInputHandler = GetComponentInChildren<JoystickInputHandler>();
         }
 
         

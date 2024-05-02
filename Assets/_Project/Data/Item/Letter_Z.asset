@@ -15,5 +15,5 @@ MonoBehaviour:
   letterName: Z
   letterId: 26
   hasTaken: 0
-  letterSprite: {fileID: 21300000, guid: 9b10824aa877631449445c8f7a1118ad, type: 3}
+  letterSprite: {fileID: 21300000, guid: 41615725b2c28b14eb7c8f21e0ecf9aa, type: 3}
   letterAudio: {fileID: 8300000, guid: 5206af68a90cd4144bb52b7e7ab58dd2, type: 3}
