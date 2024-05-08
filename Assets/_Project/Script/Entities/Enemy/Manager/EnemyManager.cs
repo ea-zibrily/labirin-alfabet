@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Gameplay.EventHandler;
 using KevinCastejon.MoreAttributes;
+using Alphabet.Enum;
 
 namespace Alphabet.Entities.Enemy
 {
@@ -45,6 +46,8 @@ namespace Alphabet.Entities.Enemy
 
             // Game
             GameEventHandler.OnGameStart += _enemyBase.StartMovement;
+            GameEventHandler.OnGameWin += () => _enemyBase.StopMovement();
+            GameEventHandler.OnGameOver += value => _enemyBase.StopMovement();
         }
         
         private void OnDisable()
@@ -55,6 +58,8 @@ namespace Alphabet.Entities.Enemy
 
             // Game
             GameEventHandler.OnGameStart -= _enemyBase.StartMovement;
+            GameEventHandler.OnGameWin -= () => _enemyBase.StopMovement();
+            GameEventHandler.OnGameOver -= value => _enemyBase.StopMovement();
         }
         
         private void Start()
@@ -109,6 +114,11 @@ namespace Alphabet.Entities.Enemy
                 stunPanelUI.SetActive(false);
                 stunFillBarUI.fillAmount = MAX_FILL_BAR;
             }
+        }
+
+        private void StopMovementWhenOver(LoseType type)
+        {
+            _enemyBase.StopMovement();
         }
 
         #endregion

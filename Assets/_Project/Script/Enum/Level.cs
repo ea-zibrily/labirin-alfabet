@@ -1,6 +1,6 @@
 ﻿namespace Alphabet.Enum
 {
-    public enum Level
+    public enum StageName
     {
         Gua_Aksara,
         Hutan_Abjad,

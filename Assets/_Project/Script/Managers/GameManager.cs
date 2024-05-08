@@ -95,13 +95,14 @@ namespace Alphabet.Managers
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
         }
-        
+
         private void GameOver(LoseType loseType)
         {
             IsGameStart = false;
             _timeController.IsTimerStart = false;
             _playerController.StopMovement();
 
+            Debug.Log("Game Over");
             gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;

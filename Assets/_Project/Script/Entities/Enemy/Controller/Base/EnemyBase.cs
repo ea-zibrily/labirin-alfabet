@@ -75,7 +75,7 @@ namespace Alphabet.Entities.Enemy
             var currentSpeed = EnemyData.EnemyMoveSpeed * Time.deltaTime;
             
             EnemyDirection(targetPosition);
-
+            
             if (!CanMove || !GameManager.Instance.IsGameStart) return;
             transform.position = Vector2.MoveTowards(enemyPosition, targetPosition, currentSpeed);
         }

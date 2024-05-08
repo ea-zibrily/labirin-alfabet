@@ -21,10 +21,6 @@ namespace Alphabet.Item
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
 
-        [Header("Spacing")]
-        [SerializeField] private float fullLetterSpace;
-        private const float DEFAULT_SPACE = -20f;
-
         // Event
         public event Action<int> OnLetterTaken;
         public event Action<int> OnLetterLost;
@@ -78,8 +74,6 @@ namespace Alphabet.Item
             amountOfLetter = _letterManager.LetterSpawns[StageManager.Instance.CurrentStageIndex].AmountOfLetter;
             _currentTakenLetter = 0;
             
-            SetLayoutSpace(amountOfLetter);
-
             for (var i = 0; i < amountOfLetter; i++)
             {
                 var letterSprite = datas[i].LetterSprite;
@@ -114,15 +108,6 @@ namespace Alphabet.Item
             var itemIndex = itemId - 1;
             _letterFillImage[itemIndex].SetActive(false);
             _currentTakenLetter--;
-        }
-
-        // !-- Helper/Utilities
-        private void SetLayoutSpace(int amount)
-        {
-            if (amount > letterImageUI.Length) return;
-            
-            var value = amount > letterImageUI.Length - 1 ? fullLetterSpace : DEFAULT_SPACE;
-            letterPanel.GetComponent<HorizontalLayoutGroup>().spacing = value;
         }
         
         #endregion

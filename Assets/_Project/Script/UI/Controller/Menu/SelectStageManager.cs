@@ -16,7 +16,7 @@ namespace Alphabet.UI
         [Serializable]
         private struct StageContent
         {
-            public Level levelName;
+            public StageName levelName;
             public GameObject stagePanelObject;
         }
         #endregion
@@ -31,7 +31,7 @@ namespace Alphabet.UI
         
         // TODO: Pas udah fix, panel index iki gausa di serializ
         private int _currentPanelIndex;
-        private int StageCount =>  System.Enum.GetNames(typeof(Level)).Length;
+        private int StageCount =>  System.Enum.GetNames(typeof(StageName)).Length;
 
         [Header("Image Data")]
         [SerializeField] private Color lockedStageColor;

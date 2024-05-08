@@ -162,7 +162,7 @@ namespace Alphabet.Item
 
         private List<LetterData> GetLetterDatas()
         {
-            var currentLevel = StageManager.Instance.CurrentLevelList.ToString();
+            var currentLevel = StageManager.Instance.CurrentStage.ToString();
             var isLevelCleared = GameDatabase.Instance.LoadLevelConditions(currentLevel);
             
             return isLevelCleared ? _unlockedLetterDatas : _lockedLetterDatas;

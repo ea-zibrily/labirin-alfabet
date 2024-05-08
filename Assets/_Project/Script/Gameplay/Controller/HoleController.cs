@@ -5,6 +5,7 @@ using Cinemachine;
 using Alphabet.Stage;
 using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
+using Alphabet.Managers;
 
 namespace Alphabet.Gameplay.Controller
 {
@@ -123,13 +124,6 @@ namespace Alphabet.Gameplay.Controller
                 Debug.Log($"{player.name} masuk portal!");
                 StartCoroutine(EnterDoorRoutine());
             }
-            
-
-            // if (other.CompareTag("Player")) return;
-            // if (!other.TryGetComponent(out PlayerController player)) return;
-            
-            // Debug.Log($"{player.name} masuk portal!");
-            // StartCoroutine(EnterDoorRoutine());
         }
         
         #endregion

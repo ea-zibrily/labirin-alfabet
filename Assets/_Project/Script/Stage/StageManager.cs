@@ -13,8 +13,8 @@ namespace Alphabet.Stage
         #region Fields & Properties
         
         [Header("Settings")] 
-        public Level CurrentLevelList;
-        [ReadOnly] public StageNum CurrentStageList;
+        public StageName CurrentStage;
+        [ReadOnly] public StageNum CurrentStageNum;
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
@@ -60,7 +60,7 @@ namespace Alphabet.Stage
                 {
                     stageObjects[i].SetActive(true);
                     currentStageIndex = i;
-                    CurrentStageList = StageNum.Stage_1;
+                    CurrentStageNum = StageNum.Stage_1;
                     continue;
                 }
                 
@@ -77,7 +77,7 @@ namespace Alphabet.Stage
 
         public void SaveClearStage()
         {
-            var currentLevel = CurrentLevelList.ToString();
+            var currentLevel = CurrentStage.ToString();
             SaveClearIndex(currentLevel);
             GameDatabase.Instance.SaveLevelClear(currentLevel, true);
         }
@@ -88,8 +88,8 @@ namespace Alphabet.Stage
             var levelCondition = GameDatabase.Instance.LoadLevelConditions(levelName);
             if (levelCondition) return;
             
-            var levelIndex = (int)System.Enum.Parse(typeof(Level), levelName);
-            levelIndex = levelIndex < System.Enum.GetNames(typeof(Level)).Length - 1 ? levelIndex + 1 : 0;
+            var levelIndex = (int)System.Enum.Parse(typeof(StageName), levelName);
+            levelIndex = levelIndex < System.Enum.GetNames(typeof(StageName)).Length - 1 ? levelIndex + 1 : 0;
             GameDatabase.Instance.SaveLevelClearIndex(levelIndex);
         }
 
@@ -107,7 +107,7 @@ namespace Alphabet.Stage
             }
             
             currentStageIndex += 1;
-            CurrentStageList = GetCurrentStage(currentStageIndex);
+            CurrentStageNum = GetCurrentStage(currentStageIndex);
             stageObjects[currentStageIndex].SetActive(true);
         }
         

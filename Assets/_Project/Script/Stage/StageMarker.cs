@@ -60,15 +60,15 @@ namespace Alphabet.Stage
         
         public void TopMarker()
         {
-            _currentStageNumber = GetCurrentStage(StageManager.Instance.CurrentLevelList);
-            _currentSubStage = GetCurrentSubStage(StageManager.Instance.CurrentStageList);
+            _currentStageNumber = GetCurrentStage(StageManager.Instance.CurrentStage);
+            _currentSubStage = GetCurrentSubStage(StageManager.Instance.CurrentStageNum);
 
             markTextUI.text = _currentStageNumber + " - " +_currentSubStage;
         }
         
         private void SetNotification()
         {
-            _currentStage = StageHelper.GetStageNameByEnum(StageManager.Instance.CurrentLevelList);
+            _currentStage = StageHelper.GetStageNameByEnum(StageManager.Instance.CurrentStage);
 
             stageNameTextUI.text = _currentStage.ToUpper();
             stageNumberTextUI.text = _currentStageNumber + " - " + _currentSubStage;
@@ -94,13 +94,13 @@ namespace Alphabet.Stage
         }
         
         // !-- Helpers/Utilities
-        private string GetCurrentStage(Level level)
+        private string GetCurrentStage(StageName level)
         {
             return level switch
             {
-                Level.Gua_Aksara => "Stage 1",
-                Level.Hutan_Abjad => "Stage 2",
-                Level.Kuil_Litera => "Stage 3",
+                StageName.Gua_Aksara => "Stage 1",
+                StageName.Hutan_Abjad => "Stage 2",
+                StageName.Kuil_Litera => "Stage 3",
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };
         }

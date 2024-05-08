@@ -9,31 +9,31 @@ namespace Alphabet.Stage
     {
         public static string GetStageDataKey(int stageIndex)
         {
-            var stageLenght = System.Enum.GetNames(typeof(Level)).Length;
+            var stageLenght = System.Enum.GetNames(typeof(StageName)).Length;
             if (stageIndex > stageLenght - 1)
             {
                 Debug.LogWarning("indexny kebanyakan kang");
                 return null;
             }
 
-            var stageName = (Level)stageIndex;
+            var stageName = (StageName)stageIndex;
             return stageName.ToString();
         }
         
-        public static string GetStageNameByEnum(Level level)
+        public static string GetStageNameByEnum(StageName level)
         {
             return level switch
             {
-                Level.Gua_Aksara => "Gua Aksara",
-                Level.Hutan_Abjad => "Hutan Abjad",
-                Level.Kuil_Litera => "Kuil Litera",
+                StageName.Gua_Aksara => "Gua Aksara",
+                StageName.Hutan_Abjad => "Hutan Abjad",
+                StageName.Kuil_Litera => "Kuil Litera",
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };
         }
 
         public static string GetStageNameByInt(int stageIndex)
         {
-            var stageLenght = System.Enum.GetNames(typeof(Level)).Length;
+            var stageLenght = System.Enum.GetNames(typeof(StageName)).Length;
             if (stageIndex > stageLenght - 1)
             {
                 Debug.LogWarning("indexny kebanyakan kang");
@@ -49,13 +49,13 @@ namespace Alphabet.Stage
             };
         }
 
-        public static int GetStageInt(Level stageName)
+        public static int GetStageInt(StageName stageName)
         {
             return stageName switch
             {
-                Level.Gua_Aksara => 0,
-                Level.Hutan_Abjad => 1,
-                Level.Kuil_Litera => 2,
+                StageName.Gua_Aksara => 0,
+                StageName.Hutan_Abjad => 1,
+                StageName.Kuil_Litera => 2,
                 _ => throw new ArgumentOutOfRangeException(nameof(stageName), stageName, null)
             };
         }

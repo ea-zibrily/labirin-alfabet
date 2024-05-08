@@ -60,7 +60,7 @@ namespace Alphabet.Database
         {
             var levelConditions = new Dictionary<string, bool>();
     
-            foreach (Level level in System.Enum.GetValues(typeof(Level)))
+            foreach (StageName level in System.Enum.GetValues(typeof(StageName)))
             {
                 var key = level.ToString();
                 levelConditions.Add(key, false);
