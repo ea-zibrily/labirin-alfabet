@@ -14,12 +14,11 @@ namespace Alphabet.Entities.Enemy
 
         [Header("Stun")]
         [SerializeField] private GameObject stunPanelUI;
-        [SerializeField] private Image stunFillBarUI;
+        [SerializeField] private Slider stunBarSliderUI;
         [SerializeField] [ReadOnly] private bool _isStunned;
 
         public bool IsStunned => _isStunned;
 
-        
         // Const Variable
         private const float MAX_FILL_BAR = 1f;
         private const float MIN_FILL_BAR = 0f;
@@ -94,31 +93,26 @@ namespace Alphabet.Entities.Enemy
         {
             _isStunned = false;
             stunPanelUI.SetActive(false);
-            stunFillBarUI.fillAmount = MAX_FILL_BAR;
+            stunBarSliderUI.value = MAX_FILL_BAR;
         }
 
         // !-- Core Functioanlity
         public void PerformStunBar()
         {
-            stunFillBarUI.fillAmount = MAX_FILL_BAR;
+            stunBarSliderUI.value = MAX_FILL_BAR;
             stunPanelUI.SetActive(true);
             _isStunned = true;
         }
 
         public void DecreaseStunBar(float duration, float elapsedTime)
         {
-            stunFillBarUI.fillAmount = Mathf.Lerp(MAX_FILL_BAR, MIN_FILL_BAR, elapsedTime / duration);
-            if (stunFillBarUI.fillAmount <= MIN_FILL_BAR)
+            stunBarSliderUI.value = Mathf.Lerp(MAX_FILL_BAR, MIN_FILL_BAR, elapsedTime / duration);
+            if (stunBarSliderUI.value <= MIN_FILL_BAR)
             {
                 _isStunned = false;
                 stunPanelUI.SetActive(false);
-                stunFillBarUI.fillAmount = MAX_FILL_BAR;
+                stunBarSliderUI.value = MAX_FILL_BAR;
             }
-        }
-
-        private void StopMovementWhenOver(LoseType type)
-        {
-            _enemyBase.StopMovement();
         }
 
         #endregion

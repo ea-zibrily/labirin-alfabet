@@ -61,7 +61,7 @@ namespace Alphabet.Gameplay.Controller
         {
             InitializeDoor();
         }
-
+        
         #endregion
         
         #region CariHuruf Callbacks
