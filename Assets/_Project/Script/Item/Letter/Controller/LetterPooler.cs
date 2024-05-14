@@ -25,7 +25,7 @@ namespace Alphabet.Item
 
         [Header("Data")]
         private int _stageIndex;
-        private List<LetterData> _letterDatas;
+        [SerializeField] private List<LetterData> _letterDatas;
         private ObjectPool<LetterController> _letterPool;
         
         public List<Transform> SpawnedLetters { get; private set; }
@@ -121,33 +121,45 @@ namespace Alphabet.Item
             var latestLetterIndices = new HashSet<int>();
             var latestPointIndices = new HashSet<int>();
             var letterSpawns = spawns[_stageIndex];
-            
+
             for (var i = 0; i < letterSpawns.AmountOfLetter; i++)
             {
-                int randomLetterId;
+                int randomLetterIndex;
                 int randomPointIndex;
                 
                 do
                 {
-                    randomLetterId = Random.Range(1, _letterDatas.Count);
+                    randomLetterIndex = _letterDatas.Count <= letterSpawns.AmountOfLetter 
+                            ? i : Random.Range(0, _letterDatas.Count - 1);
+
                     randomPointIndex = Random.Range(0, letterSpawns.SpawnPointTransforms.Length - 1);
-                } while (latestLetterIndices.Contains(randomLetterId) || latestPointIndices.Contains(randomPointIndex));
-                
-                latestLetterIndices.Add(randomLetterId);
+                } while (latestLetterIndices.Contains(randomLetterIndex) || latestPointIndices.Contains(randomPointIndex));
+
+                latestLetterIndices.Add(randomLetterIndex);
                 latestPointIndices.Add(randomPointIndex);
-                
+
+                AdjustSpecialCases(ref randomLetterIndex, i);
+
                 var letter = _letterPool.Get();
-                var letterData = letterContainer.GetLetterDataById(_letterDatas[randomLetterId].LetterId);
+                var letterData = letterContainer.GetLetterDataById(_letterDatas[randomLetterIndex].LetterId);
                 
                 letter.InitializeLetterData(letterData, i + 1);
                 letter.transform.position = letterSpawns.SpawnPointTransforms[randomPointIndex].position;
                 
                 SpawnedLetters.Add(letter.transform);
                 SpawnedLetterDatas.Add(letterData);
-                _letterDatas.RemoveAt(randomLetterId);
+                _letterDatas.RemoveAt(randomLetterIndex);
             }
-            
+
             Profiler.EndSample();
+        }
+
+        private void AdjustSpecialCases(ref int letterIndex, int iteration)
+        {
+            if (_letterDatas.Count == 2 && iteration == 2)
+                letterIndex = 1;
+            else if (_letterDatas.Count == 1 && iteration == 3)
+                letterIndex = 0;
         }
 
         #endregion

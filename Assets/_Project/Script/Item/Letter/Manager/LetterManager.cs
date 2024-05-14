@@ -73,8 +73,6 @@ namespace Alphabet.Item
         {
             _lockedLetterDatas = new List<LetterData>();
             _unlockedLetterDatas = new List<LetterData>();
-
-            // AvailableSpawnPoint = new List<Transform>();
         }
         
         private void InitializeLetterDatas()
@@ -92,8 +90,8 @@ namespace Alphabet.Item
                 
                 if (isLetterUnlock)
                 {
+                    // Debug.LogWarning($"add unlock {letter}");
                     _unlockedLetterDatas.Add(letter);
-                    Debug.LogWarning($"add unlock {letter}");
                     continue;
                 }
                 _lockedLetterDatas.Add(letter);

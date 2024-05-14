@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
+using Alphabet.Gameplay.EventHandler;
+using Alphabet.Entities.Player;
 
 namespace Alphabet.Item
 {
@@ -29,7 +31,7 @@ namespace Alphabet.Item
 
         [Header("Reference")]
         private SpriteRenderer _spriteRenderer;
-
+        private PlayerController _playerController;
         public LetterManager LetterManager { get; private set; }
         public LetterInterfaceManager LetterInterfaceManager { get; private set; }
         
@@ -40,6 +42,7 @@ namespace Alphabet.Item
         private void Awake()
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
             var letter = LetterHelper.GetLetterManagerObject();
             LetterManager = letter.GetComponent<LetterManager>();
