@@ -2584,7 +2584,7 @@ PrefabInstance:
       objectReference: {fileID: 101780228}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_Name
-      value: TeleportHole
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_IsActive
@@ -10316,7 +10316,7 @@ PrefabInstance:
       objectReference: {fileID: 101780228}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_Name
-      value: TeleportHole
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_IsActive
@@ -16414,7 +16414,7 @@ PrefabInstance:
       objectReference: {fileID: 101780228}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_Name
-      value: TeleportHole
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 5878717771308910855, guid: 5991427f3d6a506468cd31bfcb3c0e4e, type: 3}
       propertyPath: m_IsActive
