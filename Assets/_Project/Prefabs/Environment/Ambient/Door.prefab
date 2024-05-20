@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7877969727217413094}
   - component: {fileID: 4964563534294275047}
   m_Layer: 0
-  m_Name: TeleportHole
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
