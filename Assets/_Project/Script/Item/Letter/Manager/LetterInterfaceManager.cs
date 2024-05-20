@@ -6,6 +6,7 @@ using KevinCastejon.MoreAttributes;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Stage;
 using Alphabet.Data;
+using System.Collections;
 
 namespace Alphabet.Item
 {
@@ -20,6 +21,8 @@ namespace Alphabet.Item
 
         private GameObject[] _letterFillImage;
         private int _currentTakenLetter;
+        public int ItemIndex { get; private set; }
+        public GameObject[] LetterImageUI => letterImageUI;
 
         // Event
         public event Action<int> OnLetterTaken;
@@ -27,6 +30,7 @@ namespace Alphabet.Item
 
         [Header("Reference")] 
         private LetterManager _letterManager;
+        private LetterFillAnimation _letterAnimation;
         
         #endregion
 
@@ -35,6 +39,7 @@ namespace Alphabet.Item
         private void Awake()
         {
             _letterManager = GetComponent<LetterManager>();
+            _letterAnimation = GetComponent<LetterFillAnimation>();
         }
 
         private void OnEnable()
@@ -93,10 +98,18 @@ namespace Alphabet.Item
         
         private void TakeLetter(int itemId)
         {
+            StartCoroutine(TakeLetterRoutine(itemId));
+        }
+
+        private IEnumerator TakeLetterRoutine(int itemId)
+        {
             var itemIndex = itemId - 1;
-            _letterFillImage[itemIndex].SetActive(true);
+
+            ItemIndex = itemIndex;
             _currentTakenLetter++;
-            
+            _letterFillImage[itemIndex].SetActive(true);
+            yield return _letterAnimation.AnimateLetterRoutine(_letterFillImage[itemIndex]);
+
             if (_currentTakenLetter >= amountOfLetter)
             {
                 GameEventHandler.ObjectiveClearEvent();

@@ -203,6 +203,18 @@ namespace Alphabet.Entities.Player
         }
 
         // !-- Helper/Utilities
+        public void SetInitializeSkin(string skin)
+        {
+            _skeletonAnimation.initialSkinName = skin;
+        }
+
+        public void ChangeSkinWhenPlay(string skin)
+        {
+            _skeletonAnimation.Skeleton.SetSkin(skin);
+            _skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+            _skeletonAnimation.LateUpdate();
+        }
+
         public void SetDefaultState()
         {
             var direction = _playerController.MovementDirection;

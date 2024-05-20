@@ -27,11 +27,8 @@ namespace Alphabet.Item
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
-        /// <summary>
-        /// Panggil method ini jika player bertabrakan dengan enemy
-        /// </summary>
         public void Lost()
         {
             transform.position = _playerObject.transform.position;
@@ -70,7 +67,7 @@ namespace Alphabet.Item
             var targetPoint = availablePoint[randomPointIndex];
             return targetPoint;
         }
-
+        
         private IEnumerator LerpToRandomPointRoutine(Vector3 randomPoint)
         {
             var elapsedTime = 0f;
