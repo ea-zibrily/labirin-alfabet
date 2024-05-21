@@ -17,11 +17,13 @@ namespace Alphabet.Item
         [SerializeField] private float rotateEffectSpeed;
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private GameObject effectParent;
+        [SerializeField] private GameObject dustEffect;
         
         private float _elapsedTime;
         private bool _isCameraShift;
         private bool _isCollideWithAnother;
 
+        public GameObject DustEffect => dustEffect;
         public bool IsItemThrowed { get; private set;}
 
         [Header("Reference")]
@@ -66,6 +68,7 @@ namespace Alphabet.Item
             _elapsedTime = 0f;
             _isCollideWithAnother = false;
             _stunCollider.isTrigger = false;
+            dustEffect.SetActive(false);
 
             IsItemThrowed = false;
         }
@@ -141,6 +144,12 @@ namespace Alphabet.Item
             Destroy(gameObject);
         }
 
+        private IEnumerator HandleDustEffect(bool condition)
+        {
+            yield return new WaitForSeconds(0.5f);
+            dustEffect.SetActive(condition);
+        }
+
         // !-- Helper/Utilities
         public void EnableSprite() => _spriteRenderer.enabled = true;
         public void DisableSprite() => _spriteRenderer.enabled = false;
@@ -167,6 +176,7 @@ namespace Alphabet.Item
             if (!CheckColliderTag(other)) return;
             
             _isCollideWithAnother = true;
+            StartCoroutine(HandleDustEffect(false));
             if (other.TryGetComponent(out EnemyBase enemy))
             {
                 StartCoroutine(PerformStunEffect(enemy));

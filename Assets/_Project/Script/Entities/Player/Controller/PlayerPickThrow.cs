@@ -23,14 +23,14 @@ namespace Alphabet.Entities.Player
         private float _normalMoveSpeed;
         private GameObject _pickItemObject;
         private GameObject _holdedItemObject;
+        private GameObject _dustEffect;
 
         public bool IsThrowItem { get; set; }
         public bool IsHoldedItem => _holdedItemObject != null;
+        public float NerfedMultiplier => nerfedSpeedMultiplier;
+        public Vector3 PickDirection { get; set; }
 
         public event Action<float> OnPlayerInteract;
-
-        public float NerfedMultiplier => nerfedSpeedMultiplier;
-        public UnityEngine.Vector3 PickDirection { get; set; }
 
         [Header("Throw")]
         [SerializeField] private float throwDelayDuration;
@@ -65,11 +65,15 @@ namespace Alphabet.Entities.Player
             {
                 var multiplier = GetMultiplierValue();
                 var throwPosition = transform.position + PickDirection - multiplier;
+                var dustCondition = _playerController.PlayerInputHandler.Direction != Vector2.zero;
                 
                 _holdedItemObject.transform.position = throwPosition;
                 pickColliderObject.transform.position = throwPosition;
                 pickColliderObject.SetActive(true);
                 interactButtonUI.gameObject.SetActive(true);
+
+                if (_dustEffect.activeSelf == dustCondition) return;
+                StartCoroutine(HandleDustEffect(dustCondition));
             }
             else
             {
@@ -129,6 +133,7 @@ namespace Alphabet.Entities.Player
             if (!_pickItemObject.TryGetComponent(out StunUnique stunItem)) return;
             stunItem.GetComponent<Rigidbody2D>().simulated = false;
             stunItem.DisableSprite();
+            _dustEffect = stunItem.DustEffect;
         }
 
         private void ThrowItem()
@@ -144,6 +149,7 @@ namespace Alphabet.Entities.Player
 
             IsThrowItem = false;
             _playerController.StopMovement();
+            _dustEffect.SetActive(true);
 
             stunItem.EnableSprite();
             stunItem.GetComponent<Rigidbody2D>().simulated = true;
@@ -153,6 +159,17 @@ namespace Alphabet.Entities.Player
             OnPlayerInteract?.Invoke(0f);
             _playerController.StartMovement();
             _holdedItemObject = null;
+            _dustEffect = null;
+        }
+
+        private IEnumerator HandleDustEffect(bool condition)
+        {
+            var timeDelay = condition ? 0 : 0.5f;
+            yield return new WaitForSeconds(timeDelay);
+            if (_dustEffect != null)
+            {
+                _dustEffect.SetActive(condition);
+            }
         }
 
         // !-- Helper/Utilities
