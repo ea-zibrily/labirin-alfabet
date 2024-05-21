@@ -107,7 +107,6 @@ namespace Alphabet.Item
 
             ItemIndex = itemIndex;
             _currentTakenLetter++;
-            _letterFillImage[itemIndex].SetActive(true);
             yield return _letterAnimation.AnimateLetterRoutine(_letterFillImage[itemIndex]);
 
             if (_currentTakenLetter >= amountOfLetter)

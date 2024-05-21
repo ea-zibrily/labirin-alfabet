@@ -60,10 +60,10 @@ namespace Alphabet.Item
             yield return InitializeCenterPosition(letterRect);
             _targetPosition = Vector2.zero;
             letterRect.localScale = Vector3.zero;
+            letterTarget.SetActive(true);
 
             // Animate
-            Debug.Log("Go Animate!");
-            var lerpStartDelay = tweeningDuration * 2 + 1f;
+            var lerpStartDelay = tweeningDuration * 2 + 0.5f;
             LeanTween.scale(letterRect, letterScale.Upper, tweeningDuration).setEase(leanTweenType);
             LeanTween.scale(letterRect, letterScale.OnMove, tweeningDuration)
                 .setDelay(tweeningDuration).setEase(leanTweenType);
@@ -98,7 +98,6 @@ namespace Alphabet.Item
                 target.localScale = Vector3.Lerp(target.localScale, letterScale.Default, lerpRatio);
             }
 
-            Debug.Log("done animate!");
             target.localPosition = point;
             target.localScale = letterScale.Default;
         }

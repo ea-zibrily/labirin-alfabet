@@ -2303,6 +2303,7 @@ MonoBehaviour:
   - {fileID: 1184164110}
   closeButtonUI: {fileID: 809432235}
   letterPooler: {fileID: 1547474171}
+  skeletonGraphic: {fileID: 4568391133224255137}
 --- !u!1 &297812154
 GameObject:
   m_ObjectHideFlags: 0
@@ -54255,8 +54256,8 @@ MonoBehaviour:
     OnMove: {x: 2.5, y: 2.5}
   leanTweenType: 15
   tweeningDuration: 0.3
-  moveDelay: 1.2
-  lerpDuration: 12
+  moveDelay: 1.3
+  lerpDuration: 8
 --- !u!1 &1867378743
 GameObject:
   m_ObjectHideFlags: 0
@@ -63741,6 +63742,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8727373729792387398, guid: 478586777308edf438f0447261f2021c, type: 3}
   m_PrefabInstance: {fileID: 4568391133224255134}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4568391133224255137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1792611823752009397, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5469667373037716917
 PrefabInstance:
   m_ObjectHideFlags: 0

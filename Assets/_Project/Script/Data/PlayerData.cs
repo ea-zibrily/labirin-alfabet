@@ -12,7 +12,7 @@ namespace Alphabet.Data
         public enum SpineSkine
         {
             devan,
-            rea
+            rhea
         }
         #endregion
 

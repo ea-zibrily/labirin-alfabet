@@ -294,6 +294,7 @@ MonoBehaviour:
   joystickSize: {x: 300, y: 300}
   isHalfScreen: 1
   isClampPosition: 0
+  _joystickHandler: {fileID: 0}
 --- !u!1 &3326803340925165034
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +486,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91c27027ec266cb49a18c18fce0405eb, type: 2}
+  - {fileID: 2100000, guid: 86b3d86b314a02747a57fe86a9b50a6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -519,8 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 3ec5b81c63369a0478033221703bc904, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: a7a8405c18fa3a54e9686ebb76c51436, type: 2}
+  initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -537,10 +538,8 @@ MonoBehaviour:
   calculateTangents: 0
   maskInteraction: 0
   maskMaterials:
-    materialsMaskDisabled:
-    - {fileID: 2100000, guid: 91c27027ec266cb49a18c18fce0405eb, type: 2}
-    materialsInsideMask:
-    - {fileID: 2100000, guid: b0eb469f418670841978bee0a7551f4f, type: 2}
+    materialsMaskDisabled: []
+    materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: QF_idle

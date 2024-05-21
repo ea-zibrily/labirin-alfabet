@@ -96,7 +96,7 @@ namespace Alphabet.Entities.Player
             // Component
             gameObject.name = playerData.PlayerName;
             CurrentMoveSpeed = playerData.PlayerMoveSpeed;
-            _playerAnimation.SetInitializeSkin(playerData.PlayerSkin);
+            _playerAnimation.ChangeSkinWhenPlay(playerData.PlayerSkin);
         }
         
         // !-- Core Functionality

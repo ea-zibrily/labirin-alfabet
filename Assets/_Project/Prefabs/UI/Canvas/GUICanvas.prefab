@@ -18277,8 +18277,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 3ec5b81c63369a0478033221703bc904, type: 2}
-  initialSkinName: default
+  skeletonDataAsset: {fileID: 11400000, guid: a7a8405c18fa3a54e9686ebb76c51436, type: 2}
+  initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
   startingAnimation: QF_idle
@@ -23790,7 +23790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2792943672446051990
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Alphabet.Data;
+using Alphabet.Database;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Item;
 using Alphabet.Stage;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +24,7 @@ namespace Alphabet.Gameplay.Controller
 
         [Header("References")]
         [SerializeField] private LetterPooler letterPooler;
+        [SerializeField] private SkeletonGraphic skeletonGraphic;
         private StageMarker _stageMarker;
 
         #endregion
@@ -45,12 +48,14 @@ namespace Alphabet.Gameplay.Controller
         // !-- Initialization
         private void InitializeTutorial()
         {
-            // Letter datas
+            // Datas
+            var spawnedDatas = letterPooler.SpawnedLetterDatas;
+            var playerData = PlayerDatabase.Instance.GetPlayerDatabySelected();
+
             _letterDatas ??= new List<LetterData>();
             _letterDatas.Clear();
-
-            var spawnedDatas = letterPooler.SpawnedLetterDatas;
             _letterDatas.AddRange(spawnedDatas);
+            ChangeIconSkin(playerData.PlayerSkin);
             
             // Other
             foreach (var letter in letterObjectivesUI)
@@ -58,6 +63,12 @@ namespace Alphabet.Gameplay.Controller
                 letter.SetActive(false);
             }
             tutorialPanelUI.SetActive(true);
+        }
+
+        private void InitializeIcon()
+        {
+           var playerData = PlayerDatabase.Instance.GetPlayerDatabySelected();
+           ChangeIconSkin(playerData.PlayerSkin);
         }
 
         // !-- Core Functionality
@@ -90,6 +101,13 @@ namespace Alphabet.Gameplay.Controller
                 letter.SetActive(false);
             }
            _stageMarker.ShowNotification();
+        }
+
+        private void ChangeIconSkin(string skin)
+        {
+            skeletonGraphic.Skeleton.SetSkin(skin);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.LateUpdate();
         }
 
         #endregion
