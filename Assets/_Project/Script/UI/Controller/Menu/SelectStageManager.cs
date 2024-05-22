@@ -108,6 +108,7 @@ namespace Alphabet.UI
             simpleScrollSnap.Setup();
         }
 
+        // TODO: Ubah sistem ini, bisa disesuaikan sama Audio Manager nanti
         private void SetSelectedPanel()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
