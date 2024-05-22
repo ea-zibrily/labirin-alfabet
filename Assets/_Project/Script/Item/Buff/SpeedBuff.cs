@@ -94,17 +94,16 @@ namespace Alphabet.Item
             PlayerController.IsBuffed = true;
 
             StartCoroutine(SpeedActive());
-            StartSpeedEffect();
+            StartSpeedEffect(PlayerManager.SpeedEffect);
         }
 
         public override void DeactivateBuff()
         {
             base.DeactivateBuff();
 
-            StopSpeedEffect();
+            StopSpeedEffect(PlayerManager.SpeedEffect);
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
             PlayerController.IsBuffed = false;
-            Debug.Log(_defaultMoveSpeed);
 
             gameObject.SetActive(false);
         }
@@ -121,7 +120,6 @@ namespace Alphabet.Item
                 }
                 yield return null;
             }
-            Debug.Log(_currentTime);
             _currentTime = 0;
             yield return SlowDownRoutine();
         }
@@ -170,15 +168,25 @@ namespace Alphabet.Item
         private void CameraShiftOutEvent() => _isCameraShift = false;
 
         // Effect
-        private void StartSpeedEffect()
+        private void StartSpeedEffect(GameObject buffEffect)
         {
             StartCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
+            if (buffEffect.TryGetComponent<ParticleSystem>(out var effect))
+            {
+                buffEffect.SetActive(true);
+                effect.Play();
+            }
         }
 
-        private void StopSpeedEffect()
+        private void StopSpeedEffect(GameObject buffEffect)
         {
             StopCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
             _playerSkeleton.SetColor(Color.white);
+            if (buffEffect.TryGetComponent<ParticleSystem>(out var effect))
+            {
+                buffEffect.SetActive(false);
+                effect.Stop();
+            }
         }
 
         #endregion

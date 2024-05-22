@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Alphabet.Item
 {
@@ -26,27 +27,43 @@ namespace Alphabet.Item
         protected override void ActivateBuff()
         {
             base.ActivateBuff();
-            PlayerManager.CurrentHealthCount++;
+            var buffRenderer = GetComponentInChildren<SpriteRenderer>();
             var healthIndex = PlayerManager.CurrentHealthCount - 1;
+
+            buffRenderer.enabled = false;
+            PlayerManager.CurrentHealthCount++;
             PlayerManager.HealthUIFills[healthIndex].SetActive(true);
         }
         
         public override void DeactivateBuff()
         {
             base.DeactivateBuff();
-            gameObject.SetActive(false);
+            StartCoroutine(HandleBuffEffect(PlayerManager.HealEffect));
         }
         
+        private IEnumerator HandleBuffEffect(GameObject buffEffect)
+        {
+            if (buffEffect.TryGetComponent<ParticleSystem>(out var healEffect))
+            {
+                var smokeEffect = buffEffect.transform.GetChild(0).GetComponent<ParticleSystem>();
+                var effectDuration = healEffect.main.duration + smokeEffect.main.duration;
+
+                buffEffect.SetActive(true);
+
+                yield return new WaitForSeconds(effectDuration);
+                buffEffect.SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
+
         // !-- Helper/Utilites
         private bool CheckActiveHealthUI()
         {
             var activeCount = 0;
             foreach (var healthUI in PlayerManager.HealthUIFills)
             {
-                if (healthUI.activeSelf)
-                {
-                    activeCount++;
-                }
+                if (!healthUI.activeSelf) continue;
+                activeCount++;
             }
 
             return activeCount >= maxHealth;

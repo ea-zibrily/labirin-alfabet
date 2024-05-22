@@ -53,6 +53,13 @@ namespace Alphabet.Entities.Player
         private LetterObject[] letterObjects;
         private int _currentStageIndex;
         private int _currentLetterAmount;
+
+        [Header("Effect")]
+        [SerializeField] private GameObject healEffect;
+        [SerializeField] private GameObject speedEffect;
+
+        public GameObject HealEffect => healEffect;
+        public GameObject SpeedEffect => speedEffect;
         
         [Header("Reference")]
         private PlayerController _playerController;
@@ -90,6 +97,9 @@ namespace Alphabet.Entities.Player
         {
            InitializeHealth();
            InitializeLetterObject();
+
+           SpeedEffect.SetActive(false);
+           HealEffect.SetActive(false);
         }
         
         #endregion

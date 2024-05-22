@@ -61,7 +61,7 @@ namespace Alphabet.Entities.Player
 
         private void Update()
         {
-            if (_holdedItemObject)
+            if (_holdedItemObject && !IsThrowItem)
             {
                 var multiplier = GetMultiplierValue();
                 var throwPosition = transform.position + PickDirection - multiplier;

@@ -73,7 +73,7 @@ namespace Alphabet.Gameplay.Controller
         
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializeDoor()
@@ -131,13 +131,6 @@ namespace Alphabet.Gameplay.Controller
                 Debug.Log($"{other.name} masuk portal!");
                 StartCoroutine(EnterDoorRoutine());
             }
-
-            // TODO: Drop logic dibawah jika logic diatas aman
-            // if (other.TryGetComponent(out PlayerController player))
-            // {
-            //     Debug.Log($"{player.name} masuk portal!");
-            //     StartCoroutine(EnterDoorRoutine());
-            // }
         }
         
         #endregion

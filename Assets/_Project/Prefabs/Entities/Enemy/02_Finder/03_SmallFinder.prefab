@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f15400734130964fb82b77e8d9dc447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunPanelUI: {fileID: 0}
+  stunPanelUI: {fileID: 4368100333120561785}
   stunBarSliderUI: {fileID: 5502368514533423597}
   _isStunned: 0
 --- !u!1 &7213336965409209712
