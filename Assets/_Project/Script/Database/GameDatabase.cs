@@ -16,7 +16,7 @@ namespace Alphabet.Database
         private Dictionary<string, bool> _isLevelClear;
         private int _levelClearIndex;
         
-        public bool IsAnimateUnlock => _levelClearIndex > 0;
+        // public bool IsAnimateUnlock => _levelClearIndex > 0;
         
         //-- Constant Variable
         public const int LETTER_COUNT = 26;

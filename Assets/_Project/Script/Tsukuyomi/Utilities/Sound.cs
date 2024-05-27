@@ -17,6 +17,7 @@ namespace Tsukuyomi.Utilities
         public float pitch;
 
         public bool loop;
+        public bool sfx;
 
         [HideInInspector]
         public AudioSource source;

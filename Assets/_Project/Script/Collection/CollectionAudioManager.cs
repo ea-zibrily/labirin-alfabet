@@ -8,10 +8,10 @@ namespace Alphabet.Collection
     {
         #region Fields & Properties
 
-        // Reference
         [SerializeField] private LetterContainer letterContainer;
         private AudioSource _audioSource;
 
+        // Reference
         private CollectionManager _collectionManager;
         
         #endregion
@@ -38,7 +38,7 @@ namespace Alphabet.Collection
 
         private void OnDisable()
         {
-             // Open and Close Collection
+            // Open and Close Collection
             _collectionManager.OnCollectionOpen -= EnableAudio;
             _collectionManager.OnCollectionClose -= DisableAudio;
 

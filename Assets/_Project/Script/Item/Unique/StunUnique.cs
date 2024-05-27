@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Alphabet.Enum;
+using Alphabet.Managers;
 using Alphabet.Entities.Enemy;
-using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Item
@@ -177,6 +178,8 @@ namespace Alphabet.Item
             
             _isCollideWithAnother = true;
             StartCoroutine(HandleDustEffect(false));
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.StonebreakSfx);
+            
             if (other.TryGetComponent(out EnemyBase enemy))
             {
                 StartCoroutine(PerformStunEffect(enemy));

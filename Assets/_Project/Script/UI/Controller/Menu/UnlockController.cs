@@ -41,11 +41,11 @@ namespace Alphabet.UI
 
         private void Start()
         {
-            if (!GameDatabase.Instance.IsAnimateUnlock) return;
+            // if (!GameDatabase.Instance.IsAnimateUnlock) return;
             
-            InitializeContent();
-            InitializeComponent();
-            AnimateUnlockStage();
+            // InitializeContent();
+            // InitializeComponent();
+            // AnimateUnlockStage();
         }
 
         #endregion

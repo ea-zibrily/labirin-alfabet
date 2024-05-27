@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.Item
 {
@@ -33,6 +35,7 @@ namespace Alphabet.Item
             buffRenderer.enabled = false;
             PlayerManager.CurrentHealthCount++;
             PlayerManager.HealthUIFills[healthIndex].SetActive(true);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.HealSfx);
         }
         
         public override void DeactivateBuff()

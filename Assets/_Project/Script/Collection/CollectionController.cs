@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
+using Alphabet.Enum;
 using Alphabet.Data;
-using System.Collections;
+using Alphabet.Database;
+using Alphabet.Managers;
 
 namespace Alphabet.Collection
 {
@@ -17,7 +20,6 @@ namespace Alphabet.Collection
         
         private LetterData _letterData;
         private bool _canInteract;
-        private Button _buttonUI;
 
         [Header("Tweening")]
         [SerializeField] private Vector3 targetScaling;
@@ -32,6 +34,7 @@ namespace Alphabet.Collection
         [Header("Reference")]
         private CollectionManager _collectionManager;
         private CollectionAudioManager _collectionAudioManager;
+        private Button _buttonUI;
         
         #endregion
 
@@ -88,6 +91,7 @@ namespace Alphabet.Collection
 
             _canInteract = true;
             _defaultScaling = _rectTransform.localScale;
+            _buttonUI.interactable = true;
             _buttonUI.onClick.AddListener(OnCollectionClicked);
         }
         
@@ -96,43 +100,63 @@ namespace Alphabet.Collection
         {
             if (!_canInteract) return;
 
-            _canInteract = false;
             StopAudio();
-            _collectionManager.SetSelectedCollection(collectionId);
+            _canInteract = false;
+            _buttonUI.interactable = false;
+            _collectionManager.SetSelectedCollection(collectionId);            
             StartCoroutine(ClickFeedbackRoutine());
         }
 
         private IEnumerator ClickFeedbackRoutine()
         {
+            var hasCollected = GameDatabase.Instance.LoadLetterConditions(collectionId);
+            var tweenDuration = hasCollected ? tweeningDuration : tweeningDuration + 1f;
+
             LeanTween.scale(gameObject, targetScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
                         if (collectionId == _collectionManager.SelectedCollectionId)
                         {
-                            _collectionAudioManager.PlayAudio(collectionId);
+                            if (hasCollected)
+                            {
+                                _collectionAudioManager.PlayAudio(collectionId);
+                            }
+                            else
+                            {
+                                FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedLetterSfx);
+                            }
                         }
                     });     
             
-            yield return new WaitForSeconds(tweeningDuration);
+            yield return new WaitForSeconds(tweenDuration);
             LeanTween.scale(gameObject, _defaultScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
                     {
                         _canInteract = true;
+                        _buttonUI.interactable = true;
                     });       
         }
 
         private void OnCloseCollection()
         {
             _canInteract = true;
-            
+            _buttonUI.interactable = true;
+
             LeanTween.cancel(gameObject);
+            FindObjectOfType<AudioManager>().StopAudio(Musics.LockedLetterSfx);
             _rectTransform.localScale = _defaultScaling;
         }
-
+        
         // !-- Helper/Utilities
-        private void SetId(int letterId) => collectionId = letterId;
+        private void SetId(int letterId)
+        {
+            collectionId = letterId;
+        }
 
-        private void SetCollectionName(string letterName) => collectionName = letterName;
+        private void SetCollectionName(string letterName)
+        {
+            collectionName = letterName;
+        }
 
         private void SetSprite(Sprite letterSprite)
         {

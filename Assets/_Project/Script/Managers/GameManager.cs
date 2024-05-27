@@ -87,6 +87,7 @@ namespace Alphabet.Managers
 
         private void GameWin()
         {
+            // Win Game
             IsGameStart = false;
             _timeController.IsTimerStart = false;
             _playerController.StopMovement();
@@ -94,15 +95,19 @@ namespace Alphabet.Managers
             StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
+
+            // Start Audio
+            FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.Win);
         }
 
         private void GameOver(LoseType loseType)
         {
+            // Lose Game
             IsGameStart = false;
             _timeController.IsTimerStart = false;
             _playerController.StopMovement();
 
-            Debug.Log("Game Over");
             gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;

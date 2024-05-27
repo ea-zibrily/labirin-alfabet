@@ -7,6 +7,7 @@ using Alphabet.Enum;
 using Alphabet.Stage;
 using Alphabet.Managers;
 using Alphabet.Database;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.UI
 {
@@ -29,9 +30,10 @@ namespace Alphabet.UI
         [SerializeField] private TextMeshProUGUI stageHeadlineText;
         [SerializeField] private StageContent[] stageContents;
         
-        // TODO: Pas udah fix, panel index iki gausa di serializ
         private int _currentPanelIndex;
-        private int StageCount =>  System.Enum.GetNames(typeof(StageName)).Length;
+        private bool _canExplore;
+
+        private const string PADLOCK_TRIGGERED = "LockTap";
 
         [Header("Image Data")]
         [SerializeField] private Color lockedStageColor;
@@ -47,12 +49,20 @@ namespace Alphabet.UI
 
         private void OnEnable()
         {
+            // Snapping
             simpleScrollSnap.OnSnappingBegin += SetSelectedPanel;
+
+            // Padlock
+            PadlockEventHandler.OnPadlockAnimate += value => ExploreButtonUI.interactable = !value;
         }
 
         private void OnDisable()
         {
+            // Snapping
             simpleScrollSnap.OnSnappingBegin -= SetSelectedPanel;
+
+            // Padlock
+            PadlockEventHandler.OnPadlockAnimate -= value => ExploreButtonUI.interactable = !value;
         }
 
         #endregion
@@ -69,7 +79,7 @@ namespace Alphabet.UI
 
         private void InitializeSelectStage()
         {
-            if (stageContents.Length != StageCount)
+            if (stageContents.Length != GetStageCount())
             {
                 Debug.LogError("stage content kurang brok!");
                 return;
@@ -83,15 +93,27 @@ namespace Alphabet.UI
         public void GoToStage()
         {
             var levelSceneIndex = _currentPanelIndex + 1;
-            Debug.Log($"explore level {levelSceneIndex}");
             SceneTransitionManager.Instance.LoadSelectedLevel(levelSceneIndex);
         }
 
         protected override void OnClickExplore()
         {
             base.OnClickExplore();
-            selectCharacterPanelUI.SetActive(true);
-            ClosePanel();
+
+            if (_canExplore)
+            {
+                selectCharacterPanelUI.SetActive(true);
+                ClosePanel();
+            }
+            else
+            {
+                var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
+                var stagePadlock = stagePanel.transform.GetChild(1).GetComponent<Animator>();
+
+                stagePadlock.SetTrigger(PADLOCK_TRIGGERED);
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedStageSfx);
+            }
+           
         }
 
         protected override void OnClickClose()
@@ -108,46 +130,38 @@ namespace Alphabet.UI
             simpleScrollSnap.Setup();
         }
 
-        // TODO: Ubah sistem ini, bisa disesuaikan sama Audio Manager nanti
         private void SetSelectedPanel()
         {
             _currentPanelIndex = simpleScrollSnap.SelectedPanelIndex;
-            
-            var stageName = StageHelper.GetStageNameByInt(_currentPanelIndex);
-            var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
+
             var isLevelCleared = IsLevelUnlocked(_currentPanelIndex);
-            var isActivateButton = isLevelCleared || _currentPanelIndex is 0;
-            var isAnimate = GameDatabase.Instance.LoadLevelClearIndex() <= _currentPanelIndex 
-                        && GameDatabase.Instance.IsAnimateUnlock;
+            var stageName = StageHelper.GetStageNameByInt(_currentPanelIndex);
+            
+            _canExplore = isLevelCleared || _currentPanelIndex is 0;
 
             SetHeadlineText(stageName.ToUpper());
-            SetExploreButtonState(isActivateButton, isAnimate, ExploreButtonUI);
-                        
-            if (_currentPanelIndex <= 0 || GameDatabase.Instance.IsAnimateUnlock) return;
-            SetStageThumbnailState(isLevelCleared, stagePanel);   
+            SetExploreButtonState(_canExplore, ExploreButtonUI);
+            SetThumbnailState(isLevelCleared, stageContents[_currentPanelIndex].stagePanelObject);   
         }
 
-        private void SetExploreButtonState(bool isUnlocked, bool isAnimate, Button button)
+        private void SetHeadlineText(string value)
+        {
+            stageHeadlineText.text = value;
+        }
+
+        private void SetExploreButtonState(bool isUnlocked, Button button)
         {
             var buttonImage = button.GetComponent<Image>();
             var canvasGroup = button.GetComponent<CanvasGroup>();
 
-            if (isAnimate)
-            {
-                ExploreButtonUI.interactable = false;
-                canvasGroup.enabled = false;
-                buttonImage.material = imageMaterial;
-            }
-            else
-            {
-                ExploreButtonUI.interactable = isUnlocked;
-                canvasGroup.enabled = !isUnlocked;
-                buttonImage.material = isUnlocked ? null : imageMaterial;
-            }
+            canvasGroup.enabled = !isUnlocked;
+            buttonImage.material = isUnlocked ? null : imageMaterial;
         }
 
-        private void SetStageThumbnailState(bool isUnlocked, GameObject stagePanel)
+        private void SetThumbnailState(bool isUnlocked, GameObject stagePanel)
         {
+            if (_currentPanelIndex <= 0) return;
+
             var stageThumbnail = stagePanel.transform.GetChild(0).GetComponent<Image>();
             var stagePadlock = stagePanel.transform.GetChild(1).gameObject;
 
@@ -157,7 +171,6 @@ namespace Alphabet.UI
         }
         
         // !-- Helper/Utilities
-        private void SetHeadlineText(string text) => stageHeadlineText.text = text;
         private bool IsLevelUnlocked(int index)
         {
             var stageIndex = index > 0 ? index - 1 : index;
@@ -165,6 +178,8 @@ namespace Alphabet.UI
 
             return GameDatabase.Instance.LoadLevelConditions(stageName);
         }
+
+        private int GetStageCount() => System.Enum.GetNames(typeof(StageName)).Length;
 
         #endregion
 

@@ -2,7 +2,6 @@
 using UnityEngine;
 using Alphabet.Enum;
 using Tsukuyomi.Utilities;
-using UnityEngine.Serialization;
 
 namespace Alphabet.Managers
 {
@@ -10,9 +9,14 @@ namespace Alphabet.Managers
     {
         #region Fields & Properties
         
+        [Header("Audio Data")]
         public Sound[] Musics;
-        public Sound[] SoundEffects;
 
+        [Header("Container")]
+        [SerializeField] private GameObject musicsContainer;
+        [SerializeField] private GameObject sfxsContainer;
+
+        public Musics LatestMusic { get; set; } = Enum.Musics.none;
         public static AudioManager Instance;
         
         #endregion
@@ -32,19 +36,20 @@ namespace Alphabet.Managers
             }
             
             DontDestroyOnLoad(gameObject);
-            InitializeAudio(Musics);
+            InitializeAudio();
         }
         
         #endregion
 
-        #region Tsukuyomi Callbacks
+        #region Methods
 
-        //-- Initialization
-        private void InitializeMusic()
+        //!-- Initialization
+        private void InitializeAudio()
         {
             foreach (var s in Musics)
             {
-                s.source = gameObject.AddComponent<AudioSource>();
+                var container = s.sfx ? sfxsContainer : musicsContainer;
+                s.source = container.AddComponent<AudioSource>();
                 s.source.clip = s.clip;
 
                 s.source.volume = s.volume;
@@ -53,70 +58,51 @@ namespace Alphabet.Managers
             }
         }
 
-        private void InitializeSoundEffect()
+        //!-- Core Functionality
+        public void PlayAudio(Musics music)
         {
-            foreach (var s in SoundEffects)
-            {
-                s.source = gameObject.AddComponent<AudioSource>();
-                s.source.clip = s.clip;
-
-                s.source.volume = s.volume;
-                s.source.pitch = s.pitch;
-                s.source.loop = s.loop;
-            }
-        }
-        
-        private void InitializeAudio(Sound[] sounds)
-        {
-            foreach (var s in sounds)
-            {
-                s.source = gameObject.AddComponent<AudioSource>();
-                s.source.clip = s.clip;
-
-                s.source.volume = s.volume;
-                s.source.pitch = s.pitch;
-                s.source.loop = s.loop;
-            }
-            Debug.Log("done initialize");
-        }
-        
-        //-- Core Functionality
-        public void PlayAudio(AudioList audioListName)
-        {
-            Sound sound = Array.Find(Musics, sound => sound.name == audioListName.ToString());
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
             if (sound == null)
             {
-                Debug.LogWarning($"Sound: {audioListName} not found!");
+                Debug.LogWarning($"Bgm: {music} not found!");
                 return;
             }
-        
-            sound.source.Play();
+
+            if (sound.sfx)
+            {
+                sound.source.PlayOneShot(sound.clip);
+            }
+            else
+            {
+                sound.source.Play();
+                LatestMusic = music;
+            }
         }
-        
-        public void StopAudio(AudioList audioListName)
+
+        public void StopAudio(Musics music)
         { 
-            Sound sound = Array.Find(Musics, sound => sound.name == audioListName.ToString());
-        
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
+
             sound.source.Stop();
         }
         
-        public void PauseAudio(AudioList audioListName)
+        public void PauseAudio(Musics music)
         {
-            Sound sound = Array.Find(Musics, sound => sound.name == audioListName.ToString());
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
         
             sound.source.Pause();
         }
         
-        public void SetVolume(AudioList audioListName, float value)
+        public void SetVolume(Musics music, float value)
         {
-            Sound sound = Array.Find(Musics, sound => sound.name == audioListName.ToString());
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
         
             sound.source.volume = value;
         }
         
-        public float GetVolume(AudioList audioListName)
+        public float GetVolume(Musics music)
         {
-            Tsukuyomi.Utilities.Sound sound = Array.Find(Musics, sound => sound.name == audioListName.ToString());
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
         
             return sound.volume;
         }

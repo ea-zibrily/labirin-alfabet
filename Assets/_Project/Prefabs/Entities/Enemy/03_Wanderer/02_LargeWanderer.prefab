@@ -396,8 +396,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 48a1022ba793d254491f96438237d6e1, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -431,8 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c9c6d1f8510f5ed49b5c2e9f2d71fd82, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: 0a076a734c0ddb74cbb75b93f987943e, type: 2}
+  initialSkinName: skinC
   initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3

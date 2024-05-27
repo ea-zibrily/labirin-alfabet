@@ -1,6 +1,6 @@
-using Alphabet.Managers;
-using Alphabet.Enum;
 using UnityEngine;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.Gameplay.Controller
 {
@@ -8,24 +8,26 @@ namespace Alphabet.Gameplay.Controller
     {
         #region Variable
 
-        [Header("Enum")]
-        [SerializeField] private AudioList playSoundEnum;
-    
-        [Header("Reference")]
+        [SerializeField] private Musics musicName;
         private AudioManager _audioManager;
-    
+
         #endregion
     
         #region MonoBehaviour Callbacks
 
         private void Awake()
         {
-            _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+            _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         }
-        
+
         private void Start()
         {
-            _audioManager.PlayAudio(playSoundEnum);
+            if (_audioManager.LatestMusic != Musics.none)
+            {
+                _audioManager.StopAudio(_audioManager.LatestMusic);
+            }
+
+            _audioManager.PlayAudio(musicName);
         }
 
         #endregion

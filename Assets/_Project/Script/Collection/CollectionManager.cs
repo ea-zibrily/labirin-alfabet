@@ -95,16 +95,13 @@ namespace Alphabet.Collection
         {
             var letterData = letterContainer.GetLetterDataById(id);
             var collectionController = collection.GetComponent<CollectionController>();
-            var button = collection.GetComponent<Button>();
             var fillImage = collection.transform.GetChild(0).gameObject;
 
             collectionController.InitializeData(letterData);
-            button.interactable = GameDatabase.Instance.LoadLetterConditions(id);
-            fillImage.SetActive(button.interactable);
+            fillImage.SetActive(GameDatabase.Instance.LoadLetterConditions(id));
         }
         
         // !-- Core Functionality
-        public void SetSelectedCollection(int collectionId)  =>  _selectedCollectionId = collectionId;
 
         private void CloseCollection()
         {
@@ -126,6 +123,13 @@ namespace Alphabet.Collection
                 throw new Exception("Invalid configuration.");
             }
         }
+
+        // !-- Helpers/Utilities
+        public void SetSelectedCollection(int collectionId)
+        {
+            _selectedCollectionId = collectionId;
+        }
+
 
         #endregion
         

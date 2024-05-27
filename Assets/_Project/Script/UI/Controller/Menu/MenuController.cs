@@ -26,7 +26,7 @@ namespace Alphabet.UI
         #endregion
 
         #region MonoBehaviour Callbacks
-
+        
         private void Awake()
         {
             var collectionObject = GameObject.FindGameObjectWithTag("Collection");
@@ -41,7 +41,7 @@ namespace Alphabet.UI
         #endregion
         
         #region Methods
-
+        
         // !-- Initialization
         private void InitializeButton()
         {
@@ -50,7 +50,7 @@ namespace Alphabet.UI
             playButtonUI.onClick.AddListener(OnPlayButton);
             collectionButtonUI.onClick.AddListener(OnCollectionButton);
         }
-
+        
         // !-- Core Functionality
         public void OnPlayButton()
         {
