@@ -128,7 +128,6 @@ namespace Alphabet.Gameplay.Controller
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log($"{other.name} masuk portal!");
                 StartCoroutine(EnterDoorRoutine());
             }
         }

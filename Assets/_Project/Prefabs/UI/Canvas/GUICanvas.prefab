@@ -182,7 +182,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 180, y: -80}
-  m_SizeDelta: {x: 0, y: 162}
+  m_SizeDelta: {x: 344, y: 162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9056879354015959339
 MonoBehaviour:
@@ -5775,10 +5775,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3603593252267961126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 282, y: -81}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2351189128647099445
 CanvasRenderer:
@@ -6402,10 +6402,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8262336825228327571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 134.1177, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 134.1177, y: -37.138855}
+  m_SizeDelta: {x: 0, y: 40.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4851316089675518759
 CanvasRenderer:
@@ -6802,7 +6802,7 @@ MonoBehaviour:
   - loseText: Monster telah menangkapmu!
     loseImage: {fileID: 21300000, guid: ab195b10c06b5c34a9f92c00d698a816, type: 3}
   - loseText: Waktu telah habis!
-    loseImage: {fileID: 21300000, guid: c61b3c4b1d5cad3419ae2646bcee3c4e, type: 3}
+    loseImage: {fileID: 21300000, guid: ab195b10c06b5c34a9f92c00d698a816, type: 3}
 --- !u!1 &2888683948453986402
 GameObject:
   m_ObjectHideFlags: 0
@@ -6971,10 +6971,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3603593252267961126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 62, y: -81}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7729162567507045334
 CanvasRenderer:
@@ -24450,7 +24450,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1008, y: 625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8863630316112517970
 CanvasRenderer:
@@ -25156,7 +25156,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 755, y: 143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5851970345849930347
 CanvasRenderer:
