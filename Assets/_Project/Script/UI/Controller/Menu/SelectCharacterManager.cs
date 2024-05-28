@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Alphabet.Database;
 using Spine.Unity;
+using Alphabet.Database;
 
 namespace Alphabet.UI
 {

@@ -49,56 +49,56 @@ MonoBehaviour:
   Musics:
   - name: MainMenu
     clip: {fileID: 8300000, guid: a1f62e29f2b939e43b6594f239fbc5af, type: 3}
-    priority: 70
-    volume: 0.2
+    priority: 100
+    volume: 0.4
     pitch: 1
     loop: 1
     sfx: 0
     source: {fileID: 0}
   - name: Gameplay
     clip: {fileID: 8300000, guid: 4cf54c0e3d20bfd43b1136fd862cbab2, type: 3}
-    priority: 70
-    volume: 0.2
+    priority: 100
+    volume: 0.6
     pitch: 1
     loop: 1
     sfx: 0
     source: {fileID: 0}
   - name: Win
     clip: {fileID: 8300000, guid: 7d35dc9844f233d4d8f005e7e12bc1f8, type: 3}
-    priority: 70
-    volume: 0.2
+    priority: 100
+    volume: 0.5
     pitch: 1
     loop: 0
     sfx: 0
     source: {fileID: 0}
   - name: HealSfx
     clip: {fileID: 8300000, guid: 5870859aa34f60446b8be064e99a8dac, type: 3}
-    priority: 70
-    volume: 0.7
+    priority: 150
+    volume: 0.9
     pitch: 1
     loop: 0
     sfx: 1
     source: {fileID: 0}
   - name: StonebreakSfx
     clip: {fileID: 8300000, guid: 0aa03ab516b142748aa9813705bdfc44, type: 3}
-    priority: 70
-    volume: 0.6
+    priority: 150
+    volume: 0.9
     pitch: 1
     loop: 0
     sfx: 1
     source: {fileID: 0}
   - name: LockedLetterSfx
     clip: {fileID: 8300000, guid: b889185e76e6b0648bf72e5b41bf52a1, type: 3}
-    priority: 70
-    volume: 0.7
+    priority: 140
+    volume: 0.9
     pitch: 1
     loop: 0
     sfx: 1
     source: {fileID: 0}
   - name: LockedStageSfx
     clip: {fileID: 8300000, guid: a8a62a725052fee4a94921550dff0947, type: 3}
-    priority: 70
-    volume: 0.7
+    priority: 140
+    volume: 0.9
     pitch: 1
     loop: 0
     sfx: 1

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Gameplay.EventHandler;
 using KevinCastejon.MoreAttributes;
-using Alphabet.Enum;
 
 namespace Alphabet.Entities.Enemy
 {
@@ -13,7 +12,6 @@ namespace Alphabet.Entities.Enemy
         #region Fields & Property
 
         [Header("Stun")]
-        [SerializeField] private GameObject stunPanelUI;
         [SerializeField] private Slider stunBarSliderUI;
         [SerializeField] [ReadOnly] private bool _isStunned;
 
@@ -92,7 +90,7 @@ namespace Alphabet.Entities.Enemy
         private void InitializeStunBar()
         {
             _isStunned = false;
-            stunPanelUI.SetActive(false);
+            stunBarSliderUI.gameObject.SetActive(false);
             stunBarSliderUI.value = MAX_FILL_BAR;
         }
 
@@ -100,7 +98,7 @@ namespace Alphabet.Entities.Enemy
         public void PerformStunBar()
         {
             stunBarSliderUI.value = MAX_FILL_BAR;
-            stunPanelUI.SetActive(true);
+            stunBarSliderUI.gameObject.SetActive(true);
             _isStunned = true;
         }
 
@@ -110,7 +108,7 @@ namespace Alphabet.Entities.Enemy
             if (stunBarSliderUI.value <= MIN_FILL_BAR)
             {
                 _isStunned = false;
-                stunPanelUI.SetActive(false);
+                stunBarSliderUI.gameObject.SetActive(false);
                 stunBarSliderUI.value = MAX_FILL_BAR;
             }
         }
