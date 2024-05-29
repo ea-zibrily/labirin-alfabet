@@ -30,7 +30,7 @@ namespace Alphabet.Item
         
         public List<Transform> SpawnedLetters { get; private set; }
         public List<LetterData> SpawnedLetterDatas { get; private set; }
-        
+                
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
 
@@ -131,7 +131,6 @@ namespace Alphabet.Item
                 {
                     randomLetterIndex = _letterDatas.Count <= letterSpawns.AmountOfLetter 
                             ? i : Random.Range(0, _letterDatas.Count - 1);
-
                     randomPointIndex = Random.Range(0, letterSpawns.SpawnPointTransforms.Length - 1);
                 } while (latestLetterIndices.Contains(randomLetterIndex) || latestPointIndices.Contains(randomPointIndex));
 
@@ -156,9 +155,9 @@ namespace Alphabet.Item
 
         private void AdjustSpecialCases(ref int letterIndex, int iteration)
         {
-            if (_letterDatas.Count == 2 && iteration == 2)
+            if (_letterDatas.Count == 2 && iteration == 1)
                 letterIndex = 1;
-            else if (_letterDatas.Count == 1 && iteration == 3)
+            else if (_letterDatas.Count == 1 && iteration == 2)
                 letterIndex = 0;
         }
 

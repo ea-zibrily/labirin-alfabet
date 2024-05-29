@@ -77,11 +77,11 @@ namespace Alphabet.Item
         
         private void InitializeLetterDatas()
         {
-            if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
-            {
-                Debug.LogError("letter prefabs kurenx breks");
-                return;
-            }
+            // if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
+            // {
+            //     Debug.LogError("letter prefabs kurenx breks");
+            //     return;
+            // }
             
             foreach (var letter in LetterContainer.LetterDatas)
             {

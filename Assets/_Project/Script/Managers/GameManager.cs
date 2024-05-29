@@ -18,7 +18,6 @@ namespace Alphabet.Managers
         //-- Load stage time delay
         private const float FADE_OUT_DELAY = 2.5f;
         private const float LOAD_STAGE_DELAY = 1.2f;
-        private const float FADE_IN_DELAY = 1.5f;
         
         #endregion
         
@@ -95,7 +94,7 @@ namespace Alphabet.Managers
             StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
-
+                        
             // Start Audio
             FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
             FindObjectOfType<AudioManager>().PlayAudio(Musics.Win);

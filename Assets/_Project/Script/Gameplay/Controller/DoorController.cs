@@ -109,6 +109,14 @@ namespace Alphabet.Gameplay.Controller
             doorConstraint.CloseConstraint.enabled = false;
             doorVirtualCamera.Follow = null;
         }
+
+        private void EnterDoor()
+        {
+            if (StageManager.Instance.CheckCanContinueStage())
+                GameEventHandler.ContinueStageEvent();
+            else
+                GameEventHandler.GameWinEvent();
+        }
         
         private IEnumerator EnterDoorRoutine()
         {
@@ -128,7 +136,8 @@ namespace Alphabet.Gameplay.Controller
         {
             if (other.CompareTag("Player"))
             {
-                StartCoroutine(EnterDoorRoutine());
+                EnterDoor();
+                // StartCoroutine(EnterDoorRoutine());
             }
         }
         
