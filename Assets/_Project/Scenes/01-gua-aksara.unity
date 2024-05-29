@@ -30462,6 +30462,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8579790739957850742, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
+      propertyPath: _animationName
+      value: QF_idle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1607543625289569303, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
@@ -36667,6 +36671,10 @@ PrefabInstance:
     - target: {fileID: 7864256409736217769, guid: 478586777308edf438f0447261f2021c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196120740692206234, guid: 478586777308edf438f0447261f2021c, type: 3}
+      propertyPath: m_SortMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

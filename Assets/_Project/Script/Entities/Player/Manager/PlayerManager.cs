@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine;
+using Spine.Unity;
 using KevinCastejon.MoreAttributes;
+using Alphabet.Enum;
 using Alphabet.Item;
 using Alphabet.Stage;
 using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
-using Spine;
-using Spine.Unity;
-using Alphabet.Enum;
 
 namespace Alphabet.Entities.Player
 {

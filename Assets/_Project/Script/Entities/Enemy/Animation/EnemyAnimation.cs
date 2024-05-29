@@ -90,10 +90,9 @@ namespace Alphabet.Entities.Enemy
         // !-- Core Functionality
         public void AnimationHandler()
         {
+            var state = GetState();
             var direction = _enemyController.MovementDirection;
             if ((direction.x > 0 && !_isRight) || (direction.x < 0 && _isRight)) PlayerFlip();
-
-            var state = GetState();
 
             if (state == _currentState) return;
             ChangeAnimation(state);

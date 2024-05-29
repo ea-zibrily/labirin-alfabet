@@ -20,20 +20,26 @@ namespace Alphabet.Item
         // !-- Core Functionality
         public void Taken()
         {
-            if (PlayerManager.CurrentHealthCount > maxHealth || CheckActiveHealthUI()) return;
-            
+            if (PlayerManager.CurrentHealthCount > maxHealth || CheckActiveHealthUI())
+            {
+                Debug.LogError("health buff ga jalan!");
+                return;
+            }
+
+            Debug.Log($"health before: {PlayerManager.CurrentHealthCount}");
             ActivateBuff();
             DeactivateBuff();
+            Debug.Log($"health after: {PlayerManager.CurrentHealthCount}");
         }
         
         protected override void ActivateBuff()
         {
             base.ActivateBuff();
             var buffRenderer = GetComponentInChildren<SpriteRenderer>();
-            var healthIndex = PlayerManager.CurrentHealthCount - 1;
-
+            
             buffRenderer.enabled = false;
             PlayerManager.CurrentHealthCount++;
+            var healthIndex = PlayerManager.CurrentHealthCount - 1;
             PlayerManager.HealthUIFills[healthIndex].SetActive(true);
             FindObjectOfType<AudioManager>().PlayAudio(Musics.HealSfx);
         }
