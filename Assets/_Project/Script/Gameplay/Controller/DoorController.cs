@@ -117,16 +117,6 @@ namespace Alphabet.Gameplay.Controller
             else
                 GameEventHandler.GameWinEvent();
         }
-        
-        private IEnumerator EnterDoorRoutine()
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            if (StageManager.Instance.CheckCanContinueStage())
-                GameEventHandler.ContinueStageEvent();
-            else
-                GameEventHandler.GameWinEvent();
-        }
 
         #endregion
         
@@ -137,7 +127,6 @@ namespace Alphabet.Gameplay.Controller
             if (other.CompareTag("Player"))
             {
                 EnterDoor();
-                // StartCoroutine(EnterDoorRoutine());
             }
         }
         
