@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fd7a2891fa9784789f587e8b03fabc, type: 3}
-  m_Name: Build Information
+  m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+  m_Name: Spine_Monster_Atlas
   m_EditorClassIdentifier: 
-  buildType: Development
-  buildDate:
-    day: 31
-    month: 5
-    year: 2024
-  buildNumber: 20
+  atlasFile: {fileID: 4900000, guid: 8f3bf6392a4f52b469eee0d3babb7cb1, type: 3}
+  materials:
+  - {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}

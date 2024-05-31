@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0a076a734c0ddb74cbb75b93f987943e, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 1b07ebccab68c764181e4eb0fafcdeb9, type: 2}
   initialSkinName: skinA
   initialFlipX: 0
   initialFlipY: 0
