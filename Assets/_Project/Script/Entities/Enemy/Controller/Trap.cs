@@ -14,7 +14,7 @@ namespace Alphabet.Entities.Enemy
         [SerializeField] private EnemyPatternType patternType;
         [SerializeField] private Transform[] movePointTransforms;
 
-        [Header("Reference")]
+        // Reference
         private LinePattern _linePattern;
         private ShapePattern _shapePattern;
 

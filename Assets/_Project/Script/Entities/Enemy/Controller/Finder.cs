@@ -16,7 +16,7 @@ namespace Alphabet.Entities.Enemy
         [SerializeField] private int maxChange;
         [SerializeField] private float changeDirectionDelayTime;
 
-        [Header("Reference")]
+        // Reference
         private RandomLinePattern _randomLinePattern;
         private RandomShapePattern _randomShapePattern;
 

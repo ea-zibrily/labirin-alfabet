@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Musics:
   - name: MainMenu
-    clip: {fileID: 8300000, guid: a1f62e29f2b939e43b6594f239fbc5af, type: 3}
+    clip: {fileID: 8300000, guid: 9b6e63a2ef6a28d478d7f9fb5b60d458, type: 3}
     priority: 100
     volume: 0.4
     pitch: 1
@@ -56,7 +56,7 @@ MonoBehaviour:
     sfx: 0
     source: {fileID: 0}
   - name: Gameplay
-    clip: {fileID: 8300000, guid: 4cf54c0e3d20bfd43b1136fd862cbab2, type: 3}
+    clip: {fileID: 8300000, guid: 21f58c07a5036744da8c16de3fe1ef2a, type: 3}
     priority: 100
     volume: 0.6
     pitch: 1
