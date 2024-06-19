@@ -3698,7 +3698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: a7a8405c18fa3a54e9686ebb76c51436, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 01ca5d2f00dec1444bd250c9becf3ae3, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
