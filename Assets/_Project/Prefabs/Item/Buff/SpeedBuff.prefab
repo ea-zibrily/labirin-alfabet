@@ -270,4 +270,4 @@ MonoBehaviour:
   timeDuration: 5
   timeMultiplier: 1.35
   flashDuration: 0.07
-  flashColor: {r: 0, g: 1, b: 1, a: 0.69803923}
+  flashColor: {r: 0, g: 1, b: 1, a: 1}

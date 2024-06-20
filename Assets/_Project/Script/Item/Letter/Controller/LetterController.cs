@@ -59,7 +59,7 @@ namespace Alphabet.Item
             // Data
             _letterData = data;
             spawnId = spawnNum;
-            Debug.LogWarning($"initialize letter {_letterData.LetterName}");
+            // Debug.LogWarning($"initialize letter {_letterData.LetterName}");
             
             // Component
             _letterName = _letterData.LetterName;

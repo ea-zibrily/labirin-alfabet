@@ -118,13 +118,9 @@ namespace Alphabet.Collection
                         if (collectionId == _collectionManager.SelectedCollectionId)
                         {
                             if (hasCollected)
-                            {
                                 _collectionAudioManager.PlayAudio(collectionId);
-                            }
                             else
-                            {
                                 FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedLetterSfx);
-                            }
                         }
                     });     
             
@@ -136,7 +132,7 @@ namespace Alphabet.Collection
                         _buttonUI.interactable = true;
                     });       
         }
-
+        
         private void OnCloseCollection()
         {
             _canInteract = true;
