@@ -9855,6 +9855,7 @@ MonoBehaviour:
   selectStagePanelUI: {fileID: 753202062}
   playButtonUI: {fileID: 65287720}
   collectionButtonUI: {fileID: 446422490}
+  backButtonUI: {fileID: 2065392285}
 --- !u!1 &1643327902
 GameObject:
   m_ObjectHideFlags: 0
@@ -13950,6 +13951,14 @@ PrefabInstance:
     - target: {fileID: 2693364854572169114, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467148139307384770, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
+      propertyPath: Musics.Array.data[0].volume
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467148139307384770, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
+      propertyPath: Musics.Array.data[1].volume
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

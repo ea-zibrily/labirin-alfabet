@@ -96,6 +96,12 @@ namespace Alphabet.Entities.Player
                     pickColliderObject.SetActive(false);
                     interactButtonUI.gameObject.SetActive(false);
                 }
+
+                // Audio
+                if (_audioManager.IsAudioPlaying(Musics.StoneslideSfx))
+                {
+                    _audioManager.StopAudio(Musics.StoneslideSfx);
+                }
             }
         }
         

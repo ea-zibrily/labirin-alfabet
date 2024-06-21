@@ -19,6 +19,7 @@ namespace Alphabet.UI
         [Space]
         [SerializeField] private Button playButtonUI;
         [SerializeField] private Button collectionButtonUI;
+        [SerializeField] private Button backButtonUI;
 
         public Button PlayButtonUI => playButtonUI;
 
@@ -51,6 +52,7 @@ namespace Alphabet.UI
             
             playButtonUI.onClick.AddListener(OnPlayButton);
             collectionButtonUI.onClick.AddListener(OnCollectionButton);
+            backButtonUI.onClick.AddListener(OnBackButton);
         }
         
         // !-- Core Functionality
@@ -67,6 +69,12 @@ namespace Alphabet.UI
             collectionPanelUI.SetActive(true);
             mainMenuPanelUI.SetActive(false);
             _collectionManager.OnCollectionOpenEvent();
+        }
+
+        // TODO: Drop logic buat kembali ke iota kids
+        private void OnBackButton()
+        {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
         }
 
         #endregion
