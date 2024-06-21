@@ -39,6 +39,7 @@ namespace Alphabet.UI
         
         private void OnHomeButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);
         }
 

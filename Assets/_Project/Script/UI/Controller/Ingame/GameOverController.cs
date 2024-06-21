@@ -56,6 +56,7 @@ namespace Alphabet.UI
 
         private void OnRetryButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.CurrentLevel);
         }
 

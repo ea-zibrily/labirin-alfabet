@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
+using Alphabet.Enum;
+using Alphabet.Managers;
 using Alphabet.Database;
 
 namespace Alphabet.UI
@@ -95,12 +97,14 @@ namespace Alphabet.UI
 
         private void OnClickClose()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             selectCharacterPanelUI.SetActive(false);
             SetDefaultCharacter();
         }
         
         private void OnSelectCharacter(Button btn)
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             _characterIndex = _selectButtonNums[btn];
             SelectCharacter(_characterIndex);
         }

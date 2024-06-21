@@ -19,15 +19,22 @@ namespace Alphabet.Gameplay.Controller
         {
             _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         }
-
+        
         private void Start()
         {
-            if (_audioManager.LatestMusic != Musics.none)
-            {
-                _audioManager.StopAudio(_audioManager.LatestMusic);
-            }
-
+            var latestBgm = GetLatestBgm();
+            _audioManager.StopAudio(latestBgm);
             _audioManager.PlayAudio(musicName);
+        }
+
+        private Musics GetLatestBgm()
+        {
+            return musicName switch
+            {
+                Musics.MainMenu => Musics.Gameplay,
+                Musics.Gameplay => Musics.MainMenu,
+                _ => musicName
+            };
         }
 
         #endregion

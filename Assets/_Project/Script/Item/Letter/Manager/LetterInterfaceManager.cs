@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using KevinCastejon.MoreAttributes;
-using Alphabet.Gameplay.EventHandler;
-using Alphabet.Stage;
 using Alphabet.Data;
-using System.Collections;
+using Alphabet.Stage;
+using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Item
 {
@@ -104,11 +104,10 @@ namespace Alphabet.Item
         private IEnumerator TakeLetterRoutine(int itemId)
         {
             var itemIndex = itemId - 1;
-
             ItemIndex = itemIndex;
             _currentTakenLetter++;
             yield return _letterAnimation.AnimateLetterRoutine(_letterFillImage[itemIndex]);
-
+            
             if (_currentTakenLetter >= amountOfLetter)
             {
                 GameEventHandler.ObjectiveClearEvent();
@@ -117,11 +116,21 @@ namespace Alphabet.Item
         
         private void LostLetter(int itemId)
         {
+            StartCoroutine(LostLetterRoutine(itemId));
+        }
+
+        private IEnumerator LostLetterRoutine(int itemId)
+        {
             var itemIndex = itemId - 1;
+            if (_letterAnimation.IsAnimate && _letterAnimation.TargetFill == _letterFillImage[itemIndex])
+            {
+                yield return new WaitForSeconds(_letterAnimation.LerpDuration);
+            }
+
             _letterFillImage[itemIndex].SetActive(false);
             _currentTakenLetter--;
         }
-        
+
         #endregion
     }
 }

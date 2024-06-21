@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
+using Alphabet.Enum;
 using Alphabet.Item;
 using Alphabet.Database;
+using Alphabet.Managers;
 
 namespace Alphabet.Collection
 {
@@ -105,6 +107,7 @@ namespace Alphabet.Collection
 
         private void CloseCollection()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             OnCollectionCloseEvent();
             mainMenuPanelUI.SetActive(true);
 

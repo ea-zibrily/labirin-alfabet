@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5467148139307384770}
   m_Layer: 0
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,30 +49,54 @@ MonoBehaviour:
   Musics:
   - name: MainMenu
     clip: {fileID: 8300000, guid: a80d9bff40acf264293082bfc91a38a5, type: 3}
-    priority: 100
-    volume: 0.4
+    priority: 125
+    volume: 0.5
     pitch: 1
     loop: 1
     sfx: 0
     source: {fileID: 0}
   - name: Gameplay
     clip: {fileID: 8300000, guid: 3951f7ccd8740a94087161a32d350c63, type: 3}
-    priority: 100
-    volume: 0.6
+    priority: 125
+    volume: 0.5
     pitch: 1
     loop: 1
     sfx: 0
     source: {fileID: 0}
-  - name: Win
-    clip: {fileID: 8300000, guid: 7d35dc9844f233d4d8f005e7e12bc1f8, type: 3}
-    priority: 100
-    volume: 0.5
+  - name: LetterSfx
+    clip: {fileID: 8300000, guid: 70aafe3deb4554541acbe1b945637d16, type: 3}
+    priority: 150
+    volume: 0.9
     pitch: 1
     loop: 0
-    sfx: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LetterUISfx
+    clip: {fileID: 8300000, guid: 55e71fc05bf8314418db491b7d4704e6, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: HitSfx
+    clip: {fileID: 8300000, guid: 4cbe438057de64c4fb01d5604ad40f8b, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
     source: {fileID: 0}
   - name: HealSfx
-    clip: {fileID: 8300000, guid: 5870859aa34f60446b8be064e99a8dac, type: 3}
+    clip: {fileID: 8300000, guid: dafa430bc2007fd458dc5c656ff96ece, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: SpeedSfx
+    clip: {fileID: 8300000, guid: 447d1e0a31f1e8e4b96c3b5ba5c387a2, type: 3}
     priority: 150
     volume: 0.9
     pitch: 1
@@ -83,6 +107,38 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0aa03ab516b142748aa9813705bdfc44, type: 3}
     priority: 150
     volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: StoneslideSfx
+    clip: {fileID: 8300000, guid: 52f43ecfa9b4bba4f9b8e8f4a0294368, type: 3}
+    priority: 140
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: WinSfx
+    clip: {fileID: 8300000, guid: 35f2285d1621848408d5e21857a17581, type: 3}
+    priority: 140
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LoseSfx
+    clip: {fileID: 8300000, guid: 3d9c3be62578bc14b91d3f8d06b4fe3b, type: 3}
+    priority: 140
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: ButtonSfx
+    clip: {fileID: 8300000, guid: 4fb0bafca4a75d84abcb7f9bbe52a672, type: 3}
+    priority: 150
+    volume: 0.75
     pitch: 1
     loop: 0
     sfx: 1

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Item;
+using Alphabet.Managers;
+using Alphabet.Enum;
 
 namespace Alphabet.Entities.Player
 {
@@ -42,6 +44,7 @@ namespace Alphabet.Entities.Player
         [Header("Reference")]
         private PlayerController _playerController;
         private PlayerAnimation _playerAnimation;
+        private AudioManager _audioManager;
         
 
         #endregion
@@ -52,6 +55,7 @@ namespace Alphabet.Entities.Player
         {
             _playerController = GetComponent<PlayerController>();
             _playerAnimation = GetComponentInChildren<PlayerAnimation>();
+            _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         }
 
         private void Start()
@@ -69,9 +73,11 @@ namespace Alphabet.Entities.Player
                 
                 _holdedItemObject.transform.position = throwPosition;
                 pickColliderObject.transform.position = throwPosition;
+
                 pickColliderObject.SetActive(true);
                 interactButtonUI.gameObject.SetActive(true);
 
+                HandleHoldItemSfx();
                 if (_dustEffect.activeSelf == dustCondition) return;
                 StartCoroutine(HandleDustEffect(dustCondition));
             }
@@ -135,7 +141,7 @@ namespace Alphabet.Entities.Player
             stunItem.DisableSprite();
             _dustEffect = stunItem.DustEffect;
         }
-
+        
         private void ThrowItem()
         {
             IsThrowItem = true;
@@ -169,6 +175,22 @@ namespace Alphabet.Entities.Player
             if (_dustEffect != null)
             {
                 _dustEffect.SetActive(condition);
+            }
+        }
+
+        private void HandleHoldItemSfx()
+        {
+            var stoneSlides = Musics.StoneslideSfx;
+            var isPlaying = _audioManager.IsAudioPlaying(stoneSlides);
+            var isMoving = _playerController.PlayerInputHandler.Direction != Vector2.zero;
+
+            if (isMoving && !isPlaying)
+            {
+                _audioManager.PlayAudio(stoneSlides);
+            }
+            else if (!isMoving && isPlaying)
+            {
+                _audioManager.StopAudio(stoneSlides);
             }
         }
 

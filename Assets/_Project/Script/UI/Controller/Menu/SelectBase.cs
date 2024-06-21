@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.UI
 {
@@ -38,7 +40,10 @@ namespace Alphabet.UI
 
         // !-- Core Initialization
         protected virtual void OnClickExplore() { }
-        protected virtual void OnClickClose() { }
+        protected virtual void OnClickClose()
+        {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+        }
 
         #endregion
     }

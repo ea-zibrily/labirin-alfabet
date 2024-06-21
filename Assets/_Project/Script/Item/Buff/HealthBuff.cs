@@ -26,10 +26,8 @@ namespace Alphabet.Item
                 return;
             }
 
-            Debug.Log($"health before: {PlayerManager.CurrentHealthCount}");
             ActivateBuff();
             DeactivateBuff();
-            Debug.Log($"health after: {PlayerManager.CurrentHealthCount}");
         }
         
         protected override void ActivateBuff()

@@ -2,6 +2,8 @@
 using Alphabet.Collection;
 using UnityEngine;
 using UnityEngine.UI;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.UI
 {
@@ -54,11 +56,14 @@ namespace Alphabet.UI
         // !-- Core Functionality
         public void OnPlayButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             selectStagePanelUI.SetActive(true);
         }
 
         private void OnCollectionButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+
             collectionPanelUI.SetActive(true);
             mainMenuPanelUI.SetActive(false);
             _collectionManager.OnCollectionOpenEvent();

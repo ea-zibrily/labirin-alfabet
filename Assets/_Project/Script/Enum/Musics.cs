@@ -4,9 +4,16 @@
     {
         MainMenu,
         Gameplay,
-        Win,
+        LetterSfx,
+        LetterUISfx,
+        HitSfx,
         HealSfx,
+        SpeedSfx,
         StonebreakSfx,
+        StoneslideSfx,
+        WinSfx,
+        LoseSfx,
+        ButtonSfx,
         LockedStageSfx,
         LockedLetterSfx,
         none

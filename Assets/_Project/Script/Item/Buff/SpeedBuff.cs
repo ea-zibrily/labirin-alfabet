@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using Alphabet.Enum;
+using Alphabet.Managers;
 using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
 
@@ -95,6 +97,7 @@ namespace Alphabet.Item
 
             StartCoroutine(SpeedActive());
             StartSpeedEffect(PlayerManager.SpeedEffect);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.SpeedSfx);
         }
 
         public override void DeactivateBuff()

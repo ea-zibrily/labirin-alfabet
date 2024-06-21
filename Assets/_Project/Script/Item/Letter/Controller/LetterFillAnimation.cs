@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.Item
 {
@@ -10,7 +12,7 @@ namespace Alphabet.Item
         [Serializable]
         public struct LetterScale
         {
-            public Vector2 Default;
+            public Vector3 Default;
             public Vector2 Upper;
             public Vector2 OnMove;
         }
@@ -30,10 +32,14 @@ namespace Alphabet.Item
         [SerializeField] private float moveDelay;
         [SerializeField] private float lerpDuration;
 
+        public float LerpDuration => lerpDuration;
 
+        // Utilities
+        public GameObject TargetFill { get; private set; }
+        public bool IsAnimate { get; private set; }
 
         #endregion
-
+        
         #region Methods
 
         // !-- Initialization
@@ -60,9 +66,11 @@ namespace Alphabet.Item
             yield return InitializeCenterPosition(letterRect);
             _targetPosition = Vector2.zero;
             letterRect.localScale = Vector3.zero;
+            TargetFill = letterTarget;
             letterTarget.SetActive(true);
 
             // Animate
+            IsAnimate = true;
             var lerpStartDelay = tweeningDuration * 2 + 0.5f;
             LeanTween.scale(letterRect, letterScale.Upper, tweeningDuration).setEase(leanTweenType);
             LeanTween.scale(letterRect, letterScale.OnMove, tweeningDuration)
@@ -98,8 +106,11 @@ namespace Alphabet.Item
                 target.localScale = Vector3.Lerp(target.localScale, letterScale.Default, lerpRatio);
             }
 
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterUISfx);
             target.localPosition = point;
             target.localScale = letterScale.Default;
+            IsAnimate = false;
+            TargetFill = null;
         }
 
         #endregion

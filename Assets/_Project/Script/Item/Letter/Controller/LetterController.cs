@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
-using Alphabet.Gameplay.EventHandler;
-using Alphabet.Entities.Player;
 
 namespace Alphabet.Item
 {
@@ -15,6 +13,7 @@ namespace Alphabet.Item
         [Header("Data")] 
         [SerializeField] [ReadOnly] private int spawnId;
         [SerializeField] private bool hasLetterTaken;
+        [SerializeField] private GameObject letterVfx;
 
         private LetterData _letterData;
         private string _letterName;
@@ -31,7 +30,6 @@ namespace Alphabet.Item
 
         [Header("Reference")]
         private SpriteRenderer _spriteRenderer;
-        private PlayerController _playerController;
         public LetterManager LetterManager { get; private set; }
         public LetterInterfaceManager LetterInterfaceManager { get; private set; }
         
@@ -42,7 +40,6 @@ namespace Alphabet.Item
         private void Awake()
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
             var letter = LetterHelper.GetLetterManagerObject();
             LetterManager = letter.GetComponent<LetterManager>();
@@ -59,8 +56,7 @@ namespace Alphabet.Item
             // Data
             _letterData = data;
             spawnId = spawnNum;
-            // Debug.LogWarning($"initialize letter {_letterData.LetterName}");
-            
+
             // Component
             _letterName = _letterData.LetterName;
             hasLetterTaken = _letterData.HasTaken;
@@ -78,7 +74,7 @@ namespace Alphabet.Item
                 hasLetterTaken = true;
             }
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
-            gameObject.SetActive(false);
+            StartCoroutine(ActivateVfxRoutine(letterVfx));
         }
 
         public void ReleaseLetter()
@@ -86,6 +82,22 @@ namespace Alphabet.Item
             // Release letter ke pool
             _objectPool.Release(this);
         }
+        
+        private IEnumerator ActivateVfxRoutine(GameObject vfx)
+        {
+            var vfxDuration = vfx.GetComponent<ParticleSystem>().main.duration;
+
+            vfx.SetActive(true);
+            _spriteRenderer.enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+
+            yield return new WaitForSeconds(vfxDuration);
+            vfx.SetActive(false);
+            _spriteRenderer.enabled = true;
+            GetComponent<BoxCollider2D>().enabled = true;
+            gameObject.SetActive(false);
+        }
+
         
         #endregion
     }

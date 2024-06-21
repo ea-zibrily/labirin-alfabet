@@ -12,6 +12,7 @@ using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
+using Alphabet.Managers;
 
 namespace Alphabet.Entities.Player
 {
@@ -82,7 +83,6 @@ namespace Alphabet.Entities.Player
 
         private void OnEnable()
         {
-            // Camera
             CameraEventHandler.OnCameraShiftIn += _playerController.StopMovement;
             CameraEventHandler.OnCameraShiftOut += _playerController.StartMovement;
         }
@@ -191,15 +191,8 @@ namespace Alphabet.Entities.Player
         private void CollectLetter(GameObject letter)
         {
             SetStageData();
-
             var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
             letterCollects.Add(letter);
-
-            if (letterCollects.Count < _currentLetterAmount) return;
-            foreach (var collect in letterCollects)
-            {
-                collect.GetComponent<LetterController>().ReleaseLetter();  
-            }
         }
         
         private void LostLetter()
@@ -211,6 +204,18 @@ namespace Alphabet.Entities.Player
             letterCollects[randomLetter].SetActive(true);
             letterCollects[randomLetter].GetComponent<LetterLost>().Lost();
             letterCollects.RemoveAt(randomLetter);
+        }
+
+        public void ResetLetter()
+        {
+            var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
+
+            if (letterCollects.Count < _currentLetterAmount) return;
+            Debug.Log("reset letter!");
+            foreach (var collect in letterCollects)
+            {
+                collect.GetComponent<LetterController>().ReleaseLetter();  
+            }
         }
         
         // !-- Helper/Utilities
@@ -229,6 +234,7 @@ namespace Alphabet.Entities.Player
             switch (tag)
             {
                 case TagFeedback.Enemy:
+                    FindObjectOfType<AudioManager>().PlayAudio(Musics.HitSfx);
                     DecreaseHealth();
                     _playerController.StopMovement();
                     
@@ -240,6 +246,7 @@ namespace Alphabet.Entities.Player
                     LostLetter();
                     break;
                 case TagFeedback.Item:
+                    FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
                     var takeableObject = triggerObject.GetComponent<ITakeable>();
                     takeableObject.Taken();
                     

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Alphabet.Enum;
+using Alphabet.Managers;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Alphabet.UI
@@ -37,6 +39,7 @@ namespace Alphabet.UI
         // !-- Core Functionality
         private void OnPauseButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             pausePanelUI.SetActive(true);
             controllerCanvas.SetActive(false);
             
@@ -45,6 +48,7 @@ namespace Alphabet.UI
         
         private void OnResumeButton()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             pausePanelUI.SetActive(false);
             controllerCanvas.SetActive(true);
             

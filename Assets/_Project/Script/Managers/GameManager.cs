@@ -31,6 +31,7 @@ namespace Alphabet.Managers
         
         [Header("Reference")] 
         private PlayerController _playerController;
+        private PlayerManager _playerManager;
         private TimeController _timeController;
         private TutorialController _tutorialController;
         private StageMarker _stageMarker;
@@ -69,6 +70,7 @@ namespace Alphabet.Managers
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _playerManager = _playerController.GetComponentInChildren<PlayerManager>();
             _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
@@ -90,14 +92,15 @@ namespace Alphabet.Managers
             IsGameStart = false;
             _timeController.IsTimerStart = false;
             _playerController.StopMovement();
+            _playerManager.ResetLetter();
             
             StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
-                        
-            // Start Audio
+
+            // Audio
             FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.Win);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.WinSfx);
         }
 
         private void GameOver(LoseType loseType)
@@ -110,6 +113,10 @@ namespace Alphabet.Managers
             gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
             Time.timeScale = 0;
+            
+            // Audio
+            FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.LoseSfx);
         }
         
         private void ContinueStage()
@@ -122,6 +129,7 @@ namespace Alphabet.Managers
             _playerController.StopMovement();
             _timeController.IsTimerStart = false;
             _timeController.SetLatestTimer();
+            _playerManager.ResetLetter();
             
             SceneTransitionManager.Instance.FadeOut();
             

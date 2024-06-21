@@ -79,6 +79,7 @@ namespace Alphabet.Managers
             }
         }
 
+
         public void StopAudio(Musics music)
         { 
             Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
@@ -107,6 +108,12 @@ namespace Alphabet.Managers
             return sound.volume;
         }
 
+        public bool IsAudioPlaying(Musics music)
+        {
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
+            return sound.source.isPlaying;
+        }
+        
         #endregion
     }
 }
