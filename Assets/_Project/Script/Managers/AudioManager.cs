@@ -16,7 +16,6 @@ namespace Alphabet.Managers
         [SerializeField] private GameObject musicsContainer;
         [SerializeField] private GameObject sfxsContainer;
 
-        public Musics LatestMusic { get; set; } = Enum.Musics.none;
         public static AudioManager Instance;
         
         #endregion
@@ -69,14 +68,9 @@ namespace Alphabet.Managers
             }
 
             if (sound.sfx)
-            {
                 sound.source.PlayOneShot(sound.clip);
-            }
             else
-            {
                 sound.source.Play();
-                LatestMusic = music;
-            }
         }
 
 
