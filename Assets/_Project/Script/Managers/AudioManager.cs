@@ -2,6 +2,7 @@
 using UnityEngine;
 using Alphabet.Enum;
 using Tsukuyomi.Utilities;
+using Alphabet.Tsukuyomi;
 
 namespace Alphabet.Managers
 {
@@ -17,6 +18,7 @@ namespace Alphabet.Managers
         [SerializeField] private GameObject sfxsContainer;
 
         public static AudioManager Instance;
+        public bool IsFirstOpening { get; set; } = true;
         
         #endregion
 
@@ -102,6 +104,18 @@ namespace Alphabet.Managers
             return sound.volume;
         }
 
+        // !- Utilities
+        public Sound GetAudio(Musics music)
+        {
+            Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
+            if (sound == null)
+            {
+                Debug.LogWarning($"Bgm: {music} not found!");
+                return null;
+            }
+            return sound;
+        }
+
         public bool IsAudioPlaying(Musics music)
         {
             Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
@@ -109,5 +123,6 @@ namespace Alphabet.Managers
         }
         
         #endregion
+
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Alphabet.Enum;
 using UnityEngine.Serialization;
+using Alphabet.Enum;
 
 namespace Alphabet.Managers
 {

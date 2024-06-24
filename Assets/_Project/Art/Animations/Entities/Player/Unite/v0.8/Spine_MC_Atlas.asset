@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: Spine_MC_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 38e1e87a45d86f045b85e1e469399d5e, type: 3}
+  atlasFile: {fileID: 4900000, guid: b3f9a0f2b0294624f8d2a3279c912b07, type: 3}
   materials:
-  - {fileID: 2100000, guid: ef53249fe9f8bc34c9da55fe3bac725f, type: 2}
+  - {fileID: 2100000, guid: 4b311d75f864e53428a07faff962f54e, type: 2}

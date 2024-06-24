@@ -5151,7 +5151,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 01ca5d2f00dec1444bd250c9becf3ae3, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
@@ -9466,7 +9466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 01ca5d2f00dec1444bd250c9becf3ae3, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
   initialSkinName: rhea
   initialFlipX: 0
   initialFlipY: 0
@@ -13951,14 +13951,6 @@ PrefabInstance:
     - target: {fileID: 2693364854572169114, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
       propertyPath: m_Name
       value: AudioManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 5467148139307384770, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
-      propertyPath: Musics.Array.data[0].volume
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 5467148139307384770, guid: c00055a410b33894b94c47bfaf872f2e, type: 3}
-      propertyPath: Musics.Array.data[1].volume
-      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -3,7 +3,10 @@
     public enum Musics
     {
         MainMenu,
-        Gameplay,
+        GuaAksara,
+        HutanAbjad,
+        KuilLitera,
+        FootstepSfx,
         LetterSfx,
         LetterUISfx,
         HitSfx,

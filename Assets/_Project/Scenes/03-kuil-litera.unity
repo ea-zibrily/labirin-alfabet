@@ -1036,7 +1036,7 @@ PrefabInstance:
     - target: {fileID: 6816173022725531429, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4903b48d4797d644ba3288d9d8a04303, type: 2}
+      objectReference: {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}
     - target: {fileID: 7486617079902904544, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2449,7 +2449,7 @@ PrefabInstance:
     - target: {fileID: 4449023962665429175, guid: 7f00ec6d5a5b7c34c80f8847028c0c50, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4903b48d4797d644ba3288d9d8a04303, type: 2}
+      objectReference: {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}
     - target: {fileID: 5619603873226161700, guid: 7f00ec6d5a5b7c34c80f8847028c0c50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.1
@@ -2873,7 +2873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3a408470117b846af2d104621f5216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicName: 1
+  musicName: 3
 --- !u!4 &395292251
 Transform:
   m_ObjectHideFlags: 0
@@ -16711,7 +16711,7 @@ PrefabInstance:
     - target: {fileID: 6816173022725531429, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4903b48d4797d644ba3288d9d8a04303, type: 2}
+      objectReference: {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}
     - target: {fileID: 7486617079902904544, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -26783,7 +26783,7 @@ PrefabInstance:
     - target: {fileID: 6816173022725531429, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4903b48d4797d644ba3288d9d8a04303, type: 2}
+      objectReference: {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}
     - target: {fileID: 7486617079902904544, guid: 57e5e27ead0b3c746ae80535f824488e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -54105,7 +54105,7 @@ PrefabInstance:
     - target: {fileID: 4449023962665429175, guid: 7f00ec6d5a5b7c34c80f8847028c0c50, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4903b48d4797d644ba3288d9d8a04303, type: 2}
+      objectReference: {fileID: 2100000, guid: f75b80b369326d84d97476b72bf1c70c, type: 2}
     - target: {fileID: 5619603873226161700, guid: 7f00ec6d5a5b7c34c80f8847028c0c50, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.75
@@ -54291,7 +54291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterPoint: {fileID: 4568391133224255135}
   letterScale:
-    Default: {x: 1, y: 1}
+    Default: {x: 1, y: 1, z: 0}
     Upper: {x: 3, y: 3}
     OnMove: {x: 2.5, y: 2.5}
   leanTweenType: 15

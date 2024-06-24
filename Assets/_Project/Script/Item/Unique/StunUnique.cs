@@ -6,6 +6,7 @@ using Alphabet.Enum;
 using Alphabet.Managers;
 using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
+using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Item
 {
@@ -77,7 +78,7 @@ namespace Alphabet.Item
         // !-- Core Functioanlity
         public void ThrowItem(Vector2 direction, float speed)
         {
-             StartCoroutine(ThrowItemRoutine(direction, speed));
+            StartCoroutine(ThrowItemRoutine(direction, speed));
         }
         
         private IEnumerator ThrowItemRoutine(Vector2 direction, float speed)
@@ -145,12 +146,6 @@ namespace Alphabet.Item
             Destroy(gameObject);
         }
 
-        private IEnumerator HandleDustEffect(bool condition)
-        {
-            yield return new WaitForSeconds(0.5f);
-            dustEffect.SetActive(condition);
-        }
-
         // !-- Helper/Utilities
         public void EnableSprite() => _spriteRenderer.enabled = true;
         public void DisableSprite() => _spriteRenderer.enabled = false;
@@ -177,7 +172,7 @@ namespace Alphabet.Item
             if (!CheckColliderTag(other)) return;
             
             _isCollideWithAnother = true;
-            StartCoroutine(HandleDustEffect(false));
+            if (dustEffect.TryGetComponent<ParticleController>(out var effect)) effect.StopParticle();
             FindObjectOfType<AudioManager>().PlayAudio(Musics.StonebreakSfx);
             
             if (other.TryGetComponent(out EnemyBase enemy))

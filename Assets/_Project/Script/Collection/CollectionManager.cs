@@ -30,7 +30,7 @@ namespace Alphabet.Collection
         [SerializeField] private GameObject mainMenuPanelUI;
         [SerializeField] private GameObject collectionPanelUI;
         [SerializeField] private Button closeButtonUI;
-
+        
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;

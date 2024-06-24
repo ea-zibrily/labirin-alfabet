@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Alphabet.Enum;
+using Alphabet.Gameplay.Controller;
 using Alphabet.DesignPattern.Singleton;
 
 namespace Alphabet.Managers
@@ -13,7 +14,9 @@ namespace Alphabet.Managers
         [Header("Interface")]
         [Range(0f, 2f )][SerializeField] private float fadeDuration;
         [SerializeField] private RectTransform sceneFader;
-        
+
+        public float FadeDuration => fadeDuration;
+
         #endregion
     
         #region MonoBehaviour Callbacks
@@ -49,16 +52,11 @@ namespace Alphabet.Managers
         // !-- Core Functionality
         public void LoadSelectedScene(SceneState sceneState)
         {
-            // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
             Time.timeScale = 1;
-            
             switch (sceneState)
             {
                 case SceneState.MainMenu:
                     OpenMainMenuScene();
-                    break;
-                case SceneState.LevelSelectionMenu:
-                    OpenCollectionMenuScene();
                     break;
                 case SceneState.CurrentLevel:
                     OpenCurrentGameScene();
@@ -66,17 +64,15 @@ namespace Alphabet.Managers
                 case SceneState.NextLevel:
                     OpenNextLevelScene();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(sceneState), sceneState, null);
             }
         }
         
         public void LoadSelectedLevel(int levelIndex)
         {
-            // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
             Time.timeScale = 1;
             sceneFader.gameObject.SetActive(true);
 
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(levelIndex);
@@ -86,20 +82,11 @@ namespace Alphabet.Managers
         private void OpenMainMenuScene () 
         {
             sceneFader.gameObject.SetActive (true);
-        
+
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
             LeanTween.alpha (sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(0);
-            });
-        }
-        
-        private void OpenCollectionMenuScene () 
-        {
-            sceneFader.gameObject.SetActive (true);
-        
-            LeanTween.alpha (sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
-                SceneManager.LoadScene(1);
             });
         }
         
@@ -117,6 +104,7 @@ namespace Alphabet.Managers
         {
             sceneFader.gameObject.SetActive (true);
 
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
             LeanTween.alpha(sceneFader, 0, 0);
             LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 Invoke (nameof(LoadNextGame), fadeDuration);

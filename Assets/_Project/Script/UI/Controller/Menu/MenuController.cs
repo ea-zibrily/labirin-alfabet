@@ -38,6 +38,7 @@ namespace Alphabet.UI
 
         private void Start()
         {
+            collectionPanelUI.SetActive(false);
             InitializeButton();
         }
 
@@ -48,8 +49,6 @@ namespace Alphabet.UI
         // !-- Initialization
         private void InitializeButton()
         {
-            collectionPanelUI.SetActive(false);
-            
             playButtonUI.onClick.AddListener(OnPlayButton);
             collectionButtonUI.onClick.AddListener(OnCollectionButton);
             backButtonUI.onClick.AddListener(OnBackButton);

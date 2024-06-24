@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Alphabet.Item;
 using Alphabet.Managers;
 using Alphabet.Enum;
+using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Entities.Player
 {
@@ -37,6 +38,7 @@ namespace Alphabet.Entities.Player
         [Header("Throw")]
         [SerializeField] private float throwDelayDuration;
         [SerializeField] private float throwSpeed;
+        private Vector2 throwTargetDirection;
         
         [Header("UI")]
         [SerializeField] private Button interactButtonUI;
@@ -78,8 +80,7 @@ namespace Alphabet.Entities.Player
                 interactButtonUI.gameObject.SetActive(true);
 
                 HandleHoldItemSfx();
-                if (_dustEffect.activeSelf == dustCondition) return;
-                StartCoroutine(HandleDustEffect(dustCondition));
+                HandleDustEffect(dustCondition);
             }
             else
             {
@@ -151,6 +152,7 @@ namespace Alphabet.Entities.Player
         private void ThrowItem()
         {
             IsThrowItem = true;
+            throwTargetDirection = PickDirection;
             _playerAnimation.CallThrowState();
         }
 
@@ -161,11 +163,11 @@ namespace Alphabet.Entities.Player
 
             IsThrowItem = false;
             _playerController.StopMovement();
-            _dustEffect.SetActive(true);
+            if (_dustEffect.TryGetComponent<ParticleController>(out var effect)) effect.PlayParticle();
 
             stunItem.EnableSprite();
             stunItem.GetComponent<Rigidbody2D>().simulated = true;
-            stunItem.ThrowItem(PickDirection, throwSpeed);
+            stunItem.ThrowItem(throwTargetDirection, throwSpeed);
 
             _playerController.CurrentMoveSpeed = _normalMoveSpeed;
             OnPlayerInteract?.Invoke(0f);
@@ -174,13 +176,15 @@ namespace Alphabet.Entities.Player
             _dustEffect = null;
         }
 
-        private IEnumerator HandleDustEffect(bool condition)
+        private void HandleDustEffect(bool condition)
         {
-            var timeDelay = condition ? 0 : 0.5f;
-            yield return new WaitForSeconds(timeDelay);
-            if (_dustEffect != null)
+            if (_dustEffect.activeSelf == condition) return;
+            if (_dustEffect.TryGetComponent<ParticleController>(out var effect))
             {
-                _dustEffect.SetActive(condition);
+                if (condition)
+                    effect.PlayParticle();
+                else
+                    effect.StopParticle();
             }
         }
 

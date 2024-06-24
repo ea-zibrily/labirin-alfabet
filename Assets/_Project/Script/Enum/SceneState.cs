@@ -3,7 +3,6 @@
     public enum SceneState
     {
         MainMenu,
-        LevelSelectionMenu,
         CurrentLevel,
         NextLevel
     }

@@ -20,11 +20,7 @@ namespace Alphabet.Item
         // !-- Core Functionality
         public void Taken()
         {
-            if (PlayerManager.CurrentHealthCount > maxHealth || CheckActiveHealthUI())
-            {
-                Debug.LogError("health buff ga jalan!");
-                return;
-            }
+            if (PlayerManager.CurrentHealthCount >= maxHealth) return;
 
             ActivateBuff();
             DeactivateBuff();
@@ -61,19 +57,6 @@ namespace Alphabet.Item
                 buffEffect.SetActive(false);
                 gameObject.SetActive(false);
             }
-        }
-
-        // !-- Helper/Utilites
-        private bool CheckActiveHealthUI()
-        {
-            var activeCount = 0;
-            foreach (var healthUI in PlayerManager.HealthUIFills)
-            {
-                if (!healthUI.activeSelf) continue;
-                activeCount++;
-            }
-
-            return activeCount >= maxHealth;
         }
         
         #endregion

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Alphabet.Enum;
+using Alphabet.Managers;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -27,10 +29,15 @@ namespace Alphabet.Entities.Player
 
         private void ShootEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            if (e.Data.Name == "shot")
+            switch (e.Data.Name)
             {
-                _playerPickThrow.IsThrowItem = false;
-                _playerPickThrow.CallThrowItem();
+                case "shot":
+                    _playerPickThrow.IsThrowItem = false;
+                    _playerPickThrow.CallThrowItem();
+                    break;
+                case "footstep":
+                    FindObjectOfType<AudioManager>().PlayAudio(Musics.FootstepSfx);
+                    break;
             }
         }
 

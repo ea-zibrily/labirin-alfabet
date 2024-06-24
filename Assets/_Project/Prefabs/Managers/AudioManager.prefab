@@ -50,18 +50,42 @@ MonoBehaviour:
   - name: MainMenu
     clip: {fileID: 8300000, guid: a80d9bff40acf264293082bfc91a38a5, type: 3}
     priority: 125
-    volume: 0.5
+    volume: 0.75
     pitch: 1
     loop: 1
     sfx: 0
     source: {fileID: 0}
-  - name: Gameplay
+  - name: GuaAksara
     clip: {fileID: 8300000, guid: 3951f7ccd8740a94087161a32d350c63, type: 3}
     priority: 125
-    volume: 0.5
+    volume: 0.9
     pitch: 1
     loop: 1
     sfx: 0
+    source: {fileID: 0}
+  - name: HutanAbjad
+    clip: {fileID: 8300000, guid: a80d9bff40acf264293082bfc91a38a5, type: 3}
+    priority: 125
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: KuilLitera
+    clip: {fileID: 8300000, guid: ac351ad64074b0c4c9e61e27cc9de971, type: 3}
+    priority: 125
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: FootstepSfx
+    clip: {fileID: 8300000, guid: 0dded3842567cad4e85626d0d91dc8f2, type: 3}
+    priority: 150
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    sfx: 1
     source: {fileID: 0}
   - name: LetterSfx
     clip: {fileID: 8300000, guid: 70aafe3deb4554541acbe1b945637d16, type: 3}
@@ -128,7 +152,7 @@ MonoBehaviour:
     sfx: 1
     source: {fileID: 0}
   - name: LoseSfx
-    clip: {fileID: 8300000, guid: 3d9c3be62578bc14b91d3f8d06b4fe3b, type: 3}
+    clip: {fileID: 8300000, guid: 70d972f5c0f57b8408b1326dc82f3d9b, type: 3}
     priority: 140
     volume: 0.9
     pitch: 1
@@ -139,14 +163,6 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4fb0bafca4a75d84abcb7f9bbe52a672, type: 3}
     priority: 150
     volume: 0.75
-    pitch: 1
-    loop: 0
-    sfx: 1
-    source: {fileID: 0}
-  - name: LockedLetterSfx
-    clip: {fileID: 8300000, guid: b889185e76e6b0648bf72e5b41bf52a1, type: 3}
-    priority: 140
-    volume: 0.9
     pitch: 1
     loop: 0
     sfx: 1

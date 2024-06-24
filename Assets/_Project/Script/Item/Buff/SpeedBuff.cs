@@ -7,6 +7,7 @@ using Alphabet.Enum;
 using Alphabet.Managers;
 using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
+using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Item
 {
@@ -174,22 +175,18 @@ namespace Alphabet.Item
         private void StartSpeedEffect(GameObject buffEffect)
         {
             StartCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
-            if (buffEffect.TryGetComponent<ParticleSystem>(out var effect))
-            {
-                buffEffect.SetActive(true);
-                effect.Play();
-            }
+
+            if (!buffEffect.TryGetComponent<ParticleController>(out var effect)) return;
+            effect.PlayParticle();
         }
 
         private void StopSpeedEffect(GameObject buffEffect)
         {
             StopCoroutine(_playerFlash.FlashWithConditionRoutine(IsBuffActive));
             _playerSkeleton.SetColor(Color.white);
-            if (buffEffect.TryGetComponent<ParticleSystem>(out var effect))
-            {
-                buffEffect.SetActive(false);
-                effect.Stop();
-            }
+
+            if (!buffEffect.TryGetComponent<ParticleController>(out var effect)) return;
+            effect.StopParticle();
         }
 
         #endregion

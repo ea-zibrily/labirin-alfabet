@@ -3698,11 +3698,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 01ca5d2f00dec1444bd250c9becf3ae3, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: QF_idle
+  startingAnimation: QF_walk
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -6870,6 +6870,10 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 2094789542742635626, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
+      propertyPath: m_Name
+      value: Fill
+      objectReference: {fileID: 0}
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_MinWidth
       value: 80
@@ -6881,6 +6885,10 @@ PrefabInstance:
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534572758873542282, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
+      propertyPath: m_Name
+      value: Fill
       objectReference: {fileID: 0}
     - target: {fileID: 3119963890129450552, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -7022,6 +7030,10 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6978193743449302635, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
+      propertyPath: m_Name
+      value: Fill
+      objectReference: {fileID: 0}
     - target: {fileID: 7019297312150890074, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
@@ -7057,6 +7069,10 @@ PrefabInstance:
     - target: {fileID: 8140756666868650944, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195789073258125906, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
+      propertyPath: m_Name
+      value: Fill
       objectReference: {fileID: 0}
     - target: {fileID: 8675566471090725884, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Pivot.x

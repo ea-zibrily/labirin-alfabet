@@ -1,6 +1,10 @@
 using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Managers;
+using Tsukuyomi.Utilities;
+using Alphabet.Tsukuyomi;
+using System;
+using System.Collections;
 
 namespace Alphabet.Gameplay.Controller
 {
@@ -11,6 +15,9 @@ namespace Alphabet.Gameplay.Controller
         [SerializeField] private Musics musicName;
         private AudioManager _audioManager;
 
+        // Event
+        public static event Action<bool, float> OnFadeAudio;
+
         #endregion
     
         #region MonoBehaviour Callbacks
@@ -19,22 +26,41 @@ namespace Alphabet.Gameplay.Controller
         {
             _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         }
+
+        private void OnEnable()
+        {
+            OnFadeAudio += FadeAudio;
+        }
+
+        private void OnDisable()
+        {
+            OnFadeAudio -= FadeAudio;
+        }
         
         private void Start()
         {
-            var latestBgm = GetLatestBgm();
-            _audioManager.StopAudio(latestBgm);
-            _audioManager.PlayAudio(musicName);
+            var fadeDuration = SceneTransitionManager.Instance.FadeDuration;
+            FadeAudioEvent(isFadeIn: true, fadeDuration);
         }
 
-        private Musics GetLatestBgm()
+        #endregion
+
+        #region Methods
+
+        public static void FadeAudioEvent(bool isFadeIn, float duration = 0.5f)
         {
-            return musicName switch
-            {
-                Musics.MainMenu => Musics.Gameplay,
-                Musics.Gameplay => Musics.MainMenu,
-                _ => musicName
-            };
+            OnFadeAudio?.Invoke(isFadeIn, duration);
+        }
+
+        private void FadeAudio(bool isFadeIn, float duration)
+        {
+            var audio = _audioManager.GetAudio(musicName);
+            var volume = audio.volume;
+            
+            if (isFadeIn)
+                StartCoroutine(AudioSourceExt.FadeIn(audio.source, volume, duration));
+            else
+                StartCoroutine(AudioSourceExt.FadeOut(audio.source, duration));
         }
 
         #endregion

@@ -99,7 +99,7 @@ namespace Alphabet.Managers
             gameWinPanelUI.SetActive(true);
 
             // Audio
-            FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
+            AudioController.FadeAudioEvent(isFadeIn: false);
             FindObjectOfType<AudioManager>().PlayAudio(Musics.WinSfx);
         }
 
@@ -112,10 +112,9 @@ namespace Alphabet.Managers
 
             gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
-            Time.timeScale = 0;
-            
+
             // Audio
-            FindObjectOfType<AudioManager>().StopAudio(Musics.Gameplay);
+            AudioController.FadeAudioEvent(isFadeIn: false);
             FindObjectOfType<AudioManager>().PlayAudio(Musics.LoseSfx);
         }
         

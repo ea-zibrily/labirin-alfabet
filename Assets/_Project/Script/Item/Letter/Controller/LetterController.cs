@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.Item
 {
@@ -68,6 +70,8 @@ namespace Alphabet.Item
         // !-- Core Functionality
         public void Taken()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
+
             if (!hasLetterTaken)
             {
                 LetterManager.TakeLetterEvent(_letterData);

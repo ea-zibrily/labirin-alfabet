@@ -111,6 +111,11 @@ namespace Alphabet.Collection
         {
             var hasCollected = GameDatabase.Instance.LoadLetterConditions(collectionId);
             var tweenDuration = hasCollected ? tweeningDuration : tweeningDuration + 1f;
+            
+            if (!hasCollected)
+            {
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            }
 
             LeanTween.scale(gameObject, targetScaling, 0.5f).
                     setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
@@ -118,9 +123,9 @@ namespace Alphabet.Collection
                         if (collectionId == _collectionManager.SelectedCollectionId)
                         {
                             if (hasCollected)
+                            {
                                 _collectionAudioManager.PlayAudio(collectionId);
-                            else
-                                FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedLetterSfx);
+                            }
                         }
                     });     
             
@@ -139,7 +144,6 @@ namespace Alphabet.Collection
             _buttonUI.interactable = true;
 
             LeanTween.cancel(gameObject);
-            FindObjectOfType<AudioManager>().StopAudio(Musics.LockedLetterSfx);
             _rectTransform.localScale = _defaultScaling;
         }
         

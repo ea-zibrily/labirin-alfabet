@@ -169,7 +169,6 @@ namespace Alphabet.Item
         
         #region Save Letter Callbacks
         
-        // !-- Core Functionality
         public void SaveUnlockedLetters()
         {
             if (_unlockedLetterDatas == null) return;

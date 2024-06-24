@@ -211,7 +211,6 @@ namespace Alphabet.Entities.Player
             var letterCollects = letterObjects[_currentStageIndex].LetterObjects;
 
             if (letterCollects.Count < _currentLetterAmount) return;
-            Debug.Log("reset letter!");
             foreach (var collect in letterCollects)
             {
                 collect.GetComponent<LetterController>().ReleaseLetter();  
@@ -246,7 +245,6 @@ namespace Alphabet.Entities.Player
                     LostLetter();
                     break;
                 case TagFeedback.Item:
-                    FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
                     var takeableObject = triggerObject.GetComponent<ITakeable>();
                     takeableObject.Taken();
                     
