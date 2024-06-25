@@ -58,7 +58,7 @@ namespace Alphabet.Gameplay.Controller
             var volume = audio.volume;
             
             if (isFadeIn)
-                StartCoroutine(AudioSourceExt.FadeIn(audio.source, volume, duration));
+                StartCoroutine(AudioSourceExt.FadeIn(audio.source, duration, volume));
             else
                 StartCoroutine(AudioSourceExt.FadeOut(audio.source, duration));
         }
