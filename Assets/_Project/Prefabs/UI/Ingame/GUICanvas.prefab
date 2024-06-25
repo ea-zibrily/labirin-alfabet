@@ -1485,6 +1485,7 @@ GameObject:
   - component: {fileID: 4376129846013224765}
   - component: {fileID: 4335022050162068714}
   - component: {fileID: 6065368263429108347}
+  - component: {fileID: 4509099356518429101}
   m_Layer: 5
   m_Name: WinPanel
   m_TagString: Untagged
@@ -1566,6 +1567,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   homeButtonUI: {fileID: 4468912518210562006}
   nextButtonUI: {fileID: 2860655805341617253}
+--- !u!95 &4509099356518429101
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124474015525463519}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07ffb970581da404ba5806487bcaced1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2208648343361636562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,6 +1936,7 @@ GameObject:
   - component: {fileID: 4743479408744175265}
   - component: {fileID: 418739445279903888}
   - component: {fileID: 8153060111602604770}
+  - component: {fileID: 8543412297601108532}
   m_Layer: 5
   m_Name: LosePanel
   m_TagString: Untagged
@@ -2000,6 +2023,27 @@ MonoBehaviour:
     loseImage: {fileID: 21300000, guid: e1de0b4c9260b1c41babfa954f798af8, type: 3}
   - loseText: Waktu telah habis!
     loseImage: {fileID: 21300000, guid: e1de0b4c9260b1c41babfa954f798af8, type: 3}
+--- !u!95 &8543412297601108532
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754922033149293612}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d9fcf66eb22ef93439561098ac8d618c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2888683948453986402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3424,6 +3468,7 @@ GameObject:
   - component: {fileID: 3248845585179746880}
   - component: {fileID: 4288157933528543152}
   - component: {fileID: 6668046025493327739}
+  - component: {fileID: 6827948945171987395}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -3492,6 +3537,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6827948945171987395
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803197781120404639}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0100c262cd538e448aac64488292ff90, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4834741546483154544
 GameObject:
   m_ObjectHideFlags: 0
@@ -6870,10 +6936,6 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 2094789542742635626, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
-      propertyPath: m_Name
-      value: Fill
-      objectReference: {fileID: 0}
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_MinWidth
       value: 80
@@ -6885,10 +6947,6 @@ PrefabInstance:
     - target: {fileID: 2261280598609902491, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreferredHeight
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534572758873542282, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
-      propertyPath: m_Name
-      value: Fill
       objectReference: {fileID: 0}
     - target: {fileID: 3119963890129450552, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -7030,10 +7088,6 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6978193743449302635, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
-      propertyPath: m_Name
-      value: Fill
-      objectReference: {fileID: 0}
     - target: {fileID: 7019297312150890074, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
@@ -7069,10 +7123,6 @@ PrefabInstance:
     - target: {fileID: 8140756666868650944, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8195789073258125906, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
-      propertyPath: m_Name
-      value: Fill
       objectReference: {fileID: 0}
     - target: {fileID: 8675566471090725884, guid: 752b9c5e71312dc4e895c610f220e3d6, type: 3}
       propertyPath: m_Pivot.x

@@ -5195,7 +5195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: a7a8405c18fa3a54e9686ebb76c51436, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
@@ -9559,7 +9559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: a7a8405c18fa3a54e9686ebb76c51436, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
   initialSkinName: rhea
   initialFlipX: 0
   initialFlipY: 0
