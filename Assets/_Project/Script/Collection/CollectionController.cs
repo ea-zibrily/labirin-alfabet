@@ -110,32 +110,37 @@ namespace Alphabet.Collection
         private IEnumerator ClickFeedbackRoutine()
         {
             var hasCollected = GameDatabase.Instance.LoadLetterConditions(collectionId);
-            var tweenDuration = hasCollected ? tweeningDuration : tweeningDuration + 1f;
-            
+            var tweenDuration = hasCollected ? tweeningDuration : 0.5f;
+
+            // Play button SFX if not collected
             if (!hasCollected)
             {
-                FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedLetterSfx);
             }
 
-            LeanTween.scale(gameObject, targetScaling, 0.5f).
-                    setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
+            // Scale up with elastic ease
+            LeanTween.scale(gameObject, targetScaling, 0.5f)
+                .setEase(LeanTweenType.easeOutElastic)
+                .setOnComplete(() =>
+                {
+                    // Play collection audio if selected and collected
+                    if (collectionId == _collectionManager.SelectedCollectionId && hasCollected)
                     {
-                        if (collectionId == _collectionManager.SelectedCollectionId)
-                        {
-                            if (hasCollected)
-                            {
-                                _collectionAudioManager.PlayAudio(collectionId);
-                            }
-                        }
-                    });     
-            
+                        _collectionAudioManager.PlayAudio(collectionId);
+                    }
+                });
+
             yield return new WaitForSeconds(tweenDuration);
-            LeanTween.scale(gameObject, _defaultScaling, 0.5f).
-                    setEase(LeanTweenType.easeOutElastic).setOnComplete(() =>
-                    {
-                        _canInteract = true;
-                        _buttonUI.interactable = true;
-                    });       
+
+            // Scale down with elastic ease
+            LeanTween.scale(gameObject, _defaultScaling, 0.5f)
+                .setEase(LeanTweenType.easeOutElastic)
+                .setOnComplete(() =>
+                {
+                    // Enable interaction
+                    _canInteract = true;
+                    _buttonUI.interactable = true;
+                });
         }
         
         private void OnCloseCollection()

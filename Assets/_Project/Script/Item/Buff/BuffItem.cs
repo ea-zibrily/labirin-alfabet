@@ -5,7 +5,7 @@ using Alphabet.Entities.Player;
 
 using Random = UnityEngine.Random;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class BuffItem : MonoBehaviour
     {

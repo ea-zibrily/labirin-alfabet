@@ -91,6 +91,7 @@ namespace Alphabet.UI
         // !-- Core Functionality
         private void OnClickExplore()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             PlayerDatabase.Instance.SetPlayerData(_characterIndex);
             selectStageManager.GoToStage();
         }

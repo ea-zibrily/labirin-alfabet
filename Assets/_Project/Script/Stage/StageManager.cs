@@ -2,7 +2,7 @@
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
-using Alphabet.Item;
+using Alphabet.Letter;
 using Alphabet.Database;
 using Alphabet.DesignPattern.Singleton;
 

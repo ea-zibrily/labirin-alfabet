@@ -28,7 +28,6 @@ namespace Alphabet.Tsukuyomi
         public static IEnumerator FadeIn(this AudioSource audioSource, float fadeTime, float finalVolume)
         {
             var startVolume = 0.2f;
-            
             audioSource.volume = 0;
             audioSource.Play();
             while (audioSource.volume < finalVolume)

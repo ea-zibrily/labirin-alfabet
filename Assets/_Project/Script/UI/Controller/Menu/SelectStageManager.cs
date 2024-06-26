@@ -102,6 +102,7 @@ namespace Alphabet.UI
 
             if (_canExplore)
             {
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
                 selectCharacterPanelUI.SetActive(true);
                 ClosePanel();
             }

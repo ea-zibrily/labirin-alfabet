@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Alphabet.Data;
 using UnityEngine;
+using Alphabet.Data;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterContainer : MonoBehaviour
     {

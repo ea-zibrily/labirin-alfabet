@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Alphabet.Item;
+using Alphabet.Letter;
 
 namespace Alphabet.Collection
 {

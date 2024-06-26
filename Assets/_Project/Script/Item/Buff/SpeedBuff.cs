@@ -9,7 +9,7 @@ using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Gameplay.Controller;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable

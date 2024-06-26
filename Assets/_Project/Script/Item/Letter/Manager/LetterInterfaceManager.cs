@@ -8,7 +8,7 @@ using Alphabet.Data;
 using Alphabet.Stage;
 using Alphabet.Gameplay.EventHandler;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterInterfaceManager : MonoBehaviour
     {

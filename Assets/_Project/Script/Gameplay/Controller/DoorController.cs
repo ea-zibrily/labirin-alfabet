@@ -2,7 +2,9 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using Alphabet.Enum;
 using Alphabet.Stage;
+using Alphabet.Managers;
 using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
 
@@ -25,6 +27,7 @@ namespace Alphabet.Gameplay.Controller
         [SerializeField] private float doorOpenDelay;
         [SerializeField] private float reachDoorDelay;
         [SerializeField] private DoorConstraint doorConstraint;
+        [SerializeField] private GameObject doorVfx;
         
         [Header("Camera")]
         [SerializeField] private float cameraMoveInDelay;
@@ -56,19 +59,28 @@ namespace Alphabet.Gameplay.Controller
         
         private void OnEnable()
         {
+            // Objective
             GameEventHandler.OnObjectiveClear += OpenDoor;
+            
+            // Door
             _doorEventHandler.OnDoorOpen += ActivateDoorTrigger;
+            _doorEventHandler.OnEffectPlaying += ActivateEffect;
         }
         
         private void OnDisable()
         {
+            // Objective
             GameEventHandler.OnObjectiveClear -= OpenDoor;
+            
+            // Door
             _doorEventHandler.OnDoorOpen -= ActivateDoorTrigger;
+            _doorEventHandler.OnEffectPlaying -= ActivateEffect;
         }
 
         private void Start()
         {
             InitializeDoor();
+            doorVfx.SetActive(false);
         }
         
         #endregion
@@ -79,6 +91,7 @@ namespace Alphabet.Gameplay.Controller
         private void InitializeDoor()
         {
             doorVirtualCamera.Follow = gameObject.transform;
+
             _capsuleCollider2D.isTrigger = true;
             doorConstraint.CloseConstraint.enabled = true;
             doorConstraint.OpenConstraint.enabled = false;
@@ -116,6 +129,17 @@ namespace Alphabet.Gameplay.Controller
                 GameEventHandler.ContinueStageEvent();
             else
                 GameEventHandler.GameWinEvent();
+        }
+
+        // !- Vfxs
+        private void ActivateEffect()
+        {
+            doorVfx.SetActive(true);
+            if (doorVfx.TryGetComponent<ParticleSystem>(out var effect))
+            {
+                effect.Play();
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterUISfx);
+            }
         }
 
         #endregion

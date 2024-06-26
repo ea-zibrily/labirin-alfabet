@@ -6,7 +6,7 @@ using Alphabet.Database;
 using Alphabet.Data;
 using Alphabet.Gameplay.Controller;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterManager : MonoBehaviour
     {

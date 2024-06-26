@@ -4,7 +4,7 @@ using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Managers;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterFillAnimation : MonoBehaviour
     {

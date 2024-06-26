@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Enum;
-using Alphabet.Item;
+using Alphabet.Letter;
 using Alphabet.Database;
 using Alphabet.Managers;
 

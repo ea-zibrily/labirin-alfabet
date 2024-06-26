@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Alphabet.Item;
+using Alphabet.Letter;
 using Alphabet.Managers;
 using Alphabet.Enum;
 using Alphabet.Gameplay.Controller;

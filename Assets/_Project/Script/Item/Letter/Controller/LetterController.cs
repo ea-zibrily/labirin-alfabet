@@ -6,7 +6,7 @@ using Alphabet.Data;
 using Alphabet.Enum;
 using Alphabet.Managers;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterController : MonoBehaviour, ITakeable
     {
@@ -19,6 +19,7 @@ namespace Alphabet.Item
 
         private LetterData _letterData;
         private string _letterName;
+        private readonly float sfxDelayTime = 0.8f;
 
         public int SpawnId
         {
@@ -34,6 +35,7 @@ namespace Alphabet.Item
         private SpriteRenderer _spriteRenderer;
         public LetterManager LetterManager { get; private set; }
         public LetterInterfaceManager LetterInterfaceManager { get; private set; }
+        
         
         #endregion
         
@@ -70,15 +72,14 @@ namespace Alphabet.Item
         // !-- Core Functionality
         public void Taken()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
-
             if (!hasLetterTaken)
             {
                 LetterManager.TakeLetterEvent(_letterData);
                 hasLetterTaken = true;
             }
+            StartCoroutine(HandleSfxRoutine());
+            StartCoroutine(HandleVfxRoutine(letterVfx));
             LetterInterfaceManager.TakeLetterEvent(SpawnId);
-            StartCoroutine(ActivateVfxRoutine(letterVfx));
         }
 
         public void ReleaseLetter()
@@ -87,7 +88,15 @@ namespace Alphabet.Item
             _objectPool.Release(this);
         }
         
-        private IEnumerator ActivateVfxRoutine(GameObject vfx)
+        private IEnumerator HandleSfxRoutine()
+        {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
+            yield return new WaitForSeconds(sfxDelayTime);
+            LetterAudioManager.PlayAudioEvent(_letterData.LetterId);
+
+        }
+
+        private IEnumerator HandleVfxRoutine(GameObject vfx)
         {
             var vfxDuration = vfx.GetComponent<ParticleSystem>().main.duration;
 

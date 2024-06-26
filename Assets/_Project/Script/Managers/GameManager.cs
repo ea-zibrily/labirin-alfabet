@@ -15,9 +15,9 @@ namespace Alphabet.Managers
     {
         #region Constant Variable
         
-        //-- Load stage time delay
-        private const float FADE_OUT_DELAY = 2.5f;
-        private const float LOAD_STAGE_DELAY = 1.2f;
+        //Load stage time delay
+        private const float FADE_OUT_DELAY = 1f;
+        private const float LOAD_STAGE_DELAY = 1.25f;
         
         #endregion
         
@@ -130,6 +130,7 @@ namespace Alphabet.Managers
             _timeController.SetLatestTimer();
             _playerManager.ResetLetter();
             
+            AudioController.FadeAudioEvent(isFadeIn: false);
             SceneTransitionManager.Instance.FadeOut();
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
@@ -141,6 +142,7 @@ namespace Alphabet.Managers
             PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
+            AudioController.FadeAudioEvent(isFadeIn: true);
             SceneTransitionManager.Instance.FadeIn();
         }
         

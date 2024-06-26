@@ -48,9 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Musics:
   - name: MainMenu
-    clip: {fileID: 8300000, guid: a80d9bff40acf264293082bfc91a38a5, type: 3}
+    clip: {fileID: 8300000, guid: 983b42612ff4db745b61175d5c767f86, type: 3}
     priority: 125
-    volume: 0.75
+    volume: 0.7
     pitch: 1
     loop: 1
     sfx: 0
@@ -80,9 +80,9 @@ MonoBehaviour:
     sfx: 0
     source: {fileID: 0}
   - name: FootstepSfx
-    clip: {fileID: 8300000, guid: 0dded3842567cad4e85626d0d91dc8f2, type: 3}
+    clip: {fileID: 8300000, guid: e2b2527c70f8e83419c6071f6ebcc938, type: 3}
     priority: 150
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     sfx: 1
@@ -171,6 +171,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a8a62a725052fee4a94921550dff0947, type: 3}
     priority: 140
     volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LockedLetterSfx
+    clip: {fileID: 8300000, guid: 03815aab3601567419026c2a9f1c5f7e, type: 3}
+    priority: 140
+    volume: 1
     pitch: 1
     loop: 0
     sfx: 1

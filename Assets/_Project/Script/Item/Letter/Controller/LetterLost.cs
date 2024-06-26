@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Alphabet.Stage;
 using UnityEngine;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterLost : MonoBehaviour
     {

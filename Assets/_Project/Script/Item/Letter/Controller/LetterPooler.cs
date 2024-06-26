@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 using Unity.VisualScripting;
 using UnityEngine.Profiling;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class LetterPooler : MonoBehaviour
     {

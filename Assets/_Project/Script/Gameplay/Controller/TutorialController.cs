@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Alphabet.Data;
-using Alphabet.Database;
-using Alphabet.Gameplay.EventHandler;
-using Alphabet.Item;
-using Alphabet.Stage;
-using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine.Unity;
+using Alphabet.Data;
+using Alphabet.Enum;
+using Alphabet.Stage;
+using Alphabet.Letter;
+using Alphabet.Database;
+using Alphabet.Managers;
 
 namespace Alphabet.Gameplay.Controller
 {
@@ -94,6 +95,7 @@ namespace Alphabet.Gameplay.Controller
 
         private void OnCloseTutorial()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             tutorialPanelUI.SetActive(false);
             foreach (var letter in letterObjectivesUI)
             {

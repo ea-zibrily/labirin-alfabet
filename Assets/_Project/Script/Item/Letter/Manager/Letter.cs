@@ -4,7 +4,7 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     [Serializable]
     public struct LetterObject

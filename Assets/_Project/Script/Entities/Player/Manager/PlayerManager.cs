@@ -6,7 +6,7 @@ using Spine;
 using Spine.Unity;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
-using Alphabet.Item;
+using Alphabet.Letter;
 using Alphabet.Stage;
 using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;

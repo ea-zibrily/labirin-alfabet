@@ -8,7 +8,7 @@ using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Gameplay.Controller;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     public class StunUnique : MonoBehaviour
     {

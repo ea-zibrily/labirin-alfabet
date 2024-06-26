@@ -3,7 +3,7 @@ using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Managers;
 
-namespace Alphabet.Item
+namespace Alphabet.Letter
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class HealthBuff : BuffItem, ITakeable

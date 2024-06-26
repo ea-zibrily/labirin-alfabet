@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Managers;
-using Tsukuyomi.Utilities;
 using Alphabet.Tsukuyomi;
-using System;
-using System.Collections;
 
 namespace Alphabet.Gameplay.Controller
 {
@@ -14,7 +12,7 @@ namespace Alphabet.Gameplay.Controller
 
         [SerializeField] private Musics musicName;
         private AudioManager _audioManager;
-
+        
         // Event
         public static event Action<bool, float> OnFadeAudio;
 
