@@ -58,6 +58,7 @@ namespace Alphabet.Entities.Player
         [Header("Effect")]
         [SerializeField] private GameObject healEffect;
         [SerializeField] private GameObject speedEffect;
+        public bool HasBuffEffect { get; set; }
 
         public GameObject HealEffect => healEffect;
         public GameObject SpeedEffect => speedEffect;
@@ -100,6 +101,7 @@ namespace Alphabet.Entities.Player
 
            SpeedEffect.SetActive(false);
            HealEffect.SetActive(false);
+           HasBuffEffect = false;
         }
         
         #endregion

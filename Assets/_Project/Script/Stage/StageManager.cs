@@ -18,9 +18,8 @@ namespace Alphabet.Stage
 
         [Header("Stage")]
         [SerializeField] private GameObject[] stageObjects;
-        [SerializeField] [ReadOnly] private int currentStageIndex;
         
-        public int CurrentStageIndex => currentStageIndex;
+        public int CurrentStageIndex { get; private set; }
         public int StageCount => stageObjects.Length;
         
         // Reference
@@ -50,21 +49,20 @@ namespace Alphabet.Stage
         {
             if (stageObjects == null)
             {
-                Debug.LogError("stage object null brok");
+                Debug.LogError("stage object null breks");
                 return;
             }
 
             for (var i = 0; i < stageObjects.Length; i++)
             {
-                if (i is 0)
+                var isStageOne = i is 0;
+
+                stageObjects[i].SetActive(isStageOne);
+                if (isStageOne)
                 {
-                    stageObjects[i].SetActive(true);
-                    currentStageIndex = i;
+                    CurrentStageIndex = i;
                     CurrentStageNum = StageNum.Stage_1;
-                    continue;
                 }
-                
-                stageObjects[i].SetActive(false);
             }
         }
         
@@ -102,19 +100,19 @@ namespace Alphabet.Stage
                 if (!stageObjects[i].activeSelf) continue;
                 
                 stageObjects[i].SetActive(false);
-                currentStageIndex = i;
+                CurrentStageIndex = i;
                 break;
             }
             
-            currentStageIndex += 1;
-            CurrentStageNum = GetCurrentStage(currentStageIndex);
-            stageObjects[currentStageIndex].SetActive(true);
+            CurrentStageIndex += 1;
+            CurrentStageNum = GetCurrentStage(CurrentStageIndex);
+            stageObjects[CurrentStageIndex].SetActive(true);
         }
         
         // !-- Helper/Utilities
         public bool CheckCanContinueStage()
         {
-            return currentStageIndex < stageObjects.Length - 1;
+            return CurrentStageIndex < stageObjects.Length - 1;
         }
         
         private StageNum GetCurrentStage(int index)

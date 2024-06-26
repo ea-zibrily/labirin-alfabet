@@ -84,6 +84,7 @@ namespace Alphabet.Letter
         // !-- Core Functionality
         public void Taken()
         {
+            if (PlayerManager.HasBuffEffect) return;
             ActivateBuff();
         }
         

@@ -2,7 +2,7 @@
 {
     public enum StageName
     {
-        // Tutorial,
+        Tutorial,
         Gua_Aksara,
         Hutan_Abjad,
         Kuil_Litera

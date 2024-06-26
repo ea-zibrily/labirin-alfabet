@@ -25,6 +25,7 @@ namespace Alphabet.Stage
         [Header("Marker")] 
         [SerializeField] private TextMeshProUGUI markTextUI;
         
+        private bool _isTutorialStage;
         private string _currentStage;
         private string _currentStageNumber;
         private string _currentSubStage;
@@ -37,6 +38,7 @@ namespace Alphabet.Stage
         {
             // Reference
             tagCanvasGroup = notificationCanvasGroup.transform.GetChild(0).GetComponent<CanvasGroup>();
+            _isTutorialStage = StageManager.Instance.CurrentStage == StageName.Tutorial;
 
             InitializeNotification();
             TopMarker();
@@ -60,18 +62,30 @@ namespace Alphabet.Stage
         
         public void TopMarker()
         {
+            string markText;
             _currentStageNumber = GetCurrentStage(StageManager.Instance.CurrentStage);
             _currentSubStage = GetCurrentSubStage(StageManager.Instance.CurrentStageNum);
 
-            markTextUI.text = _currentStageNumber + " - " +_currentSubStage;
+            if (_isTutorialStage)
+                markText = _currentStageNumber;
+            else
+                markText = _currentStageNumber + " - " +_currentSubStage;
+
+            markTextUI.text = markText;
         }
         
         private void SetNotification()
         {
+            string stageNumText;
             _currentStage = StageHelper.GetStageNameByEnum(StageManager.Instance.CurrentStage);
 
+            if (_isTutorialStage)
+                stageNumText = _currentStageNumber + " Stage";
+            else
+                stageNumText = _currentStageNumber + " - " +_currentSubStage;
+
             stageNameTextUI.text = _currentStage.ToUpper();
-            stageNumberTextUI.text = _currentStageNumber + " - " + _currentSubStage;
+            stageNumberTextUI.text = stageNumText;
         }
         
         private IEnumerator ShowNotificationRoutine()
@@ -98,6 +112,7 @@ namespace Alphabet.Stage
         {
             return level switch
             {
+                StageName.Tutorial => "Tutorial",
                 StageName.Gua_Aksara => "Stage 1",
                 StageName.Hutan_Abjad => "Stage 2",
                 StageName.Kuil_Litera => "Stage 3",

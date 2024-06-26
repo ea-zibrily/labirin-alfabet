@@ -62,11 +62,13 @@ namespace Alphabet.Letter
         protected virtual void ActivateBuff()
         {
             IsBuffActive = true;
+            PlayerManager.HasBuffEffect = true;
         }
 
         public virtual void DeactivateBuff()
         {
             IsBuffActive = false;
+            PlayerManager.HasBuffEffect = false;
         }
         
         private void RandomizeBuffPosition()

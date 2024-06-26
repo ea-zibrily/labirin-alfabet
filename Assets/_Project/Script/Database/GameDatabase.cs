@@ -67,7 +67,7 @@ namespace Alphabet.Database
             }
             return levelConditions;
         }
-
+        
         // !-- Core Functionality
 
         // Letter Collected

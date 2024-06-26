@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Alphabet.Data;
 using UnityEngine.Pool;
+using UnityEngine.Profiling;
+using Alphabet.Data;
 using Alphabet.Stage;
 
 using Random = UnityEngine.Random;
-using Unity.VisualScripting;
-using UnityEngine.Profiling;
 
 namespace Alphabet.Letter
 {
@@ -25,7 +23,7 @@ namespace Alphabet.Letter
 
         [Header("Data")]
         private int _stageIndex;
-        [SerializeField] private List<LetterData> _letterDatas;
+        private List<LetterData> _letterDatas;
         private ObjectPool<LetterController> _letterPool;
         
         public List<Transform> SpawnedLetters { get; private set; }

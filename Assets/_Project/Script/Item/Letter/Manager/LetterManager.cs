@@ -14,12 +14,14 @@ namespace Alphabet.Letter
         
         [Header("Data")] 
         [SerializeField] private LetterSpawns[] letterSpawns;
+        [SerializeField] private bool isTutorialStage;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
         
         // Temp Letter Object Data
         private List<LetterData> _lockedLetterDatas;
         private List<LetterData> _unlockedLetterDatas;
+        private List<LetterData> _tutorialLetterDatas;
         
         // Letter Event
         public event Action<LetterData> OnTakeLetter;
@@ -73,6 +75,7 @@ namespace Alphabet.Letter
         {
             _lockedLetterDatas = new List<LetterData>();
             _unlockedLetterDatas = new List<LetterData>();
+            if (isTutorialStage) _tutorialLetterDatas = new List<LetterData>();
         }
         
         private void InitializeLetterDatas()
@@ -85,21 +88,28 @@ namespace Alphabet.Letter
             
             foreach (var letter in LetterContainer.LetterDatas)
             {
-                var letterId = letter.LetterId;
-                var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-                
-                if (isLetterUnlock)
+                if (isTutorialStage)
                 {
-                    _unlockedLetterDatas.Add(letter);
-                    continue;
+                    _tutorialLetterDatas.Add(letter);
                 }
-                _lockedLetterDatas.Add(letter);
+                else
+                {
+                    var letterId = letter.LetterId;
+                    var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
+                    
+                    if (isLetterUnlock)
+                    {
+                        _unlockedLetterDatas.Add(letter);
+                        continue;
+                    }
+                    _lockedLetterDatas.Add(letter);
+                }
             }
         }
-
+        
         private void InitializePools()
         {
-            var datas = GetLetterDatas();
+            var datas = !isTutorialStage ? GetLetterDatas() : _tutorialLetterDatas;
             _letterPooler.InitializePoolData(datas);
         }
         
@@ -171,7 +181,7 @@ namespace Alphabet.Letter
         
         public void SaveUnlockedLetters()
         {
-            if (_unlockedLetterDatas == null) return;
+            if (_unlockedLetterDatas == null || isTutorialStage) return;
             
             foreach (var unlockLetter in _unlockedLetterDatas)
             {

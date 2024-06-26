@@ -161,7 +161,7 @@ namespace Alphabet.UI
 
         private void SetThumbnailState(bool isUnlocked, GameObject stagePanel)
         {
-            if (_currentPanelIndex <= 0) return;
+            if (_currentPanelIndex < 1) return;
 
             var stageThumbnail = stagePanel.transform.GetChild(0).GetComponent<Image>();
             var stagePadlock = stagePanel.transform.GetChild(1).gameObject;
