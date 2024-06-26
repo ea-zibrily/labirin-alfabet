@@ -5195,7 +5195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: da41a8b5d1146904b9fd7cd8009ed6d0, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
@@ -9555,7 +9555,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: d274682db605b8d43a8b16ed3fbe824c, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: da41a8b5d1146904b9fd7cd8009ed6d0, type: 2}
   initialSkinName: rhea
   initialFlipX: 0
   initialFlipY: 0
@@ -14082,6 +14082,8 @@ SceneRoots:
   - {fileID: 2017201886}
   - {fileID: 965754213}
   - {fileID: 1003343773}
+  - {fileID: 364942873}
+  - {fileID: 948673205}
   - {fileID: 322768786}
   - {fileID: 1891242202}
   - {fileID: 4055342471374962273}
@@ -14096,8 +14098,6 @@ SceneRoots:
   - {fileID: 38753040075380199}
   - {fileID: 2018586946}
   - {fileID: 1799296779}
-  - {fileID: 364942873}
-  - {fileID: 948673205}
   - {fileID: 1882052532}
   - {fileID: 404453211}
   - {fileID: 1775027004}

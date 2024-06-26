@@ -15,6 +15,7 @@ namespace Alphabet.UI
         [SerializeField] private GameObject controllerCanvas;
         
         private Button pauseButtonUI;
+        private PauseEventHandler _pauseEventHandler;
         
         #endregion
 
@@ -25,6 +26,7 @@ namespace Alphabet.UI
         {
             base.InitializeOnAwake();
             pauseButtonUI = GetComponent<Button>();
+            _pauseEventHandler = pausePanelUI.GetComponent<PauseEventHandler>();
         }
 
         protected override void InitializeOnStart()
@@ -35,6 +37,16 @@ namespace Alphabet.UI
             pauseButtonUI.onClick.AddListener(OnPauseButton);
             resumeButtonUI.onClick.AddListener(OnResumeButton);
         }
+
+        private void OnEnable()
+        {
+            _pauseEventHandler.OnGamePause += () => Time.timeScale = 0f;
+        }
+
+        private void OnDisable()
+        {
+            _pauseEventHandler.OnGamePause -= () => Time.timeScale = 0f;
+        }
         
         // !-- Core Functionality
         private void OnPauseButton()
@@ -42,8 +54,6 @@ namespace Alphabet.UI
             FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             pausePanelUI.SetActive(true);
             controllerCanvas.SetActive(false);
-            
-            Time.timeScale = 0;
         }
         
         private void OnResumeButton()
