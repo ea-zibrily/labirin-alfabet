@@ -45,9 +45,17 @@ namespace Alphabet.Letter
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-            var letter = LetterHelper.GetLetterManagerObject();
+            var letter = GameObject.FindGameObjectWithTag("LetterManager");
             LetterManager = letter.GetComponent<LetterManager>();
             LetterInterfaceManager = letter.GetComponent<LetterInterfaceManager>();
+        }
+        
+        private void OnEnable()
+        {
+            if (LetterManager == null)
+            {
+                Debug.Log("manager null");
+            }
         }
         
         #endregion

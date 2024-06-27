@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Profiling;
 using Alphabet.Data;
 using Alphabet.Stage;
 
@@ -109,7 +108,6 @@ namespace Alphabet.Letter
 
         private void GenerateLetter(LetterSpawns[] spawns)
         {
-            Profiler.BeginSample("Generate Letter");
             if (_letterDatas == null)
             {
                 Debug.LogError("letter data null!");
@@ -147,15 +145,15 @@ namespace Alphabet.Letter
                 SpawnedLetterDatas.Add(letterData);
                 _letterDatas.RemoveAt(randomLetterIndex);
             }
-
-            Profiler.EndSample();
         }
 
         private void AdjustSpecialCases(ref int letterIndex, int iteration)
         {
-            if (_letterDatas.Count == 2 && iteration == 1)
+            if (_letterDatas.Count == 3 && iteration == 1)
+                letterIndex = 2;
+            else if (_letterDatas.Count == 2 && iteration == 2)
                 letterIndex = 1;
-            else if (_letterDatas.Count == 1 && iteration == 2)
+            else if (_letterDatas.Count == 1 && iteration == 3)
                 letterIndex = 0;
         }
 

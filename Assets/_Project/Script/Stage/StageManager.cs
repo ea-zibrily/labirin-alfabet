@@ -31,7 +31,7 @@ namespace Alphabet.Stage
 
         protected override void Awake()
         {
-            var letter = LetterHelper.GetLetterManagerObject();
+            var letter = GameObject.FindGameObjectWithTag("LetterManager");;
             LetterManager = letter.GetComponent<LetterManager>();
         }
         

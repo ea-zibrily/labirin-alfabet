@@ -24,7 +24,6 @@ namespace Alphabet.Stage
         {
             return level switch
             {
-                StageName.Tutorial => "Tutorial",
                 StageName.Gua_Aksara => "Gua Aksara",
                 StageName.Hutan_Abjad => "Hutan Abjad",
                 StageName.Kuil_Litera => "Kuil Litera",
@@ -43,10 +42,9 @@ namespace Alphabet.Stage
 
             return stageIndex switch
             {
-                0 => "Tutorial",
-                1 => "Gua Aksara",
-                2 => "Hutan Abjad",
-                3 => "Kuil Litera",
+                0 => "Gua Aksara",
+                1 => "Hutan Abjad",
+                2 => "Kuil Litera",
                 _ => throw new ArgumentOutOfRangeException(nameof(stageIndex), stageIndex, null)
             };
         }
@@ -55,7 +53,6 @@ namespace Alphabet.Stage
         {
             return stageName switch
             {
-                StageName.Tutorial => 0,
                 StageName.Gua_Aksara => 1,
                 StageName.Hutan_Abjad => 2,
                 StageName.Kuil_Litera => 3,

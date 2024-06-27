@@ -158,13 +158,12 @@ namespace Alphabet.Entities.Player
             _playerKnockBack.CallKnockBack(enemyDirection, Vector2.right, playerDirection);
         }
         
-        private void CanceledBuff()
+        public void CanceledBuff()
         {
             var buffObjects = GameObject.FindGameObjectsWithTag("Item");
             foreach (var buff in buffObjects)
             {
                 if (!buff.TryGetComponent<BuffItem>(out var buffItem)) continue;
-                
                 if (buffItem.gameObject.activeSelf && buffItem.IsBuffActive)
                 {
                     buffItem.DeactivateBuff();

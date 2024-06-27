@@ -21,7 +21,6 @@ namespace Alphabet.Gameplay.Controller
         [SerializeField] private GameObject tutorialPanelUI;
         [SerializeField] private GameObject[] letterObjectivesUI;
         [SerializeField] private Button closeButtonUI;
-        [SerializeField] private TextMeshProUGUI noteTextUI;
 
         private List<LetterData> _letterDatas;
 
@@ -65,8 +64,6 @@ namespace Alphabet.Gameplay.Controller
             {
                 letter.SetActive(false);
             }
-            noteTextUI.text = "Huruf yang didapat di stage ini tidak akan terbuka di koleksi Alfabet";
-            noteTextUI.gameObject.SetActive(StageManager.Instance.CurrentStage == StageName.Tutorial);
             tutorialPanelUI.SetActive(true);
         }
 

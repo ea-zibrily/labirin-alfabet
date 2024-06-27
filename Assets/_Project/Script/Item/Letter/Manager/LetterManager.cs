@@ -14,14 +14,12 @@ namespace Alphabet.Letter
         
         [Header("Data")] 
         [SerializeField] private LetterSpawns[] letterSpawns;
-        [SerializeField] private bool isTutorialStage;
         
         public LetterSpawns[] LetterSpawns => letterSpawns;
         
         // Temp Letter Object Data
         private List<LetterData> _lockedLetterDatas;
         private List<LetterData> _unlockedLetterDatas;
-        private List<LetterData> _tutorialLetterDatas;
         
         // Letter Event
         public event Action<LetterData> OnTakeLetter;
@@ -75,41 +73,33 @@ namespace Alphabet.Letter
         {
             _lockedLetterDatas = new List<LetterData>();
             _unlockedLetterDatas = new List<LetterData>();
-            if (isTutorialStage) _tutorialLetterDatas = new List<LetterData>();
         }
         
         private void InitializeLetterDatas()
         {
-            if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
-            {
-                Debug.LogError("letter prefabs kurenx breks");
-                return;
-            }
+            // if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
+            // {
+            //     Debug.LogError("letter prefabs kurenx breks");
+            //     return;
+            // }
             
             foreach (var letter in LetterContainer.LetterDatas)
             {
-                if (isTutorialStage)
+                var letterId = letter.LetterId;
+                var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
+
+                if (isLetterUnlock)
                 {
-                    _tutorialLetterDatas.Add(letter);
+                    _unlockedLetterDatas.Add(letter);
+                    continue;
                 }
-                else
-                {
-                    var letterId = letter.LetterId;
-                    var isLetterUnlock = GameDatabase.Instance.LoadLetterConditions(letterId);
-                    
-                    if (isLetterUnlock)
-                    {
-                        _unlockedLetterDatas.Add(letter);
-                        continue;
-                    }
-                    _lockedLetterDatas.Add(letter);
-                }
+                _lockedLetterDatas.Add(letter);
             }
         }
         
         private void InitializePools()
         {
-            var datas = !isTutorialStage ? GetLetterDatas() : _tutorialLetterDatas;
+            var datas = GetLetterDatas();
             _letterPooler.InitializePoolData(datas);
         }
         
@@ -181,7 +171,7 @@ namespace Alphabet.Letter
         
         public void SaveUnlockedLetters()
         {
-            if (_unlockedLetterDatas == null || isTutorialStage) return;
+            if (_unlockedLetterDatas == null) return;
             
             foreach (var unlockLetter in _unlockedLetterDatas)
             {

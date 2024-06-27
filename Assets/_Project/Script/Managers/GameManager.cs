@@ -134,6 +134,7 @@ namespace Alphabet.Managers
             SceneTransitionManager.Instance.FadeOut();
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
+            _playerManager.CanceledBuff();
             StageManager.Instance.InitializeNewStage();
             _tutorialController.CallTutorial();
             _stageMarker.TopMarker();

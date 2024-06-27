@@ -519,7 +519,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef53249fe9f8bc34c9da55fe3bac725f, type: 2}
+  - {fileID: 2100000, guid: 59b7448f86ec3be4b9987d503acffa3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 01ca5d2f00dec1444bd250c9becf3ae3, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: da41a8b5d1146904b9fd7cd8009ed6d0, type: 2}
   initialSkinName: devan
   initialFlipX: 0
   initialFlipY: 0
