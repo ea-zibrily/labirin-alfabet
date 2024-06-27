@@ -2,8 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Enum;
+using Alphabet.Stage;
 using Alphabet.Managers;
-using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.UI
 {
@@ -26,7 +26,11 @@ namespace Alphabet.UI
         private void OnNextButton()
         {
             FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
-            SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
+            
+            if (StageManager.Instance.CurrentStage == StageName.Kuil_Litera)
+                SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);
+            else
+                SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);
         }
         
         #endregion

@@ -50,14 +50,6 @@ namespace Alphabet.Letter
             LetterInterfaceManager = letter.GetComponent<LetterInterfaceManager>();
         }
         
-        private void OnEnable()
-        {
-            if (LetterManager == null)
-            {
-                Debug.Log("manager null");
-            }
-        }
-        
         #endregion
         
         #region Labirin Kata Callbacks
