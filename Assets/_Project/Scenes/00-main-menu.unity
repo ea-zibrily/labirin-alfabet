@@ -712,61 +712,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55850607}
   m_CullTransparentMesh: 1
---- !u!1 &60787241
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 60787242}
-  - component: {fileID: 60787243}
-  m_Layer: 0
-  m_Name: UnlockController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &60787242
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60787241}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &60787243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60787241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5578d94b0b2ff2044abfe6b837de1047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockerPanelUI: {fileID: 1670166603}
-  stageContentTransformUI: {fileID: 2092459393}
-  exploreButtonUI: {fileID: 1102013066}
-  unlockDelayDuration: 1.3
-  eachDelayDuration: 0.5
-  changeColorDuration: 1.5
-  leanTweenType: 15
-  tweeningDuration: 0.1
-  scaleTarget: {x: 0.55, y: 0.55, z: 0.55}
-  menuController: {fileID: 1623585330}
-  selectStageManager: {fileID: 1874585706}
 --- !u!1 &65287717
 GameObject:
   m_ObjectHideFlags: 0
@@ -14111,7 +14056,6 @@ SceneRoots:
   - {fileID: 299799908}
   - {fileID: 1623585329}
   - {fileID: 419441563}
-  - {fileID: 60787242}
   - {fileID: 1736532305}
   - {fileID: 6264256817358224403}
   - {fileID: 1124243078}
