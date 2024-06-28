@@ -7,6 +7,7 @@ using Alphabet.Enum;
 using Alphabet.Data;
 using Alphabet.Database;
 using Alphabet.Managers;
+using Alphabet.Letter;
 
 namespace Alphabet.Collection
 {
@@ -33,7 +34,6 @@ namespace Alphabet.Collection
 
         [Header("Reference")]
         private CollectionManager _collectionManager;
-        private CollectionAudioManager _collectionAudioManager;
         private Button _buttonUI;
         
         #endregion
@@ -44,10 +44,7 @@ namespace Alphabet.Collection
         {
             _buttonUI = GetComponent<Button>();
             _rectTransform = GetComponent<RectTransform>();
-
-            var collectionObject = GameObject.FindGameObjectWithTag("Collection");
-            _collectionManager = collectionObject.GetComponentInChildren<CollectionManager>();
-            _collectionAudioManager = collectionObject.GetComponentInChildren<CollectionAudioManager>();
+            _collectionManager = GameObject.FindGameObjectWithTag("Collection").GetComponentInChildren<CollectionManager>();
         }
 
         private void OnEnable()
@@ -100,7 +97,7 @@ namespace Alphabet.Collection
         {
             if (!_canInteract) return;
 
-            StopAudio();
+            LetterAudioManager.StopAudioEvent();
             _canInteract = false;
             _buttonUI.interactable = false;
             _collectionManager.SetSelectedCollection(collectionId);            
@@ -126,7 +123,7 @@ namespace Alphabet.Collection
                     // Play collection audio if selected and collected
                     if (collectionId == _collectionManager.SelectedCollectionId && hasCollected)
                     {
-                        _collectionAudioManager.PlayAudio(collectionId);
+                        LetterAudioManager.PlayAudioEvent(collectionId);
                     }
                 });
 
@@ -167,12 +164,6 @@ namespace Alphabet.Collection
         {
             outerImageUI.sprite = letterSprite;
             fillImageUI.sprite = letterSprite;
-        }
-
-        private void StopAudio()
-        {
-            if (!_collectionAudioManager.IsAudioPlaying()) return;
-            _collectionAudioManager.StopAudio();
         }
 
         #endregion

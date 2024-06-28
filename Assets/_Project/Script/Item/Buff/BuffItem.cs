@@ -13,7 +13,6 @@ namespace Alphabet.Letter
 
         [Header("Buff")] 
         public BuffType BuffType;
-        [SerializeField] private Transform[] spawnPointTransforms;
         [SerializeField] private bool isBuffActive;
 
         public bool IsBuffActive
@@ -53,10 +52,7 @@ namespace Alphabet.Letter
             PlayerManager = playerObject.GetComponentInChildren<PlayerManager>();
         }
 
-        protected virtual void InitializeOnStart()
-        {
-            RandomizeBuffPosition();
-        }
+        protected virtual void InitializeOnStart() { }
         
         // !-- Core Functionality
         protected virtual void ActivateBuff()
@@ -69,16 +65,6 @@ namespace Alphabet.Letter
         {
             IsBuffActive = false;
             PlayerManager.HasBuffEffect = false;
-        }
-        
-        private void RandomizeBuffPosition()
-        {
-            var randomSpawnIndex = Random.Range(0, spawnPointTransforms.Length - 1);
-            transform.position = spawnPointTransforms[randomSpawnIndex].position;
-            foreach (var spawnPoint in spawnPointTransforms)
-            {
-                spawnPoint.gameObject.SetActive(false);
-            }
         }
         
         #endregion

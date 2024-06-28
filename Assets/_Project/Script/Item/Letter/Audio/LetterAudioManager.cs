@@ -20,7 +20,7 @@ namespace Alphabet.Letter
 
         [Header("Reference")]
         [SerializeField] private LetterContainer letterContainer;
-        private AudioSource _audioSource;
+        protected AudioSource _audioSource;
         
         #endregion
 
@@ -28,16 +28,16 @@ namespace Alphabet.Letter
 
         private void Awake()
         {
-            _audioSource = GetComponentInChildren<AudioSource>();
+            InitOnAwake();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             OnPlayAudio += PlayAudio;
             OnStopAudio += StopAudio;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             OnPlayAudio -= PlayAudio;
             OnStopAudio -= StopAudio;
@@ -45,15 +45,26 @@ namespace Alphabet.Letter
 
         private void Start()
         {
+            InitOnStart();
+        }
+
+        #endregion
+        
+        #region Methods
+        
+        protected virtual void InitOnAwake()
+        {
+            _audioSource = GetComponentInChildren<AudioSource>();
+        }
+
+        protected virtual void InitOnStart()
+        {
             // Init audio source
             _audioSource.volume = audioVolume;
             _audioSource.pitch = audioPitch;
             _audioSource.loop = false;
         }
 
-        #endregion
-        
-        #region Methods
         
         // !-- Core Functionality
         public static void PlayAudioEvent(int id) => OnPlayAudio?.Invoke(id);
@@ -75,14 +86,9 @@ namespace Alphabet.Letter
 
         private void StopAudio()
         {
+            if (!_audioSource.isPlaying) return;
             _audioSource.Stop();
             _audioSource.clip = null;
-        }
-
-        // !-- Helper/Utilities
-        public bool IsAudioPlaying()
-        {
-            return _audioSource.isPlaying;
         }
         
         #endregion

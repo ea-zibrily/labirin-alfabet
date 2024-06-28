@@ -5062,6 +5062,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce103caf201c41e680b498e562776ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioVolume: 1
+  audioPitch: 1
   letterContainer: {fileID: 1011872448}
 --- !u!1 &856061815
 GameObject:
@@ -5434,10 +5436,6 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4112389559219962591, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4112389559219962591, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
       objectReference: {fileID: 0}
@@ -5455,11 +5453,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4112389559219962591, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 3088
       objectReference: {fileID: 0}
     - target: {fileID: 4112389559219962591, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 1440
       objectReference: {fileID: 0}
     - target: {fileID: 4112389559219962591, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5512,10 +5510,6 @@ PrefabInstance:
     - target: {fileID: 7111312263500080172, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
       propertyPath: m_Name
       value: Fader
-      objectReference: {fileID: 0}
-    - target: {fileID: 7111312263500080172, guid: cda90c2bf72e4a24dbb734e0186a34bb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

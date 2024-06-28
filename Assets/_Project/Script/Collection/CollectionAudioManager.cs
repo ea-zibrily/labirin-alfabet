@@ -4,29 +4,20 @@ using Alphabet.Letter;
 
 namespace Alphabet.Collection
 {
-    public class CollectionAudioManager : MonoBehaviour
+    public class CollectionAudioManager : LetterAudioManager
     {
-        #region Fields & Properties
+        #region Internal Fields
 
-        [SerializeField] private LetterContainer letterContainer;
-        private AudioSource _audioSource;
-
-        // Reference
         private CollectionManager _collectionManager;
         
         #endregion
 
         #region MonoBehaviour Callbacks
 
-        private void Awake()
+        protected override void OnEnable()
         {
-            _audioSource = GetComponentInChildren<AudioSource>();
-            var collection = transform.parent.gameObject;
-            _collectionManager = collection.GetComponentInChildren<CollectionManager>();
-        }
+            base.OnEnable();
 
-        private void OnEnable()
-        {
             // Open and Close Collection
             _collectionManager.OnCollectionOpen += EnableAudio;
             _collectionManager.OnCollectionClose += DisableAudio;
@@ -36,8 +27,10 @@ namespace Alphabet.Collection
             _collectionManager.SimpleScrollSnap.OnSnappingBegin += EnableAudio;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             // Open and Close Collection
             _collectionManager.OnCollectionOpen -= EnableAudio;
             _collectionManager.OnCollectionClose -= DisableAudio;
@@ -48,31 +41,16 @@ namespace Alphabet.Collection
         }
 
         #endregion
-        
+
         #region Methods
+
+        protected override void InitOnAwake()
+        {
+            base.InitOnAwake();
+            var collection = transform.parent.gameObject;
+            _collectionManager = collection.GetComponentInChildren<CollectionManager>();
+        }
         
-        // !-- Core Functionality
-        public void PlayAudio(int id)
-        {
-            var letterData = letterContainer.GetLetterDataById(id);
-            var letterAudio = letterData.LetterAudio;
-            if (letterAudio == null)
-            {
-                Debug.LogError("audionya gada kang");
-                return;                
-            }
-            
-            _audioSource.clip = letterAudio;
-            _audioSource.Play();
-        }
-
-        public void StopAudio()
-        {
-            _audioSource.Stop();
-            _audioSource.clip = null;
-        }
-
-        // !-- Helper/Utilities
         private void EnableAudio()
         {
             _audioSource.clip = null;
@@ -81,16 +59,11 @@ namespace Alphabet.Collection
 
         private void DisableAudio()
         {
-            if (IsAudioPlaying())
+            if (_audioSource.isPlaying)
             {
-                StopAudio();
+                StopAudioEvent();
             }
             _audioSource.enabled = false;
-        }
-
-        public bool IsAudioPlaying()
-        {
-            return _audioSource.isPlaying;
         }
         
         #endregion
