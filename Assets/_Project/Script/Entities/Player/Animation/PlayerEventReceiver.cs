@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Alphabet.Enum;
-using Alphabet.Managers;
+using UnityEngine;
 using Spine;
 using Spine.Unity;
-using UnityEngine;
+using Alphabet.Enum;
+using Alphabet.Managers;
 
 namespace Alphabet.Entities.Player
 {

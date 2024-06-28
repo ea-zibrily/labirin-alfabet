@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using Alphabet.Enum;
 
 namespace Alphabet.Entities.Player
 {
@@ -28,6 +29,7 @@ namespace Alphabet.Entities.Player
 
         // Reference
         private PlayerController _playerController;
+        private PlayerManager _playerManager;
 
         #endregion
 
@@ -59,6 +61,7 @@ namespace Alphabet.Entities.Player
        private void Awake()
        {
             _playerController = transform.parent.GetComponent<PlayerController>();
+            _playerManager = _playerController.GetComponentInChildren<PlayerManager>();
             _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
        }
 
@@ -191,7 +194,8 @@ namespace Alphabet.Entities.Player
         {
             var isLooping = ShouldAnimationLoop(state);
             var buffedTimeScale = _playerController.PlayerPickThrow.IsHoldedItem ? holdSpeedUpTimescale : speedUpTimescale;
-            var timeScale = _playerController.IsBuffed ? buffedTimeScale : DEFAULT_TIMESCALE;
+            // var timeScale = _playerController.IsBuffed ? buffedTimeScale : DEFAULT_TIMESCALE;
+            var timeScale = _playerManager.HasBuffEffect[BuffType.Speed] ? buffedTimeScale : DEFAULT_TIMESCALE;
             
             _playerAnimationState.SetAnimation(0, state, isLooping).TimeScale = timeScale;
         }

@@ -32,6 +32,7 @@ namespace Alphabet.Letter
         [SerializeField] private float moveDelay;
         [SerializeField] private float lerpDuration;
 
+        private readonly float tweenDelayMultiplier = 0.5f;
         public float LerpDuration => lerpDuration;
 
         // Utilities
@@ -43,17 +44,9 @@ namespace Alphabet.Letter
         #region Methods
 
         // !-- Initialization
-        private IEnumerator InitializeCenterPosition(RectTransform rectTarget)
+        private void InitializeCenterPosition(RectTransform rectTarget)
         {
-            var centerPosition = Vector3.zero;
-            var i = 0;
-
-            while (i < 3)
-            {
-                yield return null;
-                centerPosition = SwitchToRectTransform(letterPoint, rectTarget);
-                i++;
-            }
+            var centerPosition = SwitchToRectTransform(letterPoint, rectTarget);
             rectTarget.anchoredPosition = centerPosition;
         }
 
@@ -63,7 +56,7 @@ namespace Alphabet.Letter
             // Initialize
             var letterRect = letterTarget.GetComponent<RectTransform>();
 
-            yield return InitializeCenterPosition(letterRect);
+            InitializeCenterPosition(letterRect);
             _targetPosition = Vector2.zero;
             letterRect.localScale = Vector3.zero;
             TargetFill = letterTarget;
@@ -71,7 +64,7 @@ namespace Alphabet.Letter
 
             // Animate
             IsAnimate = true;
-            var lerpStartDelay = tweeningDuration * 2 + 0.5f;
+            var lerpStartDelay = tweeningDuration * 2 + tweenDelayMultiplier;
             LeanTween.scale(letterRect, letterScale.Upper, tweeningDuration).setEase(leanTweenType);
             LeanTween.scale(letterRect, letterScale.OnMove, tweeningDuration)
                 .setDelay(tweeningDuration).setEase(leanTweenType);

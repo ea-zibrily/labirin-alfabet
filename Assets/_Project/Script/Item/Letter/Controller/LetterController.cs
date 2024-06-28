@@ -36,7 +36,6 @@ namespace Alphabet.Letter
         public LetterManager LetterManager { get; private set; }
         public LetterInterfaceManager LetterInterfaceManager { get; private set; }
         
-        
         #endregion
         
         #region MonoBehaviour Callbacks
@@ -93,7 +92,6 @@ namespace Alphabet.Letter
             FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
             yield return new WaitForSeconds(sfxDelayTime);
             LetterAudioManager.PlayAudioEvent(_letterData.LetterId);
-
         }
 
         private IEnumerator HandleVfxRoutine(GameObject vfx)

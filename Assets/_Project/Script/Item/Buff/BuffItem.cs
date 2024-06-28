@@ -10,7 +10,7 @@ namespace Alphabet.Letter
     public class BuffItem : MonoBehaviour
     {
         #region Fields & Properties
-
+        
         [Header("Buff")] 
         public BuffType BuffType;
         [SerializeField] private bool isBuffActive;
@@ -58,13 +58,13 @@ namespace Alphabet.Letter
         protected virtual void ActivateBuff()
         {
             IsBuffActive = true;
-            PlayerManager.HasBuffEffect = true;
+            PlayerManager.HasBuffEffect[BuffType] = true;
         }
-
+        
         public virtual void DeactivateBuff()
         {
             IsBuffActive = false;
-            PlayerManager.HasBuffEffect = false;
+            PlayerManager.HasBuffEffect[BuffType] = false;
         }
         
         #endregion

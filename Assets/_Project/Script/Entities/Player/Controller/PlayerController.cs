@@ -14,15 +14,6 @@ namespace Alphabet.Entities.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
-        #region Struct
-        [Serializable]
-        private struct AnimationData
-        {
-            public string type;
-            [SpineAnimation] public string[] name;
-        }
-        #endregion
-
         #region Fields & Properties
         
         [Header("Movement")] 
@@ -38,7 +29,6 @@ namespace Alphabet.Entities.Player
             set => currentMoveSpeed = value;
         }
         public bool CanMove { get; private set; }
-        public bool IsBuffed { get; set; }
         
         [Header("Reference")] 
         private Rigidbody2D _playerRb;

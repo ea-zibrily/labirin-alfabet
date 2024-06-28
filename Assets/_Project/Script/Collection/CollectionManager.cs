@@ -104,27 +104,14 @@ namespace Alphabet.Collection
         }
         
         // !-- Core Functionality
-
         private void CloseCollection()
         {
             FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
             OnCollectionCloseEvent();
             mainMenuPanelUI.SetActive(true);
 
-            SetupSnap();
+            simpleScrollSnap.Setup();
             collectionPanelUI.SetActive(false);
-        }
-
-        private void SetupSnap()
-        {
-            if (simpleScrollSnap.ValidConfig)
-            {
-                simpleScrollSnap.Setup();
-            }
-            else
-            {
-                throw new Exception("Invalid configuration.");
-            }
         }
 
         // !-- Helpers/Utilities

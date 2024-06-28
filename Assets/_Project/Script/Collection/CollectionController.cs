@@ -25,8 +25,9 @@ namespace Alphabet.Collection
         [Header("Tweening")]
         [SerializeField] private Vector3 targetScaling;
         [SerializeField] private float tweeningDuration;
+        [SerializeField] private float holdTweenDuration;
         private Vector3 _defaultScaling;
-        
+
         [Header("UI")]
         [SerializeField] private Image outerImageUI;
         [SerializeField] private Image fillImageUI;
@@ -107,7 +108,7 @@ namespace Alphabet.Collection
         private IEnumerator ClickFeedbackRoutine()
         {
             var hasCollected = GameDatabase.Instance.LoadLetterConditions(collectionId);
-            var tweenDuration = hasCollected ? tweeningDuration : 0.5f;
+            var tweenDuration = hasCollected ? holdTweenDuration : tweeningDuration;
 
             // Play button SFX if not collected
             if (!hasCollected)
@@ -116,7 +117,7 @@ namespace Alphabet.Collection
             }
 
             // Scale up with elastic ease
-            LeanTween.scale(gameObject, targetScaling, 0.5f)
+            LeanTween.scale(gameObject, targetScaling, tweeningDuration)
                 .setEase(LeanTweenType.easeOutElastic)
                 .setOnComplete(() =>
                 {
@@ -128,9 +129,8 @@ namespace Alphabet.Collection
                 });
 
             yield return new WaitForSeconds(tweenDuration);
-
             // Scale down with elastic ease
-            LeanTween.scale(gameObject, _defaultScaling, 0.5f)
+            LeanTween.scale(gameObject, _defaultScaling, tweeningDuration)
                 .setEase(LeanTweenType.easeOutElastic)
                 .setOnComplete(() =>
                 {

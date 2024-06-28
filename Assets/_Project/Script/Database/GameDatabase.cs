@@ -15,9 +15,7 @@ namespace Alphabet.Database
         private Dictionary<int, bool> _isLetterCollected;
         private Dictionary<string, bool> _isLevelClear;
         private int _levelClearIndex;
-        
-        // public bool IsAnimateUnlock => _levelClearIndex > 0;
-        
+
         //-- Constant Variable
         public const int LETTER_COUNT = 26;
         
@@ -70,7 +68,7 @@ namespace Alphabet.Database
         
         // !-- Core Functionality
 
-        // Letter Collected
+        // *- Letter Collected
         public void SaveLetterCollected(int letterId, bool value)
         {
             if (_isLetterCollected.ContainsKey(letterId))
@@ -84,7 +82,7 @@ namespace Alphabet.Database
             return _isLetterCollected[letterId];
         }
         
-        // Level Clear
+        // *- Level Clear
         public void SaveLevelClear(string levelName, bool value)
         {
             if (_isLevelClear.ContainsKey(levelName))
@@ -98,7 +96,7 @@ namespace Alphabet.Database
             return _isLevelClear[levelName];
         }
 
-        // Level Clear Index
+        // *- Level Clear Index
         public void SaveLevelClearIndex(int value) => _levelClearIndex = value;
         public void ResetLevelClearIndex() => _levelClearIndex = 0;
         public int LoadLevelClearIndex() 

@@ -30,7 +30,6 @@ namespace Alphabet.Entities.Player
 
         public bool IsThrowItem { get; set; }
         public bool IsHoldedItem => _holdedItemObject != null;
-        public float NerfedMultiplier => nerfedSpeedMultiplier;
         public Vector3 PickDirection { get; set; }
 
         public event Action<float> OnPlayerInteract;
@@ -45,9 +44,9 @@ namespace Alphabet.Entities.Player
 
         [Header("Reference")]
         private PlayerController _playerController;
+        private PlayerManager _playerManager;
         private PlayerAnimation _playerAnimation;
         private AudioManager _audioManager;
-        
 
         #endregion
 
@@ -56,6 +55,7 @@ namespace Alphabet.Entities.Player
         private void Awake()
         {
             _playerController = GetComponent<PlayerController>();
+            _playerManager = GetComponentInChildren<PlayerManager>();
             _playerAnimation = GetComponentInChildren<PlayerAnimation>();
             _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         }
@@ -140,8 +140,10 @@ namespace Alphabet.Entities.Player
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.parent = transform;
 
+            var nerfedSpeed = _playerManager.HasBuffEffect[BuffType.Speed] ? 
+                nerfedSpeedMultiplier * 2 : nerfedSpeedMultiplier;
             _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
-            OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
+            OnPlayerInteract?.Invoke(nerfedSpeed);
 
             if (!_pickItemObject.TryGetComponent(out StunUnique stunItem)) return;
             stunItem.GetComponent<Rigidbody2D>().simulated = false;

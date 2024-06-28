@@ -2,17 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine;
 using Spine.Unity;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
-using Alphabet.Letter;
 using Alphabet.Stage;
+using Alphabet.Letter;
+using Alphabet.Managers;
 using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
 
 using Random = UnityEngine.Random;
-using Alphabet.Managers;
 
 namespace Alphabet.Entities.Player
 {
@@ -20,14 +19,6 @@ namespace Alphabet.Entities.Player
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {
-        #region Enum
-        public enum TagFeedback
-        {
-            Enemy,
-            Item
-        }
-        #endregion
-
         #region Fields & Properties
         
         [Header("Health")] 
@@ -58,7 +49,7 @@ namespace Alphabet.Entities.Player
         [Header("Effect")]
         [SerializeField] private GameObject healEffect;
         [SerializeField] private GameObject speedEffect;
-        public bool HasBuffEffect { get; set; }
+        public Dictionary<BuffType, bool> HasBuffEffect;
 
         public GameObject HealEffect => healEffect;
         public GameObject SpeedEffect => speedEffect;
@@ -96,12 +87,17 @@ namespace Alphabet.Entities.Player
 
         private void Start()
         {
-           InitializeHealth();
-           InitializeLetterObject();
+            InitializeHealth();
+            InitializeLetterObject();
 
-           SpeedEffect.SetActive(false);
-           HealEffect.SetActive(false);
-           HasBuffEffect = false;
+            SpeedEffect.SetActive(false);
+            HealEffect.SetActive(false);
+            
+            HasBuffEffect = new Dictionary<BuffType, bool>();
+            foreach (BuffType level in System.Enum.GetValues(typeof(BuffType)))
+            {
+                HasBuffEffect.Add(level, false);
+            }
         }
         
         #endregion

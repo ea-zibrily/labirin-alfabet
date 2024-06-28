@@ -84,7 +84,7 @@ namespace Alphabet.Letter
         // !-- Core Functionality
         public void Taken()
         {
-            if (PlayerManager.HasBuffEffect) return;
+            if (PlayerManager.HasBuffEffect[BuffType]) return;
             ActivateBuff();
         }
         
@@ -95,7 +95,6 @@ namespace Alphabet.Letter
             InitializeSpeed();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<CircleCollider2D>().enabled = false;
-            PlayerController.IsBuffed = true;
 
             StartCoroutine(SpeedActive());
             StartSpeedEffect(PlayerManager.SpeedEffect);
@@ -108,7 +107,6 @@ namespace Alphabet.Letter
 
             StopSpeedEffect(PlayerManager.SpeedEffect);
             PlayerController.CurrentMoveSpeed = _defaultMoveSpeed;
-            PlayerController.IsBuffed = false;
 
             gameObject.SetActive(false);
         }
@@ -139,7 +137,6 @@ namespace Alphabet.Letter
                 }
                 yield return null;
             }
-
             PlayerController.CurrentMoveSpeed = _upgradeMoveSpeed; 
         }
 
@@ -153,7 +150,6 @@ namespace Alphabet.Letter
                 }
                 yield return null;
             }
-
             DeactivateBuff();
         }
         

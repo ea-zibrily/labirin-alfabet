@@ -462,7 +462,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 44890468}
   fillImageUI: {fileID: 520643790}
 --- !u!114 &44890467
@@ -1122,7 +1123,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 107062124}
   fillImageUI: {fileID: 371017189}
 --- !u!114 &107062123
@@ -1529,7 +1531,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 187186098}
   fillImageUI: {fileID: 2029645423}
 --- !u!114 &187186097
@@ -3367,7 +3370,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 544552636}
   fillImageUI: {fileID: 101129590}
 --- !u!114 &544552635
@@ -4092,7 +4096,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 676353222}
   fillImageUI: {fileID: 453425123}
 --- !u!114 &676353221
@@ -4307,7 +4312,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 708242173}
   fillImageUI: {fileID: 594759896}
 --- !u!114 &708242172
@@ -4447,7 +4453,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 713488366}
   fillImageUI: {fileID: 500005470}
 --- !u!114 &713488365
@@ -6433,7 +6440,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1013170966}
   fillImageUI: {fileID: 1760579245}
 --- !u!114 &1013170965
@@ -6573,7 +6581,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1014246432}
   fillImageUI: {fileID: 1511193510}
 --- !u!114 &1014246431
@@ -7524,7 +7533,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1160896872}
   fillImageUI: {fileID: 1731506550}
 --- !u!114 &1160896871
@@ -7966,7 +7976,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1246704970}
   fillImageUI: {fileID: 432544444}
 --- !u!114 &1246704969
@@ -8724,7 +8735,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1458533384}
   fillImageUI: {fileID: 1820303327}
 --- !u!114 &1458533383
@@ -8864,7 +8876,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1462420246}
   fillImageUI: {fileID: 320627808}
 --- !u!114 &1462420245
@@ -9004,7 +9017,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1500505975}
   fillImageUI: {fileID: 1862282970}
 --- !u!114 &1500505974
@@ -9258,7 +9272,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1522467617}
   fillImageUI: {fileID: 48715590}
 --- !u!114 &1522467616
@@ -9677,7 +9692,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1607569601}
   fillImageUI: {fileID: 2106861104}
 --- !u!114 &1607569600
@@ -9957,7 +9973,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1643327906}
   fillImageUI: {fileID: 1261410943}
 --- !u!114 &1643327905
@@ -10134,7 +10151,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1646098983}
   fillImageUI: {fileID: 1955587922}
 --- !u!114 &1646098982
@@ -10701,7 +10719,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1706590360}
   fillImageUI: {fileID: 887960178}
 --- !u!114 &1706590359
@@ -11067,7 +11086,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1746896965}
   fillImageUI: {fileID: 2084041428}
 --- !u!114 &1746896964
@@ -11423,7 +11443,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1761821589}
   fillImageUI: {fileID: 2877673}
 --- !u!114 &1761821588
@@ -11639,7 +11660,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1768025130}
   fillImageUI: {fileID: 1384209639}
 --- !u!114 &1768025129
@@ -11880,7 +11902,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1803530089}
   fillImageUI: {fileID: 17837308}
 --- !u!114 &1803530088
@@ -12396,7 +12419,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1931121354}
   fillImageUI: {fileID: 1860619459}
 --- !u!114 &1931121353
@@ -12820,7 +12844,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 1962439373}
   fillImageUI: {fileID: 1227262541}
 --- !u!114 &1962439372
@@ -13454,7 +13479,8 @@ MonoBehaviour:
   collectionId: 0
   collectionName: 
   targetScaling: {x: 1.1, y: 1.1, z: 1.1}
-  tweeningDuration: 2.15
+  tweeningDuration: 0.5
+  holdTweenDuration: 2.15
   outerImageUI: {fileID: 2079061366}
   fillImageUI: {fileID: 656083373}
 --- !u!114 &2079061365
