@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Input/Button Input Handler")]
     public class ButtonInputHandler : MonoBehaviour
     {
         #region Fields & Properties

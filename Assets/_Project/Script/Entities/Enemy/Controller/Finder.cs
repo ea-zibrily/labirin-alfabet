@@ -5,7 +5,6 @@ using Alphabet.Enum;
 
 namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("Alphabet/Entities/Enemy/Finder")]
     public class Finder : EnemyBase
     {
         #region Fields & Property

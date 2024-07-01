@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("Alphabet/Entities/Enemy/Wanderer")]
     public class Wanderer : EnemyBase
     {
         #region Struct

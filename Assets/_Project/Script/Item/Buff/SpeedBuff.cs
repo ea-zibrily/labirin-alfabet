@@ -9,7 +9,7 @@ using Alphabet.Entities.Player;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.Gameplay.Controller;
 
-namespace Alphabet.Letter
+namespace Alphabet.Item
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class SpeedBuff : BuffItem, ITakeable
@@ -95,7 +95,7 @@ namespace Alphabet.Letter
             InitializeSpeed();
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<CircleCollider2D>().enabled = false;
-
+            
             StartCoroutine(SpeedActive());
             StartSpeedEffect(PlayerManager.SpeedEffect);
             FindObjectOfType<AudioManager>().PlayAudio(Musics.SpeedSfx);

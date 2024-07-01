@@ -1,4 +1,4 @@
-﻿namespace Alphabet.Letter
+﻿namespace Alphabet.Item
 {
     public interface ITakeable
     {

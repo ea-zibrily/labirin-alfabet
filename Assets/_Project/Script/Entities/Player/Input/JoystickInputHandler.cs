@@ -6,7 +6,6 @@ using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Input/Joystick Input Handler")]
     public class JoystickInputHandler : MonoBehaviour
     {
         #region Fields & Properties

@@ -4,13 +4,10 @@ using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
 using Alphabet.Database;
-using Spine.Unity;
-using Spine;
 using Alphabet.Gameplay.EventHandler;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Player Controller")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
     {
@@ -142,7 +139,7 @@ namespace Alphabet.Entities.Player
         {
             var direction = value.transform.position - transform.position;
             direction.Normalize();
-
+            
             movementDirection = direction;
             movementDirection = Vector2.zero;
         }

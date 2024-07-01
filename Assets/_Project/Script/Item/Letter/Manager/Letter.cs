@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
 
 namespace Alphabet.Letter

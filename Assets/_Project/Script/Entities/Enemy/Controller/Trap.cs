@@ -5,7 +5,6 @@ using Alphabet.Enum;
 
 namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("Alphabet/Entities/Enemy/Trap")]
     public class Trap : EnemyBase
     {
         #region Fields & Property

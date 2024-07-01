@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Player Knockback")]
     public class PlayerKnockBack : MonoBehaviour
     {
         #region Fields & Properties

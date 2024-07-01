@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Alphabet.Letter;
-using Alphabet.Managers;
 using Alphabet.Enum;
+using Alphabet.Item;
+using Alphabet.Managers;
 using Alphabet.Gameplay.Controller;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Player Pick Throw")]
     public class PlayerPickThrow : MonoBehaviour
     {
         #region Fields & Property
@@ -140,10 +139,8 @@ namespace Alphabet.Entities.Player
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.parent = transform;
 
-            var nerfedSpeed = _playerManager.HasBuffEffect[BuffType.Speed] ? 
-                nerfedSpeedMultiplier * 2 : nerfedSpeedMultiplier;
-            _playerController.CurrentMoveSpeed -= nerfedSpeedMultiplier;
-            OnPlayerInteract?.Invoke(nerfedSpeed);
+            _playerController.CurrentMoveSpeed -= HandleCurrentSpeed(nerfedSpeedMultiplier);
+            OnPlayerInteract?.Invoke(nerfedSpeedMultiplier);
 
             if (!_pickItemObject.TryGetComponent(out StunUnique stunItem)) return;
             stunItem.GetComponent<Rigidbody2D>().simulated = false;
@@ -170,12 +167,18 @@ namespace Alphabet.Entities.Player
             stunItem.EnableSprite();
             stunItem.GetComponent<Rigidbody2D>().simulated = true;
             stunItem.ThrowItem(throwTargetDirection, throwSpeed);
-
-            _playerController.CurrentMoveSpeed = _normalMoveSpeed;
-            OnPlayerInteract?.Invoke(0f);
+            
+            _playerController.CurrentMoveSpeed = HandleCurrentSpeed(_normalMoveSpeed);
             _playerController.StartMovement();
+            OnPlayerInteract?.Invoke(0f);
+
             _holdedItemObject = null;
             _dustEffect = null;
+        }
+
+        private float HandleCurrentSpeed(float speed)
+        {
+            return _playerManager.HasBuffEffect[BuffType.Speed] ? speed * 2 : speed;
         }
 
         private void HandleDustEffect(bool condition)

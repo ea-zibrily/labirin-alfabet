@@ -3,9 +3,7 @@ using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Entities.Player;
 
-using Random = UnityEngine.Random;
-
-namespace Alphabet.Letter
+namespace Alphabet.Item
 {
     public class BuffItem : MonoBehaviour
     {

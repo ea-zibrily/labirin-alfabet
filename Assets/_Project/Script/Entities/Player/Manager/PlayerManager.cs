@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
+using Alphabet.Item;
 using Alphabet.Stage;
 using Alphabet.Letter;
 using Alphabet.Managers;
@@ -15,7 +16,6 @@ using Random = UnityEngine.Random;
 
 namespace Alphabet.Entities.Player
 {
-    [AddComponentMenu("Alphabet/Entities/Player/Player Manager")]
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class PlayerManager : MonoBehaviour
     {

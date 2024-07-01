@@ -2,7 +2,6 @@
 using UnityEngine;
 using Alphabet.Enum;
 using Tsukuyomi.Utilities;
-using Alphabet.Tsukuyomi;
 
 namespace Alphabet.Managers
 {

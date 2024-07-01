@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Alphabet.Letter;
-using Alphabet.Collection;
+
 
 namespace Alphabet.Letter
 {

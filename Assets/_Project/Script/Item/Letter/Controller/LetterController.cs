@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
 using Alphabet.Enum;
+using Alphabet.Item;
 using Alphabet.Managers;
 
 namespace Alphabet.Letter
