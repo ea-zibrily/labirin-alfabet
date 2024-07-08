@@ -44,7 +44,6 @@ namespace Alphabet.Entities.Player
 
             // Handler
             _playerAnimation = GetComponentInChildren<PlayerAnimation>();
-            
             PlayerPickThrow = GetComponent<PlayerPickThrow>();
             PlayerInputHandler = GetComponentInChildren<JoystickInputHandler>();
         }
@@ -62,7 +61,7 @@ namespace Alphabet.Entities.Player
 
         private void Start()
         {
-            InitializePlayer();
+            InitPlayer();
         }
 
         private void FixedUpdate()
@@ -74,8 +73,8 @@ namespace Alphabet.Entities.Player
         
         #region Methods
         
-        // !-- Initialization
-        private void InitializePlayer()
+        // !- Initialization
+        private void InitPlayer()
         {
             // Data
             playerData = PlayerDatabase.Instance.GetPlayerDatabySelected();
@@ -86,7 +85,7 @@ namespace Alphabet.Entities.Player
             _playerAnimation.ChangeSkinWhenPlay(playerData.PlayerSkin);
         }
         
-        // !-- Core Functionality
+        // !- Core Functionality
         private void PlayerMove()
         {
             if (!CanMove) return;
@@ -113,7 +112,7 @@ namespace Alphabet.Entities.Player
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
         
-        // !-- Helpers/Utilities
+        // !- Utilities
         public void StartMovement()
         {
             CanMove = true;

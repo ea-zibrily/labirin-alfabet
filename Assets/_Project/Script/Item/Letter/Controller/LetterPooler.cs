@@ -97,7 +97,6 @@ namespace Alphabet.Letter
             GenerateLetter(spawns);
         }
 
-        // TODO: Panggil method ini dulu waktu akan generate letter
         private void UpdatePoolData()
         {
             SpawnedLetters.Clear();
