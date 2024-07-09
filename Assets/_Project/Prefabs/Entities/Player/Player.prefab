@@ -664,7 +664,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  flashNumber: 7
+  flashNumber: 8
   flashDuration: 0.075
   flashColor: {r: 1, g: 0, b: 0, a: 0.6}
   healEffect: {fileID: 6957618064419682993}

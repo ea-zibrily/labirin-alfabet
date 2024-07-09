@@ -49,7 +49,7 @@ namespace Alphabet.Entities.Player
                 yield return new WaitForSeconds(_flashDuration);
                 _flashNumElapsed++;
             }
-
+            Debug.Log("Donee");
             Physics2D.IgnoreLayerCollision(_playerLayerNum, _enemyLayerNum, false);
         }
 
