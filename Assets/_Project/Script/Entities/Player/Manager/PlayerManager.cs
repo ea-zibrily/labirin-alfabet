@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
 using Alphabet.Item;
 using Alphabet.Stage;
@@ -23,17 +22,17 @@ namespace Alphabet.Entities.Player
         
         [Header("Health")] 
         [SerializeField] private int healthCount;
-        [SerializeField] [ReadOnly] private int currentHealthCount;
         [SerializeField] private GameObject[] healthUIObjects;
 
+        private int _currentHealthCount;
         private bool _isPlayerDead;
         private const float DIE_DELAY = 0.5f;
         
         public GameObject[] HealthUIFills { get; private set; }
         public int CurrentHealthCount
         {
-            get => currentHealthCount;
-            set => currentHealthCount = value;
+            get => _currentHealthCount;
+            set => _currentHealthCount = value;
         }
         
         [Header("Invulnerability Frame")] 
@@ -120,20 +119,20 @@ namespace Alphabet.Entities.Player
                 HealthUIFills[i] = healthFill;
             }
 
-            currentHealthCount = healthCount;
+            _currentHealthCount = healthCount;
             _isPlayerDead = false;
         }
         
         // !-- Core Functionality
         private void DecreaseHealth()
         {
-            var healthIndex = currentHealthCount - 1;
+            var healthIndex = _currentHealthCount - 1;
             HealthUIFills[healthIndex].SetActive(false);
-            currentHealthCount--;
+            _currentHealthCount--;
             
-            if (currentHealthCount <= 0)
+            if (_currentHealthCount <= 0)
             {
-                currentHealthCount = 0;
+                _currentHealthCount = 0;
                 StartCoroutine(PlayerDieRoutine());
             }
         }
