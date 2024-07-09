@@ -8,6 +8,7 @@ using Alphabet.Entities.Player;
 using Alphabet.Gameplay.Controller;
 using Alphabet.Gameplay.EventHandler;
 using Alphabet.DesignPattern.Singleton;
+using Alphabet.Mission;
 
 namespace Alphabet.Managers
 {
@@ -33,7 +34,7 @@ namespace Alphabet.Managers
         private PlayerController _playerController;
         private PlayerManager _playerManager;
         private TimeController _timeController;
-        private TutorialController _tutorialController;
+        private MissionManager _missionManager;
         private StageMarker _stageMarker;
         
         #endregion
@@ -71,7 +72,7 @@ namespace Alphabet.Managers
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _playerManager = _playerController.GetComponentInChildren<PlayerManager>();
-            _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
+            _missionManager = GameObject.Find("MissionManager").GetComponent<MissionManager>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
@@ -136,7 +137,7 @@ namespace Alphabet.Managers
             yield return new WaitForSeconds(FADE_OUT_DELAY);
             _playerManager.CanceledBuff();
             StageManager.Instance.InitializeNewStage();
-            _tutorialController.CallTutorial();
+            _missionManager.CallTutorial();
             _stageMarker.TopMarker();
             _timeController.InitializeTimer();
             _playerController.DefaultDirection();

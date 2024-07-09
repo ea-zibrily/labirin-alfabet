@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Alphabet.Data;
 using Alphabet.Stage;
 using Alphabet.Database;
-using Alphabet.Data;
-using Alphabet.Gameplay.Controller;
+using Alphabet.Managers;
 
 namespace Alphabet.Letter
 {
@@ -28,7 +28,7 @@ namespace Alphabet.Letter
         [SerializeField] private LetterContainer _letterContainer;
         private LetterInterfaceManager _letterUIManager;
         private LetterPooler _letterPooler;
-        private TutorialController _tutorialController;
+        private MissionManager _missionManager;
         
         public LetterPooler LetterPooler => _letterPooler;
         public LetterContainer LetterContainer => _letterContainer;
@@ -41,7 +41,7 @@ namespace Alphabet.Letter
         {
             _letterUIManager = GetComponent<LetterInterfaceManager>();
             _letterPooler = GameObject.FindGameObjectWithTag("Pooler").GetComponent<LetterPooler>();
-            _tutorialController = GameObject.Find("TutorialController").GetComponent<TutorialController>();
+            _missionManager = GameObject.Find("MissionManager").GetComponent<MissionManager>();
         }
 
         private void OnEnable()
@@ -61,7 +61,7 @@ namespace Alphabet.Letter
             InitializePools();
             
             SpawnLetter();
-            _tutorialController.CallTutorial();
+            _missionManager.CallTutorial();
         }
         
         #endregion

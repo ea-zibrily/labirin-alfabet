@@ -1,53 +1,40 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Spine.Unity;
+using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Data;
 using Alphabet.Enum;
 using Alphabet.Stage;
-using Alphabet.Letter;
 using Alphabet.Database;
-using Alphabet.Managers;
-using TMPro;
 
-namespace Alphabet.Gameplay.Controller
+namespace Alphabet.Mission
 {
-    public class TutorialController : MonoBehaviour
+    public class TutorialManager : Mission
     {
-        #region Fields & Properties
+        #region Internal Fields
 
-        [Header("UI")]
+        [Header("Tutorial")]
+        [SerializeField] private GameObject missionPanelUI;
         [SerializeField] private GameObject tutorialPanelUI;
+        [SerializeField] private SimpleScrollSnap simpleScrollSnap;
         [SerializeField] private GameObject[] letterObjectivesUI;
-        [SerializeField] private Button closeButtonUI;
 
+        private bool _isTutorialStage;
         private List<LetterData> _letterDatas;
-
-        [Header("References")]
-        [SerializeField] private LetterPooler letterPooler;
-        [SerializeField] private SkeletonGraphic skeletonGraphic;
-        private StageMarker _stageMarker;
-
-        #endregion
-
-        #region MonoBehaviour Callbacks
-
-        private void Awake()
-        {
-            _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
-        }
-
-        private void Start()
-        {
-            closeButtonUI.onClick.AddListener(OnCloseTutorial);
-        }
 
         #endregion
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
+        protected override void InitOnStart()
+        {
+            base.InitOnStart();
+            _isTutorialStage = StageManager.Instance.CurrentStage == StageName.Gua_Aksara && 
+                StageManager.Instance.CurrentStageNum == StageNum.Stage_1;
+        }
+
         private void InitializeTutorial()
         {
             // Datas
@@ -64,18 +51,27 @@ namespace Alphabet.Gameplay.Controller
             {
                 letter.SetActive(false);
             }
-            tutorialPanelUI.SetActive(true);
+            if (_isTutorialStage)
+            {
+                tutorialPanelUI.SetActive(true);
+            }
+            else
+            {
+                missionPanelUI.SetActive(true);
+            }
         }
 
-        // !-- Core Functionality
-        public void CallTutorial()
+        // !- Core
+        public override void CallTutorial()
         {
+            base.CallTutorial();
             InitializeTutorial();
             MissionHandler();
         }
 
-        private void MissionHandler()
+        protected override void MissionHandler()
         {
+            base.MissionHandler();
             var j = 0;
             foreach (var letter in letterObjectivesUI)
             {
@@ -88,10 +84,18 @@ namespace Alphabet.Gameplay.Controller
             }
         }
 
-        private void OnCloseTutorial()
+        protected override void OnCloseMission()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
-            tutorialPanelUI.SetActive(false);
+            base.OnCloseMission();
+            if (_isTutorialStage)
+                CloseTutorial();
+            else
+                CloseMission();
+        }
+
+        private void CloseMission()
+        {
+            missionPanelUI.SetActive(false);
             foreach (var letter in letterObjectivesUI)
             {
                 if (!letter.activeSelf) continue;
@@ -100,11 +104,19 @@ namespace Alphabet.Gameplay.Controller
            _stageMarker.ShowNotification();
         }
 
-        private void ChangeIconSkin(string skin)
+        private void CloseTutorial()
         {
-            skeletonGraphic.Skeleton.SetSkin(skin);
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.LateUpdate();
+            var currentIndex = simpleScrollSnap.SelectedPanel;
+            var numOfPanels = simpleScrollSnap.NumberOfPanels;
+
+            if (currentIndex < numOfPanels - 1)
+            {
+                simpleScrollSnap.GoToNextPanel();
+            }
+            else
+            {
+                CloseMission();
+            }
         }
 
         #endregion

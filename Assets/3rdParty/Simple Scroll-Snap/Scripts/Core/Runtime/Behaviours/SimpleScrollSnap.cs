@@ -49,7 +49,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
         [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
-        // *--Labirin Kata Customize
+        // *- Labirin Alfabet Customize
         public int SelectedPanelIndex { get; set; }
         public event Action OnSnappingBegin;
         public event Action OnSnappingEnd;
@@ -651,6 +651,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 }
             }
         }
+        
         public void GoToNextPanel()
         {
             int nearestPanel = GetNearestPanel();
