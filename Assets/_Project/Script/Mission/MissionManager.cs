@@ -8,11 +8,10 @@ using Alphabet.Data;
 using Alphabet.Enum;
 using Alphabet.Stage;
 using Alphabet.Letter;
-using Alphabet.Database;
 using Alphabet.Managers;
 using DanielLochner.Assets.SimpleScrollSnap;
 
-namespace Alphabet.Managers
+namespace Alphabet.Mission
 {
     public class MissionManager : MonoBehaviour
     {
@@ -30,7 +29,6 @@ namespace Alphabet.Managers
 
         [Header("Reference")]
         [SerializeField] private LetterPooler letterPooler;
-        [SerializeField] private SkeletonGraphic skeletonGraphic;
         [SerializeField] private SimpleScrollSnap scrollSnap;
         private StageMarker _stageMarker;
 
@@ -58,7 +56,6 @@ namespace Alphabet.Managers
         {
             // Datas
             var spawnedDatas = letterPooler.SpawnedLetterDatas;
-            var playerData = PlayerDatabase.Instance.GetPlayerDatabySelected();
 
             _letterDatas ??= new List<LetterData>();
             _letterDatas.Clear();
@@ -68,8 +65,6 @@ namespace Alphabet.Managers
                 StageManager.Instance.CurrentStageNum == StageNum.Stage_1;
             _canPlay = !_isTutorialStage;
 
-            ChangeIconSkin(playerData.PlayerSkin);
-            
             // Other
             foreach (var letter in missionObjectivesUI)
             {
@@ -138,15 +133,7 @@ namespace Alphabet.Managers
                 missionButtonUI.GetComponentInChildren<TextMeshProUGUI>().text = buttonText;
             }
         }
-
-        // !- Helpers
-        private void ChangeIconSkin(string skin)
-        {
-            skeletonGraphic.Skeleton.SetSkin(skin);
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.LateUpdate();
-        }
-
+        
         #endregion
     }   
 }

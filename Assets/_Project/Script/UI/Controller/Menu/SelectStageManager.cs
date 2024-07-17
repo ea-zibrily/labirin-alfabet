@@ -64,7 +64,7 @@ namespace Alphabet.UI
             // Padlock
             PadlockEventHandler.OnPadlockAnimate -= value => ExploreButtonUI.interactable = !value;
         }
-
+        
         #endregion
 
         #region Methods

@@ -4,7 +4,7 @@ using UnityEngine;
 using Alphabet.Data;
 using Alphabet.Stage;
 using Alphabet.Database;
-using Alphabet.Managers;
+using Alphabet.Mission;
 
 namespace Alphabet.Letter
 {
