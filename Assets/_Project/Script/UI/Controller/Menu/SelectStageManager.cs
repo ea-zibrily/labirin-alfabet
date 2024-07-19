@@ -18,7 +18,7 @@ namespace Alphabet.UI
         private struct StageContent
         {
             public StageName levelName;
-            public GameObject stagePanelObject;
+            public GameObject stagePanelUI;
         }
         #endregion
 
@@ -32,12 +32,12 @@ namespace Alphabet.UI
         
         private int _currentPanelIndex;
         private bool _canExplore;
-
         private const string PADLOCK_TRIGGERED = "LockTap";
 
         [Header("Image Data")]
         [SerializeField] private Color lockedStageColor;
         [SerializeField] private Material imageMaterial;
+
 
         [Header("Reference")]
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
@@ -70,14 +70,14 @@ namespace Alphabet.UI
         #region Methods
 
         // !-- Initialization
-        protected override void InitialiazeOnStart()
+        protected override void InitOnStart()
         {
-            base.InitialiazeOnStart();
-            InitializeSelectStage();
+            base.InitOnStart();
+            InitSelectStage();
             SetSelectedPanel();
         }
 
-        private void InitializeSelectStage()
+        private void InitSelectStage()
         {
             if (stageContents.Length != GetStageCount())
             {
@@ -108,7 +108,7 @@ namespace Alphabet.UI
             }
             else
             {
-                var stagePanel = stageContents[_currentPanelIndex].stagePanelObject;
+                var stagePanel = stageContents[_currentPanelIndex].stagePanelUI;
                 var stagePadlock = stagePanel.transform.GetChild(1).GetComponent<Animator>();
 
                 stagePadlock.SetTrigger(PADLOCK_TRIGGERED);
@@ -142,7 +142,7 @@ namespace Alphabet.UI
 
             SetHeadlineText(stageName.ToUpper());
             SetExploreButtonState(_canExplore, ExploreButtonUI);
-            SetThumbnailState(isLevelCleared, stageContents[_currentPanelIndex].stagePanelObject);   
+            SetThumbnailState(isLevelCleared, stageContents[_currentPanelIndex].stagePanelUI);   
         }
 
         private void SetHeadlineText(string value)

@@ -26,9 +26,9 @@ namespace Alphabet.Letter
 
         [Header("Reference")] 
         [SerializeField] private LetterContainer _letterContainer;
+        [SerializeField] private MissionManager missionManager;
         private LetterInterfaceManager _letterUIManager;
         private LetterPooler _letterPooler;
-        private MissionManager _missionManager;
         
         public LetterPooler LetterPooler => _letterPooler;
         public LetterContainer LetterContainer => _letterContainer;
@@ -41,7 +41,6 @@ namespace Alphabet.Letter
         {
             _letterUIManager = GetComponent<LetterInterfaceManager>();
             _letterPooler = GameObject.FindGameObjectWithTag("Pooler").GetComponent<LetterPooler>();
-            _missionManager = GameObject.Find("MissionManager").GetComponent<MissionManager>();
         }
 
         private void OnEnable()
@@ -61,7 +60,7 @@ namespace Alphabet.Letter
             InitializePools();
             
             SpawnLetter();
-            _missionManager.CallTutorial();
+            missionManager.CallTutorial();
         }
         
         #endregion

@@ -29,6 +29,7 @@ namespace Alphabet.Mission
 
         [Header("Reference")]
         [SerializeField] private LetterPooler letterPooler;
+        [SerializeField] private MissionAnimation missionAnimation;
         [SerializeField] private SimpleScrollSnap scrollSnap;
         private StageMarker _stageMarker;
 
@@ -109,6 +110,7 @@ namespace Alphabet.Mission
             // Close mission
             missionPanelUI.SetActive(false);
             scrollSnap.Setup();
+            if (_isTutorialStage) missionAnimation.ResetAnimation();
             foreach (var letter in missionObjectivesUI)
             {
                 if (!letter.activeSelf) continue;

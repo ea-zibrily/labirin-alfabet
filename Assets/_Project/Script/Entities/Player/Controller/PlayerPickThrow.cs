@@ -136,6 +136,7 @@ namespace Alphabet.Entities.Player
 
         private void PickItem()
         {
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.GetStoneSfx);
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.parent = transform;
 

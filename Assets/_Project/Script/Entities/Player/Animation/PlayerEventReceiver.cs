@@ -22,12 +22,12 @@ namespace Alphabet.Entities.Player
         
         private void Start()
         {
-            _skeletonAnimation.AnimationState.Event += ShootEvent;
+            _skeletonAnimation.AnimationState.Event += HandleEvent;
         }
         
         #region Spine Event Method
 
-        private void ShootEvent(TrackEntry trackEntry, Spine.Event e)
+        private void HandleEvent(TrackEntry trackEntry, Spine.Event e)
         {
             switch (e.Data.Name)
             {

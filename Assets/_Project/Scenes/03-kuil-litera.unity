@@ -2891,6 +2891,7 @@ MonoBehaviour:
   - Lanjut
   missionButtonUI: {fileID: 4568391133224255138}
   letterPooler: {fileID: 1547474171}
+  missionAnimation: {fileID: 0}
   scrollSnap: {fileID: 4568391133224255144}
 --- !u!114 &292641953
 MonoBehaviour:
@@ -2904,11 +2905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70b98fb95518f044be000ff4a542ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonGraphics:
-  - {fileID: 4568391133224255143}
-  - {fileID: 1053921546}
-  - {fileID: 1053921545}
-  - {fileID: 1053921544}
+  graphicDatas: []
   scrollSnap: {fileID: 4568391133224255144}
 --- !u!1 &297812154
 GameObject:
@@ -3354,6 +3351,39 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1403629613}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &355991444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 355991445}
+  m_Layer: 0
+  m_Name: Mission
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &355991445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355991444}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1447558451}
+  - {fileID: 1555896554}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &357022388
 PrefabInstance:
@@ -28282,6 +28312,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5815429205632578256, guid: 92ec9d02025929d4cb9ccfe09e3ffaf6, type: 3}
   m_PrefabInstance: {fileID: 932315041}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &940978498 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5012453307286785588, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &940978499 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6141439031736693430, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &940978500 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9163698903345711485, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &941477885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40574,6 +40619,63 @@ Transform:
   - {fileID: 218686136}
   m_Father: {fileID: 1039273052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1447558450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1447558451}
+  - component: {fileID: 1447558452}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1447558451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447558450}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 355991445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1447558452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447558450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b594e5adae66744998275657568bdb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionPanelUI: {fileID: 4568391133224255137}
+  missionObjectivesUI:
+  - {fileID: 4568391133224255142}
+  - {fileID: 4568391133224255141}
+  - {fileID: 4568391133224255140}
+  - {fileID: 4568391133224255139}
+  missionTextUI:
+  - Mulai
+  - Lanjut
+  missionButtonUI: {fileID: 4568391133224255138}
+  letterPooler: {fileID: 1547474171}
+  missionAnimation: {fileID: 1555896556}
+  scrollSnap: {fileID: 4568391133224255144}
 --- !u!1001 &1448217680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46521,6 +46623,77 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2298401221773851765, guid: 1ed472c82ba01bd4d98733f287ad4153, type: 3}
   m_PrefabInstance: {fileID: 1551707887}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1555896553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555896554}
+  - component: {fileID: 1555896556}
+  - component: {fileID: 1555896555}
+  m_Layer: 0
+  m_Name: Animation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1555896554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555896553}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 355991445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1555896555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555896553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7188baed2f52e242abf29f8a965bb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1555896556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555896553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70b98fb95518f044be000ff4a542ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicDatas:
+  - MissionType: 0
+    SkeletonGraphic: {fileID: 4568391133224255143}
+    GraphicVfx: {fileID: 0}
+  - MissionType: 1
+    SkeletonGraphic: {fileID: 1053921546}
+    GraphicVfx: {fileID: 940978500}
+  - MissionType: 2
+    SkeletonGraphic: {fileID: 1053921545}
+    GraphicVfx: {fileID: 940978499}
+  - MissionType: 3
+    SkeletonGraphic: {fileID: 1053921544}
+    GraphicVfx: {fileID: 940978498}
+  scrollSnap: {fileID: 4568391133224255144}
 --- !u!1001 &1577271579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57425,6 +57598,7 @@ MonoBehaviour:
     - {fileID: 427547673}
     - {fileID: 354165018}
   _letterContainer: {fileID: 475099918}
+  missionManager: {fileID: 1447558452}
 --- !u!114 &1865757099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67864,6 +68038,7 @@ SceneRoots:
   - {fileID: 1216811832}
   - {fileID: 495634469}
   - {fileID: 292641950}
+  - {fileID: 355991445}
   - {fileID: 1057753814}
   - {fileID: 4568391133224255134}
   - {fileID: 1754008032}

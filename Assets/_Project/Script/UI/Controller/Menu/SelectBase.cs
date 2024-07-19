@@ -24,21 +24,21 @@ namespace Alphabet.UI
 
         private void Start()
         {
-            InitialiazeOnStart();
+            InitOnStart();
         }
 
         #endregion
 
         #region Methods
 
-        // !-- Initialization
-        protected virtual void InitialiazeOnStart()
+        // !-- Initialize
+        protected virtual void InitOnStart()
         {
             exploreButtonUI.onClick.AddListener(OnClickExplore);
             closeButtonUI.onClick.AddListener(OnClickClose);
         }
 
-        // !-- Core Initialization
+        // !- Core
         protected virtual void OnClickExplore() { }
         protected virtual void OnClickClose()
         {

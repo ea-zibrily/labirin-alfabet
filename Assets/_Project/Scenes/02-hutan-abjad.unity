@@ -12177,6 +12177,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6187727407179076786, guid: c75a11380e0ed8149828c2adec50a4ed, type: 3}
   m_PrefabInstance: {fileID: 397898907}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &398245533 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5012453307286785588, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &398245534 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6141439031736693430, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &398245535 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9163698903345711485, guid: 478586777308edf438f0447261f2021c, type: 3}
+  m_PrefabInstance: {fileID: 4568391133224255134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &399411406
 GameObject:
   m_ObjectHideFlags: 0
@@ -40612,6 +40627,63 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9187674688541616930, guid: 478586777308edf438f0447261f2021c, type: 3}
   m_PrefabInstance: {fileID: 4568391133224255134}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1498753712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1498753713}
+  - component: {fileID: 1498753714}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1498753713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498753712}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1820193408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1498753714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498753712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b594e5adae66744998275657568bdb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionPanelUI: {fileID: 4568391133224255137}
+  missionObjectivesUI:
+  - {fileID: 348820904}
+  - {fileID: 348820903}
+  - {fileID: 348820902}
+  - {fileID: 348820901}
+  missionTextUI:
+  - Mulai
+  - Lanjut
+  missionButtonUI: {fileID: 4568391133224255138}
+  letterPooler: {fileID: 1547474171}
+  missionAnimation: {fileID: 1747403127}
+  scrollSnap: {fileID: 348820905}
 --- !u!1 &1516554929
 GameObject:
   m_ObjectHideFlags: 0
@@ -43705,6 +43777,77 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2008926085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1747403124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747403125}
+  - component: {fileID: 1747403127}
+  - component: {fileID: 1747403126}
+  m_Layer: 0
+  m_Name: Animation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747403125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747403124}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1820193408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1747403126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747403124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7188baed2f52e242abf29f8a965bb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1747403127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747403124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70b98fb95518f044be000ff4a542ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicDatas:
+  - MissionType: 0
+    SkeletonGraphic: {fileID: 4568391133224255139}
+    GraphicVfx: {fileID: 0}
+  - MissionType: 1
+    SkeletonGraphic: {fileID: 674562588}
+    GraphicVfx: {fileID: 398245535}
+  - MissionType: 2
+    SkeletonGraphic: {fileID: 674562587}
+    GraphicVfx: {fileID: 398245534}
+  - MissionType: 3
+    SkeletonGraphic: {fileID: 674562586}
+    GraphicVfx: {fileID: 398245533}
+  scrollSnap: {fileID: 348820905}
 --- !u!1 &1750947728
 GameObject:
   m_ObjectHideFlags: 0
@@ -53195,6 +53338,39 @@ Transform:
   - {fileID: 1228936790}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1820193407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820193408}
+  m_Layer: 0
+  m_Name: Mission
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820193408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820193407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1498753713}
+  - {fileID: 1747403125}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1822125551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62604,6 +62780,7 @@ MonoBehaviour:
     - {fileID: 469080107}
     - {fileID: 199211937}
   _letterContainer: {fileID: 475099918}
+  missionManager: {fileID: 1498753714}
 --- !u!114 &1865757099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63830,81 +64007,6 @@ Transform:
   - {fileID: 1843675573}
   - {fileID: 1718829819}
   m_Father: {fileID: 1449932499}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1999296695
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1999296698}
-  - component: {fileID: 1999296697}
-  - component: {fileID: 1999296696}
-  m_Layer: 0
-  m_Name: MissionManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1999296696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999296695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70b98fb95518f044be000ff4a542ac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonGraphics:
-  - {fileID: 4568391133224255139}
-  - {fileID: 674562588}
-  - {fileID: 674562587}
-  - {fileID: 674562586}
-  scrollSnap: {fileID: 348820905}
---- !u!114 &1999296697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999296695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b594e5adae66744998275657568bdb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  missionPanelUI: {fileID: 4568391133224255137}
-  missionObjectivesUI:
-  - {fileID: 348820904}
-  - {fileID: 348820903}
-  - {fileID: 348820902}
-  - {fileID: 348820901}
-  missionTextUI:
-  - Mulai
-  - Lanjut
-  missionButtonUI: {fileID: 4568391133224255138}
-  letterPooler: {fileID: 1547474171}
-  scrollSnap: {fileID: 348820905}
---- !u!4 &1999296698
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999296695}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2008869575
 PrefabInstance:
@@ -65727,7 +65829,7 @@ SceneRoots:
   - {fileID: 1852337170}
   - {fileID: 1216811832}
   - {fileID: 495634469}
-  - {fileID: 1999296698}
+  - {fileID: 1820193408}
   - {fileID: 1057753814}
   - {fileID: 4568391133224255134}
   - {fileID: 1754008032}

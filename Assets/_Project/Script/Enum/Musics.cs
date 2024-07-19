@@ -14,6 +14,7 @@
         SpeedSfx,
         StonebreakSfx,
         StoneslideSfx,
+        GetStoneSfx,
         WinSfx,
         LoseSfx,
         ButtonSfx,

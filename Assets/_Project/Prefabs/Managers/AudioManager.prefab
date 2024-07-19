@@ -143,6 +143,14 @@ MonoBehaviour:
     loop: 1
     sfx: 0
     source: {fileID: 0}
+  - name: GetStoneSfx
+    clip: {fileID: 8300000, guid: 42a8f3f3805839d44a5f1990e106cdba, type: 3}
+    priority: 140
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
   - name: WinSfx
     clip: {fileID: 8300000, guid: 35f2285d1621848408d5e21857a17581, type: 3}
     priority: 140
