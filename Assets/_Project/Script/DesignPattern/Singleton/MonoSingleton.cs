@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Singleton Save Object Reference When Move Scene
-namespace LabirinKata.DesignPattern.Singleton
+namespace Alphabet.DesignPattern.Singleton
 {
     public class MonoSingleton<T> : MonoBehaviour where T : Component
     {

@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("LabirinKata/Entities/Enemy/Finder")]
     public class Finder : EnemyBase
     {
         #region Fields & Property
@@ -16,7 +15,7 @@ namespace LabirinKata.Entities.Enemy
         [SerializeField] private int maxChange;
         [SerializeField] private float changeDirectionDelayTime;
 
-        [Header("Reference")]
+        // Reference
         private RandomLinePattern _randomLinePattern;
         private RandomShapePattern _randomShapePattern;
 

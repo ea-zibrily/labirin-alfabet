@@ -1,9 +1,8 @@
-﻿namespace LabirinKata.Enum
+﻿namespace Alphabet.Enum
 {
     public enum SceneState
     {
         MainMenu,
-        LevelSelectionMenu,
         CurrentLevel,
         NextLevel
     }

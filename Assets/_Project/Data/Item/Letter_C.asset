@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f95fa5b9bb6d0543b8ef756f83068a9, type: 3}
+  m_Name: Letter_C
+  m_EditorClassIdentifier: 
+  letterName: C
+  letterId: 3
+  hasTaken: 0
+  letterSprite: {fileID: 21300000, guid: b597fc9c688bb3b479b247d91b2bc241, type: 3}
+  letterAudio: {fileID: 8300000, guid: bd68adf0d8dde834ab21fcc56fe74ee9, type: 3}

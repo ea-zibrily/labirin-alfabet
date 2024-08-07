@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("LabirinKata/Entities/Enemy/Trap")]
     public class Trap : EnemyBase
     {
         #region Fields & Property
         
-        [Header("Finder")]
+        [Header("Trap")]
         [SerializeField] private EnemyPatternType patternType;
         [SerializeField] private Transform[] movePointTransforms;
 
-        [Header("Reference")]
+        // Reference
         private LinePattern _linePattern;
         private ShapePattern _shapePattern;
 

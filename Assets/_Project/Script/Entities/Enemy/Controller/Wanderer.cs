@@ -2,14 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using KevinCastejon.MoreAttributes;
-using LabirinKata.Enum;
+using Alphabet.Enum;
 
 using Random = UnityEngine.Random;
 
-namespace LabirinKata.Entities.Enemy
+namespace Alphabet.Entities.Enemy
 {
-    [AddComponentMenu("LabirinKata/Entities/Enemy/Wanderer")]
     public class Wanderer : EnemyBase
     {
         #region Struct
@@ -24,6 +22,7 @@ namespace LabirinKata.Entities.Enemy
 
         #region Fields & Properties
 
+        [Header("Wanderer")]
         [SerializeField] private EnemyPattern[] enemyPattern;
         [SerializeField] private float changeDirectionDelayTime;
 

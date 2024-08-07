@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LabirinKata.DesignPattern.Singleton
+namespace Alphabet.DesignPattern.Singleton
 {
     public class MonoDDOL<T> : MonoBehaviour where T: MonoBehaviour
     {

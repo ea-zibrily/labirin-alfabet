@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2459574152931735392
+--- !u!1 &2693364854572169114
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5362342042950978621}
+  - component: {fileID: 137819510795407895}
+  - component: {fileID: 5467148139307384770}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: AudioManager
@@ -16,18 +17,241 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5362342042950978621
+--- !u!4 &137819510795407895
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459574152931735392}
+  m_GameObject: {fileID: 2693364854572169114}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1115845183917055434}
+  - {fileID: 2844701393219332976}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5467148139307384770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693364854572169114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3a2d423fc7ec549b180d7b45ff61fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Musics:
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: 983b42612ff4db745b61175d5c767f86, type: 3}
+    priority: 125
+    volume: 0.7
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: GuaAksara
+    clip: {fileID: 8300000, guid: 3951f7ccd8740a94087161a32d350c63, type: 3}
+    priority: 125
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: HutanAbjad
+    clip: {fileID: 8300000, guid: a80d9bff40acf264293082bfc91a38a5, type: 3}
+    priority: 125
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: KuilLitera
+    clip: {fileID: 8300000, guid: ac351ad64074b0c4c9e61e27cc9de971, type: 3}
+    priority: 125
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: FootstepSfx
+    clip: {fileID: 8300000, guid: e2b2527c70f8e83419c6071f6ebcc938, type: 3}
+    priority: 150
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LetterSfx
+    clip: {fileID: 8300000, guid: 70aafe3deb4554541acbe1b945637d16, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LetterUISfx
+    clip: {fileID: 8300000, guid: 55e71fc05bf8314418db491b7d4704e6, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: HitSfx
+    clip: {fileID: 8300000, guid: 4cbe438057de64c4fb01d5604ad40f8b, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: HealSfx
+    clip: {fileID: 8300000, guid: dafa430bc2007fd458dc5c656ff96ece, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: SpeedSfx
+    clip: {fileID: 8300000, guid: 447d1e0a31f1e8e4b96c3b5ba5c387a2, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: StonebreakSfx
+    clip: {fileID: 8300000, guid: 0aa03ab516b142748aa9813705bdfc44, type: 3}
+    priority: 150
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: StoneslideSfx
+    clip: {fileID: 8300000, guid: 52f43ecfa9b4bba4f9b8e8f4a0294368, type: 3}
+    priority: 140
+    volume: 0.9
+    pitch: 1
+    loop: 1
+    sfx: 0
+    source: {fileID: 0}
+  - name: GetStoneSfx
+    clip: {fileID: 8300000, guid: 42a8f3f3805839d44a5f1990e106cdba, type: 3}
+    priority: 140
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: WinSfx
+    clip: {fileID: 8300000, guid: 35f2285d1621848408d5e21857a17581, type: 3}
+    priority: 140
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LoseSfx
+    clip: {fileID: 8300000, guid: 70d972f5c0f57b8408b1326dc82f3d9b, type: 3}
+    priority: 140
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: ButtonSfx
+    clip: {fileID: 8300000, guid: 4fb0bafca4a75d84abcb7f9bbe52a672, type: 3}
+    priority: 150
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LockedStageSfx
+    clip: {fileID: 8300000, guid: a8a62a725052fee4a94921550dff0947, type: 3}
+    priority: 140
+    volume: 0.9
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  - name: LockedLetterSfx
+    clip: {fileID: 8300000, guid: 03815aab3601567419026c2a9f1c5f7e, type: 3}
+    priority: 140
+    volume: 1
+    pitch: 1
+    loop: 0
+    sfx: 1
+    source: {fileID: 0}
+  musicsContainer: {fileID: 8461995069977865150}
+  sfxsContainer: {fileID: 7965627946068160733}
+--- !u!1 &7965627946068160733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2844701393219332976}
+  m_Layer: 0
+  m_Name: SoundEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2844701393219332976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965627946068160733}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_Father: {fileID: 137819510795407895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8461995069977865150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115845183917055434}
+  m_Layer: 0
+  m_Name: Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1115845183917055434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461995069977865150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137819510795407895}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -49,6 +49,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
         [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
+        // * Labirin Alfabet Customize
+        public int SelectedPanelIndex { get; set; }
+        public event Action OnSnappingBegin;
+        public event Action OnSnappingEnd;
+
         private ScrollRect scrollRect;
         private Vector2 contentSize, prevAnchoredPosition, velocity;
         private Direction releaseDirection;
@@ -215,7 +220,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             get => Content.childCount;
         }
-        private bool ValidConfig
+        public bool ValidConfig
         {
             get
             {
@@ -337,7 +342,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             releaseSpeed = Velocity.magnitude;
         }
 
-        private void Setup()
+        public void Setup()
         {
             if (NumberOfPanels == 0) return;
 
@@ -414,6 +419,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             Vector2 offset = new Vector2(xOffset, yOffset);
             prevAnchoredPosition = Content.anchoredPosition = -Panels[startingPanel].anchoredPosition + offset;
             SelectedPanel = CenteredPanel = startingPanel;
+            SelectedPanelIndex = startingPanel;
 
             // Buttons
             if (previousButton != null)
@@ -458,6 +464,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 SelectPanel();
             }
         }
+                
         private void HandleOcclusionCulling(bool forceUpdate = false)
         {
             if (useOcclusionCulling && (Velocity.magnitude > 0f || forceUpdate))
@@ -583,6 +590,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 }
             }
         }
+
         private void SnapToPanel()
         {
             float xOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
@@ -598,6 +606,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 {
                     onPanelCentered.Invoke(CenteredPanel, SelectedPanel);
                     SelectedPanel = CenteredPanel;
+                    OnSnappingEnd?.Invoke();
                 }
             }
             else
@@ -605,10 +614,13 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 onPanelCentering.Invoke(CenteredPanel, SelectedPanel);
             }
         }
-
+        
         public void GoToPanel(int panelNumber)
         {
             CenteredPanel = panelNumber;
+            SelectedPanelIndex = panelNumber;
+
+            OnSnappingBegin?.Invoke();
             isSelected = true;
             onPanelSelected.Invoke(SelectedPanel);
 
@@ -640,6 +652,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 }
             }
         }
+        
         public void GoToNextPanel()
         {
             int nearestPanel = GetNearestPanel();

@@ -2,26 +2,32 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
-using LabirinKata.Stage;
-using LabirinKata.Entities.Player;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Enum;
+using Alphabet.Stage;
+using Alphabet.Managers;
+using Alphabet.Entities.Player;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class DoorController : MonoBehaviour
     {
-        #region Constant Variable
-        
-        private const string OPEN_DOOR_TRIGGER = "Open";
-        private const string MOVE_CAMERA_TRIGGRER = "IsMove";
-
+        #region Struct
+        [Serializable]
+        public struct DoorConstraint
+        {
+            public PolygonCollider2D OpenConstraint;
+            public PolygonCollider2D CloseConstraint;
+        }
         #endregion
-        
+
         #region Fields & Properties
 
         [Header("Door")] 
         [SerializeField] private float doorOpenDelay;
         [SerializeField] private float reachDoorDelay;
+        [SerializeField] private DoorConstraint doorConstraint;
+        [SerializeField] private GameObject doorVfx;
         
         [Header("Camera")]
         [SerializeField] private float cameraMoveInDelay;
@@ -29,8 +35,12 @@ namespace LabirinKata.Gameplay.Controller
         [SerializeField] private CinemachineVirtualCamera doorVirtualCamera;
         [SerializeField] private Animator doorCameraAnimator;
 
+        // Const Variable
+        private const string OPEN_DOOR_TRIGGER = "Open";
+        private const string MOVE_CAMERA_TRIGGRER = "IsMove";
+
         [Header("Reference")] 
-        private BoxCollider2D _boxCollider2D;
+        private CapsuleCollider2D _capsuleCollider2D;
         private Animator _doorAnimator;
         private DoorEventHandler _doorEventHandler;
         private PlayerController _playerController;
@@ -41,7 +51,7 @@ namespace LabirinKata.Gameplay.Controller
         
         private void Awake()
         {
-            _boxCollider2D = GetComponent<BoxCollider2D>();
+            _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             _doorAnimator = GetComponentInChildren<Animator>();
             _doorEventHandler = GetComponentInChildren<DoorEventHandler>();
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -49,30 +59,42 @@ namespace LabirinKata.Gameplay.Controller
         
         private void OnEnable()
         {
+            // Objective
             GameEventHandler.OnObjectiveClear += OpenDoor;
+            
+            // Door
             _doorEventHandler.OnDoorOpen += ActivateDoorTrigger;
+            _doorEventHandler.OnEffectPlaying += ActivateEffect;
         }
         
         private void OnDisable()
         {
+            // Objective
             GameEventHandler.OnObjectiveClear -= OpenDoor;
+            
+            // Door
             _doorEventHandler.OnDoorOpen -= ActivateDoorTrigger;
+            _doorEventHandler.OnEffectPlaying -= ActivateEffect;
         }
 
         private void Start()
         {
             InitializeDoor();
+            doorVfx.SetActive(false);
         }
-
+        
         #endregion
         
-        #region CariHuruf Callbacks
+        #region Methods
         
         // !-- Initialization
         private void InitializeDoor()
         {
             doorVirtualCamera.Follow = gameObject.transform;
-            _boxCollider2D.isTrigger = false;
+
+            _capsuleCollider2D.isTrigger = true;
+            doorConstraint.CloseConstraint.enabled = true;
+            doorConstraint.OpenConstraint.enabled = false;
         }
         
         // !-- Core Functionality
@@ -83,7 +105,7 @@ namespace LabirinKata.Gameplay.Controller
         {
             yield return new WaitForSeconds(cameraMoveInDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, true);
-            _playerController.SetPlayerDirection(gameObject.transform);
+            _playerController.SetDirection(gameObject.transform);
             CameraEventHandler.CameraShiftInEvent();
             
             yield return new WaitForSeconds(doorOpenDelay);
@@ -95,21 +117,28 @@ namespace LabirinKata.Gameplay.Controller
             yield return new WaitForSeconds(cameraMoveOutDelay);
             doorCameraAnimator.SetBool(MOVE_CAMERA_TRIGGRER, false);
             CameraEventHandler.CameraShiftOutEvent();
-                        
-            _boxCollider2D.isTrigger = true;
+
+            doorConstraint.OpenConstraint.enabled = true;
+            doorConstraint.CloseConstraint.enabled = false;
             doorVirtualCamera.Follow = null;
         }
-        
-        private IEnumerator EnterDoorRoutine()
+
+        private void EnterDoor()
         {
-            yield return new WaitForSeconds(0.5f);
             if (StageManager.Instance.CheckCanContinueStage())
-            {
                 GameEventHandler.ContinueStageEvent();
-            }
             else
-            { 
                 GameEventHandler.GameWinEvent();
+        }
+
+        // !- Vfxs
+        private void ActivateEffect()
+        {
+            doorVfx.SetActive(true);
+            if (doorVfx.TryGetComponent<ParticleSystem>(out var effect))
+            {
+                effect.Play();
+                FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterUISfx);
             }
         }
 
@@ -119,8 +148,10 @@ namespace LabirinKata.Gameplay.Controller
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player")) return;
-            StartCoroutine(EnterDoorRoutine());
+            if (other.CompareTag("Player"))
+            {
+                EnterDoor();
+            }
         }
         
         #endregion

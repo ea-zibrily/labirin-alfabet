@@ -1,4 +1,4 @@
-﻿namespace LabirinKata.DesignPattern.Observer
+﻿namespace Alphabet.DesignPattern.Observer
 {
     public interface IObserver
     {

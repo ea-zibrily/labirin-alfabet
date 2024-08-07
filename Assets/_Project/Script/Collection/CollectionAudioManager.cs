@@ -1,42 +1,69 @@
 ﻿using System;
 using UnityEngine;
-using LabirinKata.Enum;
+using Alphabet.Letter;
 
-namespace LabirinKata.Collection
+namespace Alphabet.Collection
 {
-    public class CollectionAudioManager : MonoBehaviour
+    public class CollectionAudioManager : LetterAudioManager
     {
-        #region Fields & Properties
+        #region Internal Fields
 
-        [SerializeField] private CollectionSound[] collectionSounds;
-        private AudioSource _audioSource;
-
+        private CollectionManager _collectionManager;
+        
         #endregion
 
         #region MonoBehaviour Callbacks
 
-        private void Awake()
+        protected override void OnEnable()
         {
-            _audioSource = GetComponentInChildren<AudioSource>();
+            base.OnEnable();
+
+            // Open and Close Collection
+            _collectionManager.OnCollectionOpen += EnableAudio;
+            _collectionManager.OnCollectionClose += DisableAudio;
+
+            // Snap
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin += DisableAudio;
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin += EnableAudio;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            // Open and Close Collection
+            _collectionManager.OnCollectionOpen -= EnableAudio;
+            _collectionManager.OnCollectionClose -= DisableAudio;
+
+            // Snap
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= DisableAudio;
+            _collectionManager.SimpleScrollSnap.OnSnappingBegin -= EnableAudio;
         }
 
         #endregion
-        
-        #region Labirin Kata Callbacks
-        
-        public void PlayCollectionAudio(string letterName)
-        {
-            var sound = Array.Find(collectionSounds, sound => sound.LetterName == letterName);
-            
-            if (sound == null)
-            {
-                Debug.Log("soundny gada kang");
-                return;
-            }
 
-            Debug.Log($"gas sound letter {sound.LetterName}");
-            _audioSource.clip = sound.LetterSound;
-            _audioSource.Play();
+        #region Methods
+
+        protected override void InitOnAwake()
+        {
+            base.InitOnAwake();
+            var collection = transform.parent.gameObject;
+            _collectionManager = collection.GetComponentInChildren<CollectionManager>();
+        }
+        
+        private void EnableAudio()
+        {
+            _audioSource.clip = null;
+            _audioSource.enabled = true;
+        }
+
+        private void DisableAudio()
+        {
+            if (_audioSource.isPlaying)
+            {
+                StopAudioEvent();
+            }
+            _audioSource.enabled = false;
         }
         
         #endregion

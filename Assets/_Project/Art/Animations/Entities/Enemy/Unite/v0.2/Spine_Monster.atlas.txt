@@ -1,0 +1,111 @@
+
+Spine_Monster.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+B_arm
+  rotate: true
+  xy: 1085, 228
+  size: 135, 131
+  orig: 136, 131
+  offset: 0, 0
+  index: -1
+B_body
+  rotate: false
+  xy: 502, 121
+  size: 436, 438
+  orig: 456, 438
+  offset: 6, 0
+  index: -1
+B_leg
+  rotate: false
+  xy: 740, 9
+  size: 106, 110
+  orig: 107, 110
+  offset: 0, 0
+  index: -1
+F_arm
+  rotate: true
+  xy: 1038, 76
+  size: 142, 130
+  orig: 142, 130
+  offset: 0, 0
+  index: -1
+F_body
+  rotate: false
+  xy: 611, 585
+  size: 424, 437
+  orig: 424, 437
+  offset: 0, 0
+  index: -1
+F_leg
+  rotate: false
+  xy: 502, 2
+  size: 110, 117
+  orig: 111, 118
+  offset: 0, 0
+  index: -1
+QF_armFar
+  rotate: false
+  xy: 614, 5
+  size: 124, 114
+  orig: 124, 114
+  offset: 0, 0
+  index: -1
+QF_armNear
+  rotate: false
+  xy: 940, 220
+  size: 143, 143
+  orig: 143, 143
+  offset: 0, 0
+  index: -1
+QF_body
+  rotate: true
+  xy: 182, 561
+  size: 461, 427
+  orig: 461, 428
+  offset: 0, 1
+  index: -1
+QF_legFar
+  rotate: true
+  xy: 936, 18
+  size: 101, 100
+  orig: 102, 100
+  offset: 1, 0
+  index: -1
+QF_legNear
+  rotate: true
+  xy: 848, 12
+  size: 107, 86
+  orig: 107, 86
+  offset: 0, 0
+  index: -1
+lose
+  rotate: false
+  xy: 2, 34
+  size: 498, 465
+  orig: 498, 466
+  offset: 0, 0
+  index: -1
+ring
+  rotate: true
+  xy: 2, 501
+  size: 521, 178
+  orig: 521, 180
+  offset: 0, 1
+  index: -1
+shadow
+  rotate: false
+  xy: 940, 365
+  size: 218, 218
+  orig: 218, 218
+  offset: 0, 0
+  index: -1
+star
+  rotate: true
+  xy: 940, 126
+  size: 92, 84
+  orig: 94, 84
+  offset: 1, 0
+  index: -1

@@ -1,0 +1,111 @@
+
+Spine_LabirinCover.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BG
+  rotate: false
+  xy: 2, 421
+  size: 1647, 887
+  orig: 1647, 887
+  offset: 0, 0
+  index: -1
+devan_Hair
+  rotate: false
+  xy: 640, 173
+  size: 245, 246
+  orig: 245, 246
+  offset: 0, 0
+  index: -1
+devan_body
+  rotate: true
+  xy: 2, 2
+  size: 417, 636
+  orig: 417, 636
+  offset: 0, 0
+  index: -1
+devan_head
+  rotate: true
+  xy: 1651, 981
+  size: 327, 313
+  orig: 327, 313
+  offset: 0, 0
+  index: -1
+j
+  rotate: false
+  xy: 1908, 849
+  size: 97, 130
+  orig: 97, 130
+  offset: 0, 0
+  index: -1
+monster_armL
+  rotate: true
+  xy: 1966, 1194
+  size: 114, 76
+  orig: 114, 76
+  offset: 0, 0
+  index: -1
+monster_armR
+  rotate: false
+  xy: 1908, 729
+  size: 78, 118
+  orig: 78, 118
+  offset: 0, 0
+  index: -1
+monster_body
+  rotate: false
+  xy: 1651, 409
+  size: 250, 281
+  orig: 250, 281
+  offset: 0, 0
+  index: -1
+rhea_armFar
+  rotate: true
+  xy: 1966, 1095
+  size: 97, 70
+  orig: 97, 70
+  offset: 0, 0
+  index: -1
+rhea_armNear
+  rotate: true
+  xy: 1988, 782
+  size: 65, 53
+  orig: 65, 53
+  offset: 0, 0
+  index: -1
+rhea_backhair
+  rotate: true
+  xy: 1903, 349
+  size: 222, 92
+  orig: 222, 92
+  offset: 0, 0
+  index: -1
+rhea_bpdy
+  rotate: false
+  xy: 887, 124
+  size: 227, 283
+  orig: 228, 283
+  offset: 1, 0
+  index: -1
+rhea_head
+  rotate: false
+  xy: 1651, 692
+  size: 255, 287
+  orig: 255, 287
+  offset: 0, 0
+  index: -1
+t
+  rotate: false
+  xy: 1966, 1014
+  size: 60, 79
+  orig: 60, 79
+  offset: 0, 0
+  index: -1
+w
+  rotate: false
+  xy: 1903, 573
+  size: 116, 117
+  orig: 116, 117
+  offset: 0, 0
+  index: -1

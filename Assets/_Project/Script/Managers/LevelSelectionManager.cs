@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using LabirinKata.Enum;
 using UnityEngine.Serialization;
+using Alphabet.Enum;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class LevelSelectionManager : MonoBehaviour
     {

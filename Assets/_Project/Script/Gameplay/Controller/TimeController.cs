@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
-using LabirinKata.Gameplay.EventHandler;
+using Alphabet.Enum;
+using Alphabet.Gameplay.EventHandler;
 
-namespace LabirinKata.Gameplay.Controller
+namespace Alphabet.Gameplay.Controller
 {
     public class TimeController : MonoBehaviour
     {
@@ -32,10 +33,29 @@ namespace LabirinKata.Gameplay.Controller
         
         #region MonoBehaviour Callbacks
         
+        private void OnEnable()
+        {
+            // Camera
+            CameraEventHandler.OnCameraShiftIn += StopTimer;
+            CameraEventHandler.OnCameraShiftOut += StartTimer;
+
+            // Game
+            GameEventHandler.OnGameStart += StartTimer;
+        }
+        
+        private void OnDisable()
+        {
+            // Camera
+            CameraEventHandler.OnCameraShiftIn -= StopTimer;
+            CameraEventHandler.OnCameraShiftOut -= StartTimer;
+
+            // Game
+            GameEventHandler.OnGameStart -= StartTimer;
+        }
+        
         private void Start()
         {
            InitializeTimer();
-           StartCoroutine(StartTimerRoutine());
         }
         
         private void Update()
@@ -52,16 +72,10 @@ namespace LabirinKata.Gameplay.Controller
         {
             _fullTime = amountOfTime + _latestTime;
             _currentTime = _fullTime;
-            
+
             TimerDisplay(_currentTime);
         }
-        
-        private IEnumerator StartTimerRoutine()
-        {
-            yield return new WaitForSeconds(1.5f);
-            IsTimerStart = true;
-        }
-        
+
         // !-- Core Functionality
         private void CountdownTimer()
         {
@@ -72,18 +86,18 @@ namespace LabirinKata.Gameplay.Controller
             {
                 _currentTime = 0;
                 isTimerStart = false;
-                GameEventHandler.GameOverEvent();
+                GameEventHandler.GameOverEvent(LoseType.TimeUp);
             }
             
             TimerDisplay(_currentTime);
         }
         
         // !-- Helper/Utitilies
-        public void SetLatestTimer()
-        {
-            _latestTime = _currentTime;
-        }
+        public void SetLatestTimer() => _latestTime = _currentTime;
         
+        private void StartTimer() => IsTimerStart = true;
+        private void StopTimer() => IsTimerStart = false;
+
         private void TimerDisplay(float time)
         {
             var timeInMinutes = Mathf.FloorToInt(time / 60);

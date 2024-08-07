@@ -1,18 +1,22 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using LabirinKata.Enum;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Enum;
+using Alphabet.Gameplay.Controller;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     {
         #region Fields & Properties
     
         [Header("Interface")]
+        [Range(0f, 2f )][SerializeField] private float fadeDuration;
         [SerializeField] private RectTransform sceneFader;
-        
+
+        public float FadeDuration => fadeDuration;
+
         #endregion
     
         #region MonoBehaviour Callbacks
@@ -26,13 +30,13 @@ namespace LabirinKata.Managers
 
         #region Scene Loader Callbacks
         
-        //-- Initialization
+        // !-- Initialization
         public void FadeIn()
         {
             sceneFader.gameObject.SetActive (true);
         
             LeanTween.alpha (sceneFader, 1, 0);
-            LeanTween.alpha (sceneFader, 0, 1f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 0, fadeDuration).setOnComplete (() => {
                 sceneFader.gameObject.SetActive (false);
             });
         }
@@ -42,51 +46,47 @@ namespace LabirinKata.Managers
             sceneFader.gameObject.SetActive (true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration);
         }
         
-        //-- Core Functionality
+        // !-- Core Functionality
         public void LoadSelectedScene(SceneState sceneState)
         {
-            // FindObjectOfType<AudioManager>().PlayAudio(AudioList.SFX_Click);
             Time.timeScale = 1;
-            
             switch (sceneState)
             {
                 case SceneState.MainMenu:
                     OpenMainMenuScene();
                     break;
-                case SceneState.LevelSelectionMenu:
-                    OpenCollectionMenuScene();
-                    break;
                 case SceneState.CurrentLevel:
                     OpenCurrentGameScene();
                     break;
                 case SceneState.NextLevel:
-                    OpenNextGameScene();
+                    OpenNextLevelScene();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(sceneState), sceneState, null);
             }
         }
         
+        public void LoadSelectedLevel(int levelIndex)
+        {
+            Time.timeScale = 1;
+            sceneFader.gameObject.SetActive(true);
+
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
+            LeanTween.alpha(sceneFader, 0, 0);
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
+                SceneManager.LoadScene(levelIndex);
+            });
+        }
+
         private void OpenMainMenuScene () 
         {
             sceneFader.gameObject.SetActive (true);
-        
+
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
             LeanTween.alpha (sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f).setOnComplete (() => {
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
                 SceneManager.LoadScene(0);
-            });
-        }
-        
-        private void OpenCollectionMenuScene () 
-        {
-            sceneFader.gameObject.SetActive (true);
-        
-            LeanTween.alpha (sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 1f).setOnComplete (() => {
-                SceneManager.LoadScene(1);
             });
         }
         
@@ -95,18 +95,19 @@ namespace LabirinKata.Managers
             sceneFader.gameObject.SetActive (true);
 
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke (nameof(LoadCurrentGame), 0.5f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
+                Invoke (nameof(LoadCurrentGame), fadeDuration);
             });
         }
         
-        private void OpenNextGameScene()
+        private void OpenNextLevelScene()
         {
             sceneFader.gameObject.SetActive (true);
 
+            AudioController.FadeAudioEvent(isFadeIn: false, FadeDuration);
             LeanTween.alpha(sceneFader, 0, 0);
-            LeanTween.alpha (sceneFader, 1, 0.5f).setOnComplete (() => {
-                Invoke (nameof(LoadNextGame), 0.5f);
+            LeanTween.alpha (sceneFader, 1, fadeDuration).setOnComplete (() => {
+                Invoke (nameof(LoadNextGame), fadeDuration);
             });
         }
         

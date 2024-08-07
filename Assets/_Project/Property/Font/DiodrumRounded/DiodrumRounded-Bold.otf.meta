@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9d19eb0b29bb7f64289c5405ab045f3d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Diodrum Rounded
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 03cbd60601684b440ba135f5a660b17a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

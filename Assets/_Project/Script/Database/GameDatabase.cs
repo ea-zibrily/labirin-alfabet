@@ -2,19 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LabirinKata.Enum;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.Enum;
+using Alphabet.DesignPattern.Singleton;
 
-namespace LabirinKata.Database
+namespace Alphabet.Database
 {
     public class GameDatabase : MonoDDOL<GameDatabase>
     {
         #region Fields & Properties
-
-        //-- Main Database
-        private Dictionary<int, bool> _letterConditions;
-        private Dictionary<string, bool> _levelConditions ;
         
+        //-- Game Database
+        private Dictionary<int, bool> _isLetterCollected;
+        private Dictionary<string, bool> _isLevelClear;
+        private int _levelClearIndex;
+
         //-- Constant Variable
         public const int LETTER_COUNT = 26;
         
@@ -29,18 +30,19 @@ namespace LabirinKata.Database
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
         // !-- Initialization
         private void InitializeData()
         {
-            if (_letterConditions != null && _levelConditions != null) return;
+            if (_isLetterCollected != null && _isLevelClear != null) return;
             
-            _letterConditions = InitializeLetterConditions();
-            _levelConditions = InitializeLevelConditions();
+            _isLetterCollected = InitializeLetterCollected();
+            _isLevelClear = InitializeLevelClear();
+            _levelClearIndex = 0;
         }
         
-        private Dictionary<int, bool> InitializeLetterConditions()
+        private Dictionary<int, bool> InitializeLetterCollected()
         {
             var letterConditions = new Dictionary<int, bool>();
     
@@ -52,47 +54,56 @@ namespace LabirinKata.Database
             return letterConditions;
         }
 
-        private Dictionary<string, bool> InitializeLevelConditions()
+        private Dictionary<string, bool> InitializeLevelClear()
         {
             var levelConditions = new Dictionary<string, bool>();
     
-            foreach (LevelList level in System.Enum.GetValues(typeof(LevelList)))
+            foreach (StageName level in System.Enum.GetValues(typeof(StageName)))
             {
-                if (level == LevelList.None) continue;
-                
-                var levelString = level.ToString();
-                levelConditions.Add(levelString, false);
+                var key = level.ToString();
+                levelConditions.Add(key, false);
             }
             return levelConditions;
         }
         
         // !-- Core Functionality
-        public void SaveLetterConditions(int letterId, bool value)
+
+        // *- Letter Collected
+        public void SaveLetterCollected(int letterId, bool value)
         {
-            if (_letterConditions.ContainsKey(letterId))
+            if (_isLetterCollected.ContainsKey(letterId))
             {
-                _letterConditions[letterId] = value;
+                _isLetterCollected[letterId] = value;
             }
         }
         
         public bool LoadLetterConditions(int letterId)
         {
-            return _letterConditions[letterId];
+            return _isLetterCollected[letterId];
         }
         
-        public void SaveLevelConditions(string levelName, bool value)
+        // *- Level Clear
+        public void SaveLevelClear(string levelName, bool value)
         {
-            if (_levelConditions.ContainsKey(levelName))
+            if (_isLevelClear.ContainsKey(levelName))
             {
-                _levelConditions[levelName] = value;
+                _isLevelClear[levelName] = value;
             }
         }
         
         public bool LoadLevelConditions(string levelName)
         {
-            return _levelConditions[levelName];
+            return _isLevelClear[levelName];
         }
-        
+
+        // *- Level Clear Index
+        public void SaveLevelClearIndex(int value) => _levelClearIndex = value;
+        public void ResetLevelClearIndex() => _levelClearIndex = 0;
+        public int LoadLevelClearIndex() 
+        {
+            return _levelClearIndex;
+        }
+
         #endregion
     }
 }

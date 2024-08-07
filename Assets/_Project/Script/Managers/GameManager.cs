@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using LabirinKata.Stage;
-using LabirinKata.Entities.Player;
-using LabirinKata.Gameplay.Controller;
-using LabirinKata.Gameplay.EventHandler;
-using LabirinKata.DesignPattern.Singleton;
+using Alphabet.UI;
+using Alphabet.Enum;
+using Alphabet.Stage;
+using Alphabet.Entities.Player;
+using Alphabet.Gameplay.Controller;
+using Alphabet.Gameplay.EventHandler;
+using Alphabet.DesignPattern.Singleton;
+using Alphabet.Mission;
 
-namespace LabirinKata.Managers
+namespace Alphabet.Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {
         #region Constant Variable
         
-        //-- Load stage time delay
-        private const float FADE_OUT_DELAY = 2.5f;
-        private const float LOAD_STAGE_DELAY = 1.2f;
-        private const float FADE_IN_DELAY = 1.5f;
+        //Load stage time delay
+        private const float FADE_OUT_DELAY = 1f;
+        private const float LOAD_STAGE_DELAY = 1.25f;
         
         #endregion
         
@@ -25,13 +27,15 @@ namespace LabirinKata.Managers
         [Header("UI")] 
         [SerializeField] private GameObject gameWinPanelUI;
         [SerializeField] private GameObject gameOverPanelUI;
-        [SerializeField] private GameObject notificationStagePanelUI;
-        
+
         public bool IsGameStart { get; private set; }
         
         [Header("Reference")] 
         private PlayerController _playerController;
+        private PlayerManager _playerManager;
         private TimeController _timeController;
+        private MissionManager _missionManager;
+        private StageMarker _stageMarker;
         
         #endregion
 
@@ -45,6 +49,7 @@ namespace LabirinKata.Managers
 
         private void OnEnable()
         {
+            GameEventHandler.OnGameStart += GameStart;
             GameEventHandler.OnGameWin += GameWin;
             GameEventHandler.OnGameOver += GameOver;
             GameEventHandler.OnContinueStage += ContinueStage;
@@ -52,14 +57,10 @@ namespace LabirinKata.Managers
         
         private void OnDisable()
         {
+            GameEventHandler.OnGameStart -= GameStart;
             GameEventHandler.OnGameWin -= GameWin;
             GameEventHandler.OnGameOver -= GameOver;
             GameEventHandler.OnContinueStage -= ContinueStage;
-        }
-
-        private void Start()
-        {
-            IsGameStart = true;
         }
 
         #endregion
@@ -70,7 +71,10 @@ namespace LabirinKata.Managers
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            _playerManager = _playerController.GetComponentInChildren<PlayerManager>();
+            _missionManager = GameObject.Find("MissionManager").GetComponent<MissionManager>();
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
+            _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
         
         #endregion
@@ -78,25 +82,41 @@ namespace LabirinKata.Managers
         #region Game State Callbacks
         
         // !-- Core Functionality
+        private void GameStart()
+        {
+            IsGameStart = true;
+        }
+
         private void GameWin()
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
+            // Win Game
             IsGameStart = false;
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
+            _playerManager.ResetLetter();
             
-            StageManager.Instance.SaveClearedLevel();
+            StageManager.Instance.SaveClearStage();
             StageManager.Instance.LetterManager.SaveUnlockedLetters();
             gameWinPanelUI.SetActive(true);
+
+            // Audio
+            AudioController.FadeAudioEvent(isFadeIn: false);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.WinSfx);
         }
-        
-        private void GameOver()
+
+        private void GameOver(LoseType loseType)
         {
-            _playerController.StopMovement();
-            _timeController.IsTimerStart = false;
+            // Lose Game
             IsGameStart = false;
-            
+            _timeController.IsTimerStart = false;
+            _playerController.StopMovement();
+
+            gameOverPanelUI.GetComponent<GameOverController>().SetGameOverInterface(loseType);
             gameOverPanelUI.SetActive(true);
-            Time.timeScale = 0;
+
+            // Audio
+            AudioController.FadeAudioEvent(isFadeIn: false);
+            FindObjectOfType<AudioManager>().PlayAudio(Musics.LoseSfx);
         }
         
         private void ContinueStage()
@@ -109,22 +129,23 @@ namespace LabirinKata.Managers
             _playerController.StopMovement();
             _timeController.IsTimerStart = false;
             _timeController.SetLatestTimer();
+            _playerManager.ResetLetter();
             
+            AudioController.FadeAudioEvent(isFadeIn: false);
             SceneTransitionManager.Instance.FadeOut();
             
             yield return new WaitForSeconds(FADE_OUT_DELAY);
+            _playerManager.CanceledBuff();
             StageManager.Instance.InitializeNewStage();
-            _timeController.InitializeTimer(); 
-            _playerController.transform.position = Vector2.zero;
+            _missionManager.CallTutorial();
+            _stageMarker.TopMarker();
+            _timeController.InitializeTimer();
+            _playerController.DefaultDirection();
+            PlayerSpawner.SpawnPlayerEvent();
             
             yield return new WaitForSeconds(LOAD_STAGE_DELAY);
+            AudioController.FadeAudioEvent(isFadeIn: true);
             SceneTransitionManager.Instance.FadeIn();
-            
-            yield return new WaitForSeconds(FADE_IN_DELAY);
-            _playerController.StartMovement();
-            _timeController.IsTimerStart = true;
-            IsGameStart = true;
-            notificationStagePanelUI.SetActive(true);
         }
         
         #endregion
