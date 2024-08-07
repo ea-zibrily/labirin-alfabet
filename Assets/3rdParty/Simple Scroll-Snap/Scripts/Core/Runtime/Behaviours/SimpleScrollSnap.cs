@@ -49,7 +49,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
         [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
-        // *- Labirin Alfabet Customize
+        // * Labirin Alfabet Customize
         public int SelectedPanelIndex { get; set; }
         public event Action OnSnappingBegin;
         public event Action OnSnappingEnd;
@@ -590,6 +590,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 }
             }
         }
+
         private void SnapToPanel()
         {
             float xOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
@@ -613,7 +614,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 onPanelCentering.Invoke(CenteredPanel, SelectedPanel);
             }
         }
-
+        
         public void GoToPanel(int panelNumber)
         {
             CenteredPanel = panelNumber;
