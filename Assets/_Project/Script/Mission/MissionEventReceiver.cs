@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -16,6 +15,7 @@ namespace Alphabet.Mission
 
         #region Spine Event Method
 
+        // !- Core
         public void SubsGraphicEvent(MissionType mission, SkeletonGraphic graphic, ParticleSystem particle)
         {
             if (_currentGraphic != null) 
@@ -64,7 +64,7 @@ namespace Alphabet.Mission
             };   
         }
 
-        // !- Helpers
+        // !- Helper
         private Musics GetSfx(MissionType type)
         {
             return type switch

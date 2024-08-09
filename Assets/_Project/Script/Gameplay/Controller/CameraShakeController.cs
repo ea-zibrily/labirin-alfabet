@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Alphabet.Gameplay.EventHandler;
@@ -19,7 +16,7 @@ namespace Alphabet.Gameplay.Controller
 
         private float _shakeTimeElapse;
         
-        [Header("Reference")]
+        // Reference
         private CinemachineVirtualCamera _myVirtualCamera;
         private CinemachineBasicMultiChannelPerlin _myVirtualCameraNoise;
 
@@ -61,9 +58,9 @@ namespace Alphabet.Gameplay.Controller
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
 
-        // !-- Core Functionality
+        // !- Core
         private void ResetShakeCamera()
         {
             _myVirtualCameraNoise.m_AmplitudeGain = 0f;

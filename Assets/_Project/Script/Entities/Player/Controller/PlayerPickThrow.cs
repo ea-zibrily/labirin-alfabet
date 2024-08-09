@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Enum;
@@ -109,7 +107,7 @@ namespace Alphabet.Entities.Player
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializePickThrow()
         {
             _holdedItemObject = null;
@@ -121,7 +119,7 @@ namespace Alphabet.Entities.Player
             interactButtonUI.gameObject.SetActive(false);
         }
 
-        // !-- Core Functionality
+        // !- Core
         private void PickThrowItem()
         {
             if (_holdedItemObject)
@@ -210,7 +208,7 @@ namespace Alphabet.Entities.Player
             }
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(transform.position + PickDirection, pickAreaRadius);

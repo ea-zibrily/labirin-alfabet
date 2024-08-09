@@ -33,14 +33,14 @@ namespace Alphabet.UI
 
         #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         protected override void InitializeOnStart()
         {
             base.InitializeOnStart();
             retryButtonUI.onClick.AddListener(OnRetryButton);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void SetGameOverInterface(LoseType loseType)
         {
             var typeIndex = loseType switch

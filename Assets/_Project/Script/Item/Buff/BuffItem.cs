@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Entities.Player;
 
@@ -19,7 +18,7 @@ namespace Alphabet.Item
             protected set => isBuffActive = value;
         }
         
-        [Header("Reference")]
+        // Reference
         protected PlayerController PlayerController;
         protected PlayerManager PlayerManager;
         
@@ -41,7 +40,7 @@ namespace Alphabet.Item
 
         #region Labirin Kata Callbacks
         
-        // !-- Initialization
+        // !- Initialize
         protected virtual void InitializeOnAwake()
         {
             var playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -52,7 +51,7 @@ namespace Alphabet.Item
 
         protected virtual void InitializeOnStart() { }
         
-        // !-- Core Functionality
+        // !- Core
         protected virtual void ActivateBuff()
         {
             IsBuffActive = true;

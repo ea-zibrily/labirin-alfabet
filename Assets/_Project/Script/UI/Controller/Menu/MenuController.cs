@@ -1,9 +1,8 @@
-﻿using System;
-using Alphabet.Collection;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Enum;
 using Alphabet.Managers;
+using Alphabet.Collection;
 
 namespace Alphabet.UI
 {
@@ -21,9 +20,7 @@ namespace Alphabet.UI
         [SerializeField] private Button collectionButtonUI;
         [SerializeField] private Button backButtonUI;
 
-        public Button PlayButtonUI => playButtonUI;
-
-        [Header("Reference")]
+        // Reference
         private CollectionManager _collectionManager;
 
         #endregion
@@ -46,7 +43,7 @@ namespace Alphabet.UI
         
         #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeButton()
         {
             playButtonUI.onClick.AddListener(OnPlayButton);
@@ -54,7 +51,7 @@ namespace Alphabet.UI
             backButtonUI.onClick.AddListener(OnBackButton);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void OnPlayButton()
         {
             FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);

@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using DanielLochner.Assets.SimpleScrollSnap;
 using Spine.Unity;
-using Alphabet.Database;
+using DanielLochner.Assets.SimpleScrollSnap;
 using Alphabet.Enum;
-using Alphabet.Stage;
+using Alphabet.Database;
 
 namespace Alphabet.Mission
 {
@@ -70,6 +68,7 @@ namespace Alphabet.Mission
         
         #region Methods
 
+        // !- Core
         private void HandleAnimation()
         {
             var selectedPanel = scrollSnap.SelectedPanel;
@@ -93,7 +92,7 @@ namespace Alphabet.Mission
             _eventReceiver.UnsubsGraphicEvent();
         }
 
-        // !- Helpers
+        // !- Helper
         private void ChangeIconSkin(SkeletonGraphic graphic, string skin)
         {
             graphic.Skeleton.SetSkin(skin);

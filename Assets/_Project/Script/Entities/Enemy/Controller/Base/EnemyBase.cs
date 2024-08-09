@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Alphabet.Data;
 using Alphabet.Managers;
 
@@ -52,7 +50,7 @@ namespace Alphabet.Entities.Enemy
         
         #region Labirin Kata Callbacks
         
-        // !-- Initialization
+        // !- Initialize
         protected virtual void InitializeEnemy() 
         {
             transform.parent.name = EnemyData.EnemyName;
@@ -65,7 +63,7 @@ namespace Alphabet.Entities.Enemy
             transform.position = wayPoints[FirstPositionIndex].position;
         }
         
-        // !-- Core Functionality
+        // !- Core
         protected virtual void EnemyPatternDirection() { }
 
         private void EnemyMove()
@@ -100,7 +98,7 @@ namespace Alphabet.Entities.Enemy
             _movementDirection.Normalize();
         }
         
-        // !-- Helpers/Utilities
+        // !- Helper
         public void StartMovement() => CanMove = true;
         public void StopMovement() => CanMove = false;
         

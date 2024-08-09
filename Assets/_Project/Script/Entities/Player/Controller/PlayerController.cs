@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using KevinCastejon.MoreAttributes;
 using Alphabet.Data;
@@ -27,7 +25,7 @@ namespace Alphabet.Entities.Player
         }
         public bool CanMove { get; private set; }
         
-        [Header("Reference")] 
+        // Reference
         private Rigidbody2D _playerRb;
         private PlayerAnimation _playerAnimation;
         public PlayerPickThrow PlayerPickThrow { get; private set; }
@@ -48,7 +46,6 @@ namespace Alphabet.Entities.Player
             PlayerInputHandler = GetComponentInChildren<JoystickInputHandler>();
         }
 
-        
         private void OnEnable()
         {
             GameEventHandler.OnGameStart += StartMovement;
@@ -73,7 +70,7 @@ namespace Alphabet.Entities.Player
         
         #region Methods
         
-        // !- Initialization
+        // !- Initialize
         private void InitPlayer()
         {
             // Data
@@ -85,7 +82,7 @@ namespace Alphabet.Entities.Player
             _playerAnimation.ChangeSkinWhenPlay(playerData.PlayerSkin);
         }
         
-        // !- Core Functionality
+        // !- Core
         private void PlayerMove()
         {
             if (!CanMove) return;
@@ -112,7 +109,7 @@ namespace Alphabet.Entities.Player
             _playerRb.velocity = movementDirection * CurrentMoveSpeed;
         }
         
-        // !- Utilities
+        // !- Helper
         public void StartMovement()
         {
             CanMove = true;

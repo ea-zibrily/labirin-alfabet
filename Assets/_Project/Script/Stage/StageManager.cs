@@ -44,7 +44,7 @@ namespace Alphabet.Stage
 
         #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeLeveStage()
         {
             if (stageObjects == null)
@@ -66,7 +66,7 @@ namespace Alphabet.Stage
             }
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void InitializeNewStage()
         {
             LoadNextStage();
@@ -109,7 +109,7 @@ namespace Alphabet.Stage
             stageObjects[CurrentStageIndex].SetActive(true);
         }
         
-        // !-- Helper/Utilities
+        // !- Helper
         public bool CheckCanContinueStage()
         {
             return CurrentStageIndex < stageObjects.Length - 1;

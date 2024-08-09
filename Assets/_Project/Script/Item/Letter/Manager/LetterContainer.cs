@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Alphabet.Data;
 
@@ -14,9 +12,9 @@ namespace Alphabet.Letter
 
         #endregion
 
-        #region MonoBehaviour Callbacks
+        #region Methods
 
-        // !-- Core Functionality
+        // !- Core
         public LetterData GetLetterDataById(int id)
         {
             if (id is 0)

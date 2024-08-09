@@ -8,7 +8,7 @@ namespace Alphabet.Gameplay.Controller
 {
     public class AudioController : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
 
         [SerializeField] private Musics musicName;
         private AudioManager _audioManager;

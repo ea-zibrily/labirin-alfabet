@@ -15,9 +15,9 @@ namespace Alphabet.Item
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Core Functionality
+        // !- Core
         public void Taken()
         {
             if (PlayerManager.CurrentHealthCount >= maxHealth) return;

@@ -7,15 +7,21 @@ namespace Alphabet.Entities.Player
 {
     public class PlayerFlash
     {
+        #region Fields
+
         private readonly int _playerLayerNum;
         private readonly int _enemyLayerNum;
         private readonly int _flashNumber;
         private readonly float _flashDuration;
+
         private readonly Color _flashColor;
         private readonly Skeleton _playerSkeleton;
 
-        #region Constructor
+        #endregion
 
+        #region Methods
+
+        // !- Initialize
         public PlayerFlash(int playerLayer, int enemyLayer, Color flashColor, float duration, int flashNumber, Skeleton skeleton)
         {
             _playerLayerNum = playerLayer;
@@ -33,8 +39,7 @@ namespace Alphabet.Entities.Player
             _playerSkeleton = skeleton;
         }
 
-        #endregion
-        
+        // !- Core
         public IEnumerator FlashWithTimeRoutine()
         {
             var _flashNumElapsed = 0;
@@ -63,5 +68,7 @@ namespace Alphabet.Entities.Player
                 yield return new WaitForSeconds(_flashDuration);
             }
         }
+
+        #endregion
     }
 }

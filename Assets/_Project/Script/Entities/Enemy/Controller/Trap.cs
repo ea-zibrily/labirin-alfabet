@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Alphabet.Enum;
 
@@ -21,7 +19,7 @@ namespace Alphabet.Entities.Enemy
 
         #region Labirin Kata Callbacks
 
-        // !-- Initialization
+        // !-- Initialie
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();
@@ -38,14 +36,14 @@ namespace Alphabet.Entities.Enemy
             _shapePattern = new ShapePattern(movePointTransforms, this, 0, isWanderer: false);
         }
 
-        // !-- Core Functioanlity
+        // !- Core
         protected override void EnemyPatternDirection()
         {
             base.EnemyPatternDirection();
             UpdatePattern();
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         private void SetPattern()
         {
             switch (patternType)

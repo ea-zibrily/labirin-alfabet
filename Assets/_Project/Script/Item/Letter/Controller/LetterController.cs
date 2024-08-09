@@ -52,9 +52,9 @@ namespace Alphabet.Letter
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !-- Initialize
         public void InitializeLetterData(LetterData data, int spawnNum)
         {
             // Data
@@ -69,7 +69,7 @@ namespace Alphabet.Letter
             _spriteRenderer.sprite = _letterData.LetterSprite;
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void Taken()
         {
             if (!hasLetterTaken)
@@ -79,7 +79,7 @@ namespace Alphabet.Letter
             }
             StartCoroutine(HandleSfxRoutine());
             StartCoroutine(HandleVfxRoutine(letterVfx));
-            LetterInterfaceManager.TakeLetterEvent(SpawnId);
+            LetterInterfaceManager.TakeLetter(SpawnId);
         }
 
         public void ReleaseLetter()

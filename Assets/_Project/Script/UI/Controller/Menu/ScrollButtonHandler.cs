@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Enum;
@@ -17,6 +15,7 @@ namespace Alphabet.UI
         {
             // Init scroll button SFXs
             static void OnButtonClick() => FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            
             nextButtonUI.onClick.AddListener(OnButtonClick);
             previousButtonUI.onClick.AddListener(OnButtonClick);
         }

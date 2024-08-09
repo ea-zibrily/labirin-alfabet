@@ -46,7 +46,7 @@ namespace Alphabet.Stage
 
         #region Methods
         
-        // !-- Initialization
+        // !-- Initialize
         private void InitializeNotification()
         {
             notificationCanvasGroup.gameObject.SetActive(false);
@@ -54,8 +54,7 @@ namespace Alphabet.Stage
             tagCanvasGroup.alpha = 0f;
         }
 
-        // !-- Core Functionality
-        
+        // !- Core
         public void ShowNotification() => StartCoroutine(ShowNotificationRoutine());
         
         public void TopMarker()
@@ -93,7 +92,7 @@ namespace Alphabet.Stage
                     });
         }
         
-        // !-- Helpers/Utilities
+        // !- Helper
         private string GetCurrentStage(StageName level)
         {
             return level switch

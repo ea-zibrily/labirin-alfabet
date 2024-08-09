@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Alphabet.Entities.Enemy
@@ -12,14 +10,13 @@ namespace Alphabet.Entities.Enemy
         protected EnemyBase EnemyBase { get; set;}
         protected int IterationCount { get; set;}
 
-        //-- Constant Variable
         private const int MAX_ITERATION = 2;
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !-- Initialize
         public PatternBase(Transform[] movePoint, EnemyBase enemyBase)
         {
             MovePointTransform = movePoint;
@@ -29,7 +26,7 @@ namespace Alphabet.Entities.Enemy
         public abstract void InitializePattern(bool isReInitialize);
         public abstract void UpdatePattern();
 
-        // !-- Helper/Utilities
+        // !-- Helper
         public bool CanChangePattern()
         {
             return IterationCount >= MAX_ITERATION;

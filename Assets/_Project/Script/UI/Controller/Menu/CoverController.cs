@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Spine.Unity;
 using UnityEngine;
 
@@ -38,7 +37,7 @@ namespace Alphabet.UI
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeCover()
         {
             _coverAnimationState = _skeletonAnimation.AnimationState;
@@ -47,7 +46,7 @@ namespace Alphabet.UI
             _isFirstAnimate = false;
         }
         
-        // !-- Core Functionality
+        // !- Core
         private IEnumerator PlayAnimationRoutine()
         {
             _coverAnimationState.SetAnimation(0, START_ANIMATION, false);

@@ -25,16 +25,16 @@ namespace Alphabet.Managers
         
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeLevelSelection()
         {            
             backButtonUI.onClick.AddListener(OnBackButton);
             exploreButtonUI.onClick.AddListener(OnPlayButton);
         }
         
-        // !-- Core Functionality
+        // !- Core 
         private void OnPlayButton()
         {
             SceneTransitionManager.Instance.LoadSelectedScene(SceneState.NextLevel);

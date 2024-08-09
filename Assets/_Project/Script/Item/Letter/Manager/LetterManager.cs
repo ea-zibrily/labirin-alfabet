@@ -65,9 +65,9 @@ namespace Alphabet.Letter
         
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeLetterData()
         {
             _lockedLetterDatas = new List<LetterData>();
@@ -76,11 +76,11 @@ namespace Alphabet.Letter
         
         private void InitializeLetterDatas()
         {
-            // if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
-            // {
-            //     Debug.LogError("letter prefabs kurenx breks");
-            //     return;
-            // }
+            if (LetterContainer.LetterDatas.Length < GameDatabase.LETTER_COUNT)
+            {
+                Debug.LogError("letter prefabs kurenx breks");
+                return;
+            }
             
             foreach (var letter in LetterContainer.LetterDatas)
             {
@@ -102,7 +102,7 @@ namespace Alphabet.Letter
             _letterPooler.InitializePoolData(datas);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void SpawnLetter()
         {
             _letterPooler.CallLetterPool(LetterSpawns);
@@ -126,7 +126,7 @@ namespace Alphabet.Letter
             }
         }
         
-        // !-- Helper/Utilities
+        // !- Utilities
         public Transform GetAvailablePoint()
         {
             var stageIndex =  StageManager.Instance.CurrentStageIndex;

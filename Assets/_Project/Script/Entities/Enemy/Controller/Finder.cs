@@ -21,8 +21,9 @@ namespace Alphabet.Entities.Enemy
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
+        // !- Initialize
         protected override void InitializeEnemy()
         {
             base.InitializeEnemy();
@@ -45,7 +46,7 @@ namespace Alphabet.Entities.Enemy
             _randomShapePattern = new RandomShapePattern(movePointTransforms, this, EnemyHelper, changeDirectionDelayTime);
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         private void SetPattern()
         {
             switch (patternType)

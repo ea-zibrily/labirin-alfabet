@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Alphabet.Enum;
 using Alphabet.Managers;
@@ -65,6 +63,7 @@ namespace Alphabet.Item
 
         #region Methods
 
+        // !- Initialize
         private void InitializeStun()
         {
             _elapsedTime = 0f;
@@ -75,7 +74,7 @@ namespace Alphabet.Item
             IsItemThrowed = false;
         }
 
-        // !-- Core Functioanlity
+        // !- Core
         public void ThrowItem(Vector2 direction, float speed)
         {
             StartCoroutine(ThrowItemRoutine(direction, speed));
@@ -146,7 +145,7 @@ namespace Alphabet.Item
             Destroy(gameObject);
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         public void EnableSprite() => _spriteRenderer.enabled = true;
         public void DisableSprite() => _spriteRenderer.enabled = false;
 

@@ -1,22 +1,25 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using Random = UnityEngine.Random;
 
 namespace Alphabet.Entities.Enemy
 {
     public class RandomShapePattern : PatternBase
     {
+        #region Field & Property
+
         private int _movePointLength;
         private int _maxTargetIndex;
         private bool _isDefaultWay;
 
-        //-- Injected Fields
+        // Injected Fields
         private readonly float _delayTime;
         private readonly EnemyHelper _enemyHelper;
 
+        #endregion
+
+        #region Methods
+
+        // !- Initialize
         public RandomShapePattern(Transform[] movePoint, EnemyBase enemyBase, EnemyHelper enemyHelper, float delay) : base(movePoint, enemyBase) 
         {
            _enemyHelper = enemyHelper;
@@ -34,6 +37,7 @@ namespace Alphabet.Entities.Enemy
             EnemyBase.CurrentTarget = MovePointTransform[EnemyBase.CurrentTargetIndex];
         }
 
+        // !- Core
         public override void UpdatePattern()
         {
             if (Vector2.Distance(EnemyBase.transform.position, MovePointTransform[EnemyBase.CurrentTargetIndex].position) <= 0.01f)
@@ -63,5 +67,7 @@ namespace Alphabet.Entities.Enemy
                 EnemyBase.StartMovement();
             }
         }
+
+        #endregion
     }
 }

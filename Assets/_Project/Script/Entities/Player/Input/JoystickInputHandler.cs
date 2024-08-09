@@ -54,9 +54,9 @@ namespace Alphabet.Entities.Player
         
         #endregion
         
-        #region Methodss
+        #region Methods
 
-        // !-- Core Functionality
+        // !- Core
         private void OnFingerDown(Finger fingerTouch)
         {
             if (_movementFinger == null && IsRestrictedArea(fingerTouch))
@@ -151,7 +151,7 @@ namespace Alphabet.Entities.Player
                     && finger.screenPosition.y >= Screen.height - (Screen.height / 1.25f);
         }
         
-        // !-- Helper/Utilities
+        // !- Helper
         public void EnableTouchInput()
         {
             enabled = true;

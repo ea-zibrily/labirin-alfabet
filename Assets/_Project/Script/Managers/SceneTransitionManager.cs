@@ -28,9 +28,9 @@ namespace Alphabet.Managers
         
         #endregion
 
-        #region Scene Loader Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         public void FadeIn()
         {
             sceneFader.gameObject.SetActive (true);
@@ -49,7 +49,7 @@ namespace Alphabet.Managers
             LeanTween.alpha (sceneFader, 1, fadeDuration);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void LoadSelectedScene(SceneState sceneState)
         {
             Time.timeScale = 1;

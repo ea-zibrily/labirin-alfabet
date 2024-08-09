@@ -65,7 +65,7 @@ namespace Alphabet.Item
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         protected override void InitializeOnAwake()
         {
             base.InitializeOnAwake();
@@ -81,7 +81,7 @@ namespace Alphabet.Item
             _upgradeMoveSpeed = _defaultMoveSpeed * speedUpMultiplier;
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void Taken()
         {
             if (PlayerManager.HasBuffEffect[BuffType]) return;
@@ -153,7 +153,7 @@ namespace Alphabet.Item
             DeactivateBuff();
         }
         
-        // !-- Helper/Utilites
+        // !- Helper
         private void SetSpeedLimitValues(float nerfedMultiplier = 0f)
         {
             _defaultMoveSpeed = PlayerController.DefaultMoveSpeed - nerfedMultiplier;

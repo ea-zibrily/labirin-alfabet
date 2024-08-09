@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Alphabet.Entities.Player
@@ -32,14 +30,14 @@ namespace Alphabet.Entities.Player
 
         #region Methods
 
-        // !-- Core Functionality
+        // !- Core
         private void OnMovementPerformed()
         {
             direction = _playerActionMap.Player.Move.ReadValue<Vector2>();
             direction.Normalize();
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         public void EnableInput() => _playerActionMap.Enable();
         public void DisableInput() => _playerActionMap.Disable();
 

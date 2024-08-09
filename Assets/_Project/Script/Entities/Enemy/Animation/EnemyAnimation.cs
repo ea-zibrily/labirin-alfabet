@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -72,7 +70,7 @@ namespace Alphabet.Entities.Enemy
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeAnimation()
         {
             _isRight = true;
@@ -87,7 +85,7 @@ namespace Alphabet.Entities.Enemy
             ChangeAnimation(_currentState);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void AnimationHandler()
         {
             var state = GetState();

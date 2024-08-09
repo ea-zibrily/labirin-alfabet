@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Alphabet.Entities.Enemy
@@ -11,12 +9,15 @@ namespace Alphabet.Entities.Enemy
         private int _maxTargetIndex;
         private bool _isDefaultWay;
         
-        //-- Injected Fields
+        // Injected Fields
         private readonly int _decisionPointIndex;
         private readonly bool _isWanderer;
 
         #endregion
 
+        #region Methods
+
+        // !- Initialize
         public LinePattern(Transform[] movePoint, EnemyBase enemyBase, int decision, bool isWanderer) : base(movePoint, enemyBase) 
         {
             _decisionPointIndex = decision;
@@ -35,6 +36,7 @@ namespace Alphabet.Entities.Enemy
             EnemyBase.CurrentTarget = MovePointTransform[EnemyBase.CurrentTargetIndex];
         }
         
+        // !- Core
         public override void UpdatePattern()
         {
             if (Vector2.Distance(EnemyBase.transform.position, MovePointTransform[EnemyBase.CurrentTargetIndex].position) <= 0.01f)
@@ -58,5 +60,7 @@ namespace Alphabet.Entities.Enemy
                 EnemyBase.CurrentTarget = MovePointTransform[EnemyBase.CurrentTargetIndex];
             }
         }
+
+        #endregion
     }
 }

@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Spine.Unity;
 using Alphabet.Data;
 using Alphabet.Enum;
 using Alphabet.Stage;

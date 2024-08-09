@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
@@ -10,8 +9,6 @@ using Alphabet.Letter;
 using Alphabet.Managers;
 using Alphabet.Entities.Enemy;
 using Alphabet.Gameplay.EventHandler;
-
-using Random = UnityEngine.Random;
 
 namespace Alphabet.Entities.Player
 {
@@ -103,7 +100,7 @@ namespace Alphabet.Entities.Player
         
         #region Health Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeHealth()
         {
             if (healthCount != healthUIObjects.Length)
@@ -123,7 +120,7 @@ namespace Alphabet.Entities.Player
             _isPlayerDead = false;
         }
         
-        // !-- Core Functionality
+        // !- Core
         private void DecreaseHealth()
         {
             var healthIndex = _currentHealthCount - 1;
@@ -171,7 +168,7 @@ namespace Alphabet.Entities.Player
         
         #region Objective Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeLetterObject()
         {
             var objectSize = StageManager.Instance.StageCount;
@@ -183,7 +180,7 @@ namespace Alphabet.Entities.Player
             }
         }
         
-        // !-- Core Functionality
+        // !- Core
         private void CollectLetter(GameObject letter)
         {
             SetStageData();
@@ -213,7 +210,7 @@ namespace Alphabet.Entities.Player
             }
         }
         
-        // !-- Helper/Utilities
+        // !- Helper
         private void SetStageData()
         {
             _currentStageIndex = StageManager.Instance.CurrentStageIndex;

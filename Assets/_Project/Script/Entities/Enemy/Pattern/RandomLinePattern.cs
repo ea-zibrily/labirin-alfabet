@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -15,14 +13,16 @@ namespace Alphabet.Entities.Enemy
         private bool _isDefaultWay;
         private bool _canChangeDir;
 
-        //-- Injected Fields
+        // Injected Fields
         private readonly int _maxChange;
         private readonly float _delayTime;
         private readonly EnemyHelper _enemyHelper;
 
-
         #endregion
 
+        #region Methods
+
+        // !- Initialize
         public RandomLinePattern(Transform[] movePoint, EnemyBase enemyBase, EnemyHelper enemyHelper, int maxChange, float delay) : base(movePoint, enemyBase) 
         {
             _maxChange = maxChange;
@@ -41,6 +41,7 @@ namespace Alphabet.Entities.Enemy
             EnemyBase.CurrentTarget = MovePointTransform[EnemyBase.CurrentTargetIndex];
         }
 
+        // !- Core
         public override void UpdatePattern()
         {
             if (Vector2.Distance(EnemyBase.transform.position, MovePointTransform[EnemyBase.CurrentTargetIndex].position) <= 0.01f)
@@ -90,7 +91,7 @@ namespace Alphabet.Entities.Enemy
             }
         }
         
-        // !--Helpers/Utilities
+        // !- Helper
         private void IncreaseChangeLength()
         {
             _currentChange++;
@@ -112,5 +113,7 @@ namespace Alphabet.Entities.Enemy
                 _canChangeDir = true;
             }
         }
+
+        #endregion
     }
 }

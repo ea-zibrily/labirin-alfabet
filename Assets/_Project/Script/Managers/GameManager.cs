@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Alphabet.UI;
 using Alphabet.Enum;
@@ -65,9 +64,9 @@ namespace Alphabet.Managers
 
         #endregion
 
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !-- Initialize
         private void InitializeComponent()
         {
             _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -76,12 +75,8 @@ namespace Alphabet.Managers
             _timeController = GameObject.Find("TimeController").GetComponent<TimeController>();
             _stageMarker = GameObject.Find("StageMarker").GetComponent<StageMarker>();
         }
-        
-        #endregion
-        
-        #region Game State Callbacks
-        
-        // !-- Core Functionality
+
+        // !- Core
         private void GameStart()
         {
             IsGameStart = true;

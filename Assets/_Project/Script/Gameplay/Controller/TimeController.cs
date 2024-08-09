@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using Alphabet.Enum;
 using Alphabet.Gameplay.EventHandler;
@@ -8,7 +7,7 @@ namespace Alphabet.Gameplay.Controller
 {
     public class TimeController : MonoBehaviour
     {
-        #region Variable
+        #region Fields & Properties
         
         [Header("Timer")]
         [Tooltip("Isi variable ini dengan total waktu dalam jumlah detik")]
@@ -67,7 +66,7 @@ namespace Alphabet.Gameplay.Controller
         
         #region Labirin Kata Callbacks
         
-        // !-- Initialization
+        // !- Initialize
         public void InitializeTimer()
         {
             _fullTime = amountOfTime + _latestTime;
@@ -76,7 +75,7 @@ namespace Alphabet.Gameplay.Controller
             TimerDisplay(_currentTime);
         }
 
-        // !-- Core Functionality
+        // !- Core
         private void CountdownTimer()
         {
             if (!IsTimerStart) return;
@@ -92,7 +91,7 @@ namespace Alphabet.Gameplay.Controller
             TimerDisplay(_currentTime);
         }
         
-        // !-- Helper/Utitilies
+        // !- Utitilies
         public void SetLatestTimer() => _latestTime = _currentTime;
         
         private void StartTimer() => IsTimerStart = true;

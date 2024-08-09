@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace Alphabet.Letter
 {
@@ -65,7 +63,7 @@ namespace Alphabet.Letter
         }
 
         
-        // !-- Core Functionality
+        // !- Core 
         public static void PlayAudioEvent(int id) => OnPlayAudio?.Invoke(id);
         public static void StopAudioEvent() => OnStopAudio?.Invoke();
 

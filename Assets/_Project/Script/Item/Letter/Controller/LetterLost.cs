@@ -32,7 +32,7 @@ namespace Alphabet.Letter
         public void Lost()
         {
             transform.position = _playerObject.transform.position;
-            _letterController.LetterInterfaceManager.LostLetterEvent(_letterController.SpawnId);
+            _letterController.LetterInterfaceManager.LostLetter(_letterController.SpawnId);
 
             var targetPoint = _letterController.LetterManager.GetAvailablePoint();
             var targetVector = new Vector3(targetPoint.position.x, targetPoint.position.y, targetPoint.position.z);

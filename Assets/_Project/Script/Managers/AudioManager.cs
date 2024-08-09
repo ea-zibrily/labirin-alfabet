@@ -43,7 +43,7 @@ namespace Alphabet.Managers
 
         #region Methods
 
-        //!-- Initialization
+        //!- Initialize
         private void InitializeAudio()
         {
             foreach (var s in Musics)
@@ -58,7 +58,7 @@ namespace Alphabet.Managers
             }
         }
 
-        //!-- Core Functionality
+        //!- Core
         public void PlayAudio(Musics music)
         {
             Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());
@@ -103,7 +103,7 @@ namespace Alphabet.Managers
             return sound.volume;
         }
 
-        // !- Utilities
+        // !- Helper
         public Sound GetAudio(Musics music)
         {
             Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());

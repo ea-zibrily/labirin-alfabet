@@ -38,7 +38,6 @@ namespace Alphabet.UI
         [SerializeField] private Color lockedStageColor;
         [SerializeField] private Material imageMaterial;
 
-
         [Header("Reference")]
         [SerializeField] private SimpleScrollSnap simpleScrollSnap;
         public SimpleScrollSnap SimpleScrollSnap => simpleScrollSnap;
@@ -69,7 +68,7 @@ namespace Alphabet.UI
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         protected override void InitOnStart()
         {
             base.InitOnStart();
@@ -89,7 +88,7 @@ namespace Alphabet.UI
             selectStagePanelUI.SetActive(false);
         }
 
-        // !-- Core Functionality
+        // !- Core
         public void GoToStage()
         {
             var levelSceneIndex = _currentPanelIndex + 1;
@@ -171,7 +170,7 @@ namespace Alphabet.UI
             stagePadlock.SetActive(!isUnlocked);
         }
         
-        // !-- Helper/Utilities
+        // !- Helper
         private bool IsLevelUnlocked(int index)
         {
             var stageIndex = index > 0 ? index - 1 : index;

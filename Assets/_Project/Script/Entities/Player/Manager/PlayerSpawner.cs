@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Alphabet.Stage;
-using System;
 
 namespace Alphabet.Entities.Player
 {

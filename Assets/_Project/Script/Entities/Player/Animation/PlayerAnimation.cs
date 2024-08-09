@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -17,7 +15,7 @@ namespace Alphabet.Entities.Player
         [SerializeField, Range(0.5f, 1.5f)] private float holdSpeedUpTimescale;
         [SerializeField] private bool _isRight;
 
-        // Const Variable
+        // Const
         private const float DEFAULT_TIMESCALE = 1f;
 
         // Animation
@@ -84,7 +82,7 @@ namespace Alphabet.Entities.Player
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializePlayerAnimation()
         {
             _isRight = true;
@@ -97,7 +95,7 @@ namespace Alphabet.Entities.Player
             _playerAnimationState.SetAnimation(0, _currentState, true);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void AnimationHandler()
         {
             var direction = _playerController.MovementDirection;
@@ -206,7 +204,7 @@ namespace Alphabet.Entities.Player
             _playerSkeleton.ScaleX *= -1;
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         public void SetInitializeSkin(string skin)
         {
             _skeletonAnimation.initialSkinName = skin;

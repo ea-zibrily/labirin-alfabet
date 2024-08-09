@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,10 +23,6 @@ namespace Alphabet.Letter
         public int ItemIndex { get; private set; }
         public GameObject[] LetterImageUI => letterImageUI;
 
-        // Event
-        public event Action<int> OnLetterTaken;
-        public event Action<int> OnLetterLost;
-
         [Header("Reference")] 
         private LetterManager _letterManager;
         private LetterFillAnimation _letterAnimation;
@@ -42,18 +37,6 @@ namespace Alphabet.Letter
             _letterAnimation = GetComponent<LetterFillAnimation>();
         }
 
-        private void OnEnable()
-        {
-            OnLetterTaken += TakeLetter;
-            OnLetterLost += LostLetter;
-        }
-        
-        private void OnDisable()
-        {
-            OnLetterTaken -= TakeLetter;
-            OnLetterLost -= LostLetter;
-        }
-
         private void Start()
         {
             InitializeLetterImage();
@@ -61,9 +44,9 @@ namespace Alphabet.Letter
 
         #endregion
         
-        #region Labirin Kata Callbacks
+        #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeLetterImage()
         {
             foreach (var image in letterImageUI)
@@ -72,7 +55,7 @@ namespace Alphabet.Letter
             }
         }
         
-        // !-- Core Functionality
+        // !- Core 
         public void SetLetterInterface(IReadOnlyList<LetterData> datas)
         {
             _letterFillImage ??= new GameObject[letterImageUI.Length];
@@ -93,17 +76,13 @@ namespace Alphabet.Letter
             }
         }
         
-        public void TakeLetterEvent(int itemId) => OnLetterTaken?.Invoke(itemId);
-        public void LostLetterEvent(int itemId) => OnLetterLost?.Invoke(itemId);
         
-        private void TakeLetter(int itemId)
-        {
-            StartCoroutine(TakeLetterRoutine(itemId));
-        }
+        public void TakeLetter(int itemId) => StartCoroutine(TakeLetterRoutine(itemId));
 
         private IEnumerator TakeLetterRoutine(int itemId)
         {
             var itemIndex = itemId - 1;
+
             ItemIndex = itemIndex;
             _currentTakenLetter++;
             yield return _letterAnimation.AnimateLetterRoutine(_letterFillImage[itemIndex]);
@@ -114,10 +93,7 @@ namespace Alphabet.Letter
             }
         }
         
-        private void LostLetter(int itemId)
-        {
-            StartCoroutine(LostLetterRoutine(itemId));
-        }
+        public void LostLetter(int itemId) => StartCoroutine(LostLetterRoutine(itemId));
 
         private IEnumerator LostLetterRoutine(int itemId)
         {

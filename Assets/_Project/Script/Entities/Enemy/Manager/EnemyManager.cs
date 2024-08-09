@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Alphabet.Gameplay.EventHandler;
@@ -21,7 +19,7 @@ namespace Alphabet.Entities.Enemy
         private const float MAX_FILL_BAR = 1f;
         private const float MIN_FILL_BAR = 0f;
 
-        [Header("Reference")]
+        // Reference
         private EnemyBase _enemyBase;
         private CapsuleCollider2D _capsuleCollider;
 
@@ -86,7 +84,7 @@ namespace Alphabet.Entities.Enemy
 
         #region Stun Feedback Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeStunBar()
         {
             _isStunned = false;
@@ -94,7 +92,7 @@ namespace Alphabet.Entities.Enemy
             stunBarSliderUI.value = MAX_FILL_BAR;
         }
 
-        // !-- Core Functioanlity
+        // !- Core
         public void PerformStunBar()
         {
             stunBarSliderUI.value = MAX_FILL_BAR;
@@ -113,11 +111,7 @@ namespace Alphabet.Entities.Enemy
             }
         }
 
-        #endregion
-
-        #region Collision Methods
-
-        // !-- Helper/Utilities
+        // !- Helper
         public void ActivateTrigger() => _capsuleCollider.isTrigger = true;
         public void DeactivateTrigger() => _capsuleCollider.isTrigger = false;
 

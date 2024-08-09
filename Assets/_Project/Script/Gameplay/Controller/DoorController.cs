@@ -87,7 +87,7 @@ namespace Alphabet.Gameplay.Controller
         
         #region Methods
         
-        // !-- Initialization
+        // !- Initialize
         private void InitializeDoor()
         {
             doorVirtualCamera.Follow = gameObject.transform;
@@ -97,7 +97,7 @@ namespace Alphabet.Gameplay.Controller
             doorConstraint.OpenConstraint.enabled = false;
         }
         
-        // !-- Core Functionality
+        // !- Core
         private void OpenDoor() => StartCoroutine(OpenDoorRoutine());
         private void ActivateDoorTrigger() => StartCoroutine(ActivateDoorTriggerRoutine());
         
@@ -130,8 +130,7 @@ namespace Alphabet.Gameplay.Controller
             else
                 GameEventHandler.GameWinEvent();
         }
-
-        // !- Vfxs
+        
         private void ActivateEffect()
         {
             doorVfx.SetActive(true);

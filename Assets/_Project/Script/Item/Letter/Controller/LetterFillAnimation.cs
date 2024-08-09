@@ -43,14 +43,14 @@ namespace Alphabet.Letter
         
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeCenterPosition(RectTransform rectTarget)
         {
             var centerPosition = SwitchToRectTransform(letterPoint, rectTarget);
             rectTarget.anchoredPosition = centerPosition;
         }
 
-        // !-- Core Functionality
+        // !- Core 
         public IEnumerator AnimateLetterRoutine(GameObject letterTarget)
         {
             // Initialize

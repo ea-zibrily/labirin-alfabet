@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,7 +57,7 @@ namespace Alphabet.UI
 
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeMainButton()
         {
             closeButtonUI.onClick.AddListener(OnClickClose);
@@ -88,7 +87,7 @@ namespace Alphabet.UI
             }
         }
 
-        // !-- Core Functionality
+        // !- Core 
         private void OnClickExplore()
         {
             FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
@@ -168,7 +167,7 @@ namespace Alphabet.UI
             graphic.AnimationState.SetAnimation(0, "QF_idle", true);
         }
 
-        // !-- Helper/Utilities
+        // !- Helper
         private void TweenScaledButton(GameObject target, bool isSelect)
         {
             var incrementVector = new Vector3(scalingMultiplier, scalingMultiplier, scalingMultiplier);

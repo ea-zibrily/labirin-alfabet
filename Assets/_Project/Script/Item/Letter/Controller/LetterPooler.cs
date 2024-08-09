@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -44,7 +42,6 @@ namespace Alphabet.Letter
 
         #region Pooling Methods
         
-        // Invoked when creating an item to populate the object pool
         private LetterController CreateLetter()
         {
             var letterObject = Instantiate(letterPrefabs, letterParent.transform, false);
@@ -52,19 +49,16 @@ namespace Alphabet.Letter
             return letterObject;
         }
         
-        // Invoked when retrieving the next item from the object pool
         private void OnGetFromPool(LetterController pooledObject)
         {
             pooledObject.gameObject.SetActive(true);
         }
         
-        // Invoked when returning an item to the object pool
         private void OnReleaseToPool(LetterController pooledObject)
         {
             pooledObject.gameObject.SetActive(false);
         }
         
-        // Invoked when we exceed the maximum number of pooled items (i.e. destroy the pooled object)
         private void OnDestroyPooledObject(LetterController pooledObject)
         {
             Destroy(pooledObject.gameObject);
@@ -74,7 +68,7 @@ namespace Alphabet.Letter
 
         #region Methods
 
-        // !-- Initialization
+        // !-- Initialize
         private void InitializePooler()
         {
             _letterPool = new ObjectPool<LetterController>(CreateLetter, OnGetFromPool, OnReleaseToPool,
@@ -90,7 +84,7 @@ namespace Alphabet.Letter
             _letterDatas.AddRange(datas);
         }
         
-        // !-- Core Functionality
+        // !- Core
         public void CallLetterPool(LetterSpawns[] spawns)
         {
             UpdatePoolData();
