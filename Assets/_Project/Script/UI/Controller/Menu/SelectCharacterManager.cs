@@ -38,7 +38,6 @@ namespace Alphabet.UI
 
         [Header("Button Tweening")]
         [SerializeField] private float startTweenDuration;
-        [SerializeField] private float endTweenDuration;
         [Range(0f, 1.5f)] [SerializeField] private float scalingMultiplier;
 
         private Vector3 defaultScale;
