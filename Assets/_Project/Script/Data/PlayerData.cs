@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Spine;
 using Spine.Unity;
-using System;
 
 namespace Alphabet.Data
 {

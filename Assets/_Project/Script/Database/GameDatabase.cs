@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using Alphabet.Enum;
 using Alphabet.DesignPattern.Singleton;
 
@@ -10,13 +7,11 @@ namespace Alphabet.Database
     public class GameDatabase : MonoDDOL<GameDatabase>
     {
         #region Fields & Properties
-        
-        //-- Game Database
+
         private Dictionary<int, bool> _isLetterCollected;
         private Dictionary<string, bool> _isLevelClear;
         private int _levelClearIndex;
 
-        //-- Constant Variable
         public const int LETTER_COUNT = 26;
         
         #endregion
@@ -66,9 +61,9 @@ namespace Alphabet.Database
             return levelConditions;
         }
         
-        // !-- Core Functionality
+        // !- Core
 
-        // *- Letter Collected
+        // - Letter Collected
         public void SaveLetterCollected(int letterId, bool value)
         {
             if (_isLetterCollected.ContainsKey(letterId))
@@ -82,7 +77,7 @@ namespace Alphabet.Database
             return _isLetterCollected[letterId];
         }
         
-        // *- Level Clear
+        // - Level Clear
         public void SaveLevelClear(string levelName, bool value)
         {
             if (_isLevelClear.ContainsKey(levelName))
@@ -96,7 +91,7 @@ namespace Alphabet.Database
             return _isLevelClear[levelName];
         }
 
-        // *- Level Clear Index
+        // - Level Clear Index
         public void SaveLevelClearIndex(int value) => _levelClearIndex = value;
         public void ResetLevelClearIndex() => _levelClearIndex = 0;
         public int LoadLevelClearIndex() 

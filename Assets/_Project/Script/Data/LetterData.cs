@@ -1,5 +1,3 @@
-using System;
-using Alphabet.Enum;
 using UnityEngine;
 
 namespace Alphabet.Data
