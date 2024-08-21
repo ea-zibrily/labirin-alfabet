@@ -5009,7 +5009,6 @@ MonoBehaviour:
   closeButtonUI: {fileID: 1738894940}
   unselectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   startTweenDuration: 0.18
-  endTweenDuration: 0.5
   scalingMultiplier: 0.1
   selectStageManager: {fileID: 1874585706}
 --- !u!1 &852370992
