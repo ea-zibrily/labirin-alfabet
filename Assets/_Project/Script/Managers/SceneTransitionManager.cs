@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Alphabet.Enum;
 using Alphabet.Gameplay.Controller;
-using Alphabet.DesignPattern.Singleton;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Managers
 {

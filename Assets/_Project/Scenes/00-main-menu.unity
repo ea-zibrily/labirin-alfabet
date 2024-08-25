@@ -5059,6 +5059,7 @@ MonoBehaviour:
   audioVolume: 1
   audioPitch: 1
   letterContainer: {fileID: 1011872448}
+  collectionManager: {fileID: 899485806}
 --- !u!1 &856061815
 GameObject:
   m_ObjectHideFlags: 0
@@ -13248,7 +13249,7 @@ GameObject:
   - component: {fileID: 2018586946}
   m_Layer: 0
   m_Name: Collection
-  m_TagString: Collection
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

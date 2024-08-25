@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Alphabet.Letter
 {
-    public class LetterAudioManager : MonoBehaviour
+    public class LetterAudio : MonoBehaviour
     {
         #region Fields & Properties
 

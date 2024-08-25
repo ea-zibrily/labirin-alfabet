@@ -172,7 +172,7 @@ namespace Alphabet.Item
             
             _isCollideWithAnother = true;
             if (dustEffect.TryGetComponent<ParticleController>(out var effect)) effect.StopParticle();
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.StonebreakSfx);
+            AudioManager.Instance.PlayAudio(Musics.StonebreakSfx);
             
             if (other.TryGetComponent(out EnemyBase enemy))
             {

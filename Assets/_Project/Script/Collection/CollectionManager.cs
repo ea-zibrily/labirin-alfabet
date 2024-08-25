@@ -18,13 +18,6 @@ namespace Alphabet.Collection
         [Header("Collection")] 
         [SerializeField] private RectTransform[] collectionContentUI;
         private GameObject[] _collectionObjectUI;
-
-        private int _selectedCollectionId;
-        public int SelectedCollectionId => _selectedCollectionId;
-        
-        // Event
-        public event Action OnCollectionOpen;
-        public event Action OnCollectionClose;
         
         [Header("UI")] 
         [SerializeField] private GameObject mainMenuPanelUI;
@@ -49,16 +42,9 @@ namespace Alphabet.Collection
         
         #endregion
 
-        #region Events
-
-        public void OnCollectionOpenEvent() => OnCollectionOpen?.Invoke();
-        public void OnCollectionCloseEvent() => OnCollectionClose?.Invoke();
-
-        #endregion
-
         #region Methods
 
-        // !-- Initialization
+        // !- Initialize
         private void InitializeObject()
         {
             _collectionObjectUI = new GameObject[GameDatabase.LETTER_COUNT];
@@ -103,23 +89,16 @@ namespace Alphabet.Collection
             fillImage.SetActive(GameDatabase.Instance.LoadLetterConditions(id));
         }
         
-        // !-- Core Functionality
+        // !- Core
         private void CloseCollection()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
-            OnCollectionCloseEvent();
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
+            CollectionEventHandler.CollectionCloseEvent();
             mainMenuPanelUI.SetActive(true);
 
             simpleScrollSnap.Setup();
             collectionPanelUI.SetActive(false);
         }
-
-        // !-- Helpers/Utilities
-        public void SetSelectedCollection(int collectionId)
-        {
-            _selectedCollectionId = collectionId;
-        }
-
 
         #endregion
         

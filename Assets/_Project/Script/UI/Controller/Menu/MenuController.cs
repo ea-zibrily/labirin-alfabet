@@ -54,23 +54,23 @@ namespace Alphabet.UI
         // !- Core
         public void OnPlayButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             selectStagePanelUI.SetActive(true);
         }
 
         private void OnCollectionButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
 
             collectionPanelUI.SetActive(true);
             mainMenuPanelUI.SetActive(false);
-            _collectionManager.OnCollectionOpenEvent();
+            CollectionEventHandler.CollectionOpenEvent();
         }
 
         // TODO: Drop logic buat kembali ke iota kids
         private void OnBackButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
         }
 
         #endregion

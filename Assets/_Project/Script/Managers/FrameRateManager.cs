@@ -1,5 +1,5 @@
 using UnityEngine;
-using Alphabet.DesignPattern.Singleton;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Managers
 {

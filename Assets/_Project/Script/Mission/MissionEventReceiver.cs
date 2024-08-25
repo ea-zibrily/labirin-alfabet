@@ -48,7 +48,7 @@ namespace Alphabet.Mission
             if (e.Data.Name == "vfx")
             {
                 var sfx = GetSfx(_currentMission);
-                FindObjectOfType<AudioManager>().PlayAudio(sfx);
+                AudioManager.Instance.PlayAudio(sfx);
                 _currentVfx.gameObject.SetActive(true);
                 _currentVfx.Play();
             }

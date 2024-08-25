@@ -96,7 +96,7 @@ namespace Alphabet.Mission
 
         private void OnCloseMission()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
 
             // Scroll tutorial
             if (!_canPlay)
@@ -120,7 +120,7 @@ namespace Alphabet.Mission
 
         private void ScrollTutorial()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
 
             var currentIndex = scrollSnap.SelectedPanel;
             var numOfPanels = scrollSnap.NumberOfPanels;

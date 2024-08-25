@@ -43,7 +43,6 @@ namespace Alphabet.Entities.Player
         private PlayerController _playerController;
         private PlayerManager _playerManager;
         private PlayerAnimation _playerAnimation;
-        private AudioManager _audioManager;
 
         #endregion
 
@@ -54,7 +53,6 @@ namespace Alphabet.Entities.Player
             _playerController = GetComponent<PlayerController>();
             _playerManager = GetComponentInChildren<PlayerManager>();
             _playerAnimation = GetComponentInChildren<PlayerAnimation>();
-            _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         }
 
         private void Start()
@@ -96,9 +94,9 @@ namespace Alphabet.Entities.Player
                 }
 
                 // Audio
-                if (_audioManager.IsAudioPlaying(Musics.StoneslideSfx))
+                if (AudioManager.Instance.IsAudioPlaying(Musics.StoneslideSfx))
                 {
-                    _audioManager.StopAudio(Musics.StoneslideSfx);
+                    AudioManager.Instance.StopAudio(Musics.StoneslideSfx);
                 }
             }
         }
@@ -134,7 +132,7 @@ namespace Alphabet.Entities.Player
 
         private void PickItem()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.GetStoneSfx);
+            AudioManager.Instance.PlayAudio(Musics.GetStoneSfx);
             _holdedItemObject = _pickItemObject;
             _holdedItemObject.transform.parent = transform;
 
@@ -195,16 +193,16 @@ namespace Alphabet.Entities.Player
         private void HandleHoldItemSfx()
         {
             var stoneSlides = Musics.StoneslideSfx;
-            var isPlaying = _audioManager.IsAudioPlaying(stoneSlides);
+            var isPlaying = AudioManager.Instance.IsAudioPlaying(stoneSlides);
             var isMoving = _playerController.PlayerInputHandler.Direction != Vector2.zero;
 
             if (isMoving && !isPlaying)
             {
-                _audioManager.PlayAudio(stoneSlides);
+                AudioManager.Instance.PlayAudio(stoneSlides);
             }
             else if (!isMoving && isPlaying)
             {
-                _audioManager.StopAudio(stoneSlides);
+                AudioManager.Instance.StopAudio(stoneSlides);
             }
         }
 

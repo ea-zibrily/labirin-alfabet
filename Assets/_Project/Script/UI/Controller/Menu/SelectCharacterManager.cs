@@ -86,24 +86,24 @@ namespace Alphabet.UI
             }
         }
 
-        // !- Core 
+        // !- Core Functionality
         private void OnClickExplore()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             PlayerDatabase.Instance.SetPlayerData(_characterIndex);
             selectStageManager.GoToStage();
         }
 
         private void OnClickClose()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             selectCharacterPanelUI.SetActive(false);
             SetDefaultCharacter();
         }
         
         private void OnSelectCharacter(Button btn)
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             _characterIndex = _selectButtonNums[btn];
             SelectCharacter(_characterIndex);
         }

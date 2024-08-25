@@ -137,7 +137,7 @@ namespace Alphabet.Gameplay.Controller
             if (doorVfx.TryGetComponent<ParticleSystem>(out var effect))
             {
                 effect.Play();
-                FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterUISfx);
+                AudioManager.Instance.PlayAudio(Musics.LetterUISfx);
             }
         }
 

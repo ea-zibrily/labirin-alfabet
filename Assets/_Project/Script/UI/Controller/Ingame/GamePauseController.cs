@@ -51,14 +51,14 @@ namespace Alphabet.UI
         // !-- Core Functionality
         private void OnPauseButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             pausePanelUI.SetActive(true);
             controllerCanvas.SetActive(false);
         }
         
         private void OnResumeButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             pausePanelUI.SetActive(false);
             controllerCanvas.SetActive(true);
             

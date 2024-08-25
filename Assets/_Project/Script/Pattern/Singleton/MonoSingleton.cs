@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Singleton Save Object Reference When Move Scene
-namespace Alphabet.DesignPattern.Singleton
+namespace Alphabet.Pattern.Singleton
 {
     public class MonoSingleton<T> : MonoBehaviour where T : Component
     {

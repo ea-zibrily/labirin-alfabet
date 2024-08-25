@@ -35,7 +35,7 @@ namespace Alphabet.Item
             PlayerManager.CurrentHealthCount++;
             var healthIndex = PlayerManager.CurrentHealthCount - 1;
             PlayerManager.HealthUIFills[healthIndex].SetActive(true);
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.HealSfx);
+            AudioManager.Instance.PlayAudio(Musics.HealSfx);
         }
         
         public override void DeactivateBuff()

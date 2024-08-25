@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Alphabet.Enum;
-using Alphabet.DesignPattern.Singleton;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Database
 {

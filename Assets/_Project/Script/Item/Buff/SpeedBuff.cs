@@ -98,7 +98,7 @@ namespace Alphabet.Item
             
             StartCoroutine(SpeedActive());
             StartSpeedEffect(PlayerManager.SpeedEffect);
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.SpeedSfx);
+            AudioManager.Instance.PlayAudio(Musics.SpeedSfx);
         }
 
         public override void DeactivateBuff()

@@ -40,7 +40,7 @@ namespace Alphabet.UI
         protected virtual void OnClickExplore() { }
         protected virtual void OnClickClose()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
         }
 
         #endregion

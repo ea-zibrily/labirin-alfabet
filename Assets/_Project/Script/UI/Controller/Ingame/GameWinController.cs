@@ -24,7 +24,7 @@ namespace Alphabet.UI
         
         private void OnNextButton()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             
             if (StageManager.Instance.CurrentStage == StageName.Kuil_Litera)
                 SceneTransitionManager.Instance.LoadSelectedScene(SceneState.MainMenu);

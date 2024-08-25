@@ -2,48 +2,36 @@
 using UnityEngine;
 using Alphabet.Enum;
 using Tsukuyomi.Utilities;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Managers
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : MonoDDOL<AudioManager>
     {
         #region Fields & Properties
         
-        [Header("Audio Data")]
+        [Header("Data")]
         public Sound[] Musics;
 
         [Header("Container")]
         [SerializeField] private GameObject musicsContainer;
         [SerializeField] private GameObject sfxsContainer;
-
-        public static AudioManager Instance;
-        public bool IsFirstOpening { get; set; } = true;
         
         #endregion
 
         #region MonoBehaviour Callbacks
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            DontDestroyOnLoad(gameObject);
+            base.Awake();
             InitializeAudio();
         }
         
         #endregion
 
         #region Methods
-
-        //!- Initialize
+        
+        // !- Initialize
         private void InitializeAudio()
         {
             foreach (var s in Musics)
@@ -58,7 +46,7 @@ namespace Alphabet.Managers
             }
         }
 
-        //!- Core
+        // !- Core
         public void PlayAudio(Musics music)
         {
             Sound sound = Array.Find(Musics, sound => sound.name == music.ToString());

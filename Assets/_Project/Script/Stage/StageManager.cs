@@ -4,7 +4,7 @@ using KevinCastejon.MoreAttributes;
 using Alphabet.Enum;
 using Alphabet.Letter;
 using Alphabet.Database;
-using Alphabet.DesignPattern.Singleton;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Stage
 {
@@ -22,22 +22,17 @@ namespace Alphabet.Stage
         public int CurrentStageIndex { get; private set; }
         public int StageCount => stageObjects.Length;
         
-        // Reference
-        public LetterManager LetterManager { get; private set; }
+        [Header("Reference")]
+        [SerializeField] private LetterManager letterManager;
+        public LetterManager LetterManager => letterManager;
         
         #endregion
         
         #region MonoBehaviour Callbacks
-
-        protected override void Awake()
-        {
-            var letter = GameObject.FindGameObjectWithTag("LetterManager");;
-            LetterManager = letter.GetComponent<LetterManager>();
-        }
         
         private void Start()
         {
-            InitializeLeveStage();
+            InitializeStage();
         }
         
         #endregion
@@ -45,7 +40,7 @@ namespace Alphabet.Stage
         #region Methods
         
         // !- Initialize
-        private void InitializeLeveStage()
+        private void InitializeStage()
         {
             if (stageObjects == null)
             {

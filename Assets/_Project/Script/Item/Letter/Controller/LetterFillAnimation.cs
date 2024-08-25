@@ -99,7 +99,7 @@ namespace Alphabet.Letter
                 target.localScale = Vector3.Lerp(target.localScale, letterScale.Default, lerpRatio);
             }
 
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterUISfx);
+            AudioManager.Instance.PlayAudio(Musics.LetterUISfx);
             target.localPosition = point;
             target.localScale = letterScale.Default;
             IsAnimate = false;

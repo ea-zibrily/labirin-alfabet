@@ -3,11 +3,11 @@ using UnityEngine;
 using Alphabet.UI;
 using Alphabet.Enum;
 using Alphabet.Stage;
+using Alphabet.Mission;
 using Alphabet.Entities.Player;
+using Alphabet.Pattern.Singleton;
 using Alphabet.Gameplay.Controller;
 using Alphabet.Gameplay.EventHandler;
-using Alphabet.DesignPattern.Singleton;
-using Alphabet.Mission;
 
 namespace Alphabet.Managers
 {
@@ -96,7 +96,7 @@ namespace Alphabet.Managers
 
             // Audio
             AudioController.FadeAudioEvent(isFadeIn: false);
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.WinSfx);
+            AudioManager.Instance.PlayAudio(Musics.WinSfx);
         }
 
         private void GameOver(LoseType loseType)
@@ -111,7 +111,7 @@ namespace Alphabet.Managers
 
             // Audio
             AudioController.FadeAudioEvent(isFadeIn: false);
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.LoseSfx);
+            AudioManager.Instance.PlayAudio(Musics.LoseSfx);
         }
         
         private void ContinueStage()

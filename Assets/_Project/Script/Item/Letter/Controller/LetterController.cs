@@ -90,9 +90,9 @@ namespace Alphabet.Letter
         
         private IEnumerator HandleSfxRoutine()
         {
-            FindObjectOfType<AudioManager>().PlayAudio(Musics.LetterSfx);
+            AudioManager.Instance.PlayAudio(Musics.LetterSfx);
             yield return new WaitForSeconds(sfxDelayTime);
-            LetterAudioManager.PlayAudioEvent(_letterData.LetterId);
+            LetterAudio.PlayAudioEvent(_letterData.LetterId);
         }
 
         private IEnumerator HandleVfxRoutine(GameObject vfx)

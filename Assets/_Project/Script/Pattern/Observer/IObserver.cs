@@ -1,4 +1,4 @@
-﻿namespace Alphabet.DesignPattern.Observer
+﻿namespace Alphabet.Pattern.Observer
 {
     public interface IObserver
     {

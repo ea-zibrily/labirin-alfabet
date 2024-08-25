@@ -226,7 +226,7 @@ namespace Alphabet.Entities.Player
             switch (tag)
             {
                 case TagFeedback.Enemy:
-                    FindObjectOfType<AudioManager>().PlayAudio(Musics.HitSfx);
+                    AudioManager.Instance.PlayAudio(Musics.HitSfx);
                     DecreaseHealth();
                     _playerController.StopMovement();
                     

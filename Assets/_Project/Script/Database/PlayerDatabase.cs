@@ -1,6 +1,6 @@
 using UnityEngine;
 using Alphabet.Data;
-using Alphabet.DesignPattern.Singleton;
+using Alphabet.Pattern.Singleton;
 
 namespace Alphabet.Database
 {

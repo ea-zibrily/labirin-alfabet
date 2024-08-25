@@ -101,7 +101,7 @@ namespace Alphabet.UI
 
             if (_canExplore)
             {
-                FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+                AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
                 selectCharacterPanelUI.SetActive(true);
                 ClosePanel();
             }
@@ -111,7 +111,7 @@ namespace Alphabet.UI
                 var stagePadlock = stagePanel.transform.GetChild(1).GetComponent<Animator>();
 
                 stagePadlock.SetTrigger(PADLOCK_TRIGGERED);
-                FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedStageSfx);
+                AudioManager.Instance.PlayAudio(Musics.LockedStageSfx);
             }
            
         }

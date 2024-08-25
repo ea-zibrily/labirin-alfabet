@@ -14,7 +14,7 @@ namespace Alphabet.UI
         private void Start()
         {
             // Init scroll button SFXs
-            static void OnButtonClick() => FindObjectOfType<AudioManager>().PlayAudio(Musics.ButtonSfx);
+            static void OnButtonClick() => AudioManager.Instance.PlayAudio(Musics.ButtonSfx);
             
             nextButtonUI.onClick.AddListener(OnButtonClick);
             previousButtonUI.onClick.AddListener(OnButtonClick);

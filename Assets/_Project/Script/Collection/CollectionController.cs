@@ -8,7 +8,6 @@ using Alphabet.Data;
 using Alphabet.Letter;
 using Alphabet.Database;
 using Alphabet.Managers;
-using Spine.Unity;
 
 namespace Alphabet.Collection
 {
@@ -43,11 +42,9 @@ namespace Alphabet.Collection
         [Header("UI")]
         [SerializeField] private Image outerImageUI;
         [SerializeField] private Image fillImageUI;
-        private RectTransform _rectTransform;
 
-        [Header("Reference")]
-        private CollectionManager _collectionManager;
-        private Button _buttonUI;
+        private RectTransform _rectTransform;
+        private Button _collectionButtonUI;
         
         #endregion
 
@@ -55,19 +52,18 @@ namespace Alphabet.Collection
 
         private void Awake()
         {
-            _buttonUI = GetComponent<Button>();
+            _collectionButtonUI = GetComponent<Button>();
             _rectTransform = GetComponent<RectTransform>();
-            _collectionManager = GameObject.FindGameObjectWithTag("Collection").GetComponentInChildren<CollectionManager>();
         }
 
         private void OnEnable()
         {
-            _collectionManager.OnCollectionClose += OnCloseCollection;
+            CollectionEventHandler.OnCollectionClose += OnCloseCollection;
         }
 
         private void OnDisable()
         {
-            _collectionManager.OnCollectionClose -= OnCloseCollection;
+            CollectionEventHandler.OnCollectionClose -= OnCloseCollection;
         }
 
         private void Start()
@@ -102,7 +98,7 @@ namespace Alphabet.Collection
 
             EnableInteract();
             _defaultScaling = _rectTransform.localScale;
-            _buttonUI.onClick.AddListener(OnCollectionClicked);
+            _collectionButtonUI.onClick.AddListener(OnCollectionClicked);
         }
         
         // !- Core
@@ -111,8 +107,7 @@ namespace Alphabet.Collection
             if (!_canInteract) return;
 
             DisableInteract();
-            LetterAudioManager.StopAudioEvent();
-            _collectionManager.SetSelectedCollection(collectionId);            
+            LetterAudio.StopAudioEvent();
             StartCoroutine(ClickFeedbackRoutine());
         }
 
@@ -122,7 +117,8 @@ namespace Alphabet.Collection
             TweenData tweenData = hasCollected ? unlockTween : lockTween;
 
             // Play button SFX if not collected
-            if (!hasCollected) FindObjectOfType<AudioManager>().PlayAudio(Musics.LockedLetterSfx);
+            if (!hasCollected) 
+                AudioManager.Instance.PlayAudio(Musics.LockedLetterSfx);
 
             // Scale up with elastic ease
             LeanTween.scale(gameObject, tweenData.tweenVector, allTweenDuration)
@@ -130,10 +126,8 @@ namespace Alphabet.Collection
                 .setOnComplete(() =>
                 {
                     // Play collection audio if selected and collected
-                    if (collectionId == _collectionManager.SelectedCollectionId && hasCollected)
-                    {
-                        LetterAudioManager.PlayAudioEvent(collectionId);
-                    }
+                    if (hasCollected)
+                        LetterAudio.PlayAudioEvent(collectionId);
                 });
 
             yield return new WaitForSeconds(tweenData.tweenDuration);
@@ -158,13 +152,13 @@ namespace Alphabet.Collection
         private void EnableInteract()
         {
             _canInteract = true;
-            _buttonUI.interactable = true;
+            _collectionButtonUI.interactable = true;
         }
 
         private void DisableInteract()
         {
             _canInteract = false;
-            _buttonUI.interactable = false;
+            _collectionButtonUI.interactable = false;
         }
 
         #endregion

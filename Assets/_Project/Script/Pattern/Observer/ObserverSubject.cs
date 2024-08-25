@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Alphabet.DesignPattern.Observer
+namespace Alphabet.Pattern.Observer
 {
     public class ObserverSubject : MonoBehaviour
     {
